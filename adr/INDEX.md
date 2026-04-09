@@ -45,7 +45,9 @@ handling, supersession policy, and review cadence -- is defined in [GOVERNANCE.m
 
 | ID | Domain | Title | Status | Description |
 |---|---|---|---|---|
-| — | — | — | — | *No ADRs yet* |
+| ADR-001 | Architecture | [Project File and Folder Structure](ADR-001-project-file-and-folder-structure.md) | active | Defines canonical directory layout, file naming conventions, and the enforced server/client boundary via `lib/server/` |
+| ADR-002 | Architecture | [Data Fetching Patterns](ADR-002-data-fetching-patterns.md) | active | All content routes return unresolved promises from `+page.ts`; components consume data exclusively via `{#await}` with all three branches required |
+| ADR-003 | Architecture | [Progressive Enhancement and No-JS Baseline](ADR-003-progressive-enhancement.md) | active | Defines no-JS functional baseline; navigation must work without JS; chat is an acknowledged JS dependency that must degrade gracefully |
 
 ---
 
@@ -53,7 +55,7 @@ handling, supersession policy, and review cadence -- is defined in [GOVERNANCE.m
 
 | ID | Domain | Title | Status | Description |
 |---|---|---|---|---|
-| — | — | — | — | *No ADRs yet* |
+| ADR-004 | UI | [Semantic HTML and Accessibility Standards](ADR-004-semantic-html-and-accessibility.md) | active | Fixed document structure with always-present landmarks and nav; HTML is the accessibility layer; CSS and JS are the design layer; ARIA only when native HTML is insufficient |
 
 ---
 

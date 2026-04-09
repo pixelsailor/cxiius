@@ -10,8 +10,8 @@
 |---|---|
 | **ADR Number** | ADR-{{ NNN }} |
 | **Status** | `proposed` |
-| **Date Created** | {{ YYYY-MM-DD }} |
-| **Last Updated** | {{ YYYY-MM-DD }} |
+| **Date** | {{ YYYY-MM-DD }} |
+| **Primary Owner** | Domain or functional owner |
 | **Decider** | {{ Name or role of the human who approved this ADR }} |
 
 > **Status** must be exactly one of: `proposed`, `active`, `deprecated`, `superseded`.

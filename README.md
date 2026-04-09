@@ -64,6 +64,23 @@ The interface behaves as a **command-driven system**, not a traditional website.
 
 ---
 
+## Tech Stack
+
+| Layer | Choice | Rationale |
+|---|---|---|
+| Framework | **SvelteKit** | Static-first, edge-ready, zero runtime overhead |
+| Rendering | **SSG + Edge Functions** | Content routes prebuilt as static HTML; AI endpoint runs as a Worker |
+| Adapter | **`@sveltejs/adapter-cloudflare`** | Targets CF Pages + Workers in a single deployment unit |
+| AI Provider | **Anthropic Claude API** (`claude-haiku-4-5-20251001`) | Fast, cheap, sufficient for personal Q&A; upgrade path to Sonnet if needed |
+| UI Component Libraries | **bits-ui** | Tested, accessible, unstyled primitives designed for use as a foundation for building custom components |
+| Styling | **Plain CSS** (custom properties) | No framework bloat; full control over animation |
+| Speech | **Web Speech API** | Native browser API, zero dependencies |
+| Deployment | **Cloudflare Pages** | GitHub-connected CI/CD, free SSL, global CDN |
+| Rate Limiting | **Cloudflare Workers KV** | Stateless IP-based counter; no external database needed |
+| Analytics | **Cloudflare Web Analytics** | Privacy-first, cookieless, free |
+
+---
+
 ## System Architecture
 
 ### Core Principles
