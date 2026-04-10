@@ -48,6 +48,10 @@ handling, supersession policy, and review cadence -- is defined in [GOVERNANCE.m
 | ADR-001 | Architecture | [Project File and Folder Structure](ADR-001-project-file-and-folder-structure.md) | active | Defines canonical directory layout, file naming conventions, and the enforced server/client boundary via `lib/server/` |
 | ADR-002 | Architecture | [Data Fetching Patterns](ADR-002-data-fetching-patterns.md) | active | All content routes return unresolved promises from `+page.ts`; components consume data exclusively via `{#await}` with all three branches required |
 | ADR-003 | Architecture | [Progressive Enhancement and No-JS Baseline](ADR-003-progressive-enhancement.md) | active | Defines no-JS functional baseline; navigation must work without JS; chat is an acknowledged JS dependency that must degrade gracefully |
+| ADR-005 | Architecture | [Error Handling Conventions](ADR-005-error-handling-conventions.md) | active | Handle errors at the level they occur; result types in service layer; inline error states mandatory; toast notifications prohibited; chat unavailability is the single layout-level exception |
+| ADR-006 | Architecture | [Type and Schema Conventions](ADR-006-type-and-schema-conventions.md) | active | TypeScript for internal code; Zod only at network boundaries in `$lib/server/`; `z.infer` over manual types; `as const` over enums; `$lib/types/` for cross-cutting types only |
+| ADR-007 | Architecture | [State Management Conventions](ADR-007-state-management-conventions.md) | active | Svelte 5 runes only; reactive classes over stores; scope determines mechanism — local `$state`, subtree context, or global store class; all Svelte 4 patterns prohibited |
+| ADR-008 | Architecture | [Content Model Conventions](ADR-008-content-model-conventions.md) | active | TypeScript objects as single source of truth; one file per domain; content types co-located with data; `Promise<T>` wrapper required; client-safe with strict one-way dependency to server layer |
 
 ---
 
