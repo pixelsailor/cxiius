@@ -63,7 +63,7 @@ cxii.us/
 │   └── *.test.ts
 ├── .env.example
 ├── svelte.config.js
-└── wrangler.toml
+└── wrangler.jsonc
 ```
 
 ---
