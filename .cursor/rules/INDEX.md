@@ -51,6 +51,12 @@ Rules are grouped by **category**. Each table lists the rule file and a one-line
 | :-------- | :-------- |
 | [`semantic-html-accessibility.mdc`](semantic-html-accessibility.mdc) | Landmarks, nav, headings, native HTML first, keyboard, motion (`prefers-reduced-motion`), focus for overlays. |
 
+### Code quality
+
+| Rule file | One-liner |
+| :-------- | :-------- |
+| [`lint-and-code-quality.mdc`](lint-and-code-quality.mdc) | TypeScript and Svelte patterns for lint-friendly code: strict nullability, async/callbacks, logging vs ADR-005, `{#if}`/`{#each}`/`{#await}`; `npm run lint` / `npm run format`. |
+
 ### Orchestration
 
 | Rule file | One-liner |
@@ -66,7 +72,7 @@ Rules are grouped by frontmatter **mode** (`alwaysApply` vs `alwaysApply: false`
 | Mode | Behavior | Rules |
 | :----- | :--------- | :------ |
 | **alwaysApply** | Loaded into every agent session automatically. No path filter and no user action needed (unless project rules are disabled in Cursor settings). | [`adr-compliance.mdc`](adr-compliance.mdc), [`svelte-mcp-workflow.mdc`](svelte-mcp-workflow.mdc) |
-| **Glob-scoped** | Loaded when workspace context includes files whose paths match that rule’s `globs` (for example open, attached, or referenced). If nothing matches, the rule may not apply. Exact matching can vary by Cursor version. | [`svelte-data-loading-and-state.mdc`](svelte-data-loading-and-state.mdc), [`server-boundary-types-schemas.mdc`](server-boundary-types-schemas.mdc), [`api-boundary-security.mdc`](api-boundary-security.mdc), [`cloudflare-kv-storage.mdc`](cloudflare-kv-storage.mdc), [`semantic-html-accessibility.mdc`](semantic-html-accessibility.mdc), [`error-handling.mdc`](error-handling.mdc), [`content-model.mdc`](content-model.mdc), [`orchestration-artifacts.mdc`](orchestration-artifacts.mdc), [`bits-ui-documentation.mdc`](bits-ui-documentation.mdc) |
+| **Glob-scoped** | Loaded when workspace context includes files whose paths match that rule’s `globs` (for example open, attached, or referenced). If nothing matches, the rule may not apply. Exact matching can vary by Cursor version. | [`svelte-data-loading-and-state.mdc`](svelte-data-loading-and-state.mdc), [`server-boundary-types-schemas.mdc`](server-boundary-types-schemas.mdc), [`api-boundary-security.mdc`](api-boundary-security.mdc), [`cloudflare-kv-storage.mdc`](cloudflare-kv-storage.mdc), [`semantic-html-accessibility.mdc`](semantic-html-accessibility.mdc), [`error-handling.mdc`](error-handling.mdc), [`content-model.mdc`](content-model.mdc), [`lint-and-code-quality.mdc`](lint-and-code-quality.mdc), [`orchestration-artifacts.mdc`](orchestration-artifacts.mdc), [`bits-ui-documentation.mdc`](bits-ui-documentation.mdc) |
 
 ---
 

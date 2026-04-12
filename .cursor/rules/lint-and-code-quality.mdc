@@ -1,0 +1,48 @@
+---
+description: TypeScript and Svelte patterns for consistent, lint-friendly code (strict nullability, async, formatting)
+globs:
+  - src/**/*.ts
+  - src/**/*.svelte
+alwaysApply: false
+---
+
+# Lint and code quality
+
+**Commands:** `npm run lint` runs Prettier (`--check`) and ESLint. `npm run format` applies Prettier. Address failures before review.
+
+**Architecture:** Follow active ADRs in [`adr/INDEX.md`](adr/INDEX.md), especially ADR-006 (types), ADR-005 (errors), ADR-002 (`{#await}` branches), ADR-007 (runes / state).
+
+## TypeScript
+
+- Trust the type system: avoid `?.` when types already exclude null/undefined; avoid `??` when the left-hand side cannot be null/undefined per its type.
+- Prefer explicit checks for nullable values (e.g. `if (value !== undefined)`) instead of truthiness when “defined” is what you mean — especially for objects and indexed access.
+- For `Record<K, V>` or dynamic keys, treat a missing key as possibly undefined; narrow before use (cast to `V | undefined`, `in` checks, or guards) — align with ADR-006.
+- Prefer object rest to omit keys; avoid `delete` on objects you control.
+- Add explicit return types on exported functions and on `async` functions when it clarifies the contract.
+- In tests, assert or narrow types before property access so access is type-safe.
+- Remove unused imports and dead code.
+
+```ts
+// Narrow optional record access
+const row = byId[id] as Row | undefined;
+if (row !== undefined && row.title.trim() !== "") {
+	// ...
+}
+
+// Prefer rest over delete
+const { [key]: _removed, ...rest } = obj;
+```
+
+## Async and callbacks
+
+- Do not mark a function `async` unless it contains `await` or must return a `Promise` for the API.
+- Use block bodies for void-return callbacks when it improves clarity or satisfies the linter (`items.forEach((item) => { ... })`).
+
+## Logging and errors
+
+- Avoid `console.*` in UI and general app code for routine logging. **Exception:** ADR-005 documents server-side `console.error` in `hooks.server.ts` `handleError` for unexpected errors. Prefer `Result` types in `$lib/server/`, inline error states in UI, and patterns in [`adr/ADR-005-error-handling-conventions.md`](adr/ADR-005-error-handling-conventions.md).
+
+## Svelte markup
+
+- Use `{#if}`, `{#each}`, `{#await}` (with required branches per ADR-002) instead of imperative DOM for control flow.
+- For accessibility (labels, buttons, landmarks), follow [semantic-html-accessibility.mdc](semantic-html-accessibility.mdc) and ADR-004.
