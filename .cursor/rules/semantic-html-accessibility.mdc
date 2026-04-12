@@ -1,0 +1,37 @@
+---
+description: Landmarks, navigation, headings, ARIA, keyboard, motion (ADR-004)
+globs:
+  - src/**/*.svelte
+  - src/app.html
+alwaysApply: false
+---
+
+# Semantic HTML and accessibility
+
+Authoritative detail: [`adr/ADR-004-semantic-html-and-accessibility.md`](adr/ADR-004-semantic-html-and-accessibility.md), [`adr/ADR-003-progressive-enhancement.md`](adr/ADR-003-progressive-enhancement.md) (no-JS baseline).
+
+## Document shell
+
+- Every page: **`header`**, **`main`**, **`footer`** as top-level landmarks — all **always** in the DOM (not removed by JS or stores).
+- **`<nav>`** in **`header`**: real `<a href="...">` for every navigable route. Never remove links from the document to gate navigation on JS.
+
+## Hiding / enhanced UI (Rule 2)
+
+- **Baseline (no JS):** nav must stay visible and usable — do not hide the only path to routes for aesthetic reasons.
+- **With JS:** header `<nav>` may be visually suppressed or omitted from the a11y tree **only while** an equivalent keyboard-accessible surface exposes the **same** routes (e.g. command palette). If that enhancement fails, fall back to visible `<nav>`.
+- **Primary command input:** follow ADR-004 command-surface expectations (autofocus, shortcuts when focus moves, focus visibility); do not strand keyboard users.
+
+## Structure and semantics
+
+- Each content route: **one `<h1>`**; headings **h1 → h2 → h3** in order — semantics first, size via CSS.
+- Prefer **native HTML** over ARIA; ARIA only when native elements cannot express the behavior. No `role="button"` on `<div>` when `<button>` works.
+
+## Interaction
+
+- **Keyboard:** all interactive controls operable via Tab / Enter / Space; **Escape** closes overlays and restores focus to trigger; no `outline: none` without a visible replacement (except negotiated primary-input exception in ADR-004).
+- **Touch:** minimum **44×44px** hit targets; no hover-only actions.
+- **Motion:** wrap animations in `@media (prefers-reduced-motion: no-preference)` — no load-bearing motion.
+
+## Dynamic UI
+
+- Palette/modals: **move focus in** on open, **return focus** to trigger on close; use `aria-live` only for genuine live updates.

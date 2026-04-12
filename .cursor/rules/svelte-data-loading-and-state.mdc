@@ -1,0 +1,33 @@
+---
+description: Svelte 5 data loading, progressive enhancement, and state (ADR-002, ADR-003, ADR-007)
+globs:
+  - src/**/*.svelte
+  - src/routes/**/*.ts
+  - src/lib/stores/**/*.ts
+alwaysApply: false
+---
+
+# Svelte data loading, no-JS baseline, and state
+
+Authoritative detail: [`adr/ADR-002-data-fetching-patterns.md`](adr/ADR-002-data-fetching-patterns.md), [`adr/ADR-003-progressive-enhancement.md`](adr/ADR-003-progressive-enhancement.md), [`adr/ADR-007-state-management-conventions.md`](adr/ADR-007-state-management-conventions.md).
+
+## Data loading (ADR-002)
+
+- Content routes: `+page.ts` uses `export const load = () => ({ key: getData() })` — return **unresolved promises**; do not `async load()` with internal `await`.
+- Every content `+page.ts`: `export const prerender = true` (first export).
+- `$lib/content/*`: getters return `Promise<T>` (wrap sync data in `Promise.resolve()`).
+- `+page.svelte`: consume route data only via `{#await}` with **pending, `:then`, and `:catch`** — all three branches required. No direct `data.x` without `{#await}`.
+- Do not use `+page.server.ts` for content routes. It is **discouraged** elsewhere; **never** use it for KV (use API routes, `hooks.server.ts`, and `src/lib/server/kv/` per ADR-010). Other exceptions need a proposed ADR (see ADR-002 Rule 3).
+- **Only** permitted `fetch()` outside `$lib/server/`: chat/AI client path posting to the API (store-driven), per ADR-002 Rule 4.
+- Do not load content that must appear in HTML inside `onMount` (browser-only side effects are OK).
+
+## Progressive enhancement (ADR-003)
+
+- Navigation: real `<a href="...">` to paths — not `<button>` + `goto()` as sole navigation.
+- Build no-JS baseline first; chat/command palette are JS enhancements and must not break nav or content for no-JS users.
+
+## State (ADR-007)
+
+- Use **Svelte 5 runes only** — no new `writable()`/`readable()`, no `export let`, no `$:`, no `<slot>`/legacy patterns (see ADR-007 Rule 8 table).
+- Scope: local `$state` → `createContext` + reactive class for subtree → global reactive class in `$lib/stores/*.svelte.ts`.
+- Store classes: `.svelte.ts` extension; API-shaped blobs use `$state.raw` where ADR-007 applies.

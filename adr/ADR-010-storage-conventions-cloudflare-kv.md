@@ -137,7 +137,7 @@ Load KV in SvelteKit `load` via `+page.server.ts` when a page needs edge state.
 
 ### Follow-up
 
-- **ADR-002 alignment:** ADR-002’s follow-up and agent directive allow introducing `+page.server.ts` when a route needs “secrets, KV, or Cloudflare bindings” after a new ADR. **This ADR intentionally forbids KV via `+page.server.ts`.** Resolve by updating ADR-002 in a separate change (narrow the `+page.server.ts` exception to secrets/non-KV bindings, or reference ADR-010 explicitly) so the two documents do not contradict.
+- **ADR-002 alignment:** ADR-002 now states that **`+page.server.ts` is discouraged in general**, that **KV must not** be accessed via `+page.server.ts`, and that API routes / hooks / `src/lib/server/kv/` helpers are the correct paths — consistent with this ADR.
 - **ADR-009 wording:** ADR-009 describes rate limiting “per IP” while storage keys must use hashed identifiers. Treat “per IP” as **logical** (one counter per client IP) with **storage** using hashed keys per this ADR; consider a small wording pass on ADR-009 for consistency.
 - **Infrastructure:** Add `RATE_LIMIT_KV` (and `CACHE_KV` if caching ships) to `wrangler.jsonc` and Cloudflare dashboard when implementing; run `npm run gen` and commit generated types.
 - **Static assets / R2:** Decide hosting for images and similar assets; update or add an ADR when chosen.

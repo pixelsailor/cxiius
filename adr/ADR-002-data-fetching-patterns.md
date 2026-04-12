@@ -20,13 +20,13 @@
 
 | Field | Value |
 |---|---|
-| **Related ADRs** | ADR-001 — Project File and Folder Structure, ADR-003 — Progressive Enhancement and No-JS Baseline |
+| **Related ADRs** | ADR-001 — Project File and Folder Structure, ADR-003 — Progressive Enhancement and No-JS Baseline, ADR-010 — Storage Conventions — Cloudflare KV |
 
 ---
 
 ## Scope
 
-Governs how data is loaded and consumed across all SvelteKit routes in CXII. Applies to `+page.ts` load functions, `+server.ts` handlers, and any component-level data consumption. Does not govern internal service layer logic within `$lib/server/`.
+Governs how data is loaded and consumed across all SvelteKit routes in CXII. Applies to `+page.ts` load functions, `+server.ts` handlers, and any component-level data consumption. Does not govern internal service layer logic within `$lib/server/`. **Cloudflare KV access from route loads** is governed by **ADR-010** (`+page.server.ts` is not a valid path for KV).
 
 ---
 
@@ -88,9 +88,15 @@ All route components receive a `data` prop and resolve it using `{#await}`. No c
 
 Every `{#await}` block must include all three branches: pending, resolved, and error. Omitting `:catch` is not permitted.
 
-### Rule 3 — `+page.server.ts` is not used for content routes
+### Rule 3 — `+page.server.ts` is discouraged; never for KV or Cloudflare KV access patterns
 
-Content routes do not use `+page.server.ts`. Content files are client-safe TypeScript — there is no reason to restrict them to the server context. `+page.server.ts` is reserved for routes that require direct access to secrets, KV, or Cloudflare bindings. No such route currently exists.
+**Content routes** do not use `+page.server.ts`. Content files are client-safe TypeScript — there is no reason to restrict them to the server context.
+
+**`+page.server.ts` is discouraged project-wide.** Prefer universal `+page.ts` (this ADR), **`+server.ts` API routes**, and **`hooks.server.ts`** unless a requirement truly cannot be met any other way. Any new use of `+page.server.ts` outside the content-route prohibition must be **exceptional**, justified, and recorded in a **proposed ADR** before implementation.
+
+**KV and Cloudflare KV usage (ADR-010):** Reading or writing **Workers KV** — or using any load whose **sole purpose** is to reach KV from a page navigation — **must not** go through `+page.server.ts`. Use **`+server.ts`**, **`hooks.server.ts`**, and **`src/lib/server/kv/`** helpers only. This is not a stylistic preference; it keeps KV access aligned with ADR-010 and avoids tunneling edge state through `load()` in ways content routes cannot use.
+
+**Other server-only needs** (secrets, non-KV bindings): still **prefer** API routes and hooks that delegate to `$lib/server/` before introducing `+page.server.ts`. If no alternative pattern can satisfy the requirement, capture the exception in a new ADR.
 
 ### Rule 4 — The AI chat endpoint is not a load function
 
@@ -162,7 +168,8 @@ Run all load functions server-side for consistency.
 ### Follow-up
 
 - If a content source migrates to an external async provider, the change is isolated to the relevant file in `$lib/content/`. No ADR update is required unless the fetching pattern itself changes.
-- If a route requires server-side data (secrets, KV, Cloudflare bindings), a new ADR should be proposed before introducing `+page.server.ts` to establish its usage rules.
+- **KV / ADR-010:** Never introduce `+page.server.ts` as a way to load or mutate KV-backed data for pages; see Rule 3 and ADR-010.
+- If a **non-KV** requirement appears to need `+page.server.ts`, first rule out `+server.ts`, `hooks.server.ts`, and delegation to `$lib/server/`. If no alternative exists, propose a new ADR that documents the exception before adding `+page.server.ts`.
 
 ---
 
@@ -173,5 +180,5 @@ Run all load functions server-side for consistency.
 - **When creating a function in `$lib/content/`:** the return type must be `Promise<T>`. Wrap synchronous data in `Promise.resolve()`.
 - **When consuming `data` in a `+page.svelte`:** always use `{#await}` with all three branches — pending, `:then`, and `:catch`. Direct access to `data.x` without `{#await}` is a violation.
 - **When the chat interface needs to call the AI endpoint:** use `fetch()` in a store, not a load function. This is the only permitted use of `fetch()` outside of `$lib/server/`.
-- **When considering `+page.server.ts` for a content route:** do not use it. Content files are client-safe. Only introduce `+page.server.ts` if the route requires direct access to secrets or Cloudflare bindings, and only after a new ADR is approved.
+- **When considering `+page.server.ts`:** do not use it for **content routes** (`$lib/content`). Do **not** use it for **KV** or any pattern ADR-010 forbids — use API routes, `hooks.server.ts`, and `src/lib/server/kv/` helpers. For any other case, treat `+page.server.ts` as a **last resort** after ruling out alternatives; require a **proposed ADR** before adding it.
 - **When reaching for `onMount` to fetch or display content:** do not. `onMount` is permitted only for browser-specific side effects that are not content. Any content required in rendered HTML must come through `load()`.

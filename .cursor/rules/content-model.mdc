@@ -1,0 +1,36 @@
+---
+description: Typed content in $lib/content — shape, Promise getters, dependencies (ADR-008)
+globs:
+  - src/lib/content/**/*.ts
+alwaysApply: false
+---
+
+# Content model (`$lib/content/`)
+
+Authoritative detail: [`adr/ADR-008-content-model-conventions.md`](adr/ADR-008-content-model-conventions.md).
+
+## Source of truth
+
+- Content is **typed TypeScript objects** in `$lib/content/` — not markdown/JSON as source. Other formats are **derived** from TS if needed.
+
+## Files and types
+
+- **One file per content domain** (e.g. resume, portfolio). Domain types live **in the same file** as the data — **not** in `$lib/types/` unless they later qualify under ADR-006 Rule 6 for unrelated sharing.
+
+## API
+
+- Export **one async getter per domain**: **`(): Promise<T>`** — always a promise (use `Promise.resolve(...)` for sync data). **Do not** export raw data as the primary consumption path.
+- **No Zod** in content files (trusted, non-network data per ADR-006).
+
+## Dependencies
+
+- Content is **client-safe**: **no** imports from `$lib/server/`, `$env/static/private`, or any server-only module.
+- Allowed: **`$lib/server/` → `$lib/content/`**. Forbidden: **`$lib/content/` → `$lib/server/`**.
+
+## Server consumption
+
+- **System prompt assembler** in `$lib/server/` is the **only** server module that should import content for aggregation. Other server code should not import content directly (keeps assembly in one place).
+
+## Shape
+
+- Types use **serialisable** data only: primitives, arrays, nested objects — **no** functions, class instances, or symbols.

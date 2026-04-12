@@ -1,0 +1,36 @@
+---
+description: AI API Worker boundary — validation, rate limits, secrets (ADR-009)
+globs:
+  - src/routes/api/**/*
+  - src/lib/server/**/*.ts
+alwaysApply: false
+---
+
+# API boundary security (AI / Worker)
+
+Authoritative detail: [`adr/ADR-009-boundary-security-and-sanitization.md`](adr/ADR-009-boundary-security-and-sanitization.md).
+
+## Authority
+
+- The **Cloudflare Worker / server path** is the sole authority for validation, rate limiting, sanitization, and AI request shaping. Client checks (ADR-005) are not sufficient alone.
+
+## Request shape
+
+- Accept **only** `{ input: string }` for the constrained AI endpoint (see ADR-009). Reject extra fields, non-strings, missing/empty input.
+- **Max input length 500 characters** server-side.
+
+## Proxy strictness
+
+- Client must not choose model, temperature, token limits, or system prompt. The Worker builds the provider request from fixed config and structured `$lib/content` (or equivalent) only.
+
+## Rate limiting (with KV per ADR-009 + ADR-010)
+
+- Enforce request and token-budget limits per ADR-009; use KV helpers under `src/lib/server/kv/` per ADR-010.
+
+## Secrets
+
+- API keys only in Worker env / local `.env` for dev. Use only from `src/lib/server/`. Never expose, log, or return secrets to the client.
+
+## Errors
+
+- Rejected requests return **structured** error JSON — no silent failures or vague 500s for validation abuse.

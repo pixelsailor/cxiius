@@ -1,0 +1,47 @@
+---
+description: Cloudflare KV — helpers, keys, TTL, failure modes (ADR-010)
+globs:
+  - src/lib/server/kv/**/*
+  - wrangler.jsonc
+alwaysApply: false
+---
+
+# Cloudflare KV storage
+
+Authoritative detail: [`adr/ADR-010-storage-conventions-cloudflare-kv.md`](adr/ADR-010-storage-conventions-cloudflare-kv.md).
+
+## Role
+
+- KV is **ephemeral** (rate limits, optional cache). Not a system of record. No D1 in scope.
+
+## Access
+
+- **All** reads/writes go through **helpers in `src/lib/server/kv/`** only. Do not call `env.RATE_LIMIT_KV` / `env.CACHE_KV` from route files, hooks, or other modules directly.
+- Allowed callers: `+server.ts`, `hooks.server.ts`, and `$lib/server` modules they import.
+- **Do not** use `+page.server.ts` to reach KV (forbidden for KV access).
+
+## Bindings
+
+- Fixed names: `RATE_LIMIT_KV` (required for rate limiting); `CACHE_KV` only if caching is implemented. Match `wrangler.jsonc`; run `npm run gen` after binding changes. No aliasing in code.
+
+## Keys and values
+
+- Pattern: `<feature>:<identifier>`; **no raw IPs** in keys — hash/HMAC with server-only salt.
+- Values: small JSON (target 1–5 KB), shallow; **validate with Zod** at helper boundary on read/write.
+
+## TTL
+
+- Every write sets expiration. Rate-limit data: TTL **≤ 5 minutes**. Cache: **1–24 hours**. No permanent keys.
+
+## Failure semantics
+
+- **Rate limiting:** KV errors → **fail closed** (deny / error the protected operation).
+- **Caching:** KV errors → **fail open** (skip cache; continue).
+
+## Tests
+
+- **Mock KV** in unit tests — no Cloudflare Workers test pools for this project.
+
+## Consistency
+
+- Design for eventual consistency; do not assume read-after-write.

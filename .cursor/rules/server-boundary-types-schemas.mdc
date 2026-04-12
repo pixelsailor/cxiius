@@ -1,0 +1,28 @@
+---
+description: Server/client layout, Zod boundaries, and type placement (ADR-001, ADR-006)
+globs:
+  - src/lib/server/**/*
+  - src/routes/api/**/*
+  - src/lib/types/**/*
+  - src/lib/content/**/*.ts
+alwaysApply: false
+---
+
+# Server boundary, types, and schemas
+
+Authoritative detail: [`adr/ADR-001-project-file-and-folder-structure.md`](adr/ADR-001-project-file-and-folder-structure.md), [`adr/ADR-006-type-and-schema-conventions.md`](adr/ADR-006-type-and-schema-conventions.md).
+
+## Layout (ADR-001)
+
+- **Business logic, secrets, Anthropic/KV, `$env/static/private`:** only under `src/lib/server/` (compiler-enforced). Do not place that code where the client can import it.
+- **`src/routes/api/**/+server.ts`:** thin HTTP handlers — validate, delegate to `$lib/server/*`, return response. No heavy business logic inline.
+- **Zod schemas:** only in `src/lib/server/*.schemas.ts`. **Do not import `zod` outside `$lib/server/`.**
+- **Types from schemas:** `type Foo = z.infer<typeof FooSchema>` in matching `*.types.ts` — no parallel manual type for the same shape.
+- **Cross-cutting client-safe types:** `src/lib/types/` only when shared across unrelated modules, no natural domain home, and no runtime validation twin (see ADR-006 Rule 6).
+- **Component-only types:** co-locate in the component folder (e.g. `commandPalette.types.ts`), not `$lib/types/`.
+
+## Validation boundaries (ADR-006)
+
+- TypeScript alone for trusted internal code (`$lib/content`, UI, stores, utils).
+- Zod at **network/runtime untrusted boundaries**: `+server.ts` request bodies; service inputs from handlers in `$lib/server/*.service.ts`.
+- Enumerations: `as const` arrays + `z.enum()` — **no** TypeScript `enum`.

@@ -6,6 +6,8 @@
 
 ## Developing
 
+**Stack:** TypeScript, npm; ESLint, Prettier, Vitest; SvelteKit with the Cloudflare adapter. Cursor-facing agent conventions (including the Svelte MCP documentation workflow) live in [`.cursor/rules/svelte-mcp-workflow.mdc`](.cursor/rules/svelte-mcp-workflow.mdc).
+
 Start a development server:
 
 ```sh
