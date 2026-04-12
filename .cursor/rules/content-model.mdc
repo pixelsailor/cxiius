@@ -1,36 +1,123 @@
 ---
-description: Typed content in $lib/content — shape, Promise getters, dependencies (ADR-008)
+description: Content library in $lib/content — ADR-008 rules, agent workflows, domain inventory pointer
 globs:
-  - src/lib/content/**/*.ts
+  - src/lib/content/**
 alwaysApply: false
 ---
 
-# Content model (`$lib/content/`)
+# Content library (`$lib/content/`)
 
-Authoritative detail: [`adr/ADR-008-content-model-conventions.md`](adr/ADR-008-content-model-conventions.md).
+Authoritative detail: [`adr/ADR-008-content-model-conventions.md`](../../adr/ADR-008-content-model-conventions.md).
 
-## Source of truth
+If this rule and **ADR-008** conflict, the ADR wins — flag the discrepancy rather than resolving it silently.
 
-- Content is **typed TypeScript objects** in `$lib/content/` — not markdown/JSON as source. Other formats are **derived** from TS if needed.
+---
 
-## Files and types
+## Role
 
-- **One file per content domain** (e.g. resume, portfolio). Domain types live **in the same file** as the data — **not** in `$lib/types/` unless they later qualify under ADR-006 Rule 6 for unrelated sharing.
+`$lib/content/` is the single source of truth for site content. It is consumed by:
 
-## API
+1. **Page load functions** (`+page.ts`) — render content as HTML
+2. **The server-side system prompt assembler** (`$lib/server/`) — compose content into the AI system prompt
 
-- Export **one async getter per domain**: **`(): Promise<T>`** — always a promise (use `Promise.resolve(...)` for sync data). **Do not** export raw data as the primary consumption path.
-- **No Zod** in content files (trusted, non-network data per ADR-006).
+Content is **typed TypeScript** — not markdown or JSON as source. Other formats are **derived** from TypeScript if needed.
 
-## Dependencies
+Every module here must remain **client-safe** for both consumers.
 
-- Content is **client-safe**: **no** imports from `$lib/server/`, `$env/static/private`, or any server-only module.
-- Allowed: **`$lib/server/` → `$lib/content/`**. Forbidden: **`$lib/content/` → `$lib/server/`**.
+---
+
+## Hard rules
+
+| Rule | What it means in practice |
+| --- | --- |
+| **TypeScript only** | No `.md`, `.json`, or other formats as *source* for content. Markdown is an output format, not a source format. (Human-oriented `INDEX.md` in this folder is not content data.) |
+| **One file per domain** | Each coherent subject area lives in exactly one file. Do not split a domain across files or merge two domains into one. |
+| **Type lives with data** | Define `export type` in the same file as the data. Default: **not** in `$lib/types/` — unless types qualify under **ADR-006 Rule 6** for unrelated cross-cutting sharing. |
+| **Return `Promise<T>`** | Every content getter: `(): Promise<T>`. Use `Promise.resolve(...)` for sync data. Do not export raw data as the primary consumption path. |
+| **No server imports** | No imports from `$lib/server/`, `$env/static/private`, or any server-only module. |
+| **Dependency direction** | Allowed: `$lib/server/` → `$lib/content/`. Forbidden: `$lib/content/` → `$lib/server/`. |
+| **Serialisable values only** | Primitives, arrays, nested plain objects. Never: functions, class instances, Symbols, or `Date` (use ISO strings). |
+| **No Zod** | Trusted, non-network data — TypeScript types only (see ADR-006). |
+
+---
 
 ## Server consumption
 
-- **System prompt assembler** in `$lib/server/` is the **only** server module that should import content for aggregation. Other server code should not import content directly (keeps assembly in one place).
+The **system prompt assembler** in `$lib/server/` is the **only** server module that should import content for aggregation. Other server code should not import content directly — it keeps assembly in one place.
 
-## Shape
+---
 
-- Types use **serialisable** data only: primitives, arrays, nested objects — **no** functions, class instances, or symbols.
+## Domain inventory
+
+The list of domains and return types is maintained in **[`src/lib/content/INDEX.md`](../../src/lib/content/INDEX.md)**. Update that file when domains are added or removed.
+
+---
+
+## Workflow — add a new content domain
+
+Follow in order:
+
+### Step 1 — Name the domain
+
+Choose a short lowercase noun (`availability`, `experience`, `skills`, …). Avoid vague names (`data`, `misc`). Filename: `$lib/content/[domain].ts`.
+
+### Step 2 — Define types before data
+
+Decide single object vs array, fields for pages vs system prompt, and keep values serialisable (ISO strings instead of `Date`).
+
+### Step 3 — Write the data
+
+Use an explicitly typed top-level `const data` (do not rely on inference alone for the main declaration).
+
+### Step 4 — Export the getter
+
+One function per structure, named `get` + PascalCase domain name:
+
+```ts
+export const getExample = (): Promise<ExampleEntry[]> =>
+  Promise.resolve(data)
+```
+
+Single-object domains return `Promise<ExampleType>` directly.
+
+### Step 5 — Verify imports
+
+No `$lib/server/`, `$env/static/private`, or uncertain server-only modules. Server-only data belongs in the server layer, not here.
+
+### Step 6 — Register with the system prompt assembler
+
+Open the assembler under `$lib/server/` (or equivalent). Import the new getter and add it to the assembled prompt. The assembler remains the **only** server file that imports from `$lib/content/`.
+
+### Step 7 — Wire consumers and docs
+
+- Update **[`src/lib/content/INDEX.md`](../../src/lib/content/INDEX.md)** with the new domain row.
+- Add or update `+page.ts` loads as needed.
+
+**Sanity check:** type co-located with data; `Promise<T>`; no server-only imports; no Zod; serialisable values; assembler updated.
+
+---
+
+## Workflow — edit existing content
+
+1. Open the relevant file in `$lib/content/`.
+2. Change the `const data` block (or equivalent).
+3. Change types only when the shape changes — update types first, then data.
+
+---
+
+## Workflow — remove a content domain
+
+1. Remove the file from `$lib/content/`.
+2. Remove imports and usage from the system prompt assembler and any `+page.ts` loads.
+3. Remove the row from **[`src/lib/content/INDEX.md`](../../src/lib/content/INDEX.md)**.
+4. No ADR update required — domain files are implementation details.
+
+---
+
+## Notes for AI agents
+
+- For “add content about X”: pick an existing domain file or add a domain using the workflow above.
+- When generating a new content file, deliver the full file — types, data, and getter — in one artifact.
+- If a value might not be serialisable, prefer string or ISO date strings.
+- Do not invent facts; use a clear `TODO` where data is missing.
+- **`availability.ts`:** confirm with a human before treating `available` and `statusMessage` as authoritative.
