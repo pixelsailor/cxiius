@@ -109,6 +109,8 @@ These two directories serve fundamentally different purposes and must never be c
 
 Each component lives in its own folder under `src/lib/ui/`. The folder name, the `.svelte` filename, and the `.test.ts` filename must all match exactly and use PascalCase. No barrel or index files. Import components by direct path.
 
+For interactive primitives in `$lib/ui/`, **bits-ui** is the primary base layer when applicable — see [ADR-011](ADR-011-ui-component-library-bits-ui.md).
+
 Types specific to a single component are defined within that component's directory, not in `lib/types/`. `lib/types/` is reserved for types used across multiple unrelated modules.
 
 ---
@@ -154,7 +156,7 @@ Naming the service layer `lib/api/` mirrors the naming of `routes/api/` and is a
 ## Agent Directives
 
 - **When creating any file that imports from `$env/static/private`, uses `ANTHROPIC_API_KEY`, or accesses Cloudflare KV:** place the file in `src/lib/server/`. Any other location is a violation.
-- **When creating a new UI component:** create a folder under `src/lib/ui/` with the PascalCase component name; the `.svelte` file and `.test.ts` file must match the folder name exactly.
+- **When creating a new UI component:** create a folder under `src/lib/ui/` with the PascalCase component name; the `.svelte` file and `.test.ts` file must match the folder name exactly. When the component needs headless accessible primitives, prefer bits-ui per ADR-011 when a suitable primitive exists.
 - **When adding a new `+server.ts` route handler:** the handler must delegate business logic to `src/lib/server/`. Do not implement service logic directly in the route handler.
 - **When defining a Zod schema and its inferred type:** name the schema `ThingSchema` and infer the type as `type Thing = z.infer<typeof ThingSchema>`. Do not define a separate manual `type Thing`.
 - **When adding a type:** if the type is used only within a single component, place it in that component's directory. If it is shared across two or more unrelated modules, place it in `src/lib/types/`.

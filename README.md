@@ -74,7 +74,7 @@ The interface behaves as a **command-driven system**, not a traditional website.
 | Rendering | **SSG + Edge Functions** | Content routes prebuilt as static HTML; AI endpoint runs as a Worker |
 | Adapter | **`@sveltejs/adapter-cloudflare`** | Targets CF Pages + Workers in a single deployment unit |
 | AI Provider | **Anthropic Claude API** (`claude-haiku-4-5-20251001`) | Fast, cheap, sufficient for personal Q&A; upgrade path to Sonnet if needed |
-| UI Component Libraries | **bits-ui** | Tested, accessible, unstyled primitives designed for use as a foundation for building custom components |
+| UI Component Libraries | **bits-ui** (primary) | Headless, accessible primitives — use as the base layer for components in `$lib/ui/` when applicable; see [ADR-011](adr/ADR-011-ui-component-library-bits-ui.md). LLM-oriented docs index: [bits-ui.com/llms.txt](https://bits-ui.com/llms.txt) (links to per-topic `llms.txt` pages). |
 | Styling | **Plain CSS** (custom properties) | No framework bloat; full control over animation |
 | Speech | **Web Speech API** | Native browser API, zero dependencies |
 | Deployment | **Cloudflare Pages** | GitHub-connected CI/CD, free SSL, global CDN |
@@ -300,7 +300,7 @@ Two parallel experiences:
 
 The following are intentionally undefined at this stage:
 
-- Component architecture and boundaries
+- Component architecture beyond the bits-ui base layer for `$lib/ui/` (see [ADR-011](adr/ADR-011-ui-component-library-bits-ui.md))
 - Visual design system
 - Interaction micro-details
 - Analytics implementation

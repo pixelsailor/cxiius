@@ -61,6 +61,7 @@ handling, supersession policy, and review cadence -- is defined in [GOVERNANCE.m
 | ID | Domain | Title | Status | Description |
 |---|---|---|---|---|
 | ADR-004 | UI | [Semantic HTML and Accessibility Standards](ADR-004-semantic-html-and-accessibility.md) | active | Fixed document structure with always-present landmarks and nav; HTML is the accessibility layer; CSS and JS are the design layer; ARIA only when native HTML is insufficient |
+| ADR-011 | UI | [UI Component Library — bits-ui](ADR-011-ui-component-library-bits-ui.md) | active | bits-ui is the primary headless UI library; use as the base layer for `$lib/ui/` when a suitable primitive exists; LLM docs index at bits-ui.com/llms.txt; agents may fetch linked `llms.txt` without prior approval |
 
 ---
 

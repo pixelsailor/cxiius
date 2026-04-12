@@ -27,6 +27,7 @@ Rules are grouped by **category**. Each table lists the rule file and a one-line
 | Rule file | One-liner |
 | :-------- | :-------- |
 | [`svelte-mcp-workflow.mdc`](svelte-mcp-workflow.mdc) | Stack and npm scripts; for Svelte/SvelteKit work use Svelte MCP (`list-sections` → `get-documentation` → `svelte-autofixer`; playground link only if user confirms and not for in-repo edits). |
+| [`bits-ui-documentation.mdc`](bits-ui-documentation.mdc) | bits-ui docs via [bits-ui.com/llms.txt](https://bits-ui.com/llms.txt); agents may fetch linked `llms.txt` pages without prior approval when working under `src/lib/ui/` (ADR-011). |
 
 ### Application architecture
 
@@ -65,7 +66,7 @@ Rules are grouped by frontmatter **mode** (`alwaysApply` vs `alwaysApply: false`
 | Mode | Behavior | Rules |
 | :----- | :--------- | :------ |
 | **alwaysApply** | Loaded into every agent session automatically. No path filter and no user action needed (unless project rules are disabled in Cursor settings). | [`adr-compliance.mdc`](adr-compliance.mdc), [`svelte-mcp-workflow.mdc`](svelte-mcp-workflow.mdc) |
-| **Glob-scoped** | Loaded when workspace context includes files whose paths match that rule’s `globs` (for example open, attached, or referenced). If nothing matches, the rule may not apply. Exact matching can vary by Cursor version. | [`svelte-data-loading-and-state.mdc`](svelte-data-loading-and-state.mdc), [`server-boundary-types-schemas.mdc`](server-boundary-types-schemas.mdc), [`api-boundary-security.mdc`](api-boundary-security.mdc), [`cloudflare-kv-storage.mdc`](cloudflare-kv-storage.mdc), [`semantic-html-accessibility.mdc`](semantic-html-accessibility.mdc), [`error-handling.mdc`](error-handling.mdc), [`content-model.mdc`](content-model.mdc), [`orchestration-artifacts.mdc`](orchestration-artifacts.mdc) |
+| **Glob-scoped** | Loaded when workspace context includes files whose paths match that rule’s `globs` (for example open, attached, or referenced). If nothing matches, the rule may not apply. Exact matching can vary by Cursor version. | [`svelte-data-loading-and-state.mdc`](svelte-data-loading-and-state.mdc), [`server-boundary-types-schemas.mdc`](server-boundary-types-schemas.mdc), [`api-boundary-security.mdc`](api-boundary-security.mdc), [`cloudflare-kv-storage.mdc`](cloudflare-kv-storage.mdc), [`semantic-html-accessibility.mdc`](semantic-html-accessibility.mdc), [`error-handling.mdc`](error-handling.mdc), [`content-model.mdc`](content-model.mdc), [`orchestration-artifacts.mdc`](orchestration-artifacts.mdc), [`bits-ui-documentation.mdc`](bits-ui-documentation.mdc) |
 
 ---
 
