@@ -8,7 +8,7 @@ Authoritative architecture decisions remain in [`adr/INDEX.md`](../../adr/INDEX.
 
 ## Maintenance
 
-**Update this file whenever a rule file is added, removed, renamed, or its `alwaysApply` / `globs` frontmatter changes.** Keep the **Rule summary** and **Activation** tables in sync with the `.mdc` files in this directory.
+**Update this file whenever a rule file is added, removed, renamed, or its activation mode changes (`alwaysApply`, `globs`, or manual-only with neither glob nor always-on).** Keep the **Rule summary** and **Activation** tables in sync with the `.mdc` files in this directory.
 
 ---
 
@@ -37,6 +37,7 @@ Rules are grouped by **category**. Each table lists the rule file and a one-line
 | [`server-boundary-types-schemas.mdc`](server-boundary-types-schemas.mdc) | `$lib/server/` vs thin API handlers; Zod only in server schemas; `z.infer`; `$lib/types/` and component type placement. |
 | [`error-handling.mdc`](error-handling.mdc) | `Result<T>` in services, inline errors, no toasts, chat layout exception, sanitised `handleError`. |
 | [`content-model.mdc`](content-model.mdc) | `$lib/content/` library: ADR-008 hard rules, add/edit/remove workflows, [`src/lib/content/INDEX.md`](../src/lib/content/INDEX.md) domain inventory. |
+| [`content-interview.mdc`](content-interview.mdc) | Elicitation before writing: batched questions, confirm then write; pairs with `content-model.mdc` for the typing/writing phase. |
 
 ### Security and Cloudflare
 
@@ -73,6 +74,7 @@ Rules are grouped by frontmatter **mode** (`alwaysApply` vs `alwaysApply: false`
 | :----- | :--------- | :------ |
 | **alwaysApply** | Loaded into every agent session automatically. No path filter and no user action needed (unless project rules are disabled in Cursor settings). | [`adr-compliance.mdc`](adr-compliance.mdc), [`svelte-mcp-workflow.mdc`](svelte-mcp-workflow.mdc) |
 | **Glob-scoped** | Loaded when workspace context includes files whose paths match that rule’s `globs` (for example open, attached, or referenced). If nothing matches, the rule may not apply. Exact matching can vary by Cursor version. | [`svelte-data-loading-and-state.mdc`](svelte-data-loading-and-state.mdc), [`server-boundary-types-schemas.mdc`](server-boundary-types-schemas.mdc), [`api-boundary-security.mdc`](api-boundary-security.mdc), [`cloudflare-kv-storage.mdc`](cloudflare-kv-storage.mdc), [`semantic-html-accessibility.mdc`](semantic-html-accessibility.mdc), [`error-handling.mdc`](error-handling.mdc), [`content-model.mdc`](content-model.mdc), [`lint-and-code-quality.mdc`](lint-and-code-quality.mdc), [`orchestration-artifacts.mdc`](orchestration-artifacts.mdc), [`bits-ui-documentation.mdc`](bits-ui-documentation.mdc) |
+| **Manual** | `alwaysApply: false` and **no** `globs` — not path-triggered. Attach the rule (or use its trigger phrase from the rule description) when adding or updating narrative content so the agent interviews before editing `$lib/content/`. | [`content-interview.mdc`](content-interview.mdc) |
 
 ---
 

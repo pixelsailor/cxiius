@@ -116,6 +116,7 @@ Open the assembler under `$lib/server/` (or equivalent). Import the new getter a
 
 ## Notes for AI agents
 
+- When adding or updating narrative content, use [`content-interview.mdc`](content-interview.mdc) first (elicitation and confirmation), then this rule for structure and TypeScript.
 - For “add content about X”: pick an existing domain file or add a domain using the workflow above.
 - When generating a new content file, deliver the full file — types, data, and getter — in one artifact.
 - If a value might not be serialisable, prefer string or ISO date strings.

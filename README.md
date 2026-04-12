@@ -326,7 +326,8 @@ To keep this README focused, the following documents should be created:
 - Streaming behavior details
 
 ### 3. Content Authoring Guide
-- Structure of content files
+- Structure of content files — [`src/lib/content/INDEX.md`](src/lib/content/INDEX.md), [`.cursor/rules/content-model.mdc`](.cursor/rules/content-model.mdc) (ADR-008)
+- Interview-first elicitation before writing — [`.cursor/rules/content-interview.mdc`](.cursor/rules/content-interview.mdc)
 - Tone/voice guidelines
 - Update workflow
 

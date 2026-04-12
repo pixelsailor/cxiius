@@ -1,0 +1,317 @@
+---
+description: >
+  Run this rule when adding new content to $lib/content/ or updating an existing domain.
+  Guides the agent through an interview-first workflow: ask questions, confirm answers,
+  then write. Do not write any file until the interview is complete and confirmed.
+  Trigger phrase: "I want to add content about [topic]" or "update [domain] content".
+alwaysApply: false
+---
+
+# Content Interview Protocol
+
+> This rule governs the *elicitation* phase of content work.
+> The *writing* phase is governed by `content-model.mdc`.
+> Do not skip to writing. Interview first.
+
+---
+
+## Core principle
+
+Content files exist to answer questions a visitor or AI might ask about Ben.
+Before writing a single line of TypeScript, you need to know:
+
+1. What domain does this content belong to?
+2. Does a file for that domain already exist?
+3. What specific questions should a visitor be able to ask after this content is added?
+4. Do you have enough detail from Ben to answer those questions accurately?
+
+If the answer to (4) is no — ask. Do not fill gaps with plausible-sounding content.
+
+---
+
+## Phase 0 — Orient
+
+Before asking anything, do the following silently:
+
+1. Read the current domain registry in `content-model.mdc`
+2. Check whether a file for the target domain already exists in `$lib/content/`
+3. If updating an existing file, read it so you know what's already there
+4. Determine the domain type (see Phase 1)
+
+Then announce to the user what you found:
+> "I can see `[domain].ts` already exists with [X] entries — I'll ask about what to add or change."
+> — or —
+> "This looks like a new domain. I'll ask a few questions before creating the file."
+
+---
+
+## Phase 1 — Classify the domain type
+
+Match the requested topic to one of these domain types. Each type has its own question set.
+
+| Domain type | Examples |
+|---|---|
+| **Role / experience** | New job, contract, freelance project |
+| **Skill / technology** | New tool, framework, language, practice |
+| **Project** | A specific thing built — product, library, side project |
+| **Focus / current work** | What Ben is working on or thinking about right now |
+| **Background / personal** | Military, martial arts, teaching, life experience |
+| **Availability** | Current status, what he's looking for |
+| **Other** | Anything that doesn't fit above — propose a domain name first |
+
+If the domain type is ambiguous, ask before proceeding:
+> "Is this about a specific role you held, a project you built, or something else?"
+
+---
+
+## Phase 2 — Domain-specific question sets
+
+### Cadence
+
+- Ask **2–4 questions per message** (never more than four in one turn).
+- **Wait for the user's reply** before sending the next batch.
+- Ask **conversationally** — not as a numbered list dump — while still respecting the batch size.
+
+### Question priority
+
+Within each batch, choose questions in this order **unless** something already answered or obvious lets you skip ahead:
+
+1. **Identity and scope** — what this is, boundaries, how it fits Ben's story for this domain.
+2. **Context** — why it mattered; situation when Ben arrived; problem or goal.
+3. **Contributions and decisions** — what Ben owned, chose, or pushed for.
+4. **Outcomes** — what shipped, changed, or resulted; how it ended (if applicable).
+5. **Supporting details** — tech stack, dates, URLs, categories, remote/on-site, `asOf`, etc.
+
+**Within the same priority level**, ask the **highest-uncertainty** items first — what you cannot infer from earlier messages or existing content files.
+
+### Stop condition
+
+You have **enough** to leave Phase 2 when **all** of the following are true:
+
+- **Identity, context, contributions, and outcomes** are each populated **for this domain type** (see mapping below). Use sensible equivalents where a pillar is thin (e.g. a skill may have minimal "outcomes" beyond sustained use or notable applications).
+- **No critical field** would require fabrication to write the entry; anything still unknown is either non-critical or safely left as `// TODO:`.
+- **Remaining gaps** are ones you can mark with `// TODO:` without misleading a reader.
+
+If you are unsure whether a gap is safe as `// TODO:`, treat it as critical and ask one more targeted question (still in a 2–4 question batch).
+
+### Vague answers
+
+- Ask **one** follow-up question to clarify.
+- If the answer is **still vague**, **do not block** Phase 2 — proceed and mark the field with `// TODO:`.
+
+### Proceed without full detail
+
+If the user explicitly asks to move on before everything is filled in:
+
+- **Confirm** that some fields will stay incomplete and will appear as `// TODO:` (or omitted where the schema allows).
+- Then **proceed** — use `// TODO:` where detail is missing; do not invent specifics.
+
+### Multiple domains in one conversation
+
+If the user introduces **more than one** domain or topic:
+
+- Ask **which domain to complete first**.
+- Finish **Phase 2 → Phase 3 confirmation → Phase 4** for that domain before starting the next.
+- **Do not interleave** questions across domains.
+
+### Internal confidence (do not label this to the user unless helpful)
+
+Track mentally (or in scratch notes) how strong each captured fact is:
+
+| Level | Meaning | Writing phase |
+|-----|---|-----|
+| **High** | Explicit user input | Write normally |
+| **Medium** | Implied but reasonable; user would likely agree | Write; flag only if it might surprise them |
+| **Low** | Missing or too weak to state | `// TODO:` — **do not** write low-confidence guesses as facts |
+
+**Capture facts, not marketing language.** Positioning and polish belong in the writing phase (`content-model.mdc`), not in the interview.
+
+---
+
+### Mapping pillars to domain types
+
+Use the checklists below as **coverage targets**. For each domain type, interpret the four pillars roughly as:
+
+| Pillar | Role / experience | Skill / technology | Project | Focus / current work | Background / personal | Availability |
+|-----|-----|-----|-----|-----|-----|-----|
+| Identity | Title, company, arrangement, dates, location | Skill name, proficiency, category | Name, purpose, solo/team, status | What the focus is; public vs private | Subject, dates | Current status; `asOf` |
+| Context | Company, problem, state when Ben joined, mandate | Where / how it shows up in Ben's work | Why it existed; audience | Why it matters now | Setting, role | What Ben is open to |
+| Contributions | Ownership, decisions, championing, team shape | Depth of use, notes | Technical/design choices; Ben's role | What Ben is doing concretely | What Ben actually did | Preferences, constraints |
+| Outcomes | What shipped; measurable/visible results; how it ended | Notable uses or proof points if any | Live/archived; links; impact | Progress or trajectory | Achievements; professional relevance | — |
+| Supporting | Tech stack | `skills.ts` category, docs | URLs, repo, tech | Duration, goals | — | Remote/on-site, industry |
+
+---
+
+### Role / experience
+
+**Identity**
+- What was the job title and company name?
+- Was this full-time, contract, or freelance?
+- What were the start and end dates? (Month and year is fine)
+- Where was it based — and was it remote, on-site, or hybrid?
+
+**Context** (why it mattered)
+- What was the company doing? What problem were they solving?
+- What was the state of things when you arrived — were you joining an existing team, rescuing something, building from scratch?
+- What was the mandate or the goal?
+
+**Contributions**
+- What did you own? What were you specifically responsible for?
+- What decisions did you make that wouldn't have happened without you?
+- Was there anything you championed or pushed for that had resistance?
+- Did you work solo, lead others, or embed in a team?
+
+**Outcomes**
+- What shipped? What changed because of your work?
+- Were there any measurable or visible results — recognition, acquisition impact, delivery timeline, scale?
+- How did it end — contract complete, role transitioned, company wound down?
+
+**Supporting**
+- What were the primary technologies?
+
+---
+
+### Skill / technology
+
+**Identity**
+- What is the name of the skill or technology?
+- How would you rate your proficiency: fluent (daily use, primary tool), proficient (solid working knowledge), or familiar (can contribute, may reference docs)?
+- Which category does it belong in? (Reference current categories in `skills.ts`)
+
+**Context**
+- What context have you used it in — which roles or projects?
+
+**Contributions / notes**
+- Any notes worth surfacing — e.g. "primarily historical use" or "used extensively in X context"?
+
+**Outcomes** (if any)
+- Notable applications, certifications, or proof points worth recording?
+
+---
+
+### Project
+
+**Identity**
+- What's the name of the project?
+- What does / did it do? One or two sentences.
+- Did you build it solo or with others?
+- What was the purpose — client work, internal tool, side project, open source?
+- What's its current status — live, archived, in progress?
+
+**Context**
+- What problem or audience was it for?
+
+**Contributions**
+- What were the notable technical or design decisions?
+- What was Ben's role in building it?
+
+**Outcomes**
+- What is worth recording about impact, adoption, or lifecycle?
+
+**Supporting**
+- What tech was used?
+- Is there a URL or repo worth referencing?
+
+---
+
+### Focus / current work
+
+**Identity**
+- What are you actively working on right now?
+- Is this something being built, something being learned, or something being explored conceptually?
+- Is it public, or is it something you'd mention only in a professional conversation?
+
+**Context**
+- Is this connected to a specific goal — a new direction, a skill you're developing, a problem you're solving?
+
+**Contributions**
+- What are you doing concretely day to day (at a useful level of detail)?
+
+**Outcomes / trajectory**
+- What progress or trajectory is worth capturing?
+
+**Supporting**
+- How long have you been focused on this?
+
+---
+
+### Background / personal
+
+**Identity**
+- What is the subject? (Military service, martial art, teaching role, something else?)
+- What were the dates involved?
+
+**Context**
+- What was the setting or role?
+
+**Contributions**
+- What did you actually do — concretely?
+
+**Outcomes**
+- Were there any notable outcomes, achievements, or things you're proud of?
+- Is there anything about this that's directly relevant to how you work professionally?
+
+---
+
+### Availability
+
+**Identity / scope**
+- Are you currently available for new work?
+- What's today's date, for the `asOf` field? (Or confirm it if already known)
+
+**Context / preferences**
+- What types of engagement are you open to — contract, full-time, consulting?
+- Is there anything specific you're looking for, or anything you're not looking for?
+- Any preferences on remote vs. on-site, or industry?
+
+---
+
+## Anti-patterns (Phase 2)
+
+- **Do not** write or edit content files before Phase 3 confirmation.
+- **Do not** ask all questions in a single message (cap at four; use multiple turns).
+- **Do not** infer answers from prior knowledge, other people's CVs, or "typical" roles — only what Ben (or existing approved content) supplied.
+- **Do not** merge unrelated content domains into one file or one narrative; keep each domain in its own `$lib/content/[domain].ts` (per `content-model.mdc` and the domain registry).
+
+---
+
+## Phase 3 — Confirm before writing
+
+Once you have met the Phase 2 stop condition (and any domain-specific must-haves), do **not** immediately write the file.
+
+Summarise what you heard back to Ben first:
+
+> "Here's what I have — let me confirm before writing anything:
+>
+> **[Domain]: [Topic]**
+> - [Key fact 1]
+> - [Key fact 2]
+> - [Key fact 3]
+>
+> Anything to add, correct, or cut?"
+
+Only proceed to writing after explicit confirmation ("looks good", "go ahead", "yes", or similar).
+
+---
+
+## Phase 4 — Hand off to the write rule
+
+Once confirmed, switch to writing mode. Apply `content-model.mdc` for all structural rules.
+
+State clearly what you're about to do:
+> "Writing `$lib/content/[domain].ts` now."
+
+Or, for an update:
+> "Adding to `$lib/content/[domain].ts` now."
+
+Then write the complete file. Do not write partial files expecting a follow-up.
+
+---
+
+## Standing directives
+
+- **Never fabricate.** If you don't have a value, insert a `// TODO:` comment rather than inventing something plausible.
+- **Never assume proficiency.** For skills, always ask rather than inferring from the job history.
+- **Multiple domains:** See Phase 2 — pick one domain first, complete it through Phase 4, then start the next; never interleave.
+- **Dates as strings.** ISO 8601 — `'YYYY-MM'` or `'YYYY-MM-DD'`. Never `Date` objects.
+- **`availability.ts` is time-sensitive.** Always confirm the `asOf` date when updating it, and flag to Ben that it will need updating when his status changes.

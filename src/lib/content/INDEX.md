@@ -4,6 +4,8 @@ Typed TypeScript modules are the **source of truth** for site content. Authorita
 
 Agent-oriented workflows and hard rules live in [`.cursor/rules/content-model.mdc`](../../../.cursor/rules/content-model.mdc).
 
+**Elicitation (interview before writing):** [`.cursor/rules/content-interview.mdc`](../../../.cursor/rules/content-interview.mdc) — use when adding or updating narrative content; it defers to `content-model.mdc` for TypeScript structure and ADR-008 compliance.
+
 ## Inventory
 
 Update this table when domains are added or removed.
