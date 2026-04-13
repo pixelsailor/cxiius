@@ -1,0 +1,86 @@
+## Benjamin Thompson
+
+Senior Software Engineer — Front-End Architecture, Component Systems, UI/UX · San Antonio, TX  
+ben@cxii.us · cxii.us · linkedin.com/in/cxiius · dribbble.com/cxiius
+
+## Summary
+
+Benjamin Thompson is a senior front-end engineer and UI/UX designer with about twenty years of experience building accessible, responsive, enterprise-grade web applications. His work combines engineering discipline with design judgment: he architects component systems so brand, accessibility, and interaction standards are enforced by structure—not left to convention or documentation alone. He designs libraries where correct usage is the path of least resistance for both human developers and AI coding agents, with guardrails that preserve code integrity and design fidelity in multi-model, AI-assisted workflows. He specialises in making data-heavy, security-focused tools feel clear and usable under pressure. As of April 2026 he is available for new contract or full-time work, open to San Antonio area, remote, or hybrid arrangements; he is not seeking relocation. He served in the US Coast Guard Reserve (2008–2016) as a Boatswain’s Mate, Petty Officer Third Class.
+
+## Experience
+
+**Lead UI Developer — LevelBlue** · Dallas, TX (remote / contract) · Jul 2025 – Apr 2026  
+Embedded on a four-person strike team brought in to recover a cybersecurity product stalled for over a year, with a mandate to ship a fully functional application within six months.
+
+- Owns end-to-end interface design for the rescued product.
+- Architects an opinionated Angular 21 component library that makes inconsistent or off-brand UI structurally difficult to produce, codifying color, typography, spacing, and interaction patterns.
+- Designs the library’s API and consumption patterns for human developers and AI agents alike, preserving accessibility and design fidelity regardless of who implements features.
+- Supports a team environment where Cursor is the primary AI development environment and models are chosen per task type; the library’s structure anchors reliable AI-assisted delivery at scale, compressing feature timelines from months to weeks while meeting enterprise quality expectations.
+
+**Outcome:** Delivers the previously stalled application within the six-month window and establishes an architecture that supports multi-model AI-assisted development without sacrificing consistency or accessibility.
+
+**Senior Software Engineer — Fortra** (formerly Digital Defense, Inc.) · Eden Prairie, MN (remote) · May 2013 – Jan 2025 · Full-time  
+One of two front-end developers re-engineering Frontline—DDI’s flagship SaaS vulnerability management platform—from the ground up on Angular 1.x; later works through DDI’s acquisition by Fortra on Frontline and related products.
+
+- Acts as primary UI/UX designer for Frontline, making a data-intensive security product approachable for practitioners.
+- Champions responsive design against internal pushback; adoption becomes a recurring strength in client demos.
+- Builds and maintains internal Angular and React component libraries used across Frontline and other web applications; continues to own significant front-end architecture and library maintenance through the acquisition.
+- Designs and delivers POCs and MVPs for new internal revenue streams independently.
+- Post-acquisition: implements Figma designs in production, then serves on a strike team as primary front-end developer for new features and application development.
+
+**Outcome:** Contributes to a product recognized by analysts (e.g., Gartner, Frost & Sullivan) and SC Magazine “Best Buy” for ease of use—cited as a factor in Fortra’s acquisition of DDI—across eleven-plus years of continuous delivery across organizational change.
+
+**Principal UI/UX Designer — MOD Systems** · Seattle, WA · Feb 2006 – Apr 2010 · Full-time  
+Sole designer for a media-on-demand platform (retail kiosks, mobile, set-top) bridging physical and digital sales before streaming dominated the market.
+
+- Designs the full UX across kiosks, mobile, and set-top experiences, including kiosk deployments with partners such as Starbucks HEAR Music, Best Buy, Blockbuster, Hollywood Video, and Circuit City; contributes to concepts that help secure digital rights from major studios and networks.
+- Directs contract design teams and produces investor-facing and marketing materials.
+
+**Outcome:** Serves as the single creative lead for a nationally deployed platform; the company winds down as the industry moves away from physical media.
+
+**Web Designer and Developer — Independent Contractor** · San Antonio, TX · Nov 2010 – Apr 2013 · Freelance  
+Delivers full-cycle web design and development for small businesses and nonprofits: discovery through deployment and maintenance, custom WordPress themes and bespoke CMS work, branding, and clear communication with non-technical clients.
+
+**Outcome:** Ships end-to-end sites and CMS solutions for clients including the University of Colorado Bookstore, Extelligence Internet Services, and other independent organizations.
+
+## Skills
+
+**Languages & markup:** HTML, CSS, SASS/SCSS, JavaScript, TypeScript; PHP (proficient; primary use in freelance period).
+
+**Frameworks & libraries:** Angular (through Angular 21), React, SvelteKit, Web Components; Bootstrap, Material UI, TailwindCSS; RxJS; jQuery (deep historical use); WordPress.
+
+**Component systems & design:** Component library architecture, design systems, UI/UX design, Figma (design-to-code and prototyping), Storybook, responsive design, accessibility (WCAG).
+
+**Testing & quality:** Jest, Vitest, Karma, Testing Library, MSW, unit and component testing.
+
+**Build tools & toolchain:** Vite, Webpack, Nx (monorepo in enterprise Angular contexts).
+
+**Backend & APIs:** Node.js, Next.js, Express.js, REST, GraphQL.
+
+**Databases:** MySQL.
+
+**DevOps & cloud:** Docker, Cloudflare, CI/CD pipelines.
+
+**AI-assisted development:** Cursor, multi-model workflows, AI-compatible component API design.
+
+**Collaboration & process:** Git, GitHub, GitLab, Figma collaboration, Atlassian (Jira, Confluence), Notion, Agile/Scrum, Kanban.
+
+## Education
+
+**Associate of Science, Digital Media — Full Sail University** · Winter Park, FL · 2005  
+Class Valedictorian; Advanced Achiever Award; Certificate of Excellence; Perfect Attendance Award. Featured in the inaugural issue of the school’s quarterly publication.
+
+**Web Design Certificate — Sessions.edu** · Online · 2000  
+Project artwork featured in school promotional materials for several years after completion.
+
+## Projects
+
+**What’s For Dinner** (active development; private beta planned)  
+Offline-capable Svelte 5 / SvelteKit app that suggests meals from the user’s own recipe library, balancing time of day, preparation frequency, and variety so favorites and long-ignored recipes both surface. Dexie for local storage; Supabase for auth and sync. Includes an in-app assistant for new recipes and in-place edits with dietary and method preferences. Roadmap: private beta, then public web and an Ionic companion app.
+
+## Background
+
+**US Coast Guard Reserve** (2008–2016) · Boatswain’s Mate, Petty Officer Third Class · Everett, WA; Port O’Connor, TX  
+Eight years as small-boat crew and boarding team member; completed ‘A’ School (Yorktown, VA, 2009); Navigation Rules Ace Award; Search & Rescue Fundamentals training.
+
+**Martial arts:** 1st Degree Black Belt, Tracy’s Kenpo (Professional Self Defense of Durango, CO, 2003).

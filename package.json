@@ -14,7 +14,9 @@
 		"format": "prettier --write .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
-		"gen": "wrangler types"
+		"gen": "wrangler types",
+		"generate:resume": "node --import tsx scripts/generate-resume.mjs",
+		"generate:resume:verbose": "node --import tsx scripts/generate-resume.mjs verbose"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^2.0.3",
@@ -32,6 +34,7 @@
 		"prettier-plugin-svelte": "^3.4.1",
 		"svelte": "^5.54.0",
 		"svelte-check": "^4.4.2",
+		"tsx": "^4.21.0",
 		"typescript": "^5.9.3",
 		"typescript-eslint": "^8.57.0",
 		"vite": "^7.3.1",
