@@ -37,7 +37,7 @@ Rules are grouped by **category**. Each table lists the rule file and a one-line
 | [`server-boundary-types-schemas.mdc`](server-boundary-types-schemas.mdc) | `$lib/server/` vs thin API handlers; Zod only in server schemas; `z.infer`; `$lib/types/` and component type placement. |
 | [`error-handling.mdc`](error-handling.mdc) | `Result<T>` in services, inline errors, no toasts, chat layout exception, sanitised `handleError`. |
 | [`content-model.mdc`](content-model.mdc) | `$lib/content/` library: ADR-008 hard rules, add/edit/remove workflows, [`src/lib/content/INDEX.md`](../src/lib/content/INDEX.md) domain inventory. |
-| [`content-interview.mdc`](content-interview.mdc) | Elicitation before writing: batched questions, confirm then write; pairs with `content-model.mdc` for the typing/writing phase. |
+| [`content-interview.mdc`](content-interview.mdc) | Elicitation before writing: batched questions, confirm then write; privacy / off-limits (location, age, family, phone, health, legal-name parts); pairs with `content-model.mdc`. |
 
 ### Security and Cloudflare
 

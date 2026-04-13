@@ -18,6 +18,7 @@ Update this table when domains are added or removed.
 | `education.ts` | Formal education and certifications | `Promise<EducationEntry[]>` |
 | `background.ts` | Military service, martial arts, instructor roles | `Promise<Background>` |
 | `availability.ts` | Current availability status | `Promise<Availability>` |
+| `projects.ts` | Personal projects (products, tools, experiments) | `Promise<ProjectEntry[]>` |
 
 ## `availability.ts`
 
