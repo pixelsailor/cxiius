@@ -5,7 +5,11 @@ ben@cxii.us · cxii.us · linkedin.com/in/cxiius · dribbble.com/cxiius
 
 ## Summary
 
-Benjamin Thompson is a senior front-end engineer and UI/UX designer with about twenty years of experience building accessible, responsive, enterprise-grade web applications. His work combines engineering discipline with design judgment: he architects component systems so brand, accessibility, and interaction standards are enforced by structure—not left to convention or documentation alone. He designs libraries where correct usage is the path of least resistance for both human developers and AI coding agents, with guardrails that preserve code integrity and design fidelity in multi-model, AI-assisted workflows. He specialises in making data-heavy, security-focused tools feel clear and usable under pressure. As of April 2026 he is available for new contract or full-time work, open to San Antonio area, remote, or hybrid arrangements; he is not seeking relocation. He served in the US Coast Guard Reserve (2008–2016) as a Boatswain’s Mate, Petty Officer Third Class.
+Benjamin Thompson is a strategic, results-driven senior front-end engineer and UI/UX designer with over 20 years of experience building accessible, responsive, enterprise-grade web applications. He combines engineering discipline with design judgment to architect component systems where brand, accessibility, and interaction standards are enforced by structure rather than convention, ensuring intuitive, goal-oriented user experiences. Known as an innovative business partner and effective communicator, he translates complex requirements into seamless, high-performance solutions that integrate front-end and back-end systems.
+
+He specializes in designing systems that support AI-orchestrated development workflows, creating scalable component libraries and guardrails that enable both developers and AI agents to produce consistent, high-quality code while preserving design fidelity and system integrity. His work focuses on making data-heavy, security-focused applications clear, usable, and accessible.
+
+A collaborative leader, US Coast Guard Reserve Veteran, and resourceful problem solver, he has a proven track record of guiding cross-functional teams to deliver efficient code, leverage emerging technologies, and drive business-critical initiatives.
 
 ## Experience
 
@@ -81,6 +85,6 @@ Offline-capable Svelte 5 / SvelteKit app that suggests meals from the user’s o
 ## Background
 
 **US Coast Guard Reserve** (2008–2016) · Boatswain’s Mate, Petty Officer Third Class · Everett, WA; Port O’Connor, TX  
-Eight years as small-boat crew and boarding team member; completed ‘A’ School (Yorktown, VA, 2009); Navigation Rules Ace Award; Search & Rescue Fundamentals training.
+Served as small-boat crew and boarding team member; completed ‘A’ School (Yorktown, VA, 2009); Navigation Rules Ace Award; Search & Rescue Fundamentals training.
 
 **Martial arts:** 1st Degree Black Belt, Tracy’s Kenpo (Professional Self Defense of Durango, CO, 2003).

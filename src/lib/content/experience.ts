@@ -28,7 +28,6 @@ const data: ExperienceEntry[] = [
 		context:
 			'LevelBlue is a cybersecurity company. Embedded within a contracted strike team - three developers and one UI designer - brought in to rescue a product that had been stalled in development for over a year. The mandate was to deliver a fully functional application within a six-month window.',
 		contributions: [
-			'Owned all interface design for the rescued product end-to-end.',
 			'Architected an opinionated Angular 21 component library that enforced design system compliance by construction - making it structurally difficult to produce inconsistent or off-brand output. The library codified decisions around color, typography, spacing, and interaction patterns, eliminating ad-hoc variation at the component level.',
 			"Designed the component library's API and consumption patterns to serve both human developers and AI coding agents equally - establishing guardrails that preserved code integrity, accessibility standards, and design fidelity regardless of who (or what) was writing the implementation.",
 			"The team adopted Cursor as the primary AI development environment, selecting and adapting different underlying models for different task types. The component library's opinionated structure became the foundation for reliable AI-assisted output at scale.",
@@ -47,11 +46,11 @@ const data: ExperienceEntry[] = [
 		startDate: '2013-05',
 		endDate: '2025-01',
 		context:
-			"Joined Digital Defense Inc. as one of only two frontend developers tasked with re-engineering Frontline - DDI's flagship SaaS vulnerability management platform and primary revenue stream - from the ground up on Angular 1.x. Frontline aggregates, visualises, and helps security teams act on large volumes of vulnerability scan data. DDI was later acquired by Fortra.",
+			"Joined Digital Defense Inc. as one of only two frontend developers tasked with re-engineering Frontline - DDI's flagship SaaS vulnerability management platform and primary revenue stream - from the ground up on AngularJS. Frontline aggregates, visualises, and helps security teams act on large volumes of vulnerability scan data. DDI was later acquired by Fortra.",
 		contributions: [
-			'Served as primary UI/UX designer for the Frontline Vulnerability Management platform - responsible for making a data-intensive, technically complex security tool feel accessible and intuitive to practitioners.',
+			'Served as primary UI/UX designer for the Frontline Vulnerability Management platform (rebranded as Fortra VM after the acquisition by Fortra) - responsible for making a data-intensive, technically complex security tool feel accessible and intuitive to practitioners.',
 			'Championed responsive design for Frontline at a time when the idea was pushed back on internally. Persisted in advocating for it; it was ultimately adopted and became a standout highlight when demoing the product to clients.',
-			'Designed and developed internal Angular and React component libraries used across Frontline and other internal web applications.',
+			'Designed and developed internal AngularJS, Angular 2.x, and React component libraries used across Frontline and other internal web applications.',
 			'Worked independently to design, prototype, and deliver proof-of-concept applications and MVPs for new internal revenue streams.',
 			'Post-acquisition: joined the UX Implementation team translating Figma designs into production-quality code, then moved to a focused strike team as the primary frontend developer for new features and application development.',
 			'Continued to own significant frontend architecture decisions and component library maintenance throughout both eras.'
@@ -94,7 +93,7 @@ const data: ExperienceEntry[] = [
 			'GreenPlay set-top box UI: interface for a streaming television and movie platform that completed a limited hardware trial.',
 			'MetaWallet: designed a virtual wallet platform enabling charitable giving, user-to-user transfers, and loaning of physical assets - ran a pilot program in Bolivia focused on mobile payments well before smartphones, PayPal, or Venmo made such transactions mainstream.',
 			'Produced design concepts and final specifications used in sales presentations that secured digital movie rights from major studios and network television networks.',
-			'Directed contract design teams and managed external creative resources.',
+			'Directed contract design teams responsible for the GreenPlay set-top box UI and managed external creative resources.',
 			'Created all company marketing materials: investor presentations, advertising assets, business cards, and brand materials.'
 		],
 		outcomes:

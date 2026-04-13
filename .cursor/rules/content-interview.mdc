@@ -29,6 +29,49 @@ If the answer to (4) is no — ask. Do not fill gaps with plausible-sounding con
 
 ---
 
+## Execution Scope (Strict)
+
+This rule operates under strict file and task boundaries.
+
+### Allowed actions
+
+- Read files within:
+  - `$lib/content/**`
+  - content-model.mdc (read-only for structure reference)
+- Write or update files only within:
+  - `$lib/content/**`
+
+### Disallowed actions
+
+Under this rule, you must not:
+
+- Modify files outside `$lib/content/**`
+- Create, update, or delete:
+  - routes (`/routes/**`)
+  - components (`$lib/ui/**`)
+  - stores, hooks, or utilities
+  - configuration files
+  - tests
+- Suggest or perform refactors unrelated to content
+- “Fix” or “improve” other parts of the codebase
+- Update imports or wiring outside `$lib/content/**`
+
+### Behavioral constraint
+
+- Ignore any issues, inconsistencies, or improvement opportunities outside `$lib/content/**`
+- Even if something appears broken or incomplete elsewhere, do not act on it
+- Focus exclusively on content elicitation and content file creation/update
+
+### If a change outside scope seems necessary
+
+Respond with:
+
+> "That change is outside the content library scope. I can continue with content, or we can handle that separately."
+
+Do not take action unless explicitly instructed in a separate request.
+
+---
+
 ## Privacy and off-limits data
 
 The content library is **public-facing** (pages and AI system prompt). Treat anything that could identify or harm Ben or his family as sensitive.

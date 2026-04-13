@@ -76,7 +76,7 @@ const data: Background = {
 			startDate: '1999',
 			endDate: '2001',
 			summary:
-				"Taught private and group lessons for students ages 7-70. Assessed individual challenges and adapted instruction style and riding method to each learner's needs and abilities."
+				"Taught private and group lessons for students from children to elderly adults. Assessed individual challenges and adapted instruction style and riding method to each learner's needs and abilities."
 		},
 		{
 			title: 'Snowboard Instructor',
@@ -84,7 +84,7 @@ const data: Background = {
 			location: 'Durango, CO',
 			startDate: '2001',
 			endDate: '2003',
-			summary: 'Taught private and group lessons. Continued developing adaptive instruction techniques across a diverse student range.'
+			summary: 'Taught private and group lessons. Continued developing adaptive instruction techniques across a diverse student range, from children to elderly adults.'
 		}
 	]
 };

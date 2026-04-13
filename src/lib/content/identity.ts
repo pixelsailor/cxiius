@@ -32,7 +32,7 @@ const data: Identity = {
 		linkedin: 'linkedin.com/in/cxiius',
 		dribbble: 'dribbble.com/cxiius'
 	},
-	yearsExperience: 20,
+	yearsExperience: 25,
 	summary:
 		'Senior front-end engineer and UI/UX designer with over two decades of experience building accessible, responsive, and secure enterprise-grade web applications. Work sits at the intersection of engineering rigor and design sensibility - architecting component systems that encode brand and accessibility standards structurally, rather than relying on convention or documentation alone.',
 	differentiators: [
