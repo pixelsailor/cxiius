@@ -18,6 +18,7 @@ export type Identity = {
 	};
 	yearsExperience: number;
 	summary: string;
+	usabilityAccessibilityCommitment: string;
 	differentiators: Differentiator[];
 	personalFacts: string[];
 };
@@ -35,6 +36,8 @@ const data: Identity = {
 	yearsExperience: 25,
 	summary:
 		'Senior front-end engineer and UI/UX designer with over two decades of experience building accessible, responsive, and secure enterprise-grade web applications. Work sits at the intersection of engineering rigor and design sensibility - architecting component systems that encode brand and accessibility standards structurally, rather than relying on convention or documentation alone.',
+	usabilityAccessibilityCommitment:
+		'Commits to interface usability and to applying WCAG in shipping work through routine accessibility audits, code reviews that include accessibility, and verification with browser tooling such as WAVE, Pa11y, Chrome DevTools, and Lighthouse.',
 	differentiators: [
 		{
 			headline: 'Component systems that enforce consistency structurally',
