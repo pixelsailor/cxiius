@@ -12,6 +12,12 @@ alwaysApply: false
 
 **Architecture:** Follow active ADRs in [`adr/INDEX.md`](adr/INDEX.md), especially ADR-006 (types), ADR-005 (errors), ADR-002 (`{#await}` branches), ADR-007 (runes / state).
 
+## `$lib/content` — ASCII-only source
+
+ESLint rule `content-ascii/only-ascii` applies to `src/lib/content/**/*.ts`. Source must be plain ASCII (no typographic quotes or dashes, emoji, or other non-ASCII characters). Use straight quotes and apostrophes, ordinary hyphens for ranges and asides, and spell out labels such as `WARNING:` instead of symbols.
+
+If a possessive or contraction needs an apostrophe inside a single-quoted string, either use a double-quoted string for that literal or escape the apostrophe (`\'`).
+
 ## TypeScript
 
 - Trust the type system: avoid `?.` when types already exclude null/undefined; avoid `??` when the left-hand side cannot be null/undefined per its type.

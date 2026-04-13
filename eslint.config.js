@@ -1,6 +1,7 @@
 import path from 'node:path';
 import { includeIgnoreFile } from '@eslint/compat';
 import js from '@eslint/js';
+import contentAscii from './eslint-plugins/content-ascii/index.mjs';
 import svelte from 'eslint-plugin-svelte';
 import { defineConfig } from 'eslint/config';
 import globals from 'globals';
@@ -37,5 +38,12 @@ export default defineConfig(
 		// Override or add rule settings here, such as:
 		// 'svelte/button-has-type': 'error'
 		rules: {}
+	},
+	{
+		files: ['src/lib/content/**/*.ts'],
+		plugins: { 'content-ascii': contentAscii },
+		rules: {
+			'content-ascii/only-ascii': 'error'
+		}
 	}
 );

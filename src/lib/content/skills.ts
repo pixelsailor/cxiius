@@ -2,9 +2,9 @@
 // Content domain: technical proficiencies, categorised by area.
 //
 // Proficiency scale:
-//   fluent     — primary working tools; used daily or near-daily across multiple projects
-//   proficient — solid working knowledge; used regularly, comfortable owning implementation
-//   familiar   — working knowledge; can contribute meaningfully, may reference docs
+//   fluent - primary working tools; used daily or near-daily across multiple projects
+//   proficient - solid working knowledge; used regularly, comfortable owning implementation
+//   familiar - working knowledge; can contribute meaningfully, may reference docs
 
 export type Proficiency = 'fluent' | 'proficient' | 'familiar';
 
@@ -28,7 +28,7 @@ const data: SkillCategory[] = [
 			{ name: 'SASS / SCSS', proficiency: 'fluent' },
 			{ name: 'JavaScript', proficiency: 'fluent' },
 			{ name: 'TypeScript', proficiency: 'fluent' },
-			{ name: 'PHP', proficiency: 'proficient', notes: 'Primary use in freelance era (2010–2013); less recent' }
+			{ name: 'PHP', proficiency: 'proficient', notes: 'Primary use in freelance era (2010-2013); less recent' }
 		]
 	},
 	{
@@ -54,7 +54,7 @@ const data: SkillCategory[] = [
 			{
 				name: 'Component library architecture',
 				proficiency: 'fluent',
-				notes: 'Core specialisation — design and implementation of opinionated, accessible, AI-compatible component systems'
+				notes: 'Core specialisation - design and implementation of opinionated, accessible, AI-compatible component systems'
 			},
 			{ name: 'Design systems', proficiency: 'fluent' },
 			{ name: 'Storybook', proficiency: 'proficient' },

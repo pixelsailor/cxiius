@@ -1,6 +1,5 @@
 // $lib/content/background.ts
-// Content domain: background outside of professional work history —
-// military service, martial arts, instructional roles, and related facts.
+// Content domain: background outside of professional work history - // military service, martial arts, instructional roles, and related facts.
 
 export type MilitaryService = {
 	rank: string;
@@ -77,7 +76,7 @@ const data: Background = {
 			startDate: '1999',
 			endDate: '2001',
 			summary:
-				"Taught private and group lessons for students ages 7–70. Assessed individual challenges and adapted instruction style and riding method to each learner's needs and abilities."
+				"Taught private and group lessons for students ages 7-70. Assessed individual challenges and adapted instruction style and riding method to each learner's needs and abilities."
 		},
 		{
 			title: 'Snowboard Instructor',
