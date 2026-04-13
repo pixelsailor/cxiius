@@ -6,20 +6,20 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-002 |
-| **Status** | `active` |
-| **Date** | 2026-04-08 |
-| **Primary Owner** | Architecture |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-002         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-08      |
+| **Primary Owner** | Architecture    |
+| **Decider**       | Human developer |
 
 ---
 
 ## Conditional Fields
 
-| Field | Value |
-|---|---|
+| Field            | Value                                                                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Related ADRs** | ADR-001 — Project File and Folder Structure, ADR-003 — Progressive Enhancement and No-JS Baseline, ADR-010 — Storage Conventions — Cloudflare KV |
 
 ---
@@ -46,23 +46,24 @@ Every content route exposes its data via a `load()` function in `+page.ts`. The 
 
 ```ts
 // src/routes/resume/+page.ts
-import { getResume } from '$lib/content/resume'
+import { getResume } from '$lib/content/resume';
 
 export const load = () => ({
-  resume: getResume()  // returned as a promise — never awaited
-})
+	resume: getResume() // returned as a promise — never awaited
+});
 ```
 
 `getResume()` returns a promise even when the underlying source is synchronous, ensuring the contract is consistent and migration-safe:
 
 ```ts
 // src/lib/content/resume.ts
-import type { Resume } from '$lib/types'
+import type { Resume } from '$lib/types';
 
-const data: Resume = { /* ... */ }
+const data: Resume = {
+	/* ... */
+};
 
-export const getResume = (): Promise<Resume> =>
-  Promise.resolve(data)
+export const getResume = (): Promise<Resume> => Promise.resolve(data);
 ```
 
 ### Rule 2 — Components consume data exclusively via `{#await}`
@@ -72,17 +73,17 @@ All route components receive a `data` prop and resolve it using `{#await}`. No c
 ```svelte
 <!-- src/routes/resume/+page.svelte -->
 <script lang="ts">
-  export let data
+	export let data;
 
-  const { resume } = data
+	const { resume } = data;
 </script>
 
 {#await resume}
-  <LoadingState />
+	<LoadingState />
 {:then resume}
-  <ResumeContent {resume} />
+	<ResumeContent {resume} />
 {:catch error}
-  <ErrorState {error} />
+	<ErrorState {error} />
 {/await}
 ```
 
@@ -112,11 +113,11 @@ Every content route `+page.ts` must export `export const prerender = true`. This
 
 ```ts
 // src/routes/resume/+page.ts
-export const prerender = true
+export const prerender = true;
 
 export const load = () => ({
-  resume: getResume()
-})
+	resume: getResume()
+});
 ```
 
 ### Rule 7 — `onMount` must not be used to load content

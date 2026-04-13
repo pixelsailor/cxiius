@@ -1,12 +1,12 @@
 # ADR-001: Project File and Folder Structure
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-001 |
-| **Status** | `active` |
-| **Date** | 2026-04-08 |
-| **Primary Owner** | Architecture |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-001         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-08      |
+| **Primary Owner** | Architecture    |
+| **Decider**       | Human developer |
 
 ---
 
@@ -72,24 +72,24 @@ cxii.us/
 
 ### Files
 
-| Context | Convention | Example |
-|---|---|---|
-| SvelteKit routes | SvelteKit defaults | `+page.svelte`, `+layout.svelte`, `+server.ts` |
-| Server modules | `domain.role.ts` | `chat.service.ts`, `chat.schemas.ts` |
-| Content files | `domain.ts` | `resume.ts`, `portfolio.ts` |
-| Stores | `domain.ts` | `interface.ts` |
-| Utils | `camelCase.ts` | `intentResolver.ts` |
-| Components | `PascalCase.svelte` | `CommandPalette.svelte` |
-| Component tests | `PascalCase.test.ts` | `CommandPalette.test.ts` |
-| Non-component tests | `camelCase.test.ts` | `intentResolver.test.ts` |
+| Context             | Convention           | Example                                        |
+| ------------------- | -------------------- | ---------------------------------------------- |
+| SvelteKit routes    | SvelteKit defaults   | `+page.svelte`, `+layout.svelte`, `+server.ts` |
+| Server modules      | `domain.role.ts`     | `chat.service.ts`, `chat.schemas.ts`           |
+| Content files       | `domain.ts`          | `resume.ts`, `portfolio.ts`                    |
+| Stores              | `domain.ts`          | `interface.ts`                                 |
+| Utils               | `camelCase.ts`       | `intentResolver.ts`                            |
+| Components          | `PascalCase.svelte`  | `CommandPalette.svelte`                        |
+| Component tests     | `PascalCase.test.ts` | `CommandPalette.test.ts`                       |
+| Non-component tests | `camelCase.test.ts`  | `intentResolver.test.ts`                       |
 
 ### Types and Schemas
 
-| Pattern | Convention | Example |
-|---|---|---|
-| Type | `PascalCase` | `ChatRequest` |
-| Zod schema | `PascalCaseSchema` | `ChatRequestSchema` |
-| Inferred type from schema | `PascalCase` (same name, inferred via `z.infer`) | `ChatRequest` |
+| Pattern                   | Convention                                       | Example             |
+| ------------------------- | ------------------------------------------------ | ------------------- |
+| Type                      | `PascalCase`                                     | `ChatRequest`       |
+| Zod schema                | `PascalCaseSchema`                               | `ChatRequestSchema` |
+| Inferred type from schema | `PascalCase` (same name, inferred via `z.infer`) | `ChatRequest`       |
 
 A type and its corresponding schema share a root name. The schema always carries the `Schema` suffix. Types inferred from schemas are the canonical type — do not define a parallel manual type for the same shape.
 

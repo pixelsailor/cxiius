@@ -6,20 +6,20 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-006 |
-| **Status** | `active` |
-| **Date** | 2026-04-09 |
-| **Primary Owner** | Architecture |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-006         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-09      |
+| **Primary Owner** | Architecture    |
+| **Decider**       | Human developer |
 
 ---
 
 ## Conditional Fields
 
-| Field | Value |
-|---|---|
+| Field            | Value                                                                             |
+| ---------------- | --------------------------------------------------------------------------------- |
 | **Related ADRs** | ADR-001 — Project File and Folder Structure, ADR-005 — Error Handling Conventions |
 
 ---
@@ -42,14 +42,14 @@ Prior ADRs established partial type conventions in passing — ADR-001 named the
 
 TypeScript types and interfaces are sufficient for all code that does not receive external input at runtime. Zod schemas are required only where data crosses a network boundary — data that arrives from outside the application and cannot be trusted at compile time.
 
-| Location | Validation required | Tool |
-|---|---|---|
-| `src/routes/api/*/+server.ts` | Yes — request body from network | Zod |
-| `$lib/server/*.service.ts` | Yes — inputs from route handlers | Zod |
-| `$lib/content/*.ts` | No — version-controlled source | TypeScript |
-| `$lib/ui/` components | No — props from same codebase | TypeScript |
-| `$lib/stores/` | No — internal state | TypeScript |
-| `$lib/utils/` | No — internal utilities | TypeScript |
+| Location                      | Validation required              | Tool       |
+| ----------------------------- | -------------------------------- | ---------- |
+| `src/routes/api/*/+server.ts` | Yes — request body from network  | Zod        |
+| `$lib/server/*.service.ts`    | Yes — inputs from route handlers | Zod        |
+| `$lib/content/*.ts`           | No — version-controlled source   | TypeScript |
+| `$lib/ui/` components         | No — props from same codebase    | TypeScript |
+| `$lib/stores/`                | No — internal state              | TypeScript |
+| `$lib/utils/`                 | No — internal utilities          | TypeScript |
 
 ### Rule 2 — Schemas live in `$lib/server/` exclusively
 
@@ -59,29 +59,23 @@ The `*.schemas.ts` file for a domain contains all schemas relevant to that domai
 
 ```ts
 // $lib/server/chat.schemas.ts
-import { z } from 'zod'
+import { z } from 'zod';
 
-export const ERROR_CODES = [
-  'RATE_LIMITED',
-  'UPSTREAM_UNAVAILABLE',
-  'INVALID_INPUT',
-  'NOT_FOUND',
-  'UNKNOWN'
-] as const
+export const ERROR_CODES = ['RATE_LIMITED', 'UPSTREAM_UNAVAILABLE', 'INVALID_INPUT', 'NOT_FOUND', 'UNKNOWN'] as const;
 
 export const ChatRequestSchema = z.object({
-  message: z.string().min(1).max(1000),
-  sessionId: z.string().uuid().optional()
-})
+	message: z.string().min(1).max(1000),
+	sessionId: z.string().uuid().optional()
+});
 ```
 
 ```ts
 // $lib/server/chat.types.ts
-import type { z } from 'zod'
-import type { ChatRequestSchema, ERROR_CODES } from './chat.schemas'
+import type { z } from 'zod';
+import type { ChatRequestSchema, ERROR_CODES } from './chat.schemas';
 
-export type ChatRequest = z.infer<typeof ChatRequestSchema>
-export type ErrorCode = typeof ERROR_CODES[number]
+export type ChatRequest = z.infer<typeof ChatRequestSchema>;
+export type ErrorCode = (typeof ERROR_CODES)[number];
 ```
 
 ### Rule 3 — `z.infer` is the canonical way to derive types from schemas
@@ -98,23 +92,23 @@ String literal unions derived from `as const` arrays are the project standard fo
 
 ```ts
 // Single definition drives both type and schema
-export const ERROR_CODES = ['RATE_LIMITED', 'UPSTREAM_UNAVAILABLE', 'INVALID_INPUT'] as const
-export type ErrorCode = typeof ERROR_CODES[number]        // TypeScript union
-export const ErrorCodeSchema = z.enum(ERROR_CODES)        // Zod schema, no re-listing
+export const ERROR_CODES = ['RATE_LIMITED', 'UPSTREAM_UNAVAILABLE', 'INVALID_INPUT'] as const;
+export type ErrorCode = (typeof ERROR_CODES)[number]; // TypeScript union
+export const ErrorCodeSchema = z.enum(ERROR_CODES); // Zod schema, no re-listing
 ```
 
 TypeScript enums require `z.nativeEnum()` and compile to JavaScript runtime objects. `as const` arrays are erased at compile time and integrate directly with `z.enum()` without duplication.
 
 ### Rule 5 — Naming conventions
 
-| Artifact | Convention | Example |
-|---|---|---|
-| TypeScript type | `PascalCase` | `ChatRequest` |
-| TypeScript interface | `PascalCase` | `RouteDefinition` |
-| Zod schema | `PascalCaseSchema` | `ChatRequestSchema` |
-| `as const` array | `SCREAMING_SNAKE_CASE` | `ERROR_CODES` |
-| Inferred type from schema | Same root as schema, no suffix | `ChatRequest` |
-| Inferred union from `as const` | Same root as array, singular | `ErrorCode` |
+| Artifact                       | Convention                     | Example             |
+| ------------------------------ | ------------------------------ | ------------------- |
+| TypeScript type                | `PascalCase`                   | `ChatRequest`       |
+| TypeScript interface           | `PascalCase`                   | `RouteDefinition`   |
+| Zod schema                     | `PascalCaseSchema`             | `ChatRequestSchema` |
+| `as const` array               | `SCREAMING_SNAKE_CASE`         | `ERROR_CODES`       |
+| Inferred type from schema      | Same root as schema, no suffix | `ChatRequest`       |
+| Inferred union from `as const` | Same root as array, singular   | `ErrorCode`         |
 
 A type and its schema share the same root name. The `Schema` suffix is the only distinction. They are always defined in the same file or the schema file exports the array and the types file imports and infers from it.
 
@@ -123,17 +117,18 @@ A type and its schema share the same root name. The `Schema` suffix is the only 
 `$lib/types/` exists for types that are genuinely shared across multiple unrelated modules and have no association with a specific API domain or service. This directory contains TypeScript types and interfaces only — no Zod schemas, no `as const` arrays, no runtime values of any kind.
 
 A type belongs in `$lib/types/` when it meets all of the following:
+
 - It is used across two or more unrelated modules
 - It has no natural home in a specific service domain, component, or utility file
 - It has no runtime validation counterpart
 
 Current residents:
 
-| Type | Rationale |
-|---|---|
-| `Result<T>` | Used in service layer and consumed by route handlers and components |
-| `AppError` | Used in service layer, route handlers, and error state components |
-| `Route` | Used by `routes.ts`, the command palette component, and the intent resolver |
+| Type        | Rationale                                                                   |
+| ----------- | --------------------------------------------------------------------------- |
+| `Result<T>` | Used in service layer and consumed by route handlers and components         |
+| `AppError`  | Used in service layer, route handlers, and error state components           |
+| `Route`     | Used by `routes.ts`, the command palette component, and the intent resolver |
 
 `$lib/types/` is not created speculatively. It is created when the first type meeting these criteria exists. Types are not moved here for organisational convenience — they must genuinely qualify.
 

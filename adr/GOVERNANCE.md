@@ -23,7 +23,7 @@ An ADR is warranted when a decision meets one or more of the following criteria:
 
 **Not every decision needs an ADR.** Formatting choices, minor naming decisions, and one-off implementation details belong in comments or inline documentation — not here.
 
-When in doubt, ask: *Would an agent making this decision independently arrive at the same answer without this record?* If no, write the ADR.
+When in doubt, ask: _Would an agent making this decision independently arrive at the same answer without this record?_ If no, write the ADR.
 
 ---
 
@@ -31,12 +31,12 @@ When in doubt, ask: *Would an agent making this decision independently arrive at
 
 Every ADR must carry exactly one of the following statuses:
 
-| Status | Meaning |
-|---|---|
-| `proposed` | Under discussion. Not yet authoritative. Must not be treated as a binding decision. |
-| `active` | Approved and in force. All agents and developers must comply. |
+| Status       | Meaning                                                                                                                                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `proposed`   | Under discussion. Not yet authoritative. Must not be treated as a binding decision.                                                              |
+| `active`     | Approved and in force. All agents and developers must comply.                                                                                    |
 | `deprecated` | No longer recommended, but not replaced by a specific alternative. The decision may still describe existing code that has not yet been migrated. |
-| `superseded` | Replaced by a newer ADR. Must reference the superseding ADR by number. Must not be treated as valid guidance. |
+| `superseded` | Replaced by a newer ADR. Must reference the superseding ADR by number. Must not be treated as valid guidance.                                    |
 
 ADRs are **never deleted**. The history of why a decision was made — and why it was abandoned — is itself valuable. Deleting an ADR removes the context that prevents the same mistake from being made again.
 
@@ -81,6 +81,7 @@ Agents **must not** self-promote an ADR from `proposed` to `active`.
 **Superseded** — Use when a new ADR directly replaces this one. The superseding ADR number must be recorded in the `Superseded By` field. Example: switching state management libraries, where ADR-004 replaces ADR-001.
 
 When superseding an ADR:
+
 1. Update the old ADR's status to `superseded` and record the new ADR number
 2. Update the new ADR to reference the ADR it supersedes in the `Supersedes` field
 3. Update both entries in the index
@@ -108,9 +109,9 @@ Failure to consult the ADR system before making architectural decisions is a vio
 
 ADR status determines how it must be treated:
 
-- `active` → authoritative and must be followed  
-- `proposed` → non-binding; must not influence implementation  
-- `deprecated` / `superseded` → invalid for new decisions  
+- `active` → authoritative and must be followed
+- `proposed` → non-binding; must not influence implementation
+- `deprecated` / `superseded` → invalid for new decisions
 
 Existing code that follows deprecated or superseded patterns **does not justify continuing their use**.
 
@@ -122,15 +123,16 @@ An agent may create an ADR when encountering a decision that is not already gove
 
 The agent must:
 
-1. Create the ADR using the canonical template  
-2. Assign status `proposed`  
-3. Add it to the index  
-4. Explicitly notify the developer for review  
+1. Create the ADR using the canonical template
+2. Assign status `proposed`
+3. Add it to the index
+4. Explicitly notify the developer for review
 
 An agent must not:
-- Treat a proposed ADR as authoritative  
-- Mark an ADR as `active`  
-- Proceed as if the decision is finalized  
+
+- Treat a proposed ADR as authoritative
+- Mark an ADR as `active`
+- Proceed as if the decision is finalized
 
 ---
 
@@ -139,8 +141,9 @@ An agent must not:
 If an instruction conflicts with an `active` ADR, the agent must pause and surface the conflict before proceeding.
 
 The agent must not:
-- Silently ignore the ADR  
-- Silently override the instruction  
+
+- Silently ignore the ADR
+- Silently override the instruction
 
 The agent should respond in the following form:
 
@@ -154,10 +157,10 @@ Resolution must come from the developer.
 
 An agent must not infer that a pattern is deprecated based on:
 
-- Code comments  
-- File age  
-- Lack of usage  
-- Personal judgment  
+- Code comments
+- File age
+- Lack of usage
+- Personal judgment
 
 A pattern is only deprecated when explicitly recorded in an ADR with status `deprecated` or `superseded`.
 
@@ -173,9 +176,9 @@ Agents must respect task scope, but may perform **limited, opportunistic complia
 
 An agent must not:
 
-- Perform broad or unrelated refactoring outside the assigned task  
-- Rewrite large sections of code solely to enforce ADR compliance  
-- Expand the scope of work beyond the original intent  
+- Perform broad or unrelated refactoring outside the assigned task
+- Rewrite large sections of code solely to enforce ADR compliance
+- Expand the scope of work beyond the original intent
 
 Discovering an ADR violation alone does not justify fixing it.
 
@@ -185,15 +188,16 @@ Discovering an ADR violation alone does not justify fixing it.
 
 An agent may make small changes to bring code into compliance with `active` ADRs **within files it is already modifying**, provided that all of the following are true:
 
-1. **Locality** — The change is in the same file or directly adjacent code  
-2. **Relevance** — The change supports or simplifies the current task  
-3. **Low Risk** — The change does not alter behavior in a non-obvious way  
-4. **Containment** — The change does not require cascading updates across multiple files  
+1. **Locality** — The change is in the same file or directly adjacent code
+2. **Relevance** — The change supports or simplifies the current task
+3. **Low Risk** — The change does not alter behavior in a non-obvious way
+4. **Containment** — The change does not require cascading updates across multiple files
 
 Examples of allowed changes:
-- Updating a deprecated helper usage while modifying the same function  
-- Renaming or restructuring to match an enforced pattern within the touched file  
-- Replacing a deprecated utility with its approved alternative when already in use  
+
+- Updating a deprecated helper usage while modifying the same function
+- Renaming or restructuring to match an enforced pattern within the touched file
+- Replacing a deprecated utility with its approved alternative when already in use
 
 ---
 
@@ -201,15 +205,15 @@ Examples of allowed changes:
 
 If bringing code into compliance would require:
 
-- Changes across multiple files  
-- Architectural restructuring  
-- Migration of a pattern used broadly  
+- Changes across multiple files
+- Architectural restructuring
+- Migration of a pattern used broadly
 
 The agent must:
 
-- Leave the code unchanged  
-- Note the violation  
-- Optionally suggest a follow-up task or ADR  
+- Leave the code unchanged
+- Note the violation
+- Optionally suggest a follow-up task or ADR
 
 ---
 
@@ -219,9 +223,9 @@ An `active` ADR may describe a target architecture that is not yet fully impleme
 
 In these cases:
 
-- The ADR remains fully authoritative  
-- Existing non-compliant code is considered **technical debt**, not a valid precedent  
-- Agents must follow the ADR for all new or modified code  
+- The ADR remains fully authoritative
+- Existing non-compliant code is considered **technical debt**, not a valid precedent
+- Agents must follow the ADR for all new or modified code
 
 Partial adoption does not weaken the authority of an ADR.
 
@@ -231,11 +235,11 @@ Partial adoption does not weaken the authority of an ADR.
 
 If no relevant ADR exists, the agent may:
 
-1. Proceed using best judgment, or  
+1. Proceed using best judgment, or
 2. Propose a new ADR if the decision is:
-   - Non-trivial  
-   - Likely to be repeated  
-   - Architecturally significant  
+   - Non-trivial
+   - Likely to be repeated
+   - Architecturally significant
 
 The agent should prefer proposing an ADR when the decision would benefit future consistency.
 
@@ -246,21 +250,21 @@ The agent should prefer proposing an ADR when the decision would benefit future 
 Each ADR has a **Primary Owner** responsible for its accuracy and a set of **Reviewers** who must sign off on changes.
 Ownership is assigned by functional domain, not by individual.
 
-| Domain        | Scope |
-|---------------|------|
-| **Platform**  | Build systems, orchestration, environment config, logging |
+| Domain           | Scope                                                     |
+| ---------------- | --------------------------------------------------------- |
+| **Platform**     | Build systems, orchestration, environment config, logging |
 | **Architecture** | State management, routing, dependencies, feature patterns |
-| **UI**        | Components, design, accessibility, internationalization |
-| **Security**  | Authentication, RBAC, XSS prevention, storage security |
-| **Quality**   | Testing |
+| **UI**           | Components, design, accessibility, internationalization   |
+| **Security**     | Authentication, RBAC, XSS prevention, storage security    |
+| **Quality**      | Testing                                                   |
 
 - Every ADR must include:
-  - `Primary Owner: <Domain>`  
-  - `Reviewers: <Domain>, ...`  
+  - `Primary Owner: <Domain>`
+  - `Reviewers: <Domain>, ...`
 
-- Choose the Primary Owner based on **long-term responsibility**  
-- Include all impacted domains as Reviewers  
-- ADRs must not be approved without Reviewer sign-off  
+- Choose the Primary Owner based on **long-term responsibility**
+- Include all impacted domains as Reviewers
+- ADRs must not be approved without Reviewer sign-off
 
 Ownership fields are required in the ADR metadata.
 
@@ -296,6 +300,7 @@ Numbers are assigned sequentially and never reused, even if an ADR is superseded
 ### 7.5 Linking
 
 When an ADR supersedes another, both must reference each other:
+
 - The old ADR: `Superseded By: ADR-NNN`
 - The new ADR: `Supersedes: ADR-NNN`
 
@@ -318,15 +323,15 @@ ADRs record decisions. Cursor rules enforce them. These are complementary but di
 
 Deprecated and superseded patterns are tracked directly within the ADR index rather than in a separate registry.
 
-- Every deprecated or superseded pattern must have a corresponding ADR  
-- The index must include a concise mapping of deprecated patterns to their ADR  
+- Every deprecated or superseded pattern must have a corresponding ADR
+- The index must include a concise mapping of deprecated patterns to their ADR
 - This mapping is derived from ADRs; the ADR file remains the source of truth
 
 This ensures a single source of truth while providing fast lookup for agents.
 
 ### 8.3 ADRs and Skills/Components
 
-An active ADR may mandate the use of a specific shared component, utility, or skill. When it does, the ADR is the authoritative source for that requirement. The component or skill itself should reference the ADR in its documentation. 
+An active ADR may mandate the use of a specific shared component, utility, or skill. When it does, the ADR is the authoritative source for that requirement. The component or skill itself should reference the ADR in its documentation.
 
 ---
 
@@ -361,15 +366,15 @@ In addition, the index must include a **derived deprecated pattern mapping**.
 
 This mapping must:
 
-- List each deprecated or superseded pattern  
-- Reference the ADR that governs it  
-- Remain concise and scannable for agent use  
+- List each deprecated or superseded pattern
+- Reference the ADR that governs it
+- Remain concise and scannable for agent use
 
 ### 9.3 Authority and Consistency
 
-- The ADR file is always the authoritative source of truth  
-- The index is a structured projection of ADR data for fast lookup  
-- If inconsistencies arise, they must be resolved immediately in favor of the ADR  
+- The ADR file is always the authoritative source of truth
+- The index is a structured projection of ADR data for fast lookup
+- If inconsistencies arise, they must be resolved immediately in favor of the ADR
 
 The index must remain reliable, current, and complete at all times. Any breakdown in index integrity undermines the entire ADR system.
 
@@ -381,5 +386,5 @@ This governance document is itself the foundational artifact of the ADR system. 
 
 ---
 
-*Last updated: project initialization*
-*Owner: human developer — this document may not be modified by agents without explicit instruction*
+_Last updated: project initialization_
+_Owner: human developer — this document may not be modified by agents without explicit instruction_

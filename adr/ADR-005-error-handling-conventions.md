@@ -6,20 +6,20 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-005 |
-| **Status** | `active` |
-| **Date** | 2026-04-09 |
-| **Primary Owner** | Architecture |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-005         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-09      |
+| **Primary Owner** | Architecture    |
+| **Decider**       | Human developer |
 
 ---
 
 ## Conditional Fields
 
-| Field | Value |
-|---|---|
+| Field            | Value                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------- |
 | **Related ADRs** | ADR-002 — Data Fetching Patterns, ADR-004 — Semantic HTML and Accessibility Standards |
 
 ---
@@ -43,6 +43,7 @@ Error handling is a first-class concern in CXII, not an afterthought. Any reques
 Errors must not occur because a user was permitted to make an invalid request. Input validation is a prerequisite to error handling — not a complement to it. Before any request is dispatched, its inputs must be validated and any invalid state must be caught and communicated to the user at the point of input.
 
 This applies at every layer:
+
 - UI components validate user input before submitting
 - `$lib/server/` service functions validate input at their boundary using Zod schemas before performing any operation
 - Route handlers reject malformed requests with appropriate HTTP status codes before delegating to the service layer
@@ -63,36 +64,27 @@ Functions in `$lib/server/` return typed result objects rather than throwing err
 
 ```ts
 // $lib/types/result.ts
-export type Result<T> =
-  | { ok: true; data: T }
-  | { ok: false; error: AppError }
+export type Result<T> = { ok: true; data: T } | { ok: false; error: AppError };
 
 export type AppError = {
-  code: ErrorCode
-  message: string
-  detail?: string
-}
+	code: ErrorCode;
+	message: string;
+	detail?: string;
+};
 
-export type ErrorCode =
-  | 'RATE_LIMITED'
-  | 'UPSTREAM_UNAVAILABLE'
-  | 'INVALID_INPUT'
-  | 'NOT_FOUND'
-  | 'UNKNOWN'
+export type ErrorCode = 'RATE_LIMITED' | 'UPSTREAM_UNAVAILABLE' | 'INVALID_INPUT' | 'NOT_FOUND' | 'UNKNOWN';
 ```
 
 ```ts
 // $lib/server/chat.service.ts
-export const streamChatResponse = async (
-  input: ChatRequest
-): Promise<Result<ReadableStream>> => {
-  try {
-    const stream = await anthropicClient.stream(input)
-    return { ok: true, data: stream }
-  } catch (err) {
-    return { ok: false, error: mapAnthropicError(err) }
-  }
-}
+export const streamChatResponse = async (input: ChatRequest): Promise<Result<ReadableStream>> => {
+	try {
+		const stream = await anthropicClient.stream(input);
+		return { ok: true, data: stream };
+	} catch (err) {
+		return { ok: false, error: mapAnthropicError(err) };
+	}
+};
 ```
 
 Route handlers check the result and respond accordingly — they do not let service errors propagate as unhandled exceptions.
@@ -104,6 +96,7 @@ Every component that can fail must render its error state inline within its own 
 Toast-style notifications are explicitly prohibited as a mechanism for communicating request or component errors.
 
 Inline error states must be:
+
 - **Human-friendly** — written in plain language, not technical jargon or error codes
 - **Clear and concise** — unambiguous about what went wrong
 - **Actionable where possible** — offer a path to resolution if one exists (retry, correct input, navigate elsewhere)
@@ -111,14 +104,11 @@ Inline error states must be:
 
 ```svelte
 {#await content}
-  <LoadingState />
+	<LoadingState />
 {:then content}
-  <ContentView {content} />
+	<ContentView {content} />
 {:catch error}
-  <ErrorState
-    message="This content couldn't be loaded."
-    action={{ label: 'Try again', handler: reload }}
-  />
+	<ErrorState message="This content couldn't be loaded." action={{ label: 'Try again', handler: reload }} />
 {/await}
 ```
 
@@ -137,6 +127,7 @@ It is not used for component-level data failures, API call failures, or any fail
 If a lower layer cannot handle an error — because it lacks the context to communicate it to the user — it may escalate to the nearest enclosing handler. Escalation must be deliberate and documented in a comment at the point of escalation. Silent re-throwing without a comment is a violation.
 
 Escalation chain:
+
 ```
 Service layer → Route handler → SvelteKit error boundary (+error.svelte)
 Component → Parent component → Layout (only for the chat exception below)
@@ -149,6 +140,7 @@ Escalation must stop at the first level that can communicate the error to the us
 When the AI chat service is unavailable — due to a failed health check, a persistent upstream error, or an environment configuration issue — this state is communicated at the layout level. This is the single exception to Rule 2.
 
 The layout-level handler:
+
 - Marks the chat interface as unavailable
 - Communicates the unavailability to the user inline within the interface area
 - Degrades the command input to route navigation only — slash commands continue to function
@@ -177,12 +169,12 @@ SvelteKit's global `handleError` hook is implemented in `hooks.server.ts`. Its r
 ```ts
 // hooks.server.ts
 export const handleError: HandleServerError = ({ error, event }) => {
-  console.error(error) // server-side log
-  return {
-    message: 'An unexpected error occurred.',
-    code: 'UNKNOWN'
-  }
-}
+	console.error(error); // server-side log
+	return {
+		message: 'An unexpected error occurred.',
+		code: 'UNKNOWN'
+	};
+};
 ```
 
 ---

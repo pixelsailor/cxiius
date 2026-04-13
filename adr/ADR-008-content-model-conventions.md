@@ -6,20 +6,20 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-008 |
-| **Status** | `active` |
-| **Date** | 2026-04-09 |
-| **Primary Owner** | Architecture |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-008         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-09      |
+| **Primary Owner** | Architecture    |
+| **Decider**       | Human developer |
 
 ---
 
 ## Conditional Fields
 
-| Field | Value |
-|---|---|
+| Field            | Value                                                                                                                |
+| ---------------- | -------------------------------------------------------------------------------------------------------------------- |
 | **Related ADRs** | ADR-001 — Project File and Folder Structure, ADR-002 — Data Fetching Patterns, ADR-006 — Type and Schema Conventions |
 
 ---
@@ -58,20 +58,21 @@ The TypeScript type describing a content domain's shape is defined in the same f
 // $lib/content/[domain].ts
 
 export type SkillCategory = {
-  name: string
-  skills: Skill[]
-}
+	name: string;
+	skills: Skill[];
+};
 
 export type Skill = {
-  name: string
-  proficiency: 'fluent' | 'proficient' | 'familiar'
-  notes?: string
-}
+	name: string;
+	proficiency: 'fluent' | 'proficient' | 'familiar';
+	notes?: string;
+};
 
-const data: SkillCategory[] = [ /* ... */ ]
+const data: SkillCategory[] = [
+	/* ... */
+];
 
-export const getSkills = (): Promise<SkillCategory[]> =>
-  Promise.resolve(data)
+export const getSkills = (): Promise<SkillCategory[]> => Promise.resolve(data);
 ```
 
 Types are exported alongside the content function so consumers can reference the shape without importing the data.
@@ -81,8 +82,7 @@ Types are exported alongside the content function so consumers can reference the
 Every content function follows the `Promise.resolve()` pattern established in ADR-002. The return type is always `Promise<T>` — never a raw value. This ensures the data fetching contract is uniform across all content domains and the pattern remains migration-safe if a domain later sources data from an external provider.
 
 ```ts
-export const getSkills = (): Promise<SkillCategory[]> =>
-  Promise.resolve(data)
+export const getSkills = (): Promise<SkillCategory[]> => Promise.resolve(data);
 ```
 
 No content file exports raw data directly as a named export intended for direct consumption. All consumption goes through the function.

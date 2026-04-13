@@ -6,22 +6,22 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-011 |
-| **Status** | `active` |
-| **Date** | 2026-04-11 |
-| **Primary Owner** | UI |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-011         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-11      |
+| **Primary Owner** | UI              |
+| **Decider**       | Human developer |
 
 ---
 
 ## Conditional Fields
 
-| Field | Value |
-|---|---|
+| Field            | Value                                                                                            |
+| ---------------- | ------------------------------------------------------------------------------------------------ |
 | **Related ADRs** | ADR-001 — Project File and Folder Structure; ADR-004 — Semantic HTML and Accessibility Standards |
-| **Cursor Rules** | `.cursor/rules/bits-ui-documentation.mdc` |
+| **Cursor Rules** | `.cursor/rules/bits-ui-documentation.mdc`                                                        |
 
 ---
 

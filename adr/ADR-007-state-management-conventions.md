@@ -6,22 +6,22 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-007 |
-| **Status** | `active` |
-| **Date** | 2026-04-09 |
-| **Primary Owner** | Architecture |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-007         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-09      |
+| **Primary Owner** | Architecture    |
+| **Decider**       | Human developer |
 
 ---
 
 ## Conditional Fields
 
-| Field | Value |
-|---|---|
+| Field                   | Value                                                                                                                                            |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | **Deprecated Patterns** | `writable()` / `readable()` Svelte stores, `export let` prop declaration, `on:event` directive, `<slot>` and `$$slots`, `$:` reactive statements |
-| **Related ADRs** | ADR-002 — Data Fetching Patterns, ADR-005 — Error Handling Conventions, ADR-006 — Type and Schema Conventions |
+| **Related ADRs**        | ADR-002 — Data Fetching Patterns, ADR-005 — Error Handling Conventions, ADR-006 — Type and Schema Conventions                                    |
 
 ---
 
@@ -43,11 +43,11 @@ CXII is built on Svelte 5, which introduces runes as the primary reactive primit
 
 The correct state mechanism is determined by where the state is needed, not by preference or familiarity. Three mechanisms are available, applied in this order of preference:
 
-| Mechanism | Use when |
-|---|---|
-| Local `$state` in component | State is needed only within a single component |
-| Reactive class via `createContext` | State is shared within a component subtree |
-| Reactive class in `$lib/stores/` | State is shared across unrelated components or persists across navigation |
+| Mechanism                          | Use when                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------- |
+| Local `$state` in component        | State is needed only within a single component                            |
+| Reactive class via `createContext` | State is shared within a component subtree                                |
+| Reactive class in `$lib/stores/`   | State is shared across unrelated components or persists across navigation |
 
 No mechanism is used outside its defined scope. A store is not created for state that a context would contain. A context is not created for state that belongs in a single component.
 
@@ -57,9 +57,9 @@ State that does not leave a component is declared with the `$state` rune. `$deri
 
 ```svelte
 <script lang="ts">
-  let inputValue = $state('')
-  let isSubmitting = $state(false)
-  let charCount = $derived(inputValue.length)
+	let inputValue = $state('');
+	let isSubmitting = $state(false);
+	let charCount = $derived(inputValue.length);
 </script>
 ```
 
@@ -74,22 +74,22 @@ State shared across components is implemented as a class with `$state` fields. S
 ```ts
 // $lib/stores/chat.svelte.ts
 export class ChatState {
-  messages = $state<Message[]>([])
-  status = $state<ChatStatus>('idle')
-  isAvailable = $state(true)
+	messages = $state<Message[]>([]);
+	status = $state<ChatStatus>('idle');
+	isAvailable = $state(true);
 
-  readonly isStreaming = $derived.by(() => this.status === 'streaming')
-  readonly hasMessages = $derived.by(() => this.messages.length > 0)
+	readonly isStreaming = $derived.by(() => this.status === 'streaming');
+	readonly hasMessages = $derived.by(() => this.messages.length > 0);
 
-  setUnavailable() {
-    this.isAvailable = false
-    this.status = 'idle'
-  }
+	setUnavailable() {
+		this.isAvailable = false;
+		this.status = 'idle';
+	}
 
-  reset() {
-    this.messages = []
-    this.status = 'idle'
-  }
+	reset() {
+		this.messages = [];
+		this.status = 'idle';
+	}
 }
 ```
 
@@ -103,9 +103,9 @@ State needed within a component subtree — not globally — is scoped using `cr
 
 ```ts
 // $lib/ui/CommandPalette/commandPalette.context.ts
-import { createContext } from 'svelte'
+import { createContext } from 'svelte';
 
-export const commandPaletteContext = createContext<CommandPaletteState>()
+export const commandPaletteContext = createContext<CommandPaletteState>();
 ```
 
 Context is not used as a substitute for a store when state is genuinely global. The scoping rule in Rule 1 determines which is appropriate.
@@ -126,11 +126,11 @@ Data assigned from API responses — including streamed chat content — is stor
 
 ```ts
 class ChatState {
-  response = $state.raw<ChatResponse | null>(null)  // replaced, not mutated
+	response = $state.raw<ChatResponse | null>(null); // replaced, not mutated
 
-  setResponse(data: ChatResponse) {
-    this.response = data  // triggers reactivity; no deep proxy overhead
-  }
+	setResponse(data: ChatResponse) {
+		this.response = data; // triggers reactivity; no deep proxy overhead
+	}
 }
 ```
 
@@ -141,6 +141,7 @@ Two reactive state classes govern global application state:
 **`ChatState`** (`$lib/stores/chat.svelte.ts`)
 
 Owns the full lifecycle of the chat interface:
+
 - Streaming status (`idle` | `loading` | `streaming` | `complete` | `error`)
 - Message history for the current session
 - Service availability — the layout-level flag defined in ADR-005
@@ -149,6 +150,7 @@ Owns the full lifecycle of the chat interface:
 **`InterfaceState`** (`$lib/stores/interface.svelte.ts`)
 
 Owns the global interface mode:
+
 - `inputMode` — whether input is in `text` or `voice` mode
 - `voiceActive` — whether the Web Speech API is currently listening
 
@@ -158,18 +160,18 @@ These are the only two global state classes at project initialisation. Additiona
 
 CXII uses Svelte 5 runes mode exclusively. The following Svelte 4 patterns must not appear in new code anywhere in the project:
 
-| Prohibited pattern | Svelte 5 replacement |
-|---|---|
-| `writable()` / `readable()` | Reactive class with `$state` fields |
-| `export let prop` | `$props()` rune |
-| `on:click={...}` | `onclick={...}` |
-| `<slot>` / `$$slots` | `{#snippet ...}` / `{@render ...}` |
-| `$: derived = value` | `$derived` |
-| `$: { statement }` | `$effect` (only when no better option exists) |
-| `use:action` | `{@attach ...}` |
-| `<svelte:component this={X}>` | `<X>` directly |
-| `<svelte:self>` | `import Self from './ThisComponent.svelte'` |
-| `class:directive` | `class` attribute with clsx-style array or object |
+| Prohibited pattern            | Svelte 5 replacement                              |
+| ----------------------------- | ------------------------------------------------- |
+| `writable()` / `readable()`   | Reactive class with `$state` fields               |
+| `export let prop`             | `$props()` rune                                   |
+| `on:click={...}`              | `onclick={...}`                                   |
+| `<slot>` / `$$slots`          | `{#snippet ...}` / `{@render ...}`                |
+| `$: derived = value`          | `$derived`                                        |
+| `$: { statement }`            | `$effect` (only when no better option exists)     |
+| `use:action`                  | `{@attach ...}`                                   |
+| `<svelte:component this={X}>` | `<X>` directly                                    |
+| `<svelte:self>`               | `import Self from './ThisComponent.svelte'`       |
+| `class:directive`             | `class` attribute with clsx-style array or object |
 
 ---
 

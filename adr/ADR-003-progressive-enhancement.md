@@ -6,20 +6,20 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-003 |
-| **Status** | `active` |
-| **Date** | 2026-04-08 |
-| **Primary Owner** | Architecture |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-003         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-08      |
+| **Primary Owner** | Architecture    |
+| **Decider**       | Human developer |
 
 ---
 
 ## Conditional Fields
 
-| Field | Value |
-|---|---|
+| Field            | Value                                                                         |
+| ---------------- | ----------------------------------------------------------------------------- |
 | **Related ADRs** | ADR-001 — Project File and Folder Structure, ADR-002 — Data Fetching Patterns |
 
 ---

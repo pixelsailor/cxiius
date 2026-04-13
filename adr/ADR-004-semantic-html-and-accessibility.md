@@ -6,20 +6,20 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-004 |
-| **Status** | `active` |
-| **Date** | 2026-04-08 |
-| **Primary Owner** | UI |
-| **Decider** | Human developer |
+| Field             | Value           |
+| ----------------- | --------------- |
+| **ADR Number**    | ADR-004         |
+| **Status**        | `active`        |
+| **Date**          | 2026-04-08      |
+| **Primary Owner** | UI              |
+| **Decider**       | Human developer |
 
 ---
 
 ## Conditional Fields
 
-| Field | Value |
-|---|---|
+| Field            | Value                                                |
+| ---------------- | ---------------------------------------------------- |
 | **Related ADRs** | ADR-003 — Progressive Enhancement and No-JS Baseline |
 
 ---
@@ -44,16 +44,16 @@ Every page in CXII uses the following layout structure without exception. This s
 
 ```svelte
 <header>
-  <!-- Site identity — headline element or structured div -->
-  <!-- Primary navigation — always present in the DOM -->
+	<!-- Site identity — headline element or structured div -->
+	<!-- Primary navigation — always present in the DOM -->
 </header>
 
 <main>
-  <!-- Route content — structured with heading hierarchy -->
+	<!-- Route content — structured with heading hierarchy -->
 </main>
 
 <footer>
-  <!-- Site-level secondary content -->
+	<!-- Site-level secondary content -->
 </footer>
 ```
 
@@ -61,13 +61,13 @@ All three landmark elements — `<header>`, `<main>`, and `<footer>` — must be
 
 ### Rule 2 — Navigation is always in the DOM; hiding is contextual
 
-The primary `<nav>` element lives inside `<header>` and is always present in the DOM. It contains standard `<a>` elements with valid `href` attributes for all navigable routes. Navigation is never conditionally rendered or gated on JavaScript in the sense of *removing* links from the document — the markup remains available for crawlers, no-JS users, and progressive enhancement (see ADR-003).
+The primary `<nav>` element lives inside `<header>` and is always present in the DOM. It contains standard `<a>` elements with valid `href` attributes for all navigable routes. Navigation is never conditionally rendered or gated on JavaScript in the sense of _removing_ links from the document — the markup remains available for crawlers, no-JS users, and progressive enhancement (see ADR-003).
 
 `display: none`, `visibility: hidden`, and `aria-hidden="true"` are **not** blanket-forbidden on `<nav>` or elsewhere. They are **forbidden when used to hide content that has no other reachable, equivalent path** for the user’s current mode (no-JS baseline vs. enhanced UI). They are **permitted when** hiding avoids duplicate announcements or redundant tab stops **and** route access remains available through another channel that meets the same bar (keyboard operable, nameable destinations, predictable activation). The decision is **always contextual**; apply the following **hierarchy** so implementations stay consistent.
 
 #### Hierarchy — when may `<nav>` (or similar landmarks) be visually hidden or removed from the accessibility tree?
 
-1. **No-JS / baseline (ADR-003):** Navigation must be clearly visible and usable. Standard links in `<nav>` must not be hidden in a way that removes them from the no-JS experience. Do not rely on `display: none` or `aria-hidden="true"` on `<nav>` to implement the minimal aesthetic *at the expense of* the baseline — the baseline is the visible, focusable link list (styling may be minimal; hiding is not).
+1. **No-JS / baseline (ADR-003):** Navigation must be clearly visible and usable. Standard links in `<nav>` must not be hidden in a way that removes them from the no-JS experience. Do not rely on `display: none` or `aria-hidden="true"` on `<nav>` to implement the minimal aesthetic _at the expense of_ the baseline — the baseline is the visible, focusable link list (styling may be minimal; hiding is not).
 
 2. **Enhanced UI with equivalent route access:** When JavaScript provides another surface that exposes the **same routes** in a keyboard-accessible, screen-reader-sensible way, the literal `<nav>` may be visually suppressed **and** omitted from the accessibility tree **only while** that enhancement is active and equivalent. Example: a bits-ui (or similar) control where typing `/` in the primary text input opens a list or combobox whose options are the same destinations as the `<nav>` links — users can move through options and activate a route without the header `<nav>` being visible or duplicated for assistive technologies. In that scenario, `display: none`, `visibility: hidden`, or `aria-hidden="true"` on `<nav>` is acceptable **because** navigation is not lost; it is **relocated** to the enhanced control.
 
@@ -98,6 +98,7 @@ The layout does not establish a global `<h1>`. Each route is responsible for its
 The HTML document must be complete, readable, and navigable before any CSS or JavaScript is applied. Visual design and interactivity are enhancements applied on top of a working semantic foundation.
 
 This means:
+
 - No content is withheld from the DOM to produce a visual effect
 - No DOM element is removed or conditionally rendered solely for aesthetic reasons
 - `display: none` and `visibility: hidden` are permitted when an element is genuinely not applicable in context, **or** when Rule 2’s hierarchy applies (e.g., duplicate navigation removed from the accessibility tree because an enhanced control exposes the same routes). They must not hide content that is the **only** path to that information or action for the user’s current mode
@@ -108,6 +109,7 @@ This means:
 Native HTML elements provide accessibility semantics by default. ARIA attributes are used only when no native HTML element or attribute provides the required semantic.
 
 The order of preference is:
+
 1. Use the correct native HTML element
 2. Use native HTML attributes (`disabled`, `required`, `aria-label` on interactive elements with no visible label)
 3. Use ARIA roles and attributes only when 1 and 2 are genuinely inadequate
@@ -119,6 +121,7 @@ ARIA must never be used to compensate for incorrect HTML structure. Applying `ro
 Every interactive element — links, buttons, inputs, the command palette, the chat interface — must be fully operable via keyboard. This is not supplementary to mouse or touch interaction; keyboard is the primary control surface of the interface.
 
 Requirements:
+
 - All interactive elements are reachable via `Tab` in a logical, predictable order
 - `Enter` and `Space` activate buttons and controls per native browser behaviour
 - `Escape` closes any open overlay, palette, or modal and returns focus to the triggering element
@@ -152,9 +155,9 @@ Animations in CXII are light and purposeful — icon transitions, fade-ins, subt
 ```css
 /* Required pattern for any animation */
 @media (prefers-reduced-motion: no-preference) {
-  .animated-element {
-    transition: opacity 200ms ease;
-  }
+	.animated-element {
+		transition: opacity 200ms ease;
+	}
 }
 ```
 

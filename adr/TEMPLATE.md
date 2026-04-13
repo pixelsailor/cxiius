@@ -6,13 +6,13 @@
 
 ## Metadata
 
-| Field | Value |
-|---|---|
-| **ADR Number** | ADR-{{ NNN }} |
-| **Status** | `proposed` |
-| **Date** | {{ YYYY-MM-DD }} |
-| **Primary Owner** | Domain or functional owner |
-| **Decider** | {{ Name or role of the human who approved this ADR }} |
+| Field             | Value                                                 |
+| ----------------- | ----------------------------------------------------- |
+| **ADR Number**    | ADR-{{ NNN }}                                         |
+| **Status**        | `proposed`                                            |
+| **Date**          | {{ YYYY-MM-DD }}                                      |
+| **Primary Owner** | Domain or functional owner                            |
+| **Decider**       | {{ Name or role of the human who approved this ADR }} |
 
 > **Status** must be exactly one of: `proposed`, `active`, `deprecated`, `superseded`.
 > Only a human developer may change status to `active`. Agents may set `proposed` only.
@@ -24,14 +24,14 @@
 > Include only the fields that apply. Omit this section entirely if none apply.
 > A `superseded` ADR must include **Superseded By**. A superseding ADR must include **Supersedes**.
 
-| Field | Value |
-|---|---|
-| **Supersedes** | {{ ADR-NNN — title }} |
-| **Superseded By** | {{ ADR-NNN — title }} |
-| **Related ADRs** | {{ ADR-NNN — title, ADR-NNN — title }} |
-| **Cursor Rules** | {{ Filename(s) of any Cursor rules generated from this ADR }} |
-| **Deprecated Patterns** | {{ Pattern name(s) this ADR formally deprecates }} |
-| **Compliance** | {{ relevant standards, e.g., WCAG 2.1 AA, OWASP Top 10 }} |
+| Field                   | Value                                                         |
+| ----------------------- | ------------------------------------------------------------- |
+| **Supersedes**          | {{ ADR-NNN — title }}                                         |
+| **Superseded By**       | {{ ADR-NNN — title }}                                         |
+| **Related ADRs**        | {{ ADR-NNN — title, ADR-NNN — title }}                        |
+| **Cursor Rules**        | {{ Filename(s) of any Cursor rules generated from this ADR }} |
+| **Deprecated Patterns** | {{ Pattern name(s) this ADR formally deprecates }}            |
+| **Compliance**          | {{ relevant standards, e.g., WCAG 2.1 AA, OWASP Top 10 }}     |
 
 ---
 

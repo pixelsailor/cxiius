@@ -32,6 +32,7 @@ You can preview the production build with `npm run preview`.
 This README defines **high-level architecture, constraints, and guiding decisions** required to begin development without ambiguity in foundational systems.
 
 It intentionally avoids:
+
 - Component-level implementation details
 - UX micro-interactions
 - Visual design specifics
@@ -39,6 +40,7 @@ It intentionally avoids:
 Those belong in separate documentation.
 
 This document exists to ensure:
+
 - Early decisions do not create architectural dead-ends
 - Core systems remain aligned with project intent
 - Development can begin without waterfall-style specification
@@ -68,18 +70,18 @@ The interface behaves as a **command-driven system**, not a traditional website.
 
 ## Tech Stack
 
-| Layer | Choice | Rationale |
-|---|---|---|
-| Framework | **SvelteKit** | Static-first, edge-ready, zero runtime overhead |
-| Rendering | **SSG + Edge Functions** | Content routes prebuilt as static HTML; AI endpoint runs as a Worker |
-| Adapter | **`@sveltejs/adapter-cloudflare`** | Targets CF Pages + Workers in a single deployment unit |
-| AI Provider | **Anthropic Claude API** (`claude-haiku-4-5-20251001`) | Fast, cheap, sufficient for personal Q&A; upgrade path to Sonnet if needed |
-| UI Component Libraries | **bits-ui** (primary) | Headless, accessible primitives — use as the base layer for components in `$lib/ui/` when applicable; see [ADR-011](adr/ADR-011-ui-component-library-bits-ui.md). LLM-oriented docs index: [bits-ui.com/llms.txt](https://bits-ui.com/llms.txt) (links to per-topic `llms.txt` pages). |
-| Styling | **Plain CSS** (custom properties) | No framework bloat; full control over animation |
-| Speech | **Web Speech API** | Native browser API, zero dependencies |
-| Deployment | **Cloudflare Pages** | GitHub-connected CI/CD, free SSL, global CDN |
-| Rate Limiting | **Cloudflare Workers KV** | Stateless IP-based counter; no external database needed |
-| Analytics | **Cloudflare Web Analytics** | Privacy-first, cookieless, free |
+| Layer                  | Choice                                                 | Rationale                                                                                                                                                                                                                                                                              |
+| ---------------------- | ------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Framework              | **SvelteKit**                                          | Static-first, edge-ready, zero runtime overhead                                                                                                                                                                                                                                        |
+| Rendering              | **SSG + Edge Functions**                               | Content routes prebuilt as static HTML; AI endpoint runs as a Worker                                                                                                                                                                                                                   |
+| Adapter                | **`@sveltejs/adapter-cloudflare`**                     | Targets CF Pages + Workers in a single deployment unit                                                                                                                                                                                                                                 |
+| AI Provider            | **Anthropic Claude API** (`claude-haiku-4-5-20251001`) | Fast, cheap, sufficient for personal Q&A; upgrade path to Sonnet if needed                                                                                                                                                                                                             |
+| UI Component Libraries | **bits-ui** (primary)                                  | Headless, accessible primitives — use as the base layer for components in `$lib/ui/` when applicable; see [ADR-011](adr/ADR-011-ui-component-library-bits-ui.md). LLM-oriented docs index: [bits-ui.com/llms.txt](https://bits-ui.com/llms.txt) (links to per-topic `llms.txt` pages). |
+| Styling                | **Plain CSS** (custom properties)                      | No framework bloat; full control over animation                                                                                                                                                                                                                                        |
+| Speech                 | **Web Speech API**                                     | Native browser API, zero dependencies                                                                                                                                                                                                                                                  |
+| Deployment             | **Cloudflare Pages**                                   | GitHub-connected CI/CD, free SSL, global CDN                                                                                                                                                                                                                                           |
+| Rate Limiting          | **Cloudflare Workers KV**                              | Stateless IP-based counter; no external database needed                                                                                                                                                                                                                                |
+| Analytics              | **Cloudflare Web Analytics**                           | Privacy-first, cookieless, free                                                                                                                                                                                                                                                        |
 
 ---
 
@@ -156,6 +158,7 @@ All content is defined in **typed source files**.
 ### Usage
 
 Content feeds:
+
 - Static pages
 - AI system prompt
 - Sitemap
@@ -316,22 +319,26 @@ These will be defined in separate documentation as needed.
 To keep this README focused, the following documents should be created:
 
 ### 1. UI / Interaction Guidelines
+
 - Input behavior
 - Command palette interactions
 - Accessibility specifics
 
 ### 2. API Specification
+
 - Request/response formats
 - Error handling contract
 - Streaming behavior details
 
 ### 3. Content Authoring Guide
+
 - Structure of content files — [`src/lib/content/INDEX.md`](src/lib/content/INDEX.md), [`.cursor/rules/content-model.mdc`](.cursor/rules/content-model.mdc) (ADR-008)
 - Interview-first elicitation before writing — [`.cursor/rules/content-interview.mdc`](.cursor/rules/content-interview.mdc)
 - Tone/voice guidelines
 - Update workflow
 
 ### 4. Development Notes
+
 - Experimental ideas
 - Platform-specific findings
 - Implementation constraints discovered during development
@@ -354,6 +361,7 @@ To keep this README focused, the following documents should be created:
 This project is defined by **constraints and intent**, not features.
 
 The goal is not to predefine the experience, but to ensure that whatever is built:
+
 - Remains coherent
 - Avoids architectural rework
 - Aligns with the core philosophy
