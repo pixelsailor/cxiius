@@ -12,6 +12,7 @@ export type Identity = {
 	location: string;
 	contact: {
 		email: string;
+		url: string;
 		linkedin: string;
 		dribbble: string;
 	};
@@ -24,9 +25,10 @@ export type Identity = {
 const data: Identity = {
 	name: 'Benjamin Thompson',
 	role: 'Senior Software Engineer - Front-End Architecture, Component Systems, UI/UX',
-	location: 'Boerne, TX 78006',
+	location: 'San Antonio, TX',
 	contact: {
 		email: 'ben@cxii.us',
+		url: 'cxii.us',
 		linkedin: 'linkedin.com/in/cxiius',
 		dribbble: 'dribbble.com/cxiius'
 	},

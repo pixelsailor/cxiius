@@ -26,6 +26,14 @@ export type Availability = {
 	 */
 	openTo: EngagementType[];
 	/**
+	 * The location Ben is willing to work from.
+	 */
+	locationPreference: string[];
+	/**
+	 * Whether Ben is willing to relocate.
+	 */
+	willingToRelocate: boolean;
+	/**
 	 * Any specific notes about preferences, constraints, or context.
 	 * Optional - omit if nothing meaningful to add.
 	 */
@@ -40,6 +48,8 @@ const data: Availability = {
 	statusMessage: 'Currently available for new work. My contract with LevelBlue wrapped up in April 2026 and I am actively looking for my next engagement - contract or full-time.',
 	asOf: '2026-04-12',
 	openTo: ['contract', 'full-time'],
+	locationPreference: ['San Antonio, TX area', 'Remote', 'Hybrid'],
+	willingToRelocate: false,
 	notes: undefined
 };
 
