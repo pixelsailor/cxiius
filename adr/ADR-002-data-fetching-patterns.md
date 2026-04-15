@@ -32,62 +32,40 @@ Governs how data is loaded and consumed across all SvelteKit routes in CXII. App
 
 ## Context
 
-CXII currently sources all page content from typed TypeScript files in `$lib/content/`. These imports are synchronous. However, the content model may migrate to an external provider (e.g. a headless CMS on a separate domain) in the future, which would make data loading genuinely asynchronous. SvelteKit's default `load()` behavior blocks navigation until data resolves, which conflicts with the requirement that pages render immediately and handle loading state in the component. Establishing a consistent promise-based pattern now prevents a future migration from requiring changes across every route.
+CXII sources page content from typed TypeScript modules in `$lib/content/`. Each domain exposes an async getter returning `Promise<T>` so a future migration (for example, a headless CMS) can swap implementation without changing call signatures.
+
+SvelteKit can return **promises** from `load()` and stream them to the browser. **Streaming deferred data only works when JavaScript is enabled.** If a universal `load()` returns top-level promises and the page resolves them only inside `{#await}` in the component, the server may emit the **pending** branch into HTML while the rest of the resolution depends on client behaviour — **users with JavaScript disabled then see loading shells or empty content**, which violates ADR-003.
+
+Therefore, **content routes that must satisfy the no-JS baseline** resolve `$lib/content` data inside `load()` and pass **plain, serialisable values** on `data`. Pages render that markup directly. `{#await}` is not required for route-loaded content and is a poor fit for this baseline when tied to deferred `load()` promises.
 
 ---
 
 ## Decision
 
-All data loading in CXII follows a single pattern regardless of whether the underlying source is synchronous or asynchronous.
+### Rule 1 — Content routes resolve data in `+page.ts` and return plain values
 
-### Rule 1 — All content routes use `+page.ts` with an unresolved promise
-
-Every content route exposes its data via a `load()` function in `+page.ts`. The load function returns an object containing unresolved promises. It must never `await` data before returning.
+Every **content route** (pages driven by `$lib/content/`) exposes data through an `async` `load()` in `+page.ts` that **awaits** the relevant content getters and returns a plain object of serialisable values. **Do not** return unresolved promises from `load()` for content that must appear in HTML without JavaScript.
 
 ```ts
 // src/routes/resume/+page.ts
-import { getResume } from '$lib/content/resume';
+import { getExperience } from '$lib/content/experience';
+import { getIdentity } from '$lib/content/identity';
 
-export const load = () => ({
-	resume: getResume() // returned as a promise — never awaited
-});
-```
+export const prerender = true;
 
-`getResume()` returns a promise even when the underlying source is synchronous, ensuring the contract is consistent and migration-safe:
-
-```ts
-// src/lib/content/resume.ts
-import type { Resume } from '$lib/types';
-
-const data: Resume = {
-	/* ... */
+export const load = async () => {
+	const [identity, experience] = await Promise.all([getIdentity(), getExperience()]);
+	return { identity, experience };
 };
-
-export const getResume = (): Promise<Resume> => Promise.resolve(data);
 ```
 
-### Rule 2 — Components consume data exclusively via `{#await}`
+Content getters remain `Promise<T>` in `$lib/content/`; **the route** is responsible for awaiting them so `data` is resolved before HTML is produced (including prerender).
 
-All route components receive a `data` prop and resolve it using `{#await}`. No component may access `data.x` directly without going through `{#await}` first.
+### Rule 2 — Content route components read `data` directly
 
-```svelte
-<!-- src/routes/resume/+page.svelte -->
-<script lang="ts">
-	export let data;
+For content routes, `+page.svelte` receives `data` from `load()` and renders it with normal markup (`{#each}`, `{#if}`, etc.). **Do not** wrap route-supplied content in `{#await}` solely to satisfy an older pattern — that pattern conflicts with the no-JS baseline when combined with deferred `load()` promises.
 
-	const { resume } = data;
-</script>
-
-{#await resume}
-	<LoadingState />
-{:then resume}
-	<ResumeContent {resume} />
-{:catch error}
-	<ErrorState {error} />
-{/await}
-```
-
-Every `{#await}` block must include all three branches: pending, resolved, and error. Omitting `:catch` is not permitted.
+Optional `{#await}` remains appropriate for **other** async UI (for example, a future client-only stream) where ADR-005 applies to `:catch` branches.
 
 ### Rule 3 — `+page.server.ts` is discouraged; never for KV or Cloudflare KV access patterns
 
@@ -103,26 +81,21 @@ Every `{#await}` block must include all three branches: pending, resolved, and e
 
 The chat interface is global, persistent, and not bound to a specific route. It does not use `load()`. The interface component manages its own request lifecycle, posting to `routes/api/chat/+server.ts` via `fetch()` and managing the streaming response through a dedicated store. This is the only context in which `fetch()` appears in component or store code.
 
-### Rule 5 — Navigation never waits for data
+### Rule 5 — All content routes must declare `prerender = true`
 
-A route must render immediately on navigation. The unresolved promise pattern enforces this — SvelteKit will not block navigation when `load()` returns a pending promise. Blocking load functions (`async load()` with internal `await`) are prohibited in content routes.
-
-### Rule 6 — All content routes must declare `prerender = true`
-
-Every content route `+page.ts` must export `export const prerender = true`. This guarantees the load function runs at build time, the promise resolves before HTML is written to disk, and no-JS users receive fully rendered content. Without this declaration, SvelteKit may fall back to SSR or client-side rendering depending on adapter configuration, making the no-JS guarantee runtime-dependent rather than build-time guaranteed.
+Every content route `+page.ts` must export `export const prerender = true` (as the first export from that module, after imports). Together with resolved `load()` data, this ensures static HTML generated at build time contains full content for no-JS users and crawlers.
 
 ```ts
-// src/routes/resume/+page.ts
 export const prerender = true;
 
-export const load = () => ({
-	resume: getResume()
-});
+export const load = async () => {
+	/* await getters; return plain objects */
+};
 ```
 
-### Rule 7 — `onMount` must not be used to load content
+### Rule 6 — `onMount` must not be used to load content
 
-`onMount` executes only in the browser after hydration. Content loaded inside `onMount` is invisible to no-JS users, crawlers, and the SSG build. It is prohibited for any data that must be present in the rendered HTML. `onMount` is permitted only for browser-specific side effects that are not content (e.g. initialising a Web Speech API listener).
+`onMount` executes only in the browser after hydration. Content loaded inside `onMount` is invisible to no-JS users, crawlers, and the SSG build. It is prohibited for any data that must be present in the rendered HTML. `onMount` is permitted only for browser-specific side effects that are not content (for example, initialising a Web Speech API listener).
 
 ---
 
@@ -132,15 +105,15 @@ export const load = () => ({
 
 Import content files directly in the component script block without a load function.
 
-**Rejected because:** Creates inconsistency between routes that use load functions and those that don't. When a content source becomes async, every component using direct imports requires structural changes. Bypasses SvelteKit's data flow model and makes component scripts responsible for data concerns.
+**Rejected because:** Bypasses SvelteKit's `data` flow, duplicates loading logic per route, and makes layout or shared concerns harder. Use `load()` and `data`.
 
 ---
 
-### Blocking `async load()` with `await`
+### Unresolved promises from `load()` plus `{#await}` in the page
 
-Use `async load()` and `await` data before returning, letting SvelteKit handle the resolved value.
+Return `{ key: getData() }` without awaiting and resolve in the component with `{#await}`.
 
-**Rejected because:** Blocks navigation until data resolves. The page does not render until load completes. This violates the requirement that routes render immediately and manage loading state in the component via `{#await}`.
+**Rejected for content routes** because SvelteKit's deferred/streaming behaviour and universal `load()` semantics do not guarantee fully resolved HTML for no-JS visitors when the only resolution path is `{#await}` tied to promises on `data`. ADR-003 requires complete static HTML for content routes.
 
 ---
 
@@ -156,30 +129,29 @@ Run all load functions server-side for consistency.
 
 ### Benefits
 
-- Navigation is never blocked — pages render immediately regardless of data load time
-- `{#await}` is the single, consistent pattern for all data consumption across every route
-- Content source migrations (e.g. to a headless CMS) require changes only in `$lib/content/` — route files and components are unaffected
-- Error states are explicitly required, preventing silent failures
+- No-JS users and crawlers receive full content in the initial HTML for prerendered routes
+- `$lib/content` getters keep a stable `Promise<T>` API for future async sources; routes centralise awaiting
+- Error handling for failed `load()` uses SvelteKit's normal mechanisms (`+error.svelte`, or structured handling inside `load()`)
 
 ### Trade-offs
 
-- Wrapping synchronous content in `Promise.resolve()` is artificial overhead with no runtime benefit in the current implementation
-- Developers unfamiliar with SvelteKit's streaming behavior may not understand why `load()` returns an unresolved promise rather than resolved data — this ADR is the explanation
+- Client-side navigations to a content route wait until `load()` finishes before the new page can render (acceptable for small local data; mitigated by prerendered static HTML on first load)
+- `{#await}` is no longer the mandated pattern for route data — components must still use it with `:catch` when they genuinely await a promise in markup (ADR-005)
 
 ### Follow-up
 
-- If a content source migrates to an external async provider, the change is isolated to the relevant file in `$lib/content/`. No ADR update is required unless the fetching pattern itself changes.
-- **KV / ADR-010:** Never introduce `+page.server.ts` as a way to load or mutate KV-backed data for pages; see Rule 3 and ADR-010.
-- If a **non-KV** requirement appears to need `+page.server.ts`, first rule out `+server.ts`, `hooks.server.ts`, and delegation to `$lib/server/`. If no alternative exists, propose a new ADR that documents the exception before adding `+page.server.ts`.
+- If a content source becomes a slow remote dependency, prefer showing stale or partial **server-resolved** HTML for the no-JS baseline and enhancing with JS — do not reintroduce deferred `load()` promises for primary content without revisiting ADR-003
+- **KV / ADR-010:** Never introduce `+page.server.ts` as a way to load or mutate KV-backed data for pages; see Rule 3 and ADR-010
+- If a **non-KV** requirement appears to need `+page.server.ts`, first rule out `+server.ts`, `hooks.server.ts`, and delegation to `$lib/server/`. If no alternative exists, propose a new ADR that documents the exception before adding `+page.server.ts`
 
 ---
 
 ## Agent Directives
 
-- **When creating a content route `+page.ts`:** return data as unresolved promises. Never use `async load()` with internal `await`. The signature is `export const load = () => ({ key: getData() })`.
-- **When creating any content route `+page.ts`:** always include `export const prerender = true` as the first export. Its absence is a violation.
+- **When creating a content route `+page.ts`:** use `async` `load()`, `await` the needed `$lib/content` getters (for example `await Promise.all([...])`), return plain objects. Do not return unresolved promises for content that must render without JavaScript.
+- **When creating any content route `+page.ts`:** always include `export const prerender = true` as the first export (after imports). Its absence is a violation.
 - **When creating a function in `$lib/content/`:** the return type must be `Promise<T>`. Wrap synchronous data in `Promise.resolve()`.
-- **When consuming `data` in a `+page.svelte`:** always use `{#await}` with all three branches — pending, `:then`, and `:catch`. Direct access to `data.x` without `{#await}` is a violation.
+- **When consuming `data` in a content `+page.svelte`:** render fields from `data` directly. Do not add `{#await}` around route-loaded content solely out of habit.
 - **When the chat interface needs to call the AI endpoint:** use `fetch()` in a store, not a load function. This is the only permitted use of `fetch()` outside of `$lib/server/`.
 - **When considering `+page.server.ts`:** do not use it for **content routes** (`$lib/content`). Do **not** use it for **KV** or any pattern ADR-010 forbids — use API routes, `hooks.server.ts`, and `src/lib/server/kv/` helpers. For any other case, treat `+page.server.ts` as a **last resort** after ruling out alternatives; require a **proposed ADR** before adding it.
 - **When reaching for `onMount` to fetch or display content:** do not. `onMount` is permitted only for browser-specific side effects that are not content. Any content required in rendered HTML must come through `load()`.

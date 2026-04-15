@@ -10,7 +10,7 @@ alwaysApply: false
 
 **Commands:** `npm run lint` runs Prettier (`--check`) and ESLint. `npm run format` applies Prettier. Address failures before review.
 
-**Architecture:** Follow active ADRs in [`adr/INDEX.md`](adr/INDEX.md), especially ADR-006 (types), ADR-005 (errors), ADR-002 (`{#await}` branches), ADR-007 (runes / state).
+**Architecture:** Follow active ADRs in [`adr/INDEX.md`](adr/INDEX.md), especially ADR-006 (types), ADR-005 (errors, `{#await}` `:catch` when awaiting promises in markup), ADR-002 (resolved `load()` data for content routes), ADR-007 (runes / state).
 
 ## `$lib/content` — ASCII-only source
 
@@ -50,5 +50,5 @@ const { [key]: _removed, ...rest } = obj;
 
 ## Svelte markup
 
-- Use `{#if}`, `{#each}`, `{#await}` (with required branches per ADR-002) instead of imperative DOM for control flow.
+- Use `{#if}`, `{#each}`, `{#await}` (with `:catch` when awaiting a promise per ADR-005) instead of imperative DOM for control flow.
 - For accessibility (labels, buttons, landmarks), follow [semantic-html-accessibility.mdc](semantic-html-accessibility.mdc) and ADR-004.

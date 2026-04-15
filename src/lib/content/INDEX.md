@@ -20,6 +20,8 @@ Update this table when domains are added or removed.
 | `availability.ts` | Current availability status                      | `Promise<Availability>`      |
 | `projects.ts`     | Personal projects (products, tools, experiments) | `Promise<ProjectEntry[]>`    |
 
+**Routes:** Page `+page.ts` files **`await`** these getters and return plain values on `data` so HTML works without JavaScript ([ADR-002](../../../adr/ADR-002-data-fetching-patterns.md)). Getters stay `Promise<T>`; the route resolves them.
+
 ## `availability.ts`
 
 Confirm with a human before treating `available` and `statusMessage` as authoritative.

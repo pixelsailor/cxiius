@@ -23,7 +23,7 @@ Authoritative detail: [`adr/ADR-005-error-handling-conventions.md`](adr/ADR-005-
 
 ## UI and routes
 
-- **`{#await}` `:catch`:** render **inline** error UI in the same component subtree — **no toasts, snackbars, global alerts, or cross-component error stores** for request failures.
+- **`{#await}` `:catch` (when you await a promise in markup):** render **inline** error UI in the same component subtree — **no toasts, snackbars, global alerts, or cross-component error stores** for request failures. Content routes that resolve data in `load()` (ADR-002) typically use SvelteKit error boundaries for `load()` failure instead.
 - Errors are **local** to the component that made the request; one component’s failure must not break the rest of the page.
 - **`+error.svelte`:** only for **page-level** failures (404, unrecoverable load, unhandled load throw) — not for routine API/component failures when the shell still renders.
 

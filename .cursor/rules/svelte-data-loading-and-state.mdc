@@ -1,5 +1,5 @@
 ---
-description: Svelte 5 data loading, progressive enhancement, and state (ADR-002, ADR-003, ADR-007)
+description: Svelte 5 data loading, progressive enhancement, and state (ADR-002 resolved load data, ADR-003, ADR-007)
 globs:
   - src/**/*.svelte
   - src/routes/**/*.ts
@@ -13,10 +13,10 @@ Authoritative detail: [`adr/ADR-002-data-fetching-patterns.md`](adr/ADR-002-data
 
 ## Data loading (ADR-002)
 
-- Content routes: `+page.ts` uses `export const load = () => ({ key: getData() })` — return **unresolved promises**; do not `async load()` with internal `await`.
-- Every content `+page.ts`: `export const prerender = true` (first export).
-- `$lib/content/*`: getters return `Promise<T>` (wrap sync data in `Promise.resolve()`).
-- `+page.svelte`: consume route data only via `{#await}` with **pending, `:then`, and `:catch`** — all three branches required. No direct `data.x` without `{#await}`.
+- Content routes: `+page.ts` uses **`async` `load()`**, **`await`** the needed `$lib/content` getters (for example `await Promise.all([getIdentity(), getExperience()])`), return **plain serialisable objects** on `data`. Do **not** return unresolved promises from `load()` for body content that must appear without JavaScript.
+- Every content `+page.ts`: `export const prerender = true` (first export after imports).
+- `$lib/content/*`: getters return `Promise<T>` (wrap sync data in `Promise.resolve()`); routes await them.
+- Content `+page.svelte`: render from **`data`** directly (`{#each}`, `{#if}`, etc.). `{#await}` is not required for route-loaded content; if you use `{#await}` for a real promise in markup, include **`:catch`** (ADR-005).
 - Do not use `+page.server.ts` for content routes. It is **discouraged** elsewhere; **never** use it for KV (use API routes, `hooks.server.ts`, and `src/lib/server/kv/` per ADR-010). Other exceptions need a proposed ADR (see ADR-002 Rule 3).
 - **Only** permitted `fetch()` outside `$lib/server/`: chat/AI client path posting to the API (store-driven), per ADR-002 Rule 4.
 - Do not load content that must appear in HTML inside `onMount` (browser-only side effects are OK).

@@ -32,7 +32,7 @@ Governs error detection, propagation, handling, and user communication across al
 
 ## Context
 
-Error handling is a first-class concern in CXII, not an afterthought. Any request that can fail must have an error handler before it is considered complete. Two principles drive every error handling decision: keep the user within the context of their current view, and keep the user informed. A system that silently fails, redirects unnecessarily, or delegates error communication to an unrelated component violates both principles. ADR-002 mandates that every `{#await}` block includes a `:catch` branch — this ADR defines what those branches must do and how errors reach them.
+Error handling is a first-class concern in CXII, not an afterthought. Any request that can fail must have an error handler before it is considered complete. Two principles drive every error handling decision: keep the user within the context of their current view, and keep the user informed. A system that silently fails, redirects unnecessarily, or delegates error communication to an unrelated component violates both principles. When a component uses `{#await}` for a promise, every such block must include a `:catch` branch; failures in `load()` surface through SvelteKit's error handling (`+error.svelte` or structured handling in `load()`). This ADR defines what `:catch` branches and service-layer errors must do.
 
 ---
 
@@ -225,7 +225,7 @@ Maintain a writable store that any component can write error state to, consumed 
 
 - `Result<T>`, `AppError`, and `ErrorCode` must be defined in `$lib/types/` before any service layer code is written. These types are foundational and must not be defined inline or duplicated across modules.
 - A shared `<ErrorState>` component should be defined in `$lib/ui/` with props for message and optional action. Individual components use this rather than implementing their own error UI.
-- A shared `<LoadingState>` component should be defined alongside `<ErrorState>` for consistency across `{#await}` pending branches.
+- A shared `<LoadingState>` component should be defined alongside `<ErrorState>` for consistency where `{#await}` is used for async UI.
 - The chat layout-level unavailability handler should be designed when the chat interface component is implemented.
 
 ---

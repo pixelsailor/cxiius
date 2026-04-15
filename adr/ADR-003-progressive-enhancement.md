@@ -40,7 +40,7 @@ CXII's README establishes that the site must remain functional without JavaScrip
 
 ### Rule 1 — Content is the no-JS baseline
 
-All content routes must render their full content as static HTML without JavaScript. A no-JS user visiting any content route receives a complete, readable, and accessible page. This is guaranteed by the SSG prerender strategy established in ADR-002 — content resolves at build time and is written to disk as HTML.
+All content routes must render their full content as static HTML without JavaScript. A no-JS user visiting any content route receives a complete, readable, and accessible page. This is guaranteed by ADR-002: content is **awaited in `load()`**, combined with **`prerender = true`**, so HTML generated at build time includes the full body — not a loading placeholder that only completes with JavaScript.
 
 ### Rule 2 — Navigation must function without JavaScript
 
@@ -67,7 +67,7 @@ The chat interface requires JavaScript. This is accepted. The chat feature is a 
 
 ### Rule 4 — No content may be loaded exclusively in `onMount`
 
-Any content that must be present in rendered HTML must not be loaded inside `onMount`. See ADR-002 Rule 7. This rule exists independently of data fetching — it applies to any use of `onMount` that conditionally renders or reveals content.
+Any content that must be present in rendered HTML must not be loaded inside `onMount`. See ADR-002 Rule 6. This rule exists independently of data fetching — it applies to any use of `onMount` that conditionally renders or reveals content.
 
 ### Rule 5 — Progressive enhancement is the implementation order
 
@@ -107,7 +107,7 @@ Gate the entire site on JavaScript being available, given that the chat interfac
 - Crawlers and assistive technologies receive complete, semantic HTML for all content routes
 - Navigation works in all environments — no JS, slow JS, failed JS
 - The chat interface failing or being slow does not affect the rest of the site
-- SSG output is clean static HTML — no hydration required for content pages to be usable
+- SSG output is clean static HTML — full content is present before client JavaScript runs; no-JS users are not blocked by deferred data (see ADR-002)
 
 ### Trade-offs
 

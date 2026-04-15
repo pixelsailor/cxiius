@@ -79,7 +79,7 @@ Types are exported alongside the content function so consumers can reference the
 
 ### Rule 4 — Content functions return `Promise<T>`
 
-Every content function follows the `Promise.resolve()` pattern established in ADR-002. The return type is always `Promise<T>` — never a raw value. This ensures the data fetching contract is uniform across all content domains and the pattern remains migration-safe if a domain later sources data from an external provider.
+Every content function follows the `Promise.resolve()` pattern. The return type is always `Promise<T>` — never a raw value. Route `load()` functions **await** these getters and pass plain objects on `data` (ADR-002). Keeping getters async keeps the contract migration-safe if a domain later sources data from an external provider.
 
 ```ts
 export const getSkills = (): Promise<SkillCategory[]> => Promise.resolve(data);
@@ -138,7 +138,7 @@ Define all content types in `$lib/types/` for discoverability.
 
 Export content data directly as named constants rather than wrapping in `Promise.resolve()` functions.
 
-**Rejected because:** Direct exports bypass the `Promise<T>` contract established in ADR-002. If a content domain migrates to an external async source, every consumer importing the raw export must be updated. The function wrapper localises that change to the content file.
+**Rejected because:** Direct exports bypass the `Promise<T>` contract. If a content domain migrates to an external async source, every consumer importing the raw export must be updated. The function wrapper localises that change to the content file.
 
 ---
 
