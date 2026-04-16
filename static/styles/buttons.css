@@ -1,12 +1,39 @@
 /* Button styles */
+.button,
+input:where([type="button"], [type="reset"], [type="submit"]) {
+  appearance: button;
+}
 
 .button {
-  @apply rounded-input inline-flex flex-row gap-3 bg-dark-10 text-black text-label dark:bg-muted border border-transparent hover:bg-dark-10/80
-  h-input cursor-pointer items-center justify-center px-6 font-semibold active:scale-[0.98] active:transition-all;
-
+  font: inherit;
+  letter-spacing: inherit;
+  opacity: 1;
+  display: inline-flex;
+  height: var(--input-height);
+  align-items: center;
+  justify-content: center;
   border-radius: var(--radius-button);
+  padding-inline: 0.5rem;
+  background-color: var(--foreground-alt);
+  color: var(--background);
+  transition: background-color 0.2s ease-in-out;
 
-  &.primary {
+  --tw-shadow: 0px 1px 0px 1px #0000004d;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+
+  &:hover {
+    background-color: var(--foreground);
+    color: var(--background);
+  }
+
+  &:active {
+    transition-property: all;
+    transition-timing-function: var(--default-transition-timing-function);
+    transition-duration: var(--default-transition-duration);
+    scale: 0.98;
+  }
+
+  /* &.primary {
     @apply bg-dark text-dark-foreground hover:bg-dark/80
     dark:bg-dark dark:text-dark-foreground dark:hover:bg-dark/80;
   }
@@ -21,10 +48,10 @@
 
   &.raised {
     @apply shadow-sm;
-  }
+  } */
 }
 
-.button.outlined {
+/* .button.outlined {
   @apply bg-transparent border-1 border-dark-40 text-dark hover:bg-muted dark:border-contrast;
 
   &.primary {
@@ -38,25 +65,43 @@
   &.danger {
     @apply text-destructive border-destructive hover:bg-destructive/10;
   }
-}
+} */
 
 .button.text {
-  @apply bg-transparent text-current hover:bg-muted dark:hover:bg-dark-04;
+  /* @apply bg-transparent text-current hover:bg-muted dark:hover:bg-dark-04; */
+  background-color: transparent;
+  color: currentColor;
 
-  &.primary {
-    @apply text-dark hover:bg-muted;
+  &:hover {
+    background-color: var(--muted);
   }
 
-  &.warn {
+  &.primary {
+    /* @apply text-dark hover:bg-muted; */
+    color: var(--dark);
+
+    &:hover {
+      background-color: var(--muted);
+    }
+  }
+
+  /* &.warn {
     @apply text-tertiary hover:bg-tertiary/10;
   }
 
   &.danger {
     @apply text-destructive hover:bg-destructive/10;
-  }
+  } */
 }
 
 .button.icon {
+  border-radius: 100%;
+  padding: 0;
+  width: var(--input-height);
+  height: var(--input-height);
+  display: relative;
+}
+/* .button.icon {
   @apply rounded-full p-0 w-11 h-11 relative;
 
   .svg {
@@ -66,9 +111,12 @@
     left: 50%;
     transform: translate(-50%, -50%);
   }
-}
+} */
 
 .button.narrow {
+  padding-inline: 0.25rem;
+}
+/* .button.narrow {
   @apply px-input-xs;
 }
 
@@ -83,9 +131,9 @@
 
 .button.justify-between {
   @apply justify-between;
-}
+} */
 
-.button:disabled {
+/* .button:disabled {
   @apply bg-dark-10 text-dark-40 opacity-50 cursor-not-allowed pointer-events-none;
 
   &.outlined {
@@ -95,4 +143,4 @@
   &.text {
     @apply bg-transparent text-dark-40 hover:bg-muted;
   }
-}
+} */
