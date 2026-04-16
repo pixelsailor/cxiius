@@ -101,7 +101,7 @@ const data: ExperienceEntry[] = [
 		tech: ['UI/UX design', 'Interaction design', 'Brand design', 'Corporate web development', 'Presentation design', 'Cross-device design (kiosk, mobile, set-top box)']
 	},
 	{
-		title: 'Art Department Coordinator & Production Assistant',
+		title: 'Principal Graphic Designer & Production Assistant',
 		company: 'Directory Plus',
 		location: 'Durango, CO',
 		employmentType: 'full-time',
