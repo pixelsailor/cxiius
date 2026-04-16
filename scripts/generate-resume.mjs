@@ -44,10 +44,7 @@ function loadDotEnv() {
 			if (eq === -1) continue;
 			const key = trimmed.slice(0, eq).trim();
 			let val = trimmed.slice(eq + 1).trim();
-			if (
-				(val.startsWith('"') && val.endsWith('"')) ||
-				(val.startsWith("'") && val.endsWith("'"))
-			) {
+			if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
 				val = val.slice(1, -1);
 			}
 			if (process.env[key] === undefined) {
@@ -92,15 +89,11 @@ function resolveAgentBinary() {
 	// Windows: `where` often misses `agent.ps1` (PATHEXT). Resolve like the shell does.
 	if (isWin) {
 		try {
-			const out = execFileSync(
-				'powershell.exe',
-				['-NoProfile', '-Command', '(Get-Command agent -ErrorAction Stop).Source'],
-				{
-					encoding: 'utf8',
-					windowsHide: true,
-					stdio: ['ignore', 'pipe', 'ignore']
-				}
-			).trim();
+			const out = execFileSync('powershell.exe', ['-NoProfile', '-Command', '(Get-Command agent -ErrorAction Stop).Source'], {
+				encoding: 'utf8',
+				windowsHide: true,
+				stdio: ['ignore', 'pipe', 'ignore']
+			}).trim();
 			if (out) return out;
 		} catch {
 			// ignore
@@ -115,16 +108,12 @@ function resolveAgentBinary() {
 function spawnAgent(agentPath, agentArgs) {
 	const isPs1 = process.platform === 'win32' && agentPath.toLowerCase().endsWith('.ps1');
 	if (isPs1) {
-		return spawnSync(
-			'powershell.exe',
-			['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', agentPath, ...agentArgs],
-			{
-				encoding: 'utf8',
-				maxBuffer: 50 * 1024 * 1024,
-				windowsHide: true,
-				env: process.env
-			}
-		);
+		return spawnSync('powershell.exe', ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', agentPath, ...agentArgs], {
+			encoding: 'utf8',
+			maxBuffer: 50 * 1024 * 1024,
+			windowsHide: true,
+			env: process.env
+		});
 	}
 	return spawnSync(agentPath, agentArgs, {
 		encoding: 'utf8',
@@ -212,7 +201,7 @@ function stripOuterCodeFence(text) {
 }
 
 function runAgent(agentPath, workspaceRoot, promptText) {
-	const maxCmd = (process.platform === 'win32' ? 7500 : 900_000);
+	const maxCmd = process.platform === 'win32' ? 7500 : 900_000;
 	let promptPath = null;
 	let lastArg = promptText;
 	if (promptText.length > maxCmd) {
@@ -221,14 +210,7 @@ function runAgent(agentPath, workspaceRoot, promptText) {
 		lastArg = `The complete instructions and JSON source data are in this file (read it fully, then output only the resume text):\n${promptPath}`;
 	}
 	try {
-		const args = [
-			'--print',
-			'--mode=ask',
-			'--trust',
-			'--workspace',
-			workspaceRoot,
-			lastArg
-		];
+		const args = ['--print', '--mode=ask', '--trust', '--workspace', workspaceRoot, lastArg];
 		const result = spawnAgent(agentPath, args);
 		if (result.error) {
 			throw result.error;

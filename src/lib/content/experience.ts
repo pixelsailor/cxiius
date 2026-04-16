@@ -50,7 +50,7 @@ const data: ExperienceEntry[] = [
 		contributions: [
 			'Served as primary UI/UX designer for the Frontline Vulnerability Management platform (rebranded as Fortra VM after the acquisition by Fortra) - responsible for making a data-intensive, technically complex security tool feel accessible and intuitive to practitioners.',
 			'Championed responsive design for Frontline at a time when the idea was pushed back on internally. Persisted in advocating for it; it was ultimately adopted and became a standout highlight when demoing the product to clients.',
-			'Designed and developed internal AngularJS, Angular 2.x, and React component libraries used across Frontline and other internal web applications.',
+			'Designed and developed internal AngularJS, Angular, and React component libraries used across Frontline and other internal web applications.',
 			'Worked independently to design, prototype, and deliver proof-of-concept applications and MVPs for new internal revenue streams.',
 			'Post-acquisition: joined the UX Implementation team translating Figma designs into production-quality code, then moved to a focused strike team as the primary frontend developer for new features and application development.',
 			'Continued to own significant frontend architecture decisions and component library maintenance throughout both eras.'

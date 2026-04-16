@@ -1,7 +1,14 @@
 :root {
+	/* Fonts */
+	--serif-font-family: 'Cambria', 'Cochin', 'Georgia', 'Times', 'Times New Roman', serif;
+	--sans-serif-font-family: 'Segoe UI', 'Helvetica Neue', 'Arial', sans-serif;
+	--base-font-family: var(--serif-font-family);
+	--base-font-weight: 300;
+	--base-font-size: 18px;
+
 	/* Colors */
 	--background: hsl(0 0% 100%);
-	--background-alt: hsl(0 0% 100%);
+	--background-alt: hsl(0 0% 90%);
 	--foreground: hsl(0 0% 9%);
 	--foreground-alt: hsl(0 0% 32%);
 	--muted: hsl(240 5% 96%);
@@ -35,6 +42,13 @@
 	--shadow-card: 0px 2px 0px 1px rgba(0, 0, 0, 0.04);
 	--shadow-date-field-focus: 0px 0px 0px 3px rgba(24, 24, 27, 0.17);
 
+	/* Layout */
+	--header-display: flex;
+	--header-flex-direction: row;
+	--header-justify-content: space-between;
+	--header-align-items: center;
+	--header-padding: 0.5rem;
+
   /* Forms */
   --radius-input: 0.25rem;
   --radius-button: 0.25rem;
@@ -46,9 +60,9 @@
 @media (prefers-color-scheme: dark) {
 	:root {
 		/* Colors */
-		--background: hsl(0 0% 5%);
+		--background: hsl(0 0% 8.63%);
 		--background-alt: hsl(0 0% 8%);
-		--foreground: hsl(0 0% 95%);
+		--foreground: hsl(0 0% 95.69%);
 		--foreground-alt: hsl(0 0% 70%);
 		--muted: hsl(240 4% 16%);
 		--muted-foreground: hsla(0 0% 100% / 0.4);
