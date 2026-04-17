@@ -9,7 +9,7 @@ export type DesignPortfolioEntry = {
 	slug: string;
 	name: string;
 	projectType: DesignPortfolioProjectType;
-	images: { thumbnail: string; hero: string; full: string };
+	images: { thumbnail: string; hero?: string; full: string };
 	/**
 	 * Human-readable timeframe; for sorting, use a leading four-digit year (e.g. "2024" or "2024 - Q2").
 	 * See circaYearFromString in portfolio load (leading year parse).
@@ -65,7 +65,6 @@ const data: DesignPortfolioEntry[] = [
 		technologies: ['Vector', 'Texture', 'Spot art'],
 		summary: 'Spot illustrations for onboarding and empty states.',
 		description: 'A coherent family of marks that reads at small sizes and pairs with the glass UI without fighting the grid.',
-		featuredAsHero: true
 	},
 	{
 		slug: 'ledger-mobile-chrome',
@@ -80,6 +79,21 @@ const data: DesignPortfolioEntry[] = [
 		technologies: ['iOS patterns', 'Android', 'Motion specs'],
 		summary: 'Navigation and surfaces for a finance companion app.',
 		description: 'Chrome-level patterns only: tab bar, sheets, and headers that stay readable on OLED blacks with minimal glow.'
+	},
+	{
+		slug: 'greenplay-corporate-ui',
+		name: 'Greenplay corporate UI',
+		projectType: 'ui',
+		images: {
+			thumbnail: '/images/gpweb2-thumb.webp',
+			hero: '/images/gpweb2-hero.webp',
+			full: '/images/gpweb2.webp',
+		},
+		circa: '2007 - corporate UI',
+		technologies: ['UI/UX design', 'Interaction design', 'Brand design', 'Corporate web development'],
+		summary: 'Marketing website design for Greenplay.',
+		description: 'Original design concept for Greenplay\'s marketing website.',
+		featuredAsHero: true
 	}
 ];
 
