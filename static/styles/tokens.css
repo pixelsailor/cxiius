@@ -30,10 +30,10 @@
 	--info: hsl(201 90% 50%);
 	--success: hsl(141 71% 48%);
 	--line: hsl(0 0% 90.92%);
- 
+
 	/* black */
 	--contrast: hsl(0 0% 0%);
- 
+
 	/* Shadows */
 	--shadow-mini: 0px 1px 0px 1px rgba(0, 0, 0, 0.04);
 	--shadow-mini-inset: 0px 1px 0px 0px rgba(0, 0, 0, 0.04) inset;
@@ -50,21 +50,60 @@
 	--header-align-items: center;
 	--header-padding: 0.5rem;
 
-  /* Forms */
-  --radius-input: 0.25rem;
-  --radius-button: 0.25rem;
-  --radius-card: 0.5rem;
-  --radius-popover: 0.5rem;
-  --radius-kbd: 0.5rem;
+	/* Forms */
+	--radius-input: 0.25rem;
+	--radius-button: 0.25rem;
+	--radius-card: 0.5rem;
+	--radius-popover: 0.5rem;
+	--radius-kbd: 0.5rem;
 
 	--input-height: 2rem;
 
 	--default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 	--default-transition-duration: 0.15s;
 }
- 
+
+/*
+ * Explicit "light" — same token values as default :root (system light).
+ */
+:root[data-theme='light'] {
+	--background: hsl(0 0% 100%);
+	--background-alt: hsl(0 0% 90%);
+	--foreground: hsl(0 0% 9%);
+	--foreground-alt: hsl(0 0% 32%);
+	--muted: hsl(240 5% 96%);
+	--muted-foreground: hsla(0 0% 9% / 0.4);
+	--border: hsl(240 6% 10%);
+	--border-input: hsla(240 6% 10% / 0.17);
+	--border-input-hover: hsla(240 6% 10% / 0.4);
+	--border-card: hsla(240 6% 10% / 0.1);
+	--dark: hsl(240 6% 10%);
+	--dark-foreground: hsl(0 0% 100% / 0.8);
+	--dark-10: hsla(240 6% 10% / 0.1);
+	--dark-40: hsla(240 6% 10% / 0.4);
+	--dark-04: hsla(240 6% 10% / 0.04);
+	--accent: var(hsla(240 6% 10%));
+	--accent-foreground: hsl(0 0% 100% / 0.8);
+	--destructive: hsl(347 77% 50%);
+	--tertiary: hsl(37.7 92.1% 50.2%);
+	--info: hsl(201 90% 50%);
+	--success: hsl(141 71% 48%);
+	--line: hsl(0 0% 90.92%);
+	--contrast: hsl(0 0% 0%);
+	--shadow-mini: 0px 1px 0px 1px rgba(0, 0, 0, 0.04);
+	--shadow-mini-inset: 0px 1px 0px 0px rgba(0, 0, 0, 0.04) inset;
+	--shadow-popover: 0px 7px 12px 3px var(--dark-04);
+	--shadow-kbd: 0px 2px 0px 0px rgba(0, 0, 0, 0.07);
+	--shadow-btn: 0px 1px 0px 1px rgba(0, 0, 0, 0.03);
+	--shadow-card: 0px 2px 0px 1px rgba(0, 0, 0, 0.04);
+	--shadow-date-field-focus: 0px 0px 0px 3px rgba(24, 24, 27, 0.17);
+}
+
+/*
+ * System dark only — when <html> has no data-theme, follow OS preference.
+ */
 @media (prefers-color-scheme: dark) {
-	:root {
+	:root:not([data-theme]) {
 		/* Colors */
 		--background: hsl(0 0% 8.63%);
 		--background-alt: hsl(0 0% 8%);
@@ -88,7 +127,7 @@
 		--tertiary: hsl(61.3 100% 82.2%);
 		/* white */
 		--contrast: hsl(0 0% 100%);
-	
+
 		/* Shadows */
 		--shadow-mini: 0px 1px 0px 1px rgba(0, 0, 0, 0.3);
 		--shadow-mini-inset: 0px 1px 0px 0px rgba(0, 0, 0, 0.5) inset;
@@ -98,4 +137,112 @@
 		--shadow-card: 0px 2px 0px 1px rgba(0, 0, 0, 0.4);
 		--shadow-date-field-focus: 0px 0px 0px 3px rgba(244, 244, 245, 0.1);
 	}
+}
+
+/*
+ * Explicit "dark" — same token values as the system dark block above.
+ */
+:root[data-theme='dark'] {
+	--background: hsl(0 0% 8.63%);
+	--background-alt: hsl(0 0% 8%);
+	--foreground: hsl(0 0% 95.69%);
+	--foreground-alt: hsl(0 0% 70%);
+	--muted: hsl(240 4% 16%);
+	--muted-foreground: hsla(0 0% 100% / 0.4);
+	--border: hsl(0 0% 96%);
+	--border-input: hsla(0 0% 96% / 0.17);
+	--border-input-hover: hsla(0 0% 96% / 0.4);
+	--border-card: hsla(0 0% 96% / 0.1);
+	--dark: hsl(0 0% 96%);
+	--dark-foreground: hsl(0 0% 5% / 0.8);
+	--dark-40: hsl(0 0% 96% / 0.4);
+	--dark-10: hsl(0 0% 96% / 0.1);
+	--dark-04: hsl(0 0% 96% / 0.04);
+	--accent: var(hsla(0 0% 96%));
+	--accent-foreground: hsl(0 0% 5% / 0.8);
+	--destructive: hsl(350 89% 60%);
+	--line: hsl(0 0% 15%);
+	--tertiary: hsl(61.3 100% 82.2%);
+	--info: hsl(201 90% 50%);
+	--success: hsl(141 71% 48%);
+	--contrast: hsl(0 0% 100%);
+	--shadow-mini: 0px 1px 0px 1px rgba(0, 0, 0, 0.3);
+	--shadow-mini-inset: 0px 1px 0px 0px rgba(0, 0, 0, 0.5) inset;
+	--shadow-popover: 0px 7px 12px 3px hsla(0deg 0% 0% / 30%);
+	--shadow-kbd: 0px 2px 0px 0px rgba(255, 255, 255, 0.07);
+	--shadow-btn: 0px 1px 0px 1px rgba(0, 0, 0, 0.2);
+	--shadow-card: 0px 2px 0px 1px rgba(0, 0, 0, 0.4);
+	--shadow-date-field-focus: 0px 0px 0px 3px rgba(244, 244, 245, 0.1);
+}
+
+/*
+ * Stone — warm neutral (product-tunable).
+ */
+:root[data-theme='stone'] {
+	--background: hsl(40 20% 98%);
+	--background-alt: hsl(38 14% 92%);
+	--foreground: hsl(28 12% 12%);
+	--foreground-alt: hsl(30 8% 36%);
+	--muted: hsl(36 12% 94%);
+	--muted-foreground: hsla(28 12% 12% / 0.45);
+	--border: hsl(32 10% 22%);
+	--border-input: hsla(32 10% 22% / 0.2);
+	--border-input-hover: hsla(32 10% 22% / 0.45);
+	--border-card: hsla(32 10% 22% / 0.12);
+	--dark: hsl(30 12% 18%);
+	--dark-foreground: hsl(40 25% 98% / 0.88);
+	--dark-10: hsla(30 12% 18% / 0.1);
+	--dark-40: hsla(30 12% 18% / 0.4);
+	--dark-04: hsla(30 12% 18% / 0.05);
+	--accent: hsl(32 28% 42%);
+	--accent-foreground: hsl(40 30% 98% / 0.92);
+	--destructive: hsl(8 70% 48%);
+	--tertiary: hsl(38 55% 48%);
+	--info: hsl(200 55% 42%);
+	--success: hsl(145 45% 38%);
+	--line: hsl(35 10% 88%);
+	--contrast: hsl(28 15% 8%);
+	--shadow-mini: 0px 1px 0px 1px rgba(60, 40, 20, 0.06);
+	--shadow-mini-inset: 0px 1px 0px 0px rgba(60, 40, 20, 0.06) inset;
+	--shadow-popover: 0px 7px 12px 3px hsla(30 20% 10% / 0.12);
+	--shadow-kbd: 0px 2px 0px 0px rgba(60, 40, 20, 0.08);
+	--shadow-btn: 0px 1px 0px 1px rgba(60, 40, 20, 0.05);
+	--shadow-card: 0px 2px 0px 1px rgba(60, 40, 20, 0.07);
+	--shadow-date-field-focus: 0px 0px 0px 3px hsla(32 25% 30% / 0.22);
+}
+
+/*
+ * Twilight — blue–purple (product-tunable).
+ */
+:root[data-theme='twilight'] {
+	--background: hsl(250 18% 11%);
+	--background-alt: hsl(252 16% 9%);
+	--foreground: hsl(255 20% 96%);
+	--foreground-alt: hsl(250 12% 72%);
+	--muted: hsl(248 14% 18%);
+	--muted-foreground: hsla(255 20% 96% / 0.45);
+	--border: hsl(255 18% 88%);
+	--border-input: hsla(255 18% 88% / 0.2);
+	--border-input-hover: hsla(255 18% 88% / 0.45);
+	--border-card: hsla(255 18% 88% / 0.1);
+	--dark: hsl(255 22% 92%);
+	--dark-foreground: hsl(250 25% 8% / 0.88);
+	--dark-10: hsla(255 22% 92% / 0.1);
+	--dark-40: hsla(255 22% 92% / 0.4);
+	--dark-04: hsla(255 22% 92% / 0.05);
+	--accent: hsl(265 45% 58%);
+	--accent-foreground: hsl(255 25% 98% / 0.95);
+	--destructive: hsl(350 75% 58%);
+	--tertiary: hsl(285 55% 68%);
+	--info: hsl(210 80% 58%);
+	--success: hsl(150 50% 48%);
+	--line: hsl(248 12% 22%);
+	--contrast: hsl(255 30% 98%);
+	--shadow-mini: 0px 1px 0px 1px rgba(0, 0, 0, 0.35);
+	--shadow-mini-inset: 0px 1px 0px 0px rgba(0, 0, 0, 0.45) inset;
+	--shadow-popover: 0px 7px 12px 3px hsla(260 40% 4% / 0.45);
+	--shadow-kbd: 0px 2px 0px 0px rgba(255, 255, 255, 0.06);
+	--shadow-btn: 0px 1px 0px 1px rgba(0, 0, 0, 0.25);
+	--shadow-card: 0px 2px 0px 1px rgba(0, 0, 0, 0.38);
+	--shadow-date-field-focus: 0px 0px 0px 3px hsla(265 50% 60% / 0.25);
 }

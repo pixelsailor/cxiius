@@ -1,13 +1,15 @@
-<!-- <div class="title-card-container">
-  <h1 class="display-large fredericka title-card">CXII</h1>
-</div> -->
+<div class="title-card-container">
+	<h1 class="display-large fredericka title-card">CXII</h1>
+</div>
 
 <style>
 	.title-card-container {
 		display: flex;
+		flex-direction: column;
 		justify-content: center;
 		align-items: center;
-		height: 100vh;
+		gap: 1.25rem;
+		height: 100%;
 	}
 
 	.title-card {

@@ -1,11 +1,18 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { Button, Popover, Slider } from 'bits-ui';
+	import { Button } from 'bits-ui';
 
 	import { resolve } from '$app/paths';
 	import favicon from '$lib/assets/favicon.svg';
 	import { isJavaScriptEnabled, removeNoJsClassFromBody } from '$lib/utils/jsEnabled';
+	import { applyTheme, clampThemeIndex } from '$lib/utils/theme';
 	import type { RouteId } from '$app/types';
+	import { Slider } from '$lib/ui/slider';
+
+	const navItems: { label: string; path: RouteId }[] = [
+		{ label: 'Home', path: '/' },
+		{ label: 'Resume', path: '/resume' }
+	];
 
 	let { children } = $props();
 
@@ -16,19 +23,16 @@
 
 	let activeFontFamily = $state(serifFontFamily);
 
-	let themeValue = $state(0);
+	let activeThemeIndex = $state(0);
 
-	const navItems: { label: string; path: RouteId }[] = [
-		{ label: 'Home', path: '/' },
-		{ label: 'Resume', path: '/resume' }
-	];
+	const handleThemeChange = (v: number) => {
+		const i = clampThemeIndex(v);
+		activeThemeIndex = i;
+		applyTheme(i);
+	};
 
 	const toggleFontFamily = () => {
 		activeFontFamily = activeFontFamily === serifFontFamily ? sansFontFamily : serifFontFamily;
-	};
-
-	const handleThemeChange = (value: number) => {
-		console.log(value);
 	};
 
 	onMount(() => {
@@ -65,21 +69,8 @@
 		</div>
 		<div class="header-controls">
 			{#if isJsEnabled}
-				<div class="button-group">
-					<Popover.Root>
-						<Popover.Trigger class="button text" id="theme-picker-trigger">Theme</Popover.Trigger>
-						<Popover.Portal>
-							<Popover.Content class="popover-content">
-								<Slider.Root class="slider-root" id="theme-picker-slider" type="single" bind:value={themeValue} onValueCommit={handleThemeChange}>
-									<Slider.Range />
-									<Slider.Thumb index={0} />
-									<Slider.Tick index={0} />
-								</Slider.Root>
-							</Popover.Content>
-						</Popover.Portal>
-					</Popover.Root>
-					<Button.Root class="button text icon" id="font-toggle" onclick={toggleFontFamily}>A</Button.Root>
-				</div>
+				<Slider aria-label="Theme switcher" class="theme-slider" type="single" min={0} max={4} step={1} bind:value={activeThemeIndex} onValueCommit={handleThemeChange} />
+				<Button.Root class="button text icon" id="font-toggle" onclick={toggleFontFamily}>A</Button.Root>
 			{/if}
 		</div>
 	</header>
@@ -124,6 +115,17 @@
 		list-style: none;
 		padding: 0;
 		margin: 0;
+	}
+
+	.header-controls {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		min-width: 300px;
+	}
+
+	:global(.theme-slider[data-slider-root]) {
+		width: min(100%, 280px);
 	}
 
 	main {
