@@ -45,5 +45,12 @@ export default defineConfig(
 		rules: {
 			'content-ascii/only-ascii': 'error'
 		}
+	},
+	{
+		// Filter links append a fixed `type` query to `resolve('/portfolio')`; eslint-plugin-svelte only treats pure `resolve()` or absolute URLs as valid.
+		files: ['src/routes/portfolio/+page.svelte'],
+		rules: {
+			'svelte/no-navigation-without-resolve': 'off'
+		}
 	}
 );

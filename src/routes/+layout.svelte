@@ -11,7 +11,8 @@
 
 	const navItems: { label: string; path: RouteId }[] = [
 		{ label: 'Home', path: '/' },
-		{ label: 'Resume', path: '/resume' }
+		{ label: 'Resume', path: '/resume' },
+		{ label: 'Portfolio', path: '/portfolio' }
 	];
 
 	let { children } = $props();
@@ -61,7 +62,7 @@
 				<ul class="main-nav-list">
 					{#each navItems as item (item.path)}
 						<li class="main-nav-item">
-							<a href={resolve(item.path)} class="main-nav-link">{item.label}</a>
+							<a href={item.path === '/' ? resolve('/') : item.path === '/resume' ? resolve('/resume') : resolve('/portfolio')} class="main-nav-link">{item.label}</a>
 						</li>
 					{/each}
 				</ul>

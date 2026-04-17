@@ -1,0 +1,81 @@
+{
+	"manifest_version": "1.0.0",
+	"task_id": "portfolio-page",
+	"objective": "Ship a prerendered `/portfolio` route that showcases design work: (1) a hero section above Featured Works highlighting one portfolio project, defaulting to the most recent by circa date but overridable via content data; (2) a responsive 3-column grid (1 column on small viewports) styled like the reference (dark theme, glass header area, neon-green filter links, glossy diagonal overlay on thumbnails); (3) a TypeScript-only light CMS under `$lib/content/` (one file per content domain per ADR-008) holding entries with: name, project type (Branding & Identity | Illustration | User Interface), three image URLs (thumbnail, hero, full), circa date (string), technologies[], one-line summary, full description, optional live project URL; (4) client-free filtering: show only projects matching the selected type; filters exposed as normal navigable links; optional query-based routing using `history.replaceState` (no extra history entries) when JS runs, with server-rendered HTML correct for no-JS; (5) grid items and hero link toward a project detail route that is explicitly out of scope (use `#` or a stub path only if the plan requires a target); (6) use placeholder imagery (e.g. placehold.co) until real assets exist. Project detail page implementation is out of scope.",
+	"status": "complete",
+	"current_agent": "orchestrator",
+	"pipeline": ["orchestrator", "planner", "builder", "test", "validator", "orchestrator"],
+	"completed_stages": [
+		{
+			"agent": "planner",
+			"completed_at": "2026-04-17T12:00:00.000Z",
+			"output_artifacts": [
+				".cursor/orchestrations/portfolio-page/plan.md",
+				".cursor/orchestrations/portfolio-page/acceptance-criteria.md"
+			],
+			"summary": "Plan and acceptance criteria written for portfolio route, design-portfolio content domain, prerender entries, assembler, and PE filters."
+		},
+		{
+			"agent": "builder",
+			"completed_at": "2026-04-17T12:30:00.000Z",
+			"output_artifacts": [
+				".cursor/orchestrations/portfolio-page/build-log.md",
+				"src/lib/content/design-portfolio.ts",
+				"src/routes/portfolio/+page.ts",
+				"src/routes/portfolio/+page.svelte",
+				"src/routes/portfolio/[slug]/+page.ts",
+				"src/routes/portfolio/[slug]/+page.svelte",
+				"src/lib/server/system-prompt.service.ts"
+			],
+			"summary": "Portfolio route, content domain, assembler, prerender config, stub detail route; check and lint passed; build noted EBUSY on Windows."
+		},
+		{
+			"agent": "test",
+			"completed_at": "2026-04-17T13:00:00.000Z",
+			"output_artifacts": [
+				".cursor/orchestrations/portfolio-page/test-report.md",
+				"src/lib/utils/portfolio-load.ts",
+				"src/lib/utils/portfolio-load.spec.ts",
+				"src/lib/content/design-portfolio.spec.ts",
+				"src/lib/server/system-prompt.service.spec.ts",
+				"src/routes/portfolio/portfolio-route-load.spec.ts"
+			],
+			"summary": "Vitest coverage for portfolio load helpers, content, assembler, route load; test-report maps AC-01-AC-22."
+		},
+		{
+			"agent": "validator",
+			"completed_at": "2026-04-17T13:15:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/portfolio-page/validation-report.md"],
+			"summary": "Verdict FAIL: AC-12/AC-13 vs SvelteKit prerender URL API and Windows prerender filenames."
+		},
+		{
+			"agent": "builder",
+			"completed_at": "2026-04-17T13:45:00.000Z",
+			"output_artifacts": [
+				".cursor/orchestrations/portfolio-page/build-log.md",
+				".cursor/orchestrations/portfolio-page/acceptance-criteria.md",
+				"src/routes/portfolio/+page.ts",
+				"svelte.config.js",
+				"src/routes/portfolio/portfolio-route-load.spec.ts",
+				"src/lib/utils/portfolio-load.spec.ts"
+			],
+			"summary": "Remediation: document href-based query parse; POSIX vs win32 prerender entries; PageData narrowing; parity test for type query."
+		},
+		{
+			"agent": "validator",
+			"completed_at": "2026-04-17T14:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/portfolio-page/validation-report.md"],
+			"summary": "Verdict PASS_WITH_NOTES: AC and ADRs satisfied with documented POSIX CI note for query prerender."
+		}
+	],
+	"loop_count": 1,
+	"max_loops": 2,
+	"locked_artifacts": [],
+	"flags": [],
+	"human_approval": {
+		"status": "approved",
+		"approved_at": "2026-04-17T15:30:00.000Z",
+		"approver": "pixelsailor",
+		"notes": "Run closed after PASS_WITH_NOTES validation."
+	}
+}
