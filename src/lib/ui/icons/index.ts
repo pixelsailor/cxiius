@@ -4,5 +4,6 @@ import MoonIcon from './MoonIcon.svelte';
 import MoonStarsIcon from './MoonStarsIcon.svelte';
 import PaletteIcon from './PaletteIcon.svelte';
 import SunIcon from './SunIcon.svelte';
+import SunHorizonIcon from './SunHorizonIcon.svelte';
 
-export { PaletteIcon, DesktopIcon, MoonIcon, MoonStarsIcon, SunIcon, DimSunIcon };
+export { PaletteIcon, DesktopIcon, MoonIcon, MoonStarsIcon, SunIcon, DimSunIcon, SunHorizonIcon };

@@ -8,7 +8,7 @@
 	import { applyTheme, clampThemeIndex } from '$lib/utils/theme';
 	import type { RouteId } from '$app/types';
 	import { Slider } from '$lib/ui';
-	import PaletteIcon from '$lib/ui/icons/PaletteIcon.svelte';
+	import { PaletteIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon } from '$lib/ui/icons';
 
 	const navItems: { label: string; path: RouteId }[] = [
 		{ label: 'Home', path: '/' },
@@ -73,7 +73,17 @@
 			{#if isJsEnabled}
 				<Popover.Root>
 					<Popover.Trigger class="button text icon popover__trigger">
-						<PaletteIcon size="sm" />
+						{#if activeThemeIndex === 1}
+							<SunIcon size="sm" />
+						{:else if activeThemeIndex === 2}
+							<SunHorizonIcon size="sm" />
+						{:else if activeThemeIndex === 3}
+							<MoonStarsIcon size="sm" />
+						{:else if activeThemeIndex === 4}
+							<MoonIcon size="sm" />
+						{:else}
+							<PaletteIcon size="sm" />
+						{/if}
 					</Popover.Trigger>
 					<Popover.Portal>
 						<Popover.Content class="popover__content">
