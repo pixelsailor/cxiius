@@ -8,7 +8,14 @@
 	import { applyTheme, clampThemeIndex } from '$lib/utils/theme';
 	import type { RouteId } from '$app/types';
 	import { Slider } from '$lib/ui';
-	import { PaletteIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon } from '$lib/ui/icons';
+	import {
+		PaletteIcon,
+		DesktopIcon,
+		SunIcon,
+		SunHorizonIcon,
+		MoonStarsIcon,
+		MoonIcon
+	} from '$lib/ui/icons';
 
 	const navItems: { label: string; path: RouteId }[] = [
 		{ label: 'Home', path: '/' },
@@ -41,6 +48,20 @@
 		removeNoJsClassFromBody();
 	});
 </script>
+
+{#snippet themeTickLabel({ value }: { value: number; index: number })}
+	{#if value === 0}
+		<DesktopIcon size="xs" />
+	{:else if value === 1}
+		<SunIcon size="xs" />
+	{:else if value === 2}
+		<SunHorizonIcon size="xs" />
+	{:else if value === 3}
+		<MoonStarsIcon size="xs" />
+	{:else if value === 4}
+		<MoonIcon size="xs" />
+	{/if}
+{/snippet}
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
@@ -87,11 +108,24 @@
 					</Popover.Trigger>
 					<Popover.Portal>
 						<Popover.Content class="popover__content">
-							<Slider aria-label="Theme switcher" class="theme-slider" type="single" min={0} max={4} step={1} bind:value={activeThemeIndex} onValueChange={handleThemeChange} />
+							<Slider
+								aria-label="Theme switcher"
+								class="theme-slider"
+								type="single"
+								min={0}
+								max={4}
+								step={1}
+								trackPadding={2}
+								bind:value={activeThemeIndex}
+								onValueChange={handleThemeChange}
+								tickLabel={themeTickLabel}
+							/>
 						</Popover.Content>
 					</Popover.Portal>
 				</Popover.Root>
-				<Button.Root class="button text icon" id="font-toggle" onclick={toggleFontFamily}>A</Button.Root>
+				<Button.Root class="button text icon label-large" id="font-toggle" onclick={toggleFontFamily}>
+					<strong>Aa</strong>
+				</Button.Root>
 			{/if}
 		</div>
 	</header>
@@ -146,7 +180,7 @@
 	}
 
 	:global(.popover__content) {
-		padding: 1rem 0.5rem;
+		padding: 0.75rem 0.5rem 1rem;
 		border: 1px solid var(--muted);
 		border-radius: var(--radius-popover);
 		background-color: var(--background);
@@ -154,7 +188,7 @@
 		box-shadow: var(--shadow-popover);
 		z-index: 40;
 		width: 16rem;
-		height: 2rem;
+		min-height: auto;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -166,6 +200,11 @@
 
 	:global(.theme-slider[data-slider-root]) {
 		width: min(100%, 280px);
+		margin-top: 1.25rem;
+	}
+
+	:global(.theme-slider [data-slider-tick-label]) {
+		margin-bottom: 0.625rem;
 	}
 
 	main {

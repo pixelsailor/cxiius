@@ -1,12 +1,13 @@
 <script lang="ts">
 	/* eslint-disable @typescript-eslint/no-explicit-any */
-	/* eslint-disable svelte/require-each-key */
-	import type { ComponentProps } from 'svelte';
+	import type { ComponentProps, Snippet } from 'svelte';
 	import { Slider, type WithoutChildren } from 'bits-ui';
 
-	type Props = WithoutChildren<ComponentProps<typeof Slider.Root>>;
+	type Props = WithoutChildren<ComponentProps<typeof Slider.Root>> & {
+		tickLabel?: Snippet<[{ index: number; value: number }]>;
+	};
 
-	let { value = $bindable(), ref = $bindable(null), ...restProps }: Props = $props();
+	let { value = $bindable(), ref = $bindable(null), tickLabel, ...restProps }: Props = $props();
 </script>
 
 <!-- 
@@ -14,13 +15,18 @@
  discriminated union of `"single" | "multiple"`. (an unfortunate consequence of having to destructure bindable values) 
  -->
 <Slider.Root bind:value bind:ref {...restProps as any}>
-	{#snippet children({ thumbs, ticks })}
+	{#snippet children({ tickItems, thumbItems })}
 		<Slider.Range />
-		{#each thumbs as index}
+		{#each thumbItems as { index } (index)}
 			<Slider.Thumb {index} />
 		{/each}
-		{#each ticks as index}
+		{#each tickItems as { index, value } (index)}
 			<Slider.Tick {index} />
+			{#if tickLabel}
+				<Slider.TickLabel {index} position="top">
+					{@render tickLabel({ index, value })}
+				</Slider.TickLabel>
+			{/if}
 		{/each}
 	{/snippet}
 </Slider.Root>
@@ -62,6 +68,25 @@
 	:global([data-slider-thumb]:focus-visible) {
 		outline: 2px solid var(--foreground);
 		outline-offset: 2px;
+	}
+
+	:global([data-slider-tick]) {
+		z-index: 1;
+		width: 1px;
+		align-self: stretch;
+		min-height: 0.375rem;
+		background-color: var(--border-input);
+	}
+
+	:global([data-slider-tick-label]) {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		color: var(--foreground-alt);
+	}
+
+	:global([data-slider-tick-label][data-selected]) {
+		color: var(--foreground);
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
