@@ -31,7 +31,7 @@
 		</section>
 		<section class="summary-section will-fade">
 			<p class="title-large summary">
-				Staff Front-End Engineer with 20+ years of experience architecting enterprise-scale web applications and design systems. Builds component-driven platforms that enforce
+				Front-End Engineer with 20+ years of experience architecting enterprise-scale web applications and design systems. Builds component-driven platforms that enforce
 				accessibility, consistency, and usability by design while enabling AI-assisted development workflows. Proven leader in aligning cross-functional teams to deliver
 				performant, maintainable, and user-centered solutions.
 			</p>

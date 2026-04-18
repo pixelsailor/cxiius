@@ -25,7 +25,7 @@ export type Identity = {
 
 const data: Identity = {
 	name: 'Benjamin Thompson',
-	role: 'Staff Software Engineer - Front-End Architecture, Component Systems, UI/UX',
+	role: 'Sr/Staff Software Engineer - Front-End Architecture, Component Systems, UI/UX',
 	location: 'San Antonio, TX',
 	contact: {
 		email: 'ben@cxii.us',
@@ -35,7 +35,7 @@ const data: Identity = {
 	},
 	yearsExperience: 25,
 	summary:
-		'Staff front-end engineer and UI/UX designer with over two decades of experience building accessible, responsive, and secure enterprise-grade web applications. Work sits at the intersection of engineering rigor and design sensibility - architecting component systems that encode brand and accessibility standards structurally, rather than relying on convention or documentation alone.',
+		'Front-end engineer and UI/UX designer with over two decades of experience building accessible, responsive, and secure enterprise-grade web applications. Work sits at the intersection of engineering rigor and design sensibility - architecting component systems that encode brand and accessibility standards structurally, rather than relying on convention or documentation alone.',
 	usabilityAccessibilityCommitment:
 		'Commits to interface usability and to applying WCAG in shipping work through routine accessibility audits, code reviews that include accessibility, and verification with browser tooling such as WAVE, Pa11y, Chrome DevTools, and Lighthouse.',
 	differentiators: [
