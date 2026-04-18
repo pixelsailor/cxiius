@@ -5,7 +5,12 @@
 	import { resolve } from '$app/paths';
 	import favicon from '$lib/assets/favicon.svg';
 	import { isJavaScriptEnabled, removeNoJsClassFromBody } from '$lib/utils/jsEnabled';
-	import { applyTheme, clampThemeIndex } from '$lib/utils/theme';
+	import {
+		applyTheme,
+		clampThemeIndex,
+		persistThemeIndex,
+		readStoredThemeIndex
+	} from '$lib/utils/theme';
 	import type { RouteId } from '$app/types';
 	import { Slider } from '$lib/ui';
 	import {
@@ -38,6 +43,7 @@
 		const i = clampThemeIndex(v);
 		activeThemeIndex = i;
 		applyTheme(i);
+		persistThemeIndex(i);
 	};
 
 	const toggleFontFamily = () => {
@@ -46,6 +52,13 @@
 
 	onMount(() => {
 		removeNoJsClassFromBody();
+		const stored = readStoredThemeIndex();
+		if (stored !== null) {
+			activeThemeIndex = stored;
+			applyTheme(stored);
+		} else {
+			applyTheme(0);
+		}
 	});
 </script>
 

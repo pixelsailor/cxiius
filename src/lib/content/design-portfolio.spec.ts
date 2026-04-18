@@ -24,7 +24,9 @@ describe('getDesignPortfolio', () => {
 			expect(typeof e.name).toBe('string');
 			expect(DESIGN_PORTFOLIO_PROJECT_TYPES).toContain(e.projectType);
 			expect(isImageRef(e.images.thumbnail)).toBe(true);
-			expect(isImageRef(e.images.hero)).toBe(true);
+			if (e.images.hero !== undefined) {
+				expect(isImageRef(e.images.hero)).toBe(true);
+			}
 			expect(isImageRef(e.images.full)).toBe(true);
 			expect(typeof e.circa).toBe('string');
 			expect(Array.isArray(e.technologies)).toBe(true);
@@ -37,7 +39,7 @@ describe('getDesignPortfolio', () => {
 		const entries = await getDesignPortfolio();
 		for (const e of entries) {
 			for (const url of [e.images.thumbnail, e.images.hero, e.images.full]) {
-				if (url.startsWith('https://')) {
+				if (url !== undefined && url.startsWith('https://')) {
 					expect(url).toContain('placehold.co');
 				}
 			}

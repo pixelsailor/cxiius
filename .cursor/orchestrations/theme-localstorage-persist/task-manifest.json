@@ -1,0 +1,53 @@
+{
+	"manifest_version": "1.0.0",
+	"task_id": "theme-localstorage-persist",
+	"objective": "Save the user's selected theme to localStorage when a theme is selected with the theme switcher/slider. On subsequent visits with JavaScript enabled, restore the saved theme (including system/default when index 0).",
+	"status": "complete",
+	"current_agent": "orchestrator",
+	"pipeline": ["orchestrator", "planner", "builder", "test", "validator"],
+	"completed_stages": [
+		{
+			"agent": "orchestrator",
+			"completed_at": "2026-04-18T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/theme-localstorage-persist/task-manifest.json"],
+			"summary": "Bootstrapped manifest; objective is actionable; handed off to Planner."
+		},
+		{
+			"agent": "planner",
+			"completed_at": "2026-04-18T00:00:00.000Z",
+			"output_artifacts": [
+				".cursor/orchestrations/theme-localstorage-persist/plan.md",
+				".cursor/orchestrations/theme-localstorage-persist/acceptance-criteria.md"
+			],
+			"summary": "Plan and acceptance criteria for localStorage theme index persistence and client restore."
+		},
+		{
+			"agent": "builder",
+			"completed_at": "2026-04-18T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/theme-localstorage-persist/build-log.md"],
+			"summary": "Implemented theme storage helpers, layout restore/persist, unit tests; check and unit tests pass."
+		},
+		{
+			"agent": "test",
+			"completed_at": "2026-04-18T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/theme-localstorage-persist/test-report.md"],
+			"summary": "Test report with AC coverage map and uncovered layout/E2E items."
+		},
+		{
+			"agent": "validator",
+			"completed_at": "2026-04-18T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/theme-localstorage-persist/validation-report.md"],
+			"summary": "PASS_WITH_NOTES: unit coverage strong; integration/e2e for reload optional follow-up."
+		}
+	],
+	"loop_count": 0,
+	"max_loops": 2,
+	"locked_artifacts": [],
+	"flags": [],
+	"human_approval": {
+		"status": "approved",
+		"approved_at": "2026-04-18T16:16:17.352Z",
+		"approver": "pixelsailor",
+		"notes": null
+	}
+}
