@@ -13,7 +13,7 @@
   padding-inline: 1rem;
   background-color: var(--foreground-alt);
   color: var(--background);
-  transition: background-color 0.2s ease-in-out;
+  transition-property: background-color, color, opacity;
 
   background-origin: border-box;
 
@@ -23,22 +23,24 @@
   &:hover:not([disabled]) {
     background-color: var(--foreground);
     color: var(--background);
+    transition-duration: 0.4s;
     cursor: pointer;
   }
 
   &:active {
-    transition-property: all;
     transition-timing-function: var(--default-transition-timing-function);
     transition-duration: var(--default-transition-duration);
     scale: 0.98;
   }
 
   &.primary {
-    background-color: var(--foreground);
-    color: var(--background);
+    background-color: highlight;
+    color: var(--contrast);
 
     &:hover {
-      background-color: var(--dark-80);
+      background-color: highlight;
+      opacity: 0.8;
+      color: var(--contrast);
     }
   }
 
