@@ -20,10 +20,14 @@ a {
   font-size: small;
   letter-spacing: 0.025em;
   font-weight: 200;
+  padding-inline: 0.125rem;
+  transition: background-color var(--default-transition-duration) var(--default-transition-timing-function), color var(--default-transition-duration) var(--default-transition-timing-function), border-color var(--default-transition-duration) var(--default-transition-timing-function);
+  border-bottom: 1px solid transparent;
 
   &:hover {
-    background-color: var(--muted);
-    color: var(--muted-foreground);
+    background-color: var(--background-alt);
+    color: var(--foreground);
+    border-color: var(--dark-40);
   }
 }
 

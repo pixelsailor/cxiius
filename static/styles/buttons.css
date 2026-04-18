@@ -23,7 +23,7 @@
   &:hover:not([disabled]) {
     background-color: var(--foreground);
     color: var(--background);
-    transition-duration: 0.4s;
+    transition-duration: 0.3s;
     cursor: pointer;
   }
 
@@ -46,18 +46,27 @@
 
   &.warn {
     background-color: var(--tertiary);
+    color: var(--contrast);
 
     &:hover {
       background-color: var(--tertiary-80);
+      color: var(--contrast);
     }
   }
 
   &.danger {
     background-color: var(--destructive);
+    color: var(--background);
 
     &:hover {
       background-color: var(--destructive-80);
+      color: var(--background);
     }
+  }
+
+  &[disabled] {
+    background-color: var(--muted);
+    color: var(--foreground-alt);
   }
 
   /* &.primary {
@@ -81,29 +90,31 @@
 .button.outlined {
   background-color: transparent;
   border-color: var(--dark-40);
-  color: var(--dark);
+  color: currentColor;
 
   &:hover {
     background-color: var(--muted);
-    border-color: var(--contrast);
-    color: var(--dark);
+    border-color: var(--dark-80);
+    color: currentColor;
   }
 
   &.primary {
-    border-color: var(--dark);
-    color: currentColor;
+    border-color: highlight;
+    color: highlight;
 
     &:hover {
       background-color: var(--muted);
+      color: highlight;
     }
   }
 
   &.warn {
     border-color: var(--tertiary);
-    color: var(--tertiary);
+    color: var(--tertiary-text);
 
     &:hover {
       background-color: var(--tertiary-10);
+      color: var(--tertiary-text);
     }
   }
 
@@ -136,6 +147,7 @@
   /* @apply bg-transparent text-current hover:bg-muted dark:hover:bg-dark-04; */
   background-color: transparent;
   color: var(--foreground);
+  font-weight: 500;
 
   &:hover {
     background-color: var(--muted);
@@ -143,8 +155,7 @@
   }
 
   &.primary {
-    /* @apply text-dark hover:bg-muted; */
-    color: var(--dark);
+    color: highlight;
 
     &:hover {
       background-color: var(--muted);
@@ -152,7 +163,7 @@
   }
 
   &.warn {
-    color: var(--tertiary);
+    color: var(--tertiary-text);
 
     &:hover {
       background-color: var(--tertiary-10);
