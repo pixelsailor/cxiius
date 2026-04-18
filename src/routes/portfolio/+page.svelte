@@ -41,7 +41,7 @@
 				<img class="hero-img" src={data.hero.images.hero} alt={data.hero.name} width="933" height="347" loading="eager" decoding="async" />
 			</picture>
 			<div class="hero-glass"></div>
-		</div>	
+		</div>
 	</section>
 
 	<section class="featured-section" aria-labelledby="featured-heading">

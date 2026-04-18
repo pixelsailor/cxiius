@@ -1,11 +1,5 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import {
-	THEME_STORAGE_KEY,
-	applyTheme,
-	clampThemeIndex,
-	persistThemeIndex,
-	readStoredThemeIndex
-} from './theme';
+import { THEME_STORAGE_KEY, applyTheme, clampThemeIndex, persistThemeIndex, readStoredThemeIndex } from './theme';
 
 describe('clampThemeIndex', () => {
 	it('rounds and clamps to 0 through 4', () => {

@@ -64,7 +64,7 @@ const data: DesignPortfolioEntry[] = [
 		circa: '2023 - editorial',
 		technologies: ['Vector', 'Texture', 'Spot art'],
 		summary: 'Spot illustrations for onboarding and empty states.',
-		description: 'A coherent family of marks that reads at small sizes and pairs with the glass UI without fighting the grid.',
+		description: 'A coherent family of marks that reads at small sizes and pairs with the glass UI without fighting the grid.'
 	},
 	{
 		slug: 'ledger-mobile-chrome',
@@ -87,12 +87,12 @@ const data: DesignPortfolioEntry[] = [
 		images: {
 			thumbnail: '/images/gpweb2-thumb.webp',
 			hero: '/images/gpweb2-hero.webp',
-			full: '/images/gpweb2.webp',
+			full: '/images/gpweb2.webp'
 		},
 		circa: '2007 - corporate UI',
 		technologies: ['UI/UX design', 'Interaction design', 'Brand design', 'Corporate web development'],
 		summary: 'Marketing website design for Greenplay.',
-		description: 'Original design concept for Greenplay\'s marketing website.',
+		description: "Original design concept for Greenplay's marketing website.",
 		featuredAsHero: true
 	}
 ];

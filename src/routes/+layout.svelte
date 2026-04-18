@@ -5,22 +5,10 @@
 	import { resolve } from '$app/paths';
 	import favicon from '$lib/assets/favicon.svg';
 	import { isJavaScriptEnabled, removeNoJsClassFromBody } from '$lib/utils/jsEnabled';
-	import {
-		applyTheme,
-		clampThemeIndex,
-		persistThemeIndex,
-		readStoredThemeIndex
-	} from '$lib/utils/theme';
+	import { applyTheme, clampThemeIndex, persistThemeIndex, readStoredThemeIndex } from '$lib/utils/theme';
 	import type { RouteId } from '$app/types';
 	import { Slider } from '$lib/ui';
-	import {
-		PaletteIcon,
-		DesktopIcon,
-		SunIcon,
-		SunHorizonIcon,
-		MoonStarsIcon,
-		MoonIcon
-	} from '$lib/ui/icons';
+	import { PaletteIcon, DesktopIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon } from '$lib/ui/icons';
 
 	const navItems: { label: string; path: RouteId }[] = [
 		{ label: 'Home', path: '/' },
@@ -231,5 +219,4 @@
 		padding: 0.25rem;
 		color: var(--foreground-alt);
 	}
-
 </style>
