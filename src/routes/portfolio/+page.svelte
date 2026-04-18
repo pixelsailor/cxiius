@@ -1,6 +1,4 @@
 <script lang="ts">
-	import { Button } from 'bits-ui';
-
 	import type { PageData } from './$types';
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
@@ -98,20 +96,6 @@
 		border-radius: 0.25rem;
 	}
 
-	/* .hero-glass {
-		background: var(--pf-glass);
-		backdrop-filter: blur(14px);
-		-webkit-backdrop-filter: blur(14px);
-		border: 1px solid var(--pf-glass-border);
-		border-radius: 1rem;
-		padding: 1.25rem;
-		box-shadow: 0 12px 40px hsla(0 0% 0% / 0.35);
-	} */
-
-	/* .hero-visual {
-		overflow: hidden;
-	} */
-
 	.hero-img {
 		max-width: 100%;
 		object-fit: cover;
@@ -190,12 +174,11 @@
 		object-fit: cover;
 	}
 
-	.thumb-sheen,
 	.hero-glass,
 	.glass {
 		position: absolute;
 		inset: 0;
-		background: linear-gradient(135deg, hsla(0 0% 100% / 0.22) 0%, hsla(0 0% 100% / 0) 42%, hsla(0 0% 100% / 0.08) 100%);
+		background: linear-gradient(135deg, hsla(0 0% 100% / 0.32) 0%, hsla(0 0% 100% / 0) 52%, hsla(0 0% 100% / 0.08) 100%);
 		pointer-events: none;
 		border-radius: 0.25rem;
 		border: 1px solid var(--border-card);
