@@ -1,29 +1,29 @@
 /* Button styles */
-.button,
-input:where([type="button"], [type="reset"], [type="submit"]) {
-  appearance: button;
-}
-
 .button {
   font: inherit;
   letter-spacing: inherit;
   opacity: 1;
   display: inline-flex;
+  box-sizing: border-box;
+  border: 1px solid transparent;
   height: var(--input-height);
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-button);
-  padding-inline: 0.5rem;
+  padding-inline: 1rem;
   background-color: var(--foreground-alt);
   color: var(--background);
   transition: background-color 0.2s ease-in-out;
 
-  --tw-shadow: 0px 1px 0px 1px #0000004d;
-  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000, var(--tw-shadow);
+  background-origin: border-box;
 
-  &:hover {
+  /* --tw-shadow: 0px 1px 0px 1px #0000004d;
+  box-shadow: 0 0 #0000, 0 0 #0000, 0 0 #0000, var(--tw-shadow); */
+
+  &:hover:not([disabled]) {
     background-color: var(--foreground);
     color: var(--background);
+    cursor: pointer;
   }
 
   &:active {
@@ -31,6 +31,31 @@ input:where([type="button"], [type="reset"], [type="submit"]) {
     transition-timing-function: var(--default-transition-timing-function);
     transition-duration: var(--default-transition-duration);
     scale: 0.98;
+  }
+
+  &.primary {
+    background-color: var(--foreground);
+    color: var(--background);
+
+    &:hover {
+      background-color: var(--dark-80);
+    }
+  }
+
+  &.warn {
+    background-color: var(--tertiary);
+
+    &:hover {
+      background-color: var(--tertiary-80);
+    }
+  }
+
+  &.danger {
+    background-color: var(--destructive);
+
+    &:hover {
+      background-color: var(--destructive-80);
+    }
   }
 
   /* &.primary {
@@ -51,6 +76,44 @@ input:where([type="button"], [type="reset"], [type="submit"]) {
   } */
 }
 
+.button.outlined {
+  background-color: transparent;
+  border-color: var(--dark-40);
+  color: var(--dark);
+
+  &:hover {
+    background-color: var(--muted);
+    border-color: var(--contrast);
+    color: var(--dark);
+  }
+
+  &.primary {
+    border-color: var(--dark);
+    color: currentColor;
+
+    &:hover {
+      background-color: var(--muted);
+    }
+  }
+
+  &.warn {
+    border-color: var(--tertiary);
+    color: var(--tertiary);
+
+    &:hover {
+      background-color: var(--tertiary-10);
+    }
+  }
+
+  &.danger {
+    border-color: var(--destructive);
+    color: var(--destructive);
+
+    &:hover {
+      background-color: var(--destructive-10);
+    }
+  }
+}
 /* .button.outlined {
   @apply bg-transparent border-1 border-dark-40 text-dark hover:bg-muted dark:border-contrast;
 
@@ -70,10 +133,11 @@ input:where([type="button"], [type="reset"], [type="submit"]) {
 .button.text {
   /* @apply bg-transparent text-current hover:bg-muted dark:hover:bg-dark-04; */
   background-color: transparent;
-  color: currentColor;
+  color: var(--foreground);
 
   &:hover {
     background-color: var(--muted);
+    color: var(--foreground);
   }
 
   &.primary {
@@ -85,13 +149,21 @@ input:where([type="button"], [type="reset"], [type="submit"]) {
     }
   }
 
-  /* &.warn {
-    @apply text-tertiary hover:bg-tertiary/10;
+  &.warn {
+    color: var(--tertiary);
+
+    &:hover {
+      background-color: var(--tertiary-10);
+    }
   }
 
   &.danger {
-    @apply text-destructive hover:bg-destructive/10;
-  } */
+    color: var(--destructive);
+
+    &:hover {
+      background-color: var(--destructive-10);
+    }
+  }
 }
 
 .button.icon {
@@ -100,6 +172,14 @@ input:where([type="button"], [type="reset"], [type="submit"]) {
   width: var(--input-height);
   height: var(--input-height);
   display: relative;
+
+  .svg {
+    color: currentColor;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }
 /* .button.icon {
   @apply rounded-full p-0 w-11 h-11 relative;
