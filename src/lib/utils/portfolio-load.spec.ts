@@ -6,7 +6,11 @@ function entry(overrides: Partial<DesignPortfolioEntry> & Pick<DesignPortfolioEn
 	return {
 		name: 'N',
 		projectType: 'ui',
-		images: { thumbnail: 't', hero: 'h', full: 'f' },
+		images: {
+			thumbnail: { src: 't', alt: '' },
+			hero: { src: 'h', alt: '' },
+			full: { src: 'f', alt: '' }
+		},
 		circa: '2000',
 		technologies: [],
 		summary: 's',

@@ -6,6 +6,9 @@
 
 	let { data }: { data: PageData } = $props();
 
+	const heroLead = $derived(data.hero.images.hero ?? data.hero.images.full);
+	const heroImgAlt = $derived(heroLead.alt.trim() !== '' ? heroLead.alt : data.hero.name);
+
 	type PortfolioFilterKey = 'all' | 'branding' | 'illustration' | 'ui';
 
 	const filterOptions: { key: PortfolioFilterKey; label: string }[] = [
@@ -38,7 +41,7 @@
 
 		<div class="hero">
 			<picture>
-				<img class="hero-img" src={data.hero.images.hero} alt={data.hero.name} width="933" height="347" loading="eager" decoding="async" />
+				<img class="hero-img" src={heroLead.src} alt={heroImgAlt} width="933" height="347" loading="eager" decoding="async" />
 			</picture>
 			<div class="hero-glass"></div>
 		</div>
@@ -69,7 +72,13 @@
 				<li class="card">
 					<a class="card-link" href={resolve('/portfolio/[slug]', { slug: entry.slug })}>
 						<div class="thumb-wrap">
-							<img class="thumb-img" src={entry.images.thumbnail} alt={entry.name} loading="lazy" decoding="async" />
+							<img
+								class="thumb-img"
+								src={entry.images.thumbnail.src}
+								alt={entry.images.thumbnail.alt.trim() !== '' ? entry.images.thumbnail.alt : entry.name}
+								loading="lazy"
+								decoding="async"
+							/>
 							<div class="glass" aria-hidden="true"></div>
 						</div>
 						<div class="card-body sr-only">
@@ -152,6 +161,15 @@
 		transform-origin: center;
 		box-shadow: 0 1px 4px hsla(0 0% 0% / 0.15);
 		border-radius: 0.25rem;
+	}
+
+	.card-link {
+		padding: 0;
+	}
+
+	.card-body {
+		position: absolute;
+		inset: 0;
 	}
 
 	@media (prefers-reduced-motion: no-preference) {

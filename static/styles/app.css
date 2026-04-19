@@ -27,7 +27,7 @@ a {
   &:hover {
     background-color: var(--background-alt);
     color: var(--foreground);
-    border-color: var(--dark-40);
+    border-color: var(--border-input-hover);
   }
 }
 

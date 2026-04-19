@@ -21,6 +21,8 @@ Update this table when domains are added or removed.
 | `projects.ts`         | Personal projects (products, tools, experiments) | `Promise<ProjectEntry[]>`         |
 | `design-portfolio.ts` | Design portfolio (case studies, visual work)     | `Promise<DesignPortfolioEntry[]>` |
 
+**`design-portfolio.ts` — images:** Each visual is a `DesignPortfolioImage` (`src`, `alt`). Thumbnail and full are required; `hero` is optional (index page falls back to full). Optional `images.showcase` is an array of extra images rendered only on `/portfolio/[slug]`.
+
 **Routes:** Page `+page.ts` files **`await`** these getters and return plain values on `data` so HTML works without JavaScript ([ADR-002](../../../adr/ADR-002-data-fetching-patterns.md)). Getters stay `Promise<T>`; the route resolves them.
 
 ## `availability.ts`

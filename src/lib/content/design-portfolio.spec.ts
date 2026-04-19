@@ -1,11 +1,16 @@
 import { describe, it, expect } from 'vitest';
-import { DESIGN_PORTFOLIO_PROJECT_TYPES, getDesignPortfolio, type DesignPortfolioEntry } from './design-portfolio';
+import { DESIGN_PORTFOLIO_PROJECT_TYPES, getDesignPortfolio, type DesignPortfolioEntry, type DesignPortfolioImage } from './design-portfolio';
 
 /** Remote URL, site-root static path, or bare filename under `static/` (e.g. hero composed with `/images/` in the route). */
 function isImageRef(s: string): boolean {
 	if (s.startsWith('https://')) return true;
 	if (s.startsWith('/images/')) return true;
 	return /^[a-zA-Z0-9._-]+\.(webp|png|jpe?g)$/i.test(s);
+}
+
+function assertDesignPortfolioImage(img: DesignPortfolioImage): void {
+	expect(typeof img.alt).toBe('string');
+	expect(isImageRef(img.src)).toBe(true);
 }
 
 describe('getDesignPortfolio', () => {
@@ -23,11 +28,17 @@ describe('getDesignPortfolio', () => {
 			expect(typeof e.slug).toBe('string');
 			expect(typeof e.name).toBe('string');
 			expect(DESIGN_PORTFOLIO_PROJECT_TYPES).toContain(e.projectType);
-			expect(isImageRef(e.images.thumbnail)).toBe(true);
+			assertDesignPortfolioImage(e.images.thumbnail);
 			if (e.images.hero !== undefined) {
-				expect(isImageRef(e.images.hero)).toBe(true);
+				assertDesignPortfolioImage(e.images.hero);
 			}
-			expect(isImageRef(e.images.full)).toBe(true);
+			assertDesignPortfolioImage(e.images.full);
+			if (e.images.showcase !== undefined) {
+				expect(Array.isArray(e.images.showcase)).toBe(true);
+				for (const shot of e.images.showcase) {
+					assertDesignPortfolioImage(shot);
+				}
+			}
 			expect(typeof e.circa).toBe('string');
 			expect(Array.isArray(e.technologies)).toBe(true);
 			expect(typeof e.summary).toBe('string');
@@ -38,8 +49,9 @@ describe('getDesignPortfolio', () => {
 	it('uses placehold.co for remote placeholders where applicable', async () => {
 		const entries = await getDesignPortfolio();
 		for (const e of entries) {
-			for (const url of [e.images.thumbnail, e.images.hero, e.images.full]) {
-				if (url !== undefined && url.startsWith('https://')) {
+			const urls = [e.images.thumbnail.src, e.images.full.src, ...(e.images.hero !== undefined ? [e.images.hero.src] : []), ...(e.images.showcase ?? []).map((img) => img.src)];
+			for (const url of urls) {
+				if (url.startsWith('https://')) {
 					expect(url).toContain('placehold.co');
 				}
 			}

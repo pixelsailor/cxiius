@@ -10,9 +10,10 @@ export const entries = async (): Promise<{ slug: string }[]> => {
 
 export const load: PageLoad = async ({ params }) => {
 	const list = await getDesignPortfolio();
-	const entry = list.find((e) => e.slug === params.slug);
+	const entry = list.find((e) => e.slug === params.slug) ?? null;
 	return {
-		title: entry !== undefined ? entry.name : 'Portfolio project',
-		slug: params.slug
+		title: entry !== null ? entry.name : 'Portfolio project',
+		slug: params.slug,
+		entry
 	};
 };

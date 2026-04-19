@@ -22,10 +22,10 @@
 			<h2 class="headline-small role">{data.identity.role}</h2>
 			<ul class="supporting-links">
 				<li class="supporting-link">
-					<a href="https://www.linkedin.com/in/{data.identity.contact.linkedin}">{data.identity.contact.linkedin}</a>
+					<a href="https://{data.identity.contact.linkedin}">{data.identity.contact.linkedin}</a>
 				</li>
 				<li class="supporting-link">
-					<a href="https://www.dribbble.com/{data.identity.contact.dribbble}">{data.identity.contact.dribbble}</a>
+					<a href="https://{data.identity.contact.dribbble}">{data.identity.contact.dribbble}</a>
 				</li>
 			</ul>
 		</section>
