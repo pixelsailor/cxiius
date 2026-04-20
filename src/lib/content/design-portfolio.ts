@@ -206,7 +206,7 @@ const data: DesignPortfolioEntry[] = [
 				{ src: '/images/mms_editregions-933.webp', alt: 'A screenshot of the Media Management System showing the United States with western states highlighted.' }
 			]
 		},
-		circa: '2007',
+		circa: '2007 - Q1',
 		technologies: ['Adobe Photoshop', 'HTML', 'CSS', 'JavaScript'],
 		summary: "UI for MOD Systems' Media Management System.",
 		description:
@@ -227,7 +227,7 @@ const data: DesignPortfolioEntry[] = [
 				{ src: '/images/modcom_endpoints-933.webp', alt: 'A screenshot of the MOD Systems website "endpoints" page highlighting digital and physical media devices.' }
 			]
 		},
-		circa: '2006',
+		circa: '2006 - Q2',
 		technologies: ['HTML', 'CSS', 'Adobe Photoshop', 'Adobe Illustrator'],
 		summary: 'Corporate website for MOD Systems.',
 		description:
@@ -285,7 +285,7 @@ const data: DesignPortfolioEntry[] = [
 				{ src: '/images/mw_publiclibrary-933.webp', alt: "A screenshot of the MetaWallet website public library page showing the user's collection of music available to borrow." }
 			]
 		},
-		circa: '2000',
+		circa: '2007 - Q3',
 		technologies: ['UI/UX design', 'Interaction design', 'Brand design', 'Corporate web development', 'Adobe Photoshop'],
 		summary: 'UI design for the MetaWallet and MetaFund services.',
 		description:

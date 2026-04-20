@@ -1,11 +1,55 @@
 <script lang="ts">
-	import { Button } from 'bits-ui';
+	import { browser } from '$app/environment';
+	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { Button } from 'bits-ui';
 	import type { PageData } from './$types';
 
 	let { data }: { data: PageData } = $props();
 
 	const entry = $derived(data.entry);
+
+	function isEditableFocusTarget(target: EventTarget | null): boolean {
+		if (target === null || !(target instanceof HTMLElement)) {
+			return false;
+		}
+		if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+			return true;
+		}
+		return target.isContentEditable;
+	}
+
+	/** Satisfies SvelteKit typed `resolve` / `goto` routes for `/portfolio/[slug]`. */
+	function portfolioEntryPath(slug: string): `/portfolio/${string}` {
+		return `/portfolio/${slug}` as `/portfolio/${string}`;
+	}
+
+	$effect(() => {
+		if (!browser || data.entry === null) {
+			return;
+		}
+		const prevSlug = data.prevSlug;
+		const nextSlug = data.nextSlug;
+		function onKeyDown(event: KeyboardEvent): void {
+			if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+				return;
+			}
+			if (isEditableFocusTarget(document.activeElement)) {
+				return;
+			}
+			if (event.key === 'ArrowLeft' && prevSlug !== null) {
+				event.preventDefault();
+				void goto(resolve(portfolioEntryPath(prevSlug)));
+				return;
+			}
+			if (event.key === 'ArrowRight' && nextSlug !== null) {
+				event.preventDefault();
+				void goto(resolve(portfolioEntryPath(nextSlug)));
+			}
+		}
+		window.addEventListener('keydown', onKeyDown);
+		return () => window.removeEventListener('keydown', onKeyDown);
+	});
 	// const leadImage = $derived(entry !== null ? (entry.images.hero ?? entry.images.full) : null);
 	// const leadAlt = $derived(entry !== null && leadImage !== null ? (leadImage.alt.trim() !== '' ? leadImage.alt : entry.name) : '');
 	// const showFullImage = $derived(entry !== null && leadImage !== null && entry.images.full.src !== leadImage.src);
