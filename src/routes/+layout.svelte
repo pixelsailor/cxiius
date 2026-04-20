@@ -70,6 +70,8 @@
 	<link href="https://unpkg.com/@csstools/normalize.css" rel="stylesheet" />
 	<link rel="stylesheet" href="/styles/tokens.css" />
 	<link rel="stylesheet" href="/styles/buttons.css" />
+	<link rel="stylesheet" href="/styles/command.css" />
+	<link rel="stylesheet" href="/styles/dialogs.css" />
 	<link rel="stylesheet" href="/styles/layout.css" />
 	<link rel="stylesheet" href="/styles/typography.css" />
 	<link rel="stylesheet" href="/styles/app.css" />
@@ -84,7 +86,7 @@
 			<nav class="main-nav">
 				<ul class="main-nav-list">
 					{#each navItems as item (item.path)}
-						<li class="main-nav-item">
+						<li class="main-nav-item link">
 							<a href={item.path === '/' ? resolve('/') : item.path === '/resume' ? resolve('/resume') : resolve('/portfolio')} class="main-nav-link">{item.label}</a>
 						</li>
 					{/each}
@@ -94,17 +96,17 @@
 		<div class="header-controls">
 			{#if isJsEnabled}
 				<Popover.Root>
-					<Popover.Trigger class="button text icon popover__trigger">
+					<Popover.Trigger class="button text icon popover__trigger" aria-label="Theme switcher">
 						{#if activeThemeIndex === 1}
-							<SunIcon size="sm" />
+							<SunIcon size="sm" ariaLabel="Light theme" />
 						{:else if activeThemeIndex === 2}
-							<SunHorizonIcon size="sm" />
+							<SunHorizonIcon size="sm" ariaLabel="Stone theme" />
 						{:else if activeThemeIndex === 3}
-							<MoonStarsIcon size="sm" />
+							<MoonStarsIcon size="sm" ariaLabel="Twilight theme" />
 						{:else if activeThemeIndex === 4}
-							<MoonIcon size="sm" />
+							<MoonIcon size="sm" ariaLabel="Dark theme" />
 						{:else}
-							<PaletteIcon size="sm" />
+							<PaletteIcon size="sm" ariaLabel="Theme switcher" />
 						{/if}
 					</Popover.Trigger>
 					<Popover.Portal>

@@ -167,7 +167,7 @@
 @media (prefers-color-scheme: dark) {
 	:root:not([data-theme]) {
 		/* Colors */
-		--background: var(--p-zinc-900);
+		--background: var(--p-zinc-950);
 		--background-alt: var(--p-zinc-800);
 		--foreground: var(--white);
 		--foreground-alt: var(--p-zinc-300);
@@ -212,7 +212,7 @@
  * Explicit "dark" — same token values as the system dark block above.
  */
 :root[data-theme='dark'] {
-	--background: var(--p-zinc-900);
+	--background: var(--p-zinc-950);
 	--background-alt: var(--p-zinc-800);
 	--foreground: var(--white);
 	--foreground-alt: var(--p-zinc-300);

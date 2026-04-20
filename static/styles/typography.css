@@ -111,12 +111,29 @@ h1, h2, h3, h4, h5, h6, p {
   letter-spacing: 0.1em;
 }
 
-.code {
+.link {
+  text-transform: uppercase;
+  font-size: smaller;
+  letter-spacing: 0.025em;
+  font-weight: 200;
+}
+
+code, kbd {
   font-size: 0.75rem;
   line-height: 1rem;
   font-weight: 400;
   letter-spacing: 0.32em;
   margin: 0;
+}
+
+kbd {
+  background-color: var(--background-alt);
+  border: 1px solid var(--dark-01);
+  border-radius: 0.25rem;
+  font-size: 0.625rem;
+  letter-spacing: 0;
+  padding: 0 0.375rem;
+  display: inline-block;
 }
 
 .fredericka {

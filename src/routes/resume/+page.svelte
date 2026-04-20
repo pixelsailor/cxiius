@@ -20,7 +20,7 @@
 		<section class="identity-section will-fade">
 			<h1 class="headline-large name">{data.identity.name}</h1>
 			<h2 class="headline-small role">{data.identity.role}</h2>
-			<ul class="supporting-links">
+			<ul class="supporting-links link">
 				<li class="supporting-link">
 					<a href="https://{data.identity.contact.linkedin}">{data.identity.contact.linkedin}</a>
 				</li>

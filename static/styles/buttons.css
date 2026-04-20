@@ -9,6 +9,7 @@
   height: var(--input-height);
   align-items: center;
   justify-content: center;
+  gap: 0.5rem;
   border-radius: var(--radius-button);
   padding-inline: 1rem;
   background-color: var(--foreground-alt);

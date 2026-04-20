@@ -11,15 +11,17 @@ body {
   margin: 0;
   padding: 0;
   min-block-size: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 a {
   color: var(--foreground);
   text-decoration: none;
-  text-transform: uppercase;
+  /* text-transform: uppercase;
   font-size: small;
   letter-spacing: 0.025em;
-  font-weight: 200;
+  font-weight: 200; */
   padding-inline: 0.125rem;
   transition: background-color var(--default-transition-duration) var(--default-transition-timing-function), color var(--default-transition-duration) var(--default-transition-timing-function), border-color var(--default-transition-duration) var(--default-transition-timing-function);
   border-bottom: 1px solid transparent;
