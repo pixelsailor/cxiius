@@ -7,10 +7,6 @@ import type { PageData } from './$types';
 
 const gotoMock = vi.hoisted(() => vi.fn(() => Promise.resolve()));
 
-vi.mock('$app/environment', () => ({
-	browser: true
-}));
-
 vi.mock('$app/navigation', () => ({
 	goto: gotoMock
 }));

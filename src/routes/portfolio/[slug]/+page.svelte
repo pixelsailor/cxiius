@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { Button } from 'bits-ui';
@@ -8,6 +7,9 @@
 	let { data }: { data: PageData } = $props();
 
 	const entry = $derived(data.entry);
+
+	const leadImage = $derived(entry !== null ? entry.images.full : null);
+	const leadAlt = $derived(entry !== null ? entry.images.full.alt : '');
 
 	function isEditableFocusTarget(target: EventTarget | null): boolean {
 		if (target === null || !(target instanceof HTMLElement)) {
@@ -24,38 +26,38 @@
 		return `/portfolio/${slug}` as `/portfolio/${string}`;
 	}
 
-	$effect(() => {
-		if (!browser || data.entry === null) {
+	function handleKeyDown(event: KeyboardEvent): void {
+		if (data.entry === null) {
 			return;
 		}
 		const prevSlug = data.prevSlug;
 		const nextSlug = data.nextSlug;
-		function onKeyDown(event: KeyboardEvent): void {
-			if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
-				return;
-			}
-			if (isEditableFocusTarget(document.activeElement)) {
-				return;
-			}
-			if (event.key === 'ArrowLeft' && prevSlug !== null) {
-				event.preventDefault();
-				void goto(resolve(portfolioEntryPath(prevSlug)));
-				return;
-			}
-			if (event.key === 'ArrowRight' && nextSlug !== null) {
-				event.preventDefault();
-				void goto(resolve(portfolioEntryPath(nextSlug)));
-			}
+		if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') {
+			return;
 		}
-		window.addEventListener('keydown', onKeyDown);
-		return () => window.removeEventListener('keydown', onKeyDown);
-	});
-	// const leadImage = $derived(entry !== null ? (entry.images.hero ?? entry.images.full) : null);
-	// const leadAlt = $derived(entry !== null && leadImage !== null ? (leadImage.alt.trim() !== '' ? leadImage.alt : entry.name) : '');
-	// const showFullImage = $derived(entry !== null && leadImage !== null && entry.images.full.src !== leadImage.src);
-	const leadImage = $derived(entry !== null ? entry.images.full : null);
-	const leadAlt = $derived(entry !== null ? entry.images.full.alt : '');
+		if (isEditableFocusTarget(document.activeElement)) {
+			return;
+		}
+		if (event.key === 'ArrowLeft' && prevSlug !== null) {
+			event.preventDefault();
+			void goto(resolve(portfolioEntryPath(prevSlug)));
+			return;
+		}
+		if (event.key === 'ArrowRight' && nextSlug !== null) {
+			event.preventDefault();
+			void goto(resolve(portfolioEntryPath(nextSlug)));
+		}
+	}
 </script>
+
+<!--
+@component
+Page for a single portfolio entry.
+Content is loaded from the design-portfolio.ts file and prerendered for each entry.
+Keyboard navigation is supported for the previous and next project buttons using the ArrowLeft and ArrowRight keys.
+-->
+
+<svelte:window onkeydown={handleKeyDown} />
 
 <svelte:head>
 	<title>{data.title} | CXII</title>
