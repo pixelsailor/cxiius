@@ -1,4 +1,5 @@
 import { describe, it, expect } from 'vitest';
+import { circaYearFromString } from '$lib/utils/circa-year';
 import { DESIGN_PORTFOLIO_PROJECT_TYPES, getDesignPortfolio, type DesignPortfolioEntry, type DesignPortfolioImage } from './design-portfolio';
 
 /** Remote URL, site-root static path, or bare filename under `static/` (e.g. hero composed with `/images/` in the route). */
@@ -20,6 +21,15 @@ describe('getDesignPortfolio', () => {
 		const entries = await p;
 		expect(Array.isArray(entries)).toBe(true);
 		expect(entries.length).toBeGreaterThan(0);
+	});
+
+	it('orders entries by circa year descending (most recent first)', async () => {
+		const entries = await getDesignPortfolio();
+		for (let i = 1; i < entries.length; i++) {
+			const prev = circaYearFromString(entries[i - 1].circa);
+			const cur = circaYearFromString(entries[i].circa);
+			expect(prev).toBeGreaterThanOrEqual(cur);
+		}
 	});
 
 	it('exposes expected fields on each entry', async () => {
@@ -48,14 +58,14 @@ describe('getDesignPortfolio', () => {
 
 	it('uses placehold.co for remote placeholders where applicable', async () => {
 		const entries = await getDesignPortfolio();
+		const remoteUrls: string[] = [];
 		for (const e of entries) {
 			const urls = [e.images.thumbnail.src, e.images.full.src, ...(e.images.hero !== undefined ? [e.images.hero.src] : []), ...(e.images.showcase ?? []).map((img) => img.src)];
 			for (const url of urls) {
-				if (url.startsWith('https://')) {
-					expect(url).toContain('placehold.co');
-				}
+				if (url.startsWith('https://')) remoteUrls.push(url);
 			}
 		}
+		expect(remoteUrls.every((url) => url.includes('placehold.co'))).toBe(true);
 	});
 
 	it('has at most one featuredAsHero in seed data', async () => {

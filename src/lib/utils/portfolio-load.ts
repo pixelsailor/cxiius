@@ -1,17 +1,11 @@
 import type { DesignPortfolioEntry, DesignPortfolioProjectType } from '$lib/content/design-portfolio';
+import { circaYearFromString } from '$lib/utils/circa-year';
 
 export type PortfolioFilterKey = 'all' | DesignPortfolioProjectType;
 
 const VALID_TYPES: DesignPortfolioProjectType[] = ['branding', 'illustration', 'ui'];
 
-/**
- * Sort key for "most recent" hero default: leading four-digit year in `circa`.
- * If missing, year is 0 (sorts older than dated entries; tie-break keeps earlier array order in reduce).
- */
-export function circaYearFromString(circa: string): number {
-	const m = /^(\d{4})/.exec(circa.trim());
-	return m !== null ? parseInt(m[1], 10) : 0;
-}
+export { circaYearFromString };
 
 export function parseFilter(raw: string | null): PortfolioFilterKey {
 	if (raw === null || raw === '' || raw === 'all') return 'all';
