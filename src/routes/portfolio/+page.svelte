@@ -3,6 +3,10 @@
 	import { browser } from '$app/environment';
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { flip } from 'svelte/animate';
+	import { cubicOut } from 'svelte/easing';
+	import { onMount, tick } from 'svelte';
+	import { fly } from 'svelte/transition';
 
 	let { data }: { data: PageData } = $props();
 
@@ -17,6 +21,31 @@
 		{ key: 'illustration', label: 'Illustration' },
 		{ key: 'ui', label: 'User Interface' }
 	];
+
+	/** After first paint: enables list motion so filter changes animate without a full-grid intro on load. */
+	let listMotionReady = $state(false);
+	let prefersReducedMotion = $state(false);
+
+	const motionEnabled = $derived(browser && listMotionReady && !prefersReducedMotion);
+
+	const flyIn = $derived(motionEnabled ? { y: 20, duration: 320, easing: cubicOut } : { duration: 0, y: 0 });
+	const flyOut = $derived(motionEnabled ? { y: -12, duration: 240, easing: cubicOut } : { duration: 0, y: 0 });
+	const flipOpts = $derived(motionEnabled ? { duration: 320, easing: cubicOut } : { duration: 0 });
+
+	onMount(() => {
+		const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
+		prefersReducedMotion = mq.matches;
+		const onPrefChange = () => {
+			prefersReducedMotion = mq.matches;
+		};
+		mq.addEventListener('change', onPrefChange);
+
+		void tick().then(() => {
+			listMotionReady = true;
+		});
+
+		return () => mq.removeEventListener('change', onPrefChange);
+	});
 
 	function onFilterClick(event: MouseEvent, key: PortfolioFilterKey) {
 		if (!browser) return;
@@ -69,7 +98,7 @@
 
 		<ul class="card-grid">
 			{#each data.filteredEntries as entry (entry.slug)}
-				<li class="card">
+				<li class="card" in:fly={flyIn} out:fly={flyOut} animate:flip={flipOpts}>
 					<a class="card-link" href={resolve('/portfolio/[slug]', { slug: entry.slug })}>
 						<div class="thumb-wrap">
 							<img
