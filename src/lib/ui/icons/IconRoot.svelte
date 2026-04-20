@@ -12,6 +12,12 @@
 		}
 		return size;
 	});
+
+	let ariaLabel = $derived.by(() => {
+		const { ariaLabel } = props;
+		if (!ariaLabel) return '';
+		return ariaLabel;
+	});
 </script>
 
-{@render children(iconSize)}
+{@render children(iconSize, ariaLabel)}
