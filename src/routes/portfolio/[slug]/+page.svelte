@@ -213,32 +213,6 @@
 		justify-content: center;
 	}
 
-	.showcase-section {
-		margin-top: 2rem;
-	}
-
-	.showcase-grid {
-		list-style: none;
-		padding: 0;
-		margin: 1rem 0 0;
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1rem;
-	}
-
-	@media (min-width: 600px) {
-		.showcase-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	.showcase-item {
-		margin: 0;
-		padding: 0.35rem;
-		border-radius: 0.25rem;
-		box-shadow: 0 1px 4px hsla(0 0% 0% / 0.12);
-	}
-
 	.showcase-img {
 		display: block;
 		width: 100%;
