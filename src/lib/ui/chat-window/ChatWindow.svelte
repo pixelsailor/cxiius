@@ -12,31 +12,31 @@
 
 	let showRoutes = $derived(commandInputValue.startsWith('/'));
 
-  /** Use afterNavigate to restore the chat input focus when a route is selected. */
-  afterNavigate(() => {
-    console.log('afterNavigate');
-    const toFocus = document.getElementById('chatWindowInput');
-    console.log('toFocus', toFocus);
-    toFocus?.focus();
-  });
+	/** Use afterNavigate to restore the chat input focus when a route is selected. */
+	afterNavigate(() => {
+		console.log('afterNavigate');
+		const toFocus = document.getElementById('chatWindowInput');
+		console.log('toFocus', toFocus);
+		toFocus?.focus();
+	});
 
 	function handleCommandStateChange(state: { search: string; filtered: { count: number } }) {
 		commandSearch = state.search;
 		commandFilteredCount = state.filtered.count;
 	}
 
-  /** Clear the command input value when a route is selected. */
+	/** Clear the command input value when a route is selected. */
 	function handleCommandRouteSelect() {
 		commandInputValue = '';
 	}
 
 	function handleCommandInputKeydown(event: KeyboardEvent) {
-    /** Remove focus from the command input when Escape is pressed. */
-    if (event.key === 'Escape') {
-      const toBlur = document.getElementById('chatWindowInput');
-      toBlur?.blur();
-      return;
-    }
+		/** Remove focus from the command input when Escape is pressed. */
+		if (event.key === 'Escape') {
+			const toBlur = document.getElementById('chatWindowInput');
+			toBlur?.blur();
+			return;
+		}
 
 		if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229 || commandFilteredCount > 0) {
 			return;
@@ -47,11 +47,11 @@
 			return;
 		}
 		event.stopPropagation();
-    event.preventDefault();
+		event.preventDefault();
 
 		// Temporary: wire to chat POST later (ADR-009).
 		commandResponse = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-    console.log('command palette → chat (no nav matches, non-slash query):', commandSearch);
+		console.log('command palette → chat (no nav matches, non-slash query):', commandSearch);
 
 		commandInputValue = ''.trim();
 	}

@@ -151,7 +151,7 @@
 			<aside class="sidebar chat-container" data-sidebar-state={showChatWindow ? 'open' : 'closed'}>
 				{#if showChatWindow}
 					<div class="chat-container-header">
-						<Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => showChatWindow = false}>
+						<Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => (showChatWindow = false)}>
 							<CloseIcon size="xs" ariaLabel="Close chat" />
 						</Button.Root>
 					</div>
@@ -162,7 +162,7 @@
 			</aside>
 		{/if}
 	</div>
-	
+
 	<footer>
 		<span class="label-small"> &copy; 2026 Benjamin Thompson. All rights reserved. </span>
 	</footer>
@@ -170,7 +170,7 @@
 
 {#if isJsEnabled && showNav && !showChatWindow}
 	<div class="chat-window-trigger">
-		<Button.Root class="button icon" aria-label="Open chat" onclick={() => showChatWindow = true}>
+		<Button.Root class="button icon" aria-label="Open chat" onclick={() => (showChatWindow = true)}>
 			<SmileyIcon size="sm" ariaLabel="Chat icon" />
 		</Button.Root>
 	</div>

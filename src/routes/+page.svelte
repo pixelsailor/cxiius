@@ -94,15 +94,19 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 
 		<div class="command-menu-container" id="commandMenuContainer">
 			<Dialog.Root bind:open={commandDialogOpen}>
-				<Dialog.Trigger class="button text dialog-trigger">
-					Try typing something
-				</Dialog.Trigger>
+				<Dialog.Trigger class="button text dialog-trigger">Try typing something</Dialog.Trigger>
 				<Dialog.Portal to="#commandMenuContainer">
 					<Dialog.Content class="command-dialog">
 						<Dialog.Title class="sr-only">Command Menu</Dialog.Title>
 						<Dialog.Description class="sr-only">This is the command menu. Use the arrow keys to navigate or start typing to ask questions.</Dialog.Description>
 						<Command.Root class="command-root" onValueChange={handleValueChange} onStateChange={handleCommandStateChange}>
-							<Command.Input bind:value={commandInputValue} ref={commandInput} class="command-input body-medium" placeholder="Ask a question or press slash to navigate" onkeydown={handleCommandInputKeydown} />
+							<Command.Input
+								bind:value={commandInputValue}
+								ref={commandInput}
+								class="command-input body-medium"
+								placeholder="Ask a question or press slash to navigate"
+								onkeydown={handleCommandInputKeydown}
+							/>
 							{#if showRoutes}
 								<Command.List class="command-list">
 									<Command.Viewport class="command-viewport">
