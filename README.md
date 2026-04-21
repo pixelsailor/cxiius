@@ -27,6 +27,24 @@ npm run build
 
 You can preview the production build with `npm run preview`.
 
+### AI prompt tuning without Cloudflare (Vitest live)
+
+Use this to evaluate real model output while editing `$lib/content` and the server-side prompt assembly in `$lib/server/ai.service.ts` **before** you have Cloudflare KV or a deployed Worker.
+
+1. Copy [`.env.example`](.env.example) to `.env` at the repo root and set `ANTHROPIC_API_KEY`.
+2. Run **`npm run test:ai-live`**, which sets `RUN_AI_LIVE=1` and executes only `src/**/*.live.spec.ts` (the `ai-live` Vitest project). Those tests call `completeAiChat` with the real Anthropic client (no SDK mocks in that file).
+3. **Do not** set `RUN_AI_LIVE` (or add live runs) in CI: default `npm test` never requires a key and does not hit the provider; keep live runs on your machine only so you do not burn quota.
+
+**ADR-009:** The production HTTP boundary (`/api/ai`) is still the authority for validation, rate limiting, and request shaping for end users. Live Vitest calls are **developer-only**; they exercise the same `completeAiChat` code path as the Worker but bypass KV and HTTP.
+
+### Full local stack with Cloudflare later (Option B)
+
+When you have a Cloudflare account and KV namespaces:
+
+1. Put `ANTHROPIC_API_KEY`, `RATE_LIMIT_ID_SALT`, and KV binding values in **`.dev.vars`** (and align `wrangler.jsonc` with real `kv_namespaces` IDs). Run `npm run gen` after binding changes.
+2. In **`svelte.config.js`**, configure `@sveltejs/adapter-cloudflare` with **`platformProxy`** (see Wrangler [`getPlatformProxy`](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy) and the adapter’s `platformProxy` option) pointing at your Wrangler config so **`npm run dev`** receives `platform.env.RATE_LIMIT_KV` locally.
+3. Use **`npm run build`** then **`npm run preview`** (or `wrangler dev` on the built worker) to exercise `/api/ai` with KV-backed rate limits without deploying to production.
+
 ## Purpose of This Document
 
 This README defines **high-level architecture, constraints, and guiding decisions** required to begin development without ambiguity in foundational systems.

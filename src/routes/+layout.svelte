@@ -8,6 +8,8 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import { isJavaScriptEnabled, removeNoJsClassFromBody } from '$lib/utils/jsEnabled';
 	import { applyTheme, clampThemeIndex, persistThemeIndex, readStoredThemeIndex } from '$lib/utils/theme';
+	import { setChatContext } from '$lib/stores/chat.context';
+	import { ChatState } from '$lib/stores/chat.svelte';
 	import { ChatWindow, Slider } from '$lib/ui';
 	import { CloseIcon, PaletteIcon, DesktopIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon, SmileyIcon } from '$lib/ui/icons';
 
@@ -33,6 +35,9 @@
 	let showNav = $derived(currentRoute !== '/');
 
 	let showChatWindow = $state(false);
+
+	const chat = new ChatState();
+	setChatContext(chat);
 
 	const handleThemeChange = (v: number) => {
 		const i = clampThemeIndex(v);
@@ -81,16 +86,15 @@
 	<link rel="stylesheet" href="/styles/dialogs.css" />
 	<link rel="stylesheet" href="/styles/forms.css" />
 	<link rel="stylesheet" href="/styles/layout.css" />
+	<link rel="stylesheet" href="/styles/markdown.css" />
 	<link rel="stylesheet" href="/styles/typography.css" />
 	<link rel="stylesheet" href="/styles/app.css" />
 </svelte:head>
 
 <div class="layout-container" style:font-family={activeFontFamily}>
+	<main>
 	<header>
 		<div>
-			<!-- <div class="title-card-container">
-				<h1 class="headline-medium fredericka title-card">CXII</h1>
-			</div> -->
 			{#if !isJsEnabled || (isJsEnabled && showNav)}
 				<nav class="main-nav">
 					<ul class="main-nav-list">
@@ -144,28 +148,34 @@
 	</header>
 
 	<div class="content-container">
-		<main>
-			{@render children()}
-		</main>
-		{#if isJsEnabled && showNav}
-			<aside class="sidebar chat-container" data-sidebar-state={showChatWindow ? 'open' : 'closed'}>
-				{#if showChatWindow}
-					<div class="chat-container-header">
-						<Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => (showChatWindow = false)}>
-							<CloseIcon size="xs" ariaLabel="Close chat" />
-						</Button.Root>
-					</div>
-					<div class="chat-container-content">
-						<ChatWindow />
-					</div>
-				{/if}
-			</aside>
-		{/if}
+		{@render children()}
 	</div>
 
 	<footer>
 		<span class="label-small"> &copy; 2026 Benjamin Thompson. All rights reserved. </span>
 	</footer>
+	</main>
+
+	{#if isJsEnabled && showNav}
+		<aside class="sidebar" data-sidebar-state={showChatWindow ? 'open' : 'closed'}>
+			{#if showChatWindow}
+			<div class="sidebar-resize-container">
+				<div class="sidebar-resize-handle"></div>
+			</div>
+			<div class="sidebar-content chat-container">
+				<div class="chat-container-header">
+					<Button.Root type="button" class="button text label-small" disabled={chat.messages.length === 0} onclick={() => chat.clear()}>Clear transcript</Button.Root>
+					<Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => (showChatWindow = false)}>
+						<CloseIcon size="xs" ariaLabel="Close chat" />
+					</Button.Root>
+				</div>
+				<div class="chat-container-content">
+					<ChatWindow hideToolbar={true} />
+				</div>
+			</div>
+			{/if}
+		</aside>
+	{/if}
 </div>
 
 {#if isJsEnabled && showNav && !showChatWindow}
@@ -179,8 +189,7 @@
 <style>
 	.layout-container {
 		display: grid;
-		grid-template-rows: auto 1fr auto;
-		min-height: 100vh;
+		grid-template-columns: 1fr auto;
 	}
 
 	header {
@@ -188,6 +197,14 @@
 		justify-content: var(--header-justify-content);
 		align-items: var(--header-align-items);
 		padding: var(--header-padding);
+		height: 3rem;
+		background-color: hsl(from var(--background) h s l / 0.8);
+		border-bottom: 1px solid var(--background);
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		backdrop-filter: blur(8px);
+
 	}
 
 	.main-nav-list {
@@ -202,7 +219,6 @@
 		display: flex;
 		align-items: center;
 		gap: 0.5rem;
-		/* min-width: 300px; */
 	}
 
 	:global(.popover__content) {
@@ -230,30 +246,36 @@
 	}
 
 	.content-container {
-		display: grid;
-		grid-template-columns: 1fr auto;
+		/* display: grid;
+		grid-template-columns: 1fr auto; */
 	}
 
 	main {
+		display: grid;
+		grid-template-rows: auto 1fr auto;
+		min-height: 100vh;
 		padding: 0 1rem;
 	}
 
 	.sidebar {
 		position: sticky;
 		top: 0;
-		display: grid;
+		/* display: grid;
 		grid-template-rows: 1fr auto;
 		align-content: stretch;
-		gap: 1rem;
-		padding: 0.5rem;
+		gap: 1rem; */
+		display: grid;
+		grid-template-columns: 3px auto;
+		align-content: stretch;
+		overflow: hidden;
 
 		&[data-sidebar-state='open'] {
 			animation: cxii-sidebar-in 140ms var(--default-transition-timing-function);
 			width: 300px;
-			height: 66dvh;
-			max-height: 100dvh;
+			height: 100dvh;
 			background-color: var(--background-alt);
 			box-shadow: var(--shadow-popover);
+			border-left: 1px solid var(--border-card);
 		}
 
 		&[data-sidebar-state='closed'] {
@@ -261,11 +283,31 @@
 		}
 	}
 
+	.sidebar-resize-container {
+		cursor: col-resize;
+	}
+
+	.sidebar-content {
+		display: grid;
+		grid-template-rows: 3rem auto;
+		grid-template-columns: 1fr;
+		/* align-content: stretch;
+		gap: 1rem; */
+		height: 100%;
+		overflow: hidden;
+	}
+
 	.chat-container-header {
 		display: flex;
-		justify-content: flex-end;
+		justify-content: space-between;
 		align-items: center;
-		height: 2rem;
+		height: 3rem;
+		padding: 0.5rem;
+	}
+
+	.chat-container-content {
+		overflow: hidden;
+		padding: 0 0.5rem 0.5rem 0.25rem;
 	}
 
 	.chat-window-trigger {

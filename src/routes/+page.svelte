@@ -1,8 +1,12 @@
 <script lang="ts">
+	import { getChatContext } from '$lib/stores/chat.context';
 	import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
 	import { Command, Dialog } from 'bits-ui';
+	import SvelteMarkdown from '@humanspeak/svelte-markdown';
 
 	const ALPHABET = new RegExp(/^[a-zA-Z/]$/);
+
+	const chat = getChatContext();
 
 	let isJsEnabled = $state(isJavaScriptEnabled());
 
@@ -18,7 +22,7 @@
 
 	let showRoutes = $derived(commandInputValue.startsWith('/'));
 
-	let commandResponse = $state('');
+	// let commandResponse = $state('');
 
 	function handleKeyDown(event: KeyboardEvent) {
 		if (!ALPHABET.test(event.key)) {
@@ -38,10 +42,6 @@
 		}
 	}
 
-	function handleValueChange(value: string) {
-		console.log('root value changed to:', value);
-	}
-
 	function handleCommandStateChange(state: { search: string; filtered: { count: number } }) {
 		commandSearch = state.search;
 		commandFilteredCount = state.filtered.count;
@@ -54,20 +54,21 @@
 		if (commandFilteredCount > 0) {
 			return;
 		}
-		const query = commandSearch.trimStart();
-		if (query.startsWith('/')) {
+		const queryStart = commandSearch.trimStart();
+		if (queryStart.startsWith('/')) {
 			return;
 		}
 		event.stopPropagation();
-		// Temporary: wire to chat POST later (ADR-009).
-		commandResponse = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-		console.log('command palette → chat (no nav matches, non-slash query):', commandSearch);
+
+		void chat.submitUserText(commandSearch.trim());
 
 		// Close and clear the command input
 		commandInput?.blur();
 		commandInputValue = '';
 		commandDialogOpen = false;
 	}
+
+	$inspect(chat.messages);
 </script>
 
 <!--
@@ -86,9 +87,16 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 	<h1 class="display-large fredericka title-card">CXII</h1>
 
 	{#if isJsEnabled}
-		{#if commandResponse}
-			<div class="command-response-container">
-				<p class="body-large">{commandResponse}</p>
+		{#if chat.messages.length > 0}
+			<div class="chat-window-messages" role="log" aria-relevant="additions" aria-label="Chat messages">
+				{#each chat.messages as message (message.id)}
+					<div class="chat-window-message markdown" class:chat-window-message--user={message.role === 'user'} class:chat-window-message--assistant={message.role === 'assistant'}>
+						<SvelteMarkdown source={message.body} />
+					</div>
+				{/each}
+				{#if chat.lastError}
+					<div class="chat-window-error body-small" role="alert">{chat.lastError}</div>
+				{/if}
 			</div>
 		{/if}
 
@@ -99,12 +107,13 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 					<Dialog.Content class="command-dialog">
 						<Dialog.Title class="sr-only">Command Menu</Dialog.Title>
 						<Dialog.Description class="sr-only">This is the command menu. Use the arrow keys to navigate or start typing to ask questions.</Dialog.Description>
-						<Command.Root class="command-root" onValueChange={handleValueChange} onStateChange={handleCommandStateChange}>
+						<Command.Root class="command-root" onStateChange={handleCommandStateChange}>
 							<Command.Input
 								bind:value={commandInputValue}
 								ref={commandInput}
 								class="command-input body-medium"
 								placeholder="Ask a question or press slash to navigate"
+								maxlength={500}
 								onkeydown={handleCommandInputKeydown}
 							/>
 							{#if showRoutes}
@@ -142,11 +151,6 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 		line-height: 1.2;
 	}
 
-	.command-response-container {
-		margin-block: 1rem;
-		animation: fadeIn 0.5s ease-in-out;
-	}
-
 	.command-menu-container {
 		position: relative;
 	}
@@ -154,5 +158,39 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 	:global(.dialog-trigger.button) {
 		font-style: italic;
 		color: var(--foreground-alt);
+	}
+
+	.chat-window-messages {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		min-height: 0;
+	}
+
+	.chat-window-message {
+		padding-inline: 0.5rem;
+		border-radius: var(--radius-card);
+		border: 1px solid var(--border-card);
+	}
+
+	.chat-window-message--user {
+		display: none;
+		align-self: flex-end;
+		max-width: 95%;
+		font-style: italic;
+		box-shadow: var(--shadow-card);
+	}
+
+	.chat-window-message--assistant {
+		align-self: flex-start;
+		max-width: 95%;
+		background-color: var(--dark-04);
+	}
+
+	.chat-window-error {
+		color: var(--destructive-text);
+		padding: 0.25rem 0;
 	}
 </style>

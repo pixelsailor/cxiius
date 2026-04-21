@@ -1,10 +1,15 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
-	import { Command } from 'bits-ui';
+	import { Button, Command } from 'bits-ui';
+	import SvelteMarkdown from '@humanspeak/svelte-markdown';
+
+	import { getChatContext } from '$lib/stores/chat.context';
+
+	const chat = getChatContext();
+
+	let { hideToolbar = false }: { hideToolbar?: boolean } = $props();
 
 	let commandInputValue = $state('');
-
-	let commandResponse = $state('');
 
 	/** Mirrors Command.Root state for Enter handling (see onStateChange). */
 	let commandFilteredCount = $state(0);
@@ -14,9 +19,7 @@
 
 	/** Use afterNavigate to restore the chat input focus when a route is selected. */
 	afterNavigate(() => {
-		console.log('afterNavigate');
 		const toFocus = document.getElementById('chatWindowInput');
-		console.log('toFocus', toFocus);
 		toFocus?.focus();
 	});
 
@@ -41,19 +44,16 @@
 		if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229 || commandFilteredCount > 0) {
 			return;
 		}
-		const query = commandSearch.trimStart();
-		if (query.startsWith('/')) {
+		const queryStart = commandSearch.trimStart();
+		if (queryStart.startsWith('/')) {
 			commandInputValue = '';
 			return;
 		}
 		event.stopPropagation();
 		event.preventDefault();
 
-		// Temporary: wire to chat POST later (ADR-009).
-		commandResponse = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.';
-		console.log('command palette → chat (no nav matches, non-slash query):', commandSearch);
-
-		commandInputValue = ''.trim();
+		void chat.submitUserText(commandSearch.trim());
+		commandInputValue = '';
 	}
 </script>
 
@@ -63,10 +63,20 @@ Chat Window
 Features a chat window with a command input and a chat messages container.
 -->
 <div class="chat-window-container">
-	<div class="chat-window-messages">
-		<div class="chat-window-message">
-			<p class="body-medium">{commandResponse}</p>
+	{#if !hideToolbar}
+		<div class="chat-window-toolbar">
+			<Button.Root type="button" class="button text label-small" onclick={() => chat.clear()}>Clear transcript</Button.Root>
 		</div>
+	{/if}
+	<div class="chat-window-messages" role="log" aria-relevant="additions" aria-label="Chat messages">
+		{#each chat.messages as message (message.id)}
+			<div class="chat-window-message body-medium markdown" class:chat-window-message--user={message.role === 'user'} class:chat-window-message--assistant={message.role === 'assistant'}>
+				<SvelteMarkdown source={message.body} />
+			</div>
+		{/each}
+		{#if chat.lastError}
+			<div class="chat-window-error body-small" role="alert">{chat.lastError}</div>
+		{/if}
 	</div>
 	<div class="chat-window-input-container">
 		<Command.Root class="command-root" onStateChange={handleCommandStateChange}>
@@ -80,6 +90,8 @@ Features a chat window with a command input and a chat messages container.
 						placeholder="Ask a question or press slash to navigate"
 						bind:value={commandInputValue}
 						onkeydown={handleCommandInputKeydown}
+						maxlength="500"
+						aria-busy={chat.status === 'loading'}
 					></textarea>
 				{/snippet}
 			</Command.Input>
@@ -99,9 +111,49 @@ Features a chat window with a command input and a chat messages container.
 <style>
 	.chat-window-container {
 		display: grid;
-		grid-template-columns: repeat(1, minmax(0, 1fr));
+		grid-template-rows: 1fr auto;
 		height: 100%;
 		width: 100%;
+		min-height: 0;
+		gap: 0.5rem;
+		overflow: hidden;
+	}
+
+	.chat-window-toolbar {
+		display: flex;
+		justify-content: flex-end;
+	}
+
+	.chat-window-messages {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		overflow-y: auto;
+		overscroll-behavior: contain;
+		min-height: 0;
+	}
+
+	.chat-window-message {
+		padding-inline: 0.5rem;
+		border-radius: var(--radius-card);
+		border: 1px solid var(--border-card);
+	}
+
+	.chat-window-message--user {
+		align-self: flex-end;
+		max-width: 95%;
+		font-style: italic;
+	}
+
+	.chat-window-message--assistant {
+		align-self: flex-start;
+		max-width: 95%;
+		background-color: var(--dark-04);
+	}
+
+	.chat-window-error {
+		color: var(--destructive-text);
+		padding: 0.25rem 0;
 	}
 
 	.chat-window-input-container {

@@ -27,7 +27,16 @@ export default defineConfig({
 					name: 'server',
 					environment: 'node',
 					include: ['src/**/*.{test,spec}.{js,ts}'],
-					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}']
+					exclude: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/**/*.live.spec.ts']
+				}
+			},
+
+			{
+				extends: './vite.config.ts',
+				test: {
+					name: 'ai-live',
+					environment: 'node',
+					include: ['src/**/*.live.spec.ts']
 				}
 			}
 		]

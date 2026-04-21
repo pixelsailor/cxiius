@@ -14,6 +14,7 @@
 		"format": "prettier --write .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
+		"test:ai-live": "cross-env RUN_AI_LIVE=1 vitest run --project ai-live",
 		"gen": "wrangler types",
 		"generate:resume": "node --import tsx scripts/generate-resume.mjs",
 		"generate:resume:verbose": "node --import tsx scripts/generate-resume.mjs verbose"
@@ -26,6 +27,7 @@
 		"@sveltejs/vite-plugin-svelte": "^6.2.4",
 		"@types/node": "^24",
 		"@vitest/browser-playwright": "^4.1.0",
+		"cross-env": "^10.1.0",
 		"eslint": "^10.0.3",
 		"eslint-plugin-svelte": "^3.15.2",
 		"globals": "^17.4.0",
@@ -43,6 +45,7 @@
 		"wrangler": "^4.63.0"
 	},
 	"dependencies": {
+		"@anthropic-ai/sdk": "^0.90.0",
 		"@csstools/normalize.css": "^12.1.1",
 		"@humanspeak/svelte-markdown": "^1.4.1",
 		"bits-ui": "^2.17.3",

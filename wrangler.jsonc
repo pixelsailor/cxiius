@@ -9,5 +9,15 @@
 		"directory": ".svelte-kit/cloudflare"
 	},
 	"workers_dev": true,
-	"preview_urls": true
+	"preview_urls": true,
+	"kv_namespaces": [
+		{
+			"binding": "RATE_LIMIT_KV",
+			"id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+			"preview_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+		}
+	],
+	"vars": {
+		"RATE_LIMIT_ID_SALT": "replace-in-production-with-secret"
+	}
 }

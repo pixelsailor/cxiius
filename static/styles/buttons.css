@@ -127,22 +127,12 @@
       background-color: var(--destructive-10);
     }
   }
+
+  &[disabled] {
+    border-color: var(--muted);
+    color: var(--foreground-alt);
+  }
 }
-/* .button.outlined {
-  @apply bg-transparent border-1 border-dark-40 text-dark hover:bg-muted dark:border-contrast;
-
-  &.primary {
-    @apply border-dark text-current hover:bg-muted;
-  }
-
-  &.warn {
-    @apply text-tertiary border-tertiary hover:bg-tertiary/10;
-  }
-
-  &.danger {
-    @apply text-destructive border-destructive hover:bg-destructive/10;
-  }
-} */
 
 .button.text {
   /* @apply bg-transparent text-current hover:bg-muted dark:hover:bg-dark-04; */
@@ -176,6 +166,15 @@
 
     &:hover {
       background-color: var(--destructive-10);
+    }
+  }
+
+  &[disabled] {
+    color: var(--muted-foreground);
+
+    &:hover {
+      background-color: transparent;
+      cursor: not-allowed;
     }
   }
 }
