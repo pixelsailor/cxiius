@@ -1,4 +1,4 @@
-# ADR-XXX: API Boundary Security and Sanitization Model
+# ADR-009: API Boundary Security and Sanitization Model
 
 > **Validity rule:** Any `{{ ... }}` placeholder remaining in this file renders the ADR invalid and it must not be treated as authoritative regardless of its stated status.
 
