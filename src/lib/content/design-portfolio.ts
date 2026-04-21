@@ -254,7 +254,7 @@ const data: DesignPortfolioEntry[] = [
 			]
 		},
 		circa: '2013',
-		technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'AngularJS', 'Angular Material', 'Webpack', 'Jasmine', 'Python', 'Django'],
+		technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'AngularJS', 'Bootstrap', 'Webpack', 'Jasmine', 'Python', 'Django'],
 		summary: 'UI design for Frontline VM.',
 		description:
 			"Developed as a complete overhaul of Digital Defense's flagship SaaS vulnerability management platform, Version 6 was built from the ground up with a modern technology stack and was designed to be more user-friendly and intuitive. The new version included a new informative UI, more effecient workflows, and a focus on accessibility and security."

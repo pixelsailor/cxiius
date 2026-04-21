@@ -1,3 +1,10 @@
+*, :after, :before, ::backdrop {
+  box-sizing: border-box;
+  border: 0 solid;
+  margin: 0;
+  padding: 0;
+}
+
 html {
   font-size: var(--base-font-size, 14px);
   font-family: var(--base-font-family);
@@ -18,10 +25,6 @@ body {
 a {
   color: var(--foreground);
   text-decoration: none;
-  /* text-transform: uppercase;
-  font-size: small;
-  letter-spacing: 0.025em;
-  font-weight: 200; */
   padding-inline: 0.125rem;
   transition: background-color var(--default-transition-duration) var(--default-transition-timing-function), color var(--default-transition-duration) var(--default-transition-timing-function), border-color var(--default-transition-duration) var(--default-transition-timing-function);
   border-bottom: 1px solid transparent;

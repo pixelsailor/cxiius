@@ -1,0 +1,10 @@
+.input {
+  background-color: var(--background-alt);
+  color: var(--foreground);
+  width: 100%;
+  outline-style: none;
+  padding: 0.25rem 0.375rem;
+  font-family: inherit;
+  font-weight: 200 !important;
+  letter-spacing: 0.05em !important;
+}

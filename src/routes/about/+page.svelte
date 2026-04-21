@@ -1,3 +1,10 @@
+<svelte:head>
+  <title>Benjamin Thompson - About</title>
+  <meta name="description" content="Benjamin Thompson - About" />
+  <meta name="keywords" content="Benjamin Thompson, About, Front-End Engineer, UI/UX Designer, Component Systems, Accessibility, Usability, Performance, Security" />
+  <meta name="author" content="Benjamin Thompson" />
+</svelte:head>
+
 <div class="container">
   <article class="page-content stack">
     <p class="body-large">Benjamin Thompson is a front-end engineer and UI/UX designer with over 20 years of experience building accessible,

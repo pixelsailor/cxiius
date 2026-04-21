@@ -84,7 +84,7 @@
 				{#each filterOptions as item (item.key)}
 					<li>
 						<a
-							class="filter-link"
+							class="filter-link link"
 							href={item.key === 'all' ? resolve('/portfolio') : resolve('/portfolio') + '?type=' + item.key}
 							aria-current={data.filterKey === item.key ? 'page' : undefined}
 							onclick={(e) => onFilterClick(e, item.key)}
@@ -126,12 +126,16 @@
 		position: relative;
 		/* aspect ratio 16:9 of 933x525 */
 		max-width: 933px;
-		/* height: 525px; */
-		max-height: 347px;
 		padding: 0.5rem;
 		overflow: hidden;
 		box-shadow: 0 1px 4px hsla(0 0% 0% / 0.15);
 		border-radius: 0.25rem;
+	}
+
+	.hero picture {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
 	}
 
 	.hero-img {

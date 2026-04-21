@@ -16,7 +16,15 @@
   padding: 0.25rem 0.375rem;
   font-family: inherit;
   font-weight: 200 !important;
-  letter-spacing: 0.0625em !important;
+  letter-spacing: 0.05em !important;
+
+  &::placeholder {
+    color: var(--foreground-alt);
+    font-size: 0.75rem;
+    font-weight: 100;
+    letter-spacing: 0.0625em;
+    font-style: italic;
+  }
 }
 
 .command-list {

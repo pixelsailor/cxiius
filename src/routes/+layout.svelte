@@ -3,12 +3,13 @@
 	import { Button, Popover } from 'bits-ui';
 
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
+	import type { RouteId } from '$app/types';
 	import favicon from '$lib/assets/favicon.svg';
 	import { isJavaScriptEnabled, removeNoJsClassFromBody } from '$lib/utils/jsEnabled';
 	import { applyTheme, clampThemeIndex, persistThemeIndex, readStoredThemeIndex } from '$lib/utils/theme';
-	import type { RouteId } from '$app/types';
-	import { Slider } from '$lib/ui';
-	import { PaletteIcon, DesktopIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon } from '$lib/ui/icons';
+	import { ChatWindow, Slider } from '$lib/ui';
+	import { CloseIcon, PaletteIcon, DesktopIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon, SmileyIcon } from '$lib/ui/icons';
 
 	const navItems: { label: string; path: RouteId }[] = [
 		{ label: 'Home', path: '/' },
@@ -26,6 +27,12 @@
 	let activeFontFamily = $state(serifFontFamily);
 
 	let activeThemeIndex = $state(0);
+
+	let currentRoute = $derived(page.url.pathname);
+
+	let showNav = $derived(currentRoute !== '/');
+
+	let showChatWindow = $state(false);
 
 	const handleThemeChange = (v: number) => {
 		const i = clampThemeIndex(v);
@@ -72,6 +79,7 @@
 	<link rel="stylesheet" href="/styles/buttons.css" />
 	<link rel="stylesheet" href="/styles/command.css" />
 	<link rel="stylesheet" href="/styles/dialogs.css" />
+	<link rel="stylesheet" href="/styles/forms.css" />
 	<link rel="stylesheet" href="/styles/layout.css" />
 	<link rel="stylesheet" href="/styles/typography.css" />
 	<link rel="stylesheet" href="/styles/app.css" />
@@ -83,15 +91,17 @@
 			<!-- <div class="title-card-container">
 				<h1 class="headline-medium fredericka title-card">CXII</h1>
 			</div> -->
-			<nav class="main-nav">
-				<ul class="main-nav-list">
-					{#each navItems as item (item.path)}
-						<li class="main-nav-item link">
-							<a href={item.path === '/' ? resolve('/') : item.path === '/resume' ? resolve('/resume') : resolve('/portfolio')} class="main-nav-link">{item.label}</a>
-						</li>
-					{/each}
-				</ul>
-			</nav>
+			{#if !isJsEnabled || (isJsEnabled && showNav)}
+				<nav class="main-nav">
+					<ul class="main-nav-list">
+						{#each navItems as item (item.path)}
+							<li class="main-nav-item link">
+								<a href={item.path === '/' ? resolve('/') : item.path === '/resume' ? resolve('/resume') : resolve('/portfolio')} class="main-nav-link">{item.label}</a>
+							</li>
+						{/each}
+					</ul>
+				</nav>
+			{/if}
 		</div>
 		<div class="header-controls">
 			{#if isJsEnabled}
@@ -132,13 +142,39 @@
 			{/if}
 		</div>
 	</header>
-	<main>
-		{@render children()}
-	</main>
+
+	<div class="content-container">
+		<main>
+			{@render children()}
+		</main>
+		{#if isJsEnabled && showNav}
+			<aside class="sidebar chat-container" data-sidebar-state={showChatWindow ? 'open' : 'closed'}>
+				{#if showChatWindow}
+					<div class="chat-container-header">
+						<Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => showChatWindow = false}>
+							<CloseIcon size="xs" ariaLabel="Close chat" />
+						</Button.Root>
+					</div>
+					<div class="chat-container-content">
+						<ChatWindow />
+					</div>
+				{/if}
+			</aside>
+		{/if}
+	</div>
+	
 	<footer>
 		<span class="label-small"> &copy; 2026 Benjamin Thompson. All rights reserved. </span>
 	</footer>
 </div>
+
+{#if isJsEnabled && showNav && !showChatWindow}
+	<div class="chat-window-trigger">
+		<Button.Root class="button icon" aria-label="Open chat" onclick={() => showChatWindow = true}>
+			<SmileyIcon size="sm" ariaLabel="Chat icon" />
+		</Button.Root>
+	</div>
+{/if}
 
 <style>
 	.layout-container {
@@ -153,19 +189,6 @@
 		align-items: var(--header-align-items);
 		padding: var(--header-padding);
 	}
-
-	/* .title-card-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-  } */
-
-	/* .title-card {
-		letter-spacing: 0.15em;
-		line-height: 1;
-		margin: 0;
-	} */
 
 	.main-nav-list {
 		display: flex;
@@ -197,10 +220,6 @@
 		justify-content: center;
 	}
 
-	/* :global([data-state='open']) {
-		animation: cxii-popover-in 140ms var(--default-transition-timing-function);
-	} */
-
 	:global(.theme-slider[data-slider-root]) {
 		width: min(100%, 280px);
 		margin-top: 1.25rem;
@@ -210,8 +229,50 @@
 		margin-bottom: 0.625rem;
 	}
 
+	.content-container {
+		display: grid;
+		grid-template-columns: 1fr auto;
+	}
+
 	main {
 		padding: 0 1rem;
+	}
+
+	.sidebar {
+		position: sticky;
+		top: 0;
+		display: grid;
+		grid-template-rows: 1fr auto;
+		align-content: stretch;
+		gap: 1rem;
+		padding: 0.5rem;
+
+		&[data-sidebar-state='open'] {
+			animation: cxii-sidebar-in 140ms var(--default-transition-timing-function);
+			width: 300px;
+			height: 66dvh;
+			max-height: 100dvh;
+			background-color: var(--background-alt);
+			box-shadow: var(--shadow-popover);
+		}
+
+		&[data-sidebar-state='closed'] {
+			animation: cxii-sidebar-out 140ms var(--default-transition-timing-function);
+		}
+	}
+
+	.chat-container-header {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+		height: 2rem;
+	}
+
+	.chat-window-trigger {
+		position: fixed;
+		bottom: 1rem;
+		right: 1rem;
+		z-index: 50;
 	}
 
 	footer {
