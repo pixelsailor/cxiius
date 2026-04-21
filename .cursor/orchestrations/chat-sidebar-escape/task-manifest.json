@@ -1,0 +1,60 @@
+{
+	"manifest_version": "1.0.0",
+	"task_id": "chat-sidebar-escape",
+	"objective": "Make the sidebar chat (opened from +layout.svelte via svelte:window keydown) close on Escape while the Command/chat textarea is focused, matching bits-ui Popover dismiss-on-Escape behavior and returning focus/control to the page. Eliminate incorrect early-return logic so global handlers run when the chat is open.",
+	"status": "awaiting_human",
+	"current_agent": "orchestrator",
+	"pipeline": ["orchestrator", "planner", "builder", "test", "validator", "orchestrator"],
+	"completed_stages": [
+		{
+			"agent": "orchestrator",
+			"completed_at": "2026-04-21T00:00:00Z",
+			"output_artifacts": [".cursor/orchestrations/chat-sidebar-escape/task-manifest.json"],
+			"summary": "Bootstrapped manifest; identified +layout handleKeyDown early return when showChatWindow blocks Escape."
+		},
+		{
+			"agent": "planner",
+			"completed_at": "2026-04-21T12:00:00Z",
+			"output_artifacts": [
+				".cursor/orchestrations/chat-sidebar-escape/plan.md",
+				".cursor/orchestrations/chat-sidebar-escape/acceptance-criteria.md"
+			],
+			"summary": "Plan and acceptance criteria for Escape path reordering and optional ChatWindow follow-up."
+		},
+		{
+			"agent": "builder",
+			"completed_at": "2026-04-21T14:00:00Z",
+			"output_artifacts": [
+				".cursor/orchestrations/chat-sidebar-escape/build-log.md",
+				"src/routes/+layout.svelte"
+			],
+			"summary": "Restructured handleKeyDown Escape-first; isJsEnabled gate; blur and preventDefault on close."
+		},
+		{
+			"agent": "test",
+			"completed_at": "2026-04-21T16:00:00Z",
+			"output_artifacts": [
+				".cursor/orchestrations/chat-sidebar-escape/test-report.md",
+				"src/tests/chat-sidebar-layout.svelte.spec.ts",
+				"src/tests/layout-chat-keyboard.source.spec.ts"
+			],
+			"summary": "Vitest browser + source specs; coverage map AC-01–AC-10; npm run test green."
+		},
+		{
+			"agent": "validator",
+			"completed_at": "2026-04-21T18:00:00Z",
+			"output_artifacts": [".cursor/orchestrations/chat-sidebar-escape/validation-report.md"],
+			"summary": "PASS_WITH_NOTES: AC-08 partial (shortcut matrix), ADR-004 focus-to-trigger optional follow-up."
+		}
+	],
+	"loop_count": 0,
+	"max_loops": 2,
+	"locked_artifacts": [],
+	"flags": [],
+	"human_approval": {
+		"status": "pending",
+		"approved_at": null,
+		"approver": null,
+		"notes": null
+	}
+}

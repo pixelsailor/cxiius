@@ -67,8 +67,6 @@
 		commandInputValue = '';
 		commandDialogOpen = false;
 	}
-
-	$inspect(chat.messages);
 </script>
 
 <!--

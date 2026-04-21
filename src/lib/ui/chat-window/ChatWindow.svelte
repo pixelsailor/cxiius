@@ -35,11 +35,11 @@
 
 	function handleCommandInputKeydown(event: KeyboardEvent) {
 		/** Remove focus from the command input when Escape is pressed. */
-		if (event.key === 'Escape') {
-			const toBlur = document.getElementById('chatWindowInput');
-			toBlur?.blur();
-			return;
-		}
+		// if (event.key === 'Escape') {
+		// 	const toBlur = document.getElementById('chatWindowInput');
+		// 	toBlur?.blur();
+		// 	return;
+		// }
 
 		if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229 || commandFilteredCount > 0) {
 			return;
@@ -169,9 +169,6 @@ Features a chat window with a command input and a chat messages container.
 	textarea {
 		resize: none;
 		width: 100%;
-		min-height: 1.5rem;
-		max-height: 8rem;
-		height: stretch;
-		height: -webkit-fill-available;
+		height: 1.625rem;
 	}
 </style>

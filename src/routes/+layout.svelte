@@ -13,6 +13,8 @@
 	import { ChatWindow, Slider } from '$lib/ui';
 	import { CloseIcon, PaletteIcon, DesktopIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon, SmileyIcon } from '$lib/ui/icons';
 
+	const ALPHABET = new RegExp(/^[a-zA-Z/]$/);
+
 	const navItems: { label: string; path: RouteId }[] = [
 		{ label: 'Home', path: '/' },
 		{ label: 'Resume', path: '/resume' },
@@ -60,6 +62,39 @@
 			applyTheme(0);
 		}
 	});
+
+	/**
+	 * Handle keydown events for the layout.
+	 * Responsible for opening the chat window and focusing the command input as well as closing the chat window when Escape is pressed.
+	 * @param event - The keyboard event.
+	 */
+	function handleKeyDown(event: KeyboardEvent) {
+		if (!isJsEnabled || !showNav) return;
+
+		// Close before any alphabet / open-chat guard: Escape is not in ALPHABET and must not sit behind `showChatWindow` early returns.
+		if (showChatWindow && event.key === 'Escape') {
+			event.preventDefault();
+			document.getElementById('chatWindowInput')?.blur();
+			showChatWindow = false;
+			return;
+		}
+
+		if (showChatWindow || !ALPHABET.test(event.key)) return;
+
+		// Prevent firefox from opening its quick search
+		if (event.key === '/') {
+			event.preventDefault();
+		}
+
+		showChatWindow = true;
+
+		// Focus the command input after a short delay to ensure the chat window is open
+		setTimeout(() => {
+			const commandInput = document.getElementById('chatWindowInput') as HTMLTextAreaElement | null;
+			commandInput?.focus();
+			if (commandInput) commandInput.value = event.key;
+		}, 100);
+	}
 </script>
 
 {#snippet themeTickLabel({ value }: { value: number; index: number })}
@@ -75,6 +110,8 @@
 		<MoonIcon size="xs" />
 	{/if}
 {/snippet}
+
+<svelte:window onkeydown={handleKeyDown} />
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
@@ -152,7 +189,7 @@
 		</div>
 
 		<footer>
-			<span class="label-small"> &copy; 2026 Benjamin Thompson. All rights reserved. </span>
+			<span class="label-small">&copy; 2026 Benjamin Thompson. All rights reserved.</span>
 		</footer>
 	</main>
 
@@ -261,7 +298,7 @@
 
 		&[data-sidebar-state='open'] {
 			animation: cxii-sidebar-in 140ms var(--default-transition-timing-function);
-			width: 300px;
+			width: 360px;
 			height: 100dvh;
 			background-color: var(--background-alt);
 			box-shadow: var(--shadow-popover);
