@@ -2,7 +2,7 @@
 	"manifest_version": "1.0.0",
 	"task_id": "chat-sidebar-escape",
 	"objective": "Make the sidebar chat (opened from +layout.svelte via svelte:window keydown) close on Escape while the Command/chat textarea is focused, matching bits-ui Popover dismiss-on-Escape behavior and returning focus/control to the page. Eliminate incorrect early-return logic so global handlers run when the chat is open.",
-	"status": "awaiting_human",
+	"status": "complete",
 	"current_agent": "orchestrator",
 	"pipeline": ["orchestrator", "planner", "builder", "test", "validator", "orchestrator"],
 	"completed_stages": [
@@ -45,6 +45,15 @@
 			"completed_at": "2026-04-21T18:00:00Z",
 			"output_artifacts": [".cursor/orchestrations/chat-sidebar-escape/validation-report.md"],
 			"summary": "PASS_WITH_NOTES: AC-08 partial (shortcut matrix), ADR-004 focus-to-trigger optional follow-up."
+		},
+		{
+			"agent": "orchestrator",
+			"completed_at": "2026-04-21T19:30:00Z",
+			"output_artifacts": [
+				".cursor/orchestrations/chat-sidebar-escape/task-manifest.json",
+				".cursor/orchestrations/chat-sidebar-escape/human-approval.md"
+			],
+			"summary": "Human approval recorded (pixelsailor); run marked complete."
 		}
 	],
 	"loop_count": 0,
@@ -52,9 +61,9 @@
 	"locked_artifacts": [],
 	"flags": [],
 	"human_approval": {
-		"status": "pending",
-		"approved_at": null,
-		"approver": null,
-		"notes": null
+		"status": "approved",
+		"approved_at": "2026-04-21T19:30:00Z",
+		"approver": "pixelsailor",
+		"notes": "User-requested closure after PASS_WITH_NOTES validation."
 	}
 }
