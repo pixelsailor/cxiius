@@ -45,7 +45,7 @@ export type Availability = {
 
 const data: Availability = {
 	available: true,
-	statusMessage: 'Currently available for new work. My contract with LevelBlue wrapped up in April 2026 and I am actively looking for my next engagement - contract or full-time.',
+	statusMessage: 'Currently available for new work. I am actively looking for my next engagement - contract or full-time.',
 	asOf: '2026-04-12',
 	openTo: ['contract', 'full-time'],
 	locationPreference: ['San Antonio, TX area', 'Remote', 'Hybrid'],

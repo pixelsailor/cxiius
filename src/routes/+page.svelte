@@ -185,7 +185,6 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 
 	.chat-window-message--assistant {
 		align-self: flex-start;
-		max-width: 95%;
 		background-color: var(--dark-04);
 	}
 

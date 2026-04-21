@@ -317,21 +317,6 @@ Two parallel experiences:
 
 ---
 
-## Open Areas (Intentionally Deferred)
-
-The following are intentionally undefined at this stage:
-
-- Component architecture beyond the bits-ui base layer for `$lib/ui/` (see [ADR-011](adr/ADR-011-ui-component-library-bits-ui.md))
-- Visual design system
-- Interaction micro-details
-- Analytics implementation
-- Voice interaction behavior
-- Multi-turn conversation support
-
-These will be defined in separate documentation as needed.
-
----
-
 ## Suggested Supporting Documents
 
 To keep this README focused, the following documents should be created:

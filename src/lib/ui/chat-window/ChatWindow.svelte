@@ -70,7 +70,11 @@ Features a chat window with a command input and a chat messages container.
 	{/if}
 	<div class="chat-window-messages" role="log" aria-relevant="additions" aria-label="Chat messages">
 		{#each chat.messages as message (message.id)}
-			<div class="chat-window-message body-medium markdown" class:chat-window-message--user={message.role === 'user'} class:chat-window-message--assistant={message.role === 'assistant'}>
+			<div
+				class="chat-window-message body-medium markdown"
+				class:chat-window-message--user={message.role === 'user'}
+				class:chat-window-message--assistant={message.role === 'assistant'}
+			>
 				<SvelteMarkdown source={message.body} />
 			</div>
 		{/each}

@@ -6,7 +6,7 @@ export type EducationEntry = {
 	institution: string;
 	location: string;
 	completedDate: string;
-	honours?: string[];
+	honors?: string[];
 	notes?: string;
 };
 
@@ -16,7 +16,7 @@ const data: EducationEntry[] = [
 		institution: 'Full Sail University',
 		location: 'Winter Park, FL',
 		completedDate: '2005',
-		honours: ['Class Valedictorian', 'Advanced Achiever Award', 'Certificate of Excellence', 'Perfect Attendance Award'],
+		honors: ['Class Valedictorian', 'Advanced Achiever Award', 'Certificate of Excellence', 'Perfect Attendance Award'],
 		notes: "Featured in the inaugural issue of the school's quarterly publication."
 	},
 	{

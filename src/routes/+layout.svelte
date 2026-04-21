@@ -93,86 +93,86 @@
 
 <div class="layout-container" style:font-family={activeFontFamily}>
 	<main>
-	<header>
-		<div>
-			{#if !isJsEnabled || (isJsEnabled && showNav)}
-				<nav class="main-nav">
-					<ul class="main-nav-list">
-						{#each navItems as item (item.path)}
-							<li class="main-nav-item link">
-								<a href={item.path === '/' ? resolve('/') : item.path === '/resume' ? resolve('/resume') : resolve('/portfolio')} class="main-nav-link">{item.label}</a>
-							</li>
-						{/each}
-					</ul>
-				</nav>
-			{/if}
-		</div>
-		<div class="header-controls">
-			{#if isJsEnabled}
-				<Popover.Root>
-					<Popover.Trigger class="button text icon popover__trigger" aria-label="Theme switcher">
-						{#if activeThemeIndex === 1}
-							<SunIcon size="sm" ariaLabel="Light theme" />
-						{:else if activeThemeIndex === 2}
-							<SunHorizonIcon size="sm" ariaLabel="Stone theme" />
-						{:else if activeThemeIndex === 3}
-							<MoonStarsIcon size="sm" ariaLabel="Twilight theme" />
-						{:else if activeThemeIndex === 4}
-							<MoonIcon size="sm" ariaLabel="Dark theme" />
-						{:else}
-							<PaletteIcon size="sm" ariaLabel="Theme switcher" />
-						{/if}
-					</Popover.Trigger>
-					<Popover.Portal>
-						<Popover.Content class="popover__content">
-							<Slider
-								aria-label="Theme switcher"
-								class="theme-slider"
-								type="single"
-								min={0}
-								max={4}
-								step={1}
-								trackPadding={2}
-								bind:value={activeThemeIndex}
-								onValueChange={handleThemeChange}
-								tickLabel={themeTickLabel}
-							/>
-						</Popover.Content>
-					</Popover.Portal>
-				</Popover.Root>
-				<Button.Root class="button text icon label-large" id="font-toggle" onclick={toggleFontFamily}>
-					<strong>Aa</strong>
-				</Button.Root>
-			{/if}
-		</div>
-	</header>
+		<header>
+			<div>
+				{#if !isJsEnabled || (isJsEnabled && showNav)}
+					<nav class="main-nav">
+						<ul class="main-nav-list">
+							{#each navItems as item (item.path)}
+								<li class="main-nav-item link">
+									<a href={item.path === '/' ? resolve('/') : item.path === '/resume' ? resolve('/resume') : resolve('/portfolio')} class="main-nav-link">{item.label}</a>
+								</li>
+							{/each}
+						</ul>
+					</nav>
+				{/if}
+			</div>
+			<div class="header-controls">
+				{#if isJsEnabled}
+					<Popover.Root>
+						<Popover.Trigger class="button text icon popover__trigger" aria-label="Theme switcher">
+							{#if activeThemeIndex === 1}
+								<SunIcon size="sm" ariaLabel="Light theme" />
+							{:else if activeThemeIndex === 2}
+								<SunHorizonIcon size="sm" ariaLabel="Stone theme" />
+							{:else if activeThemeIndex === 3}
+								<MoonStarsIcon size="sm" ariaLabel="Twilight theme" />
+							{:else if activeThemeIndex === 4}
+								<MoonIcon size="sm" ariaLabel="Dark theme" />
+							{:else}
+								<PaletteIcon size="sm" ariaLabel="Theme switcher" />
+							{/if}
+						</Popover.Trigger>
+						<Popover.Portal>
+							<Popover.Content class="popover__content">
+								<Slider
+									aria-label="Theme switcher"
+									class="theme-slider"
+									type="single"
+									min={0}
+									max={4}
+									step={1}
+									trackPadding={2}
+									bind:value={activeThemeIndex}
+									onValueChange={handleThemeChange}
+									tickLabel={themeTickLabel}
+								/>
+							</Popover.Content>
+						</Popover.Portal>
+					</Popover.Root>
+					<Button.Root class="button text icon label-large" id="font-toggle" onclick={toggleFontFamily}>
+						<strong>Aa</strong>
+					</Button.Root>
+				{/if}
+			</div>
+		</header>
 
-	<div class="content-container">
-		{@render children()}
-	</div>
+		<div class="content-container">
+			{@render children()}
+		</div>
 
-	<footer>
-		<span class="label-small"> &copy; 2026 Benjamin Thompson. All rights reserved. </span>
-	</footer>
+		<footer>
+			<span class="label-small"> &copy; 2026 Benjamin Thompson. All rights reserved. </span>
+		</footer>
 	</main>
 
 	{#if isJsEnabled && showNav}
 		<aside class="sidebar" data-sidebar-state={showChatWindow ? 'open' : 'closed'}>
 			{#if showChatWindow}
-			<div class="sidebar-resize-container">
-				<div class="sidebar-resize-handle"></div>
-			</div>
-			<div class="sidebar-content chat-container">
-				<div class="chat-container-header">
-					<Button.Root type="button" class="button text label-small" disabled={chat.messages.length === 0} onclick={() => chat.clear()}>Clear transcript</Button.Root>
-					<Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => (showChatWindow = false)}>
-						<CloseIcon size="xs" ariaLabel="Close chat" />
-					</Button.Root>
+				<div class="sidebar-resize-container">
+					<div class="sidebar-resize-handle"></div>
 				</div>
-				<div class="chat-container-content">
-					<ChatWindow hideToolbar={true} />
+				<div class="sidebar-content chat-container">
+					<div class="chat-container-header">
+						<Button.Root type="button" class="button text label-small" disabled={chat.messages.length === 0} onclick={() => chat.clear()}>Clear transcript</Button.Root>
+						<Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => (showChatWindow = false)}>
+							<CloseIcon size="xs" ariaLabel="Close chat" />
+						</Button.Root>
+					</div>
+					<div class="chat-container-content">
+						<ChatWindow hideToolbar={true} />
+					</div>
 				</div>
-			</div>
 			{/if}
 		</aside>
 	{/if}
@@ -204,7 +204,6 @@
 		top: 0;
 		z-index: 10;
 		backdrop-filter: blur(8px);
-
 	}
 
 	.main-nav-list {
@@ -245,11 +244,6 @@
 		margin-bottom: 0.625rem;
 	}
 
-	.content-container {
-		/* display: grid;
-		grid-template-columns: 1fr auto; */
-	}
-
 	main {
 		display: grid;
 		grid-template-rows: auto 1fr auto;
@@ -260,10 +254,6 @@
 	.sidebar {
 		position: sticky;
 		top: 0;
-		/* display: grid;
-		grid-template-rows: 1fr auto;
-		align-content: stretch;
-		gap: 1rem; */
 		display: grid;
 		grid-template-columns: 3px auto;
 		align-content: stretch;
@@ -291,8 +281,6 @@
 		display: grid;
 		grid-template-rows: 3rem auto;
 		grid-template-columns: 1fr;
-		/* align-content: stretch;
-		gap: 1rem; */
 		height: 100%;
 		overflow: hidden;
 	}
