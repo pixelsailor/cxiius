@@ -27,6 +27,8 @@ Before writing a single line of TypeScript, you need to know:
 
 If the answer to (4) is no — ask. Do not fill gaps with plausible-sounding content.
 
+Secondary objective: maximize **answerability breadth** across domains so the chatbot can answer naturally, specifically, and confidently in more conversations without fabricating.
+
 ---
 
 ## Execution Scope (Strict)
@@ -83,8 +85,8 @@ Do **not** ask for, accept for publication, or write any of the following:
 | Category | Off-limits | Acceptable instead |
 | --- | --- | --- |
 | **Location** | Exact city names (past or present); street-level or neighborhood detail | General region only — e.g. “San Antonio area”, “Central Texas”, “Southwest Texas”; remote / on-site / hybrid without naming a city |
-| **Age** | Age, date of birth, or other age-identifying specifics | Career phase or years of experience **only if** Ben supplies it in professional terms (e.g. “10+ years in X”) — never compute age from dates |
-| **Family** | Identifying details about spouse, children, or other relatives | High-level facts if Ben chooses — e.g. “parent” without names, ages, or counts of children |
+| **Age** | Age, date of birth, or other age-identifying specifics | Career phase or years of experience **only if** Ben supplies it in professional terms (e.g. “10+ years in X”); or broad, non-identifying generational phrasing (e.g. “Oregon Trail generation”) |
+| **Family** | Identifying details about spouse, children, or other relatives (names, ages, schools, routines, whereabouts) | High-level facts if Ben chooses — e.g. parent status, counts of children/pets, or broad household description without names/ages/locations |
 | **Contact** | Phone numbers, personal email used as private contact, mailing address | Public professional channels only if Ben explicitly wants them (e.g. a public hire-me email on the site) — still never phone |
 | **Health** | Medical history, diagnoses, medications, disability details | Do not record — omit |
 | **Legal name** | Middle name; full legal name beyond what Ben uses professionally | The name Ben uses publicly on the site / resume |
@@ -96,6 +98,7 @@ If Ben volunteers an off-limits detail in conversation, **do not copy it into co
 - **Do not** ask questions whose honest answers would require off-limits data (e.g. “what city was that?” → ask remote/on-site/hybrid and region if needed).
 - If a Phase 3 summary accidentally includes a forbidden detail, **strip it** before writing and confirm the redacted version.
 - When in doubt, **omit** or use `// TODO:` rather than guess a location or personal fact.
+- If users ask boundary-crossing questions in the chatbot persona (exact age, child ages, exact city, etc.), preserve privacy and prefer a concise, friendly, non-evasive response style (e.g. broad cohort framing, regional framing, or light whimsical phrasing).
 
 ---
 
@@ -105,8 +108,12 @@ Before asking anything, do the following silently:
 
 1. Read the current domain registry in `content-model.mdc`
 2. Check whether a file for the target domain already exists in `$lib/content/`
-3. If updating an existing file, read it so you know what's already there
-4. Determine the domain type (see Phase 1)
+3. Read the target file(s) and any closely related domain file(s) to identify what is already known
+4. Build a short internal **knowledge audit**:
+   - confirmed facts already captured
+   - likely gaps that block answerability
+   - facts that appear duplicated or stale
+5. Determine the domain type (see Phase 1)
 
 Then announce to the user what you found:
 > "I can see `[domain].ts` already exists with [X] entries — I'll ask about what to add or change."
@@ -154,6 +161,17 @@ Within each batch, choose questions in this order **unless** something already a
 
 **Within the same priority level**, ask the **highest-uncertainty** items first — what you cannot infer from earlier messages or existing content files.
 
+### Gap-first, non-duplicate interviewing
+
+Before each question batch, run this internal filter:
+
+1. Is this answer already present in `$lib/content/` with acceptable confidence?
+2. If present but weak/stale, can I ask an **update-oriented** question instead of re-asking basics?
+3. Will this question improve future chatbot answer quality for realistic user prompts?
+
+If (1) is yes and no update is needed, **do not ask it again**.
+Prefer net-new, high-value questions that close genuine knowledge gaps.
+
 ### Stop condition
 
 You have **enough** to leave Phase 2 when **all** of the following are true:
@@ -183,6 +201,7 @@ If the user introduces **more than one** domain or topic:
 - Ask **which domain to complete first**.
 - Finish **Phase 2 → Phase 3 confirmation → Phase 4** for that domain before starting the next.
 - **Do not interleave** questions across domains.
+- You may still note cross-domain follow-up opportunities and queue them for after the current domain is completed.
 
 ### Internal confidence (do not label this to the user unless helpful)
 
@@ -341,6 +360,7 @@ Use the checklists below as **coverage targets**. For each domain type, interpre
 - **Do not** write or edit content files before Phase 3 confirmation.
 - **Do not** ask all questions in a single message (cap at four; use multiple turns).
 - **Do not** infer answers from prior knowledge, other people's CVs, or "typical" roles — only what Ben (or existing approved content) supplied.
+- **Do not** ask duplicate questions when the answer already exists in `$lib/content/` unless explicitly validating stale/uncertain data.
 - **Do not** merge unrelated content domains into one file or one narrative; keep each domain in its own `$lib/content/[domain].ts` (per `content-model.mdc` and the domain registry).
 - **Do not** solicit or persist **Privacy and off-limits data** — even if Ben mentions it casually, do not put it in the content library.
 
@@ -383,6 +403,8 @@ Then write the complete file. Do not write partial files expecting a follow-up.
 
 - **Privacy first.** Follow **Privacy and off-limits data** in this rule; mirror the same boundaries when applying `content-model.mdc`.
 - **Never fabricate.** If you don't have a value, insert a `// TODO:` comment rather than inventing something plausible.
+- **Answerability first.** Bias interviews toward facts that increase the set of questions the chatbot can answer on Ben's behalf.
+- **No redundant asks.** Reuse approved facts from existing content and ask only net-new, corrective, or freshness-check questions.
 - **Never assume proficiency.** For skills, always ask rather than inferring from the job history.
 - **Multiple domains:** See Phase 2 — pick one domain first, complete it through Phase 4, then start the next; never interleave.
 - **Dates as strings.** ISO 8601 — `'YYYY-MM'` or `'YYYY-MM-DD'`. Never `Date` objects.

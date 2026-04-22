@@ -16,7 +16,7 @@ Update this table when domains are added or removed.
 | `experience.ts`       | Work history                                     | `Promise<ExperienceEntry[]>`      |
 | `skills.ts`           | Technical proficiencies by category              | `Promise<SkillCategory[]>`        |
 | `education.ts`        | Formal education and certifications              | `Promise<EducationEntry[]>`       |
-| `background.ts`       | Military service, martial arts, instructor roles | `Promise<Background>`             |
+| `background.ts`       | Personal background, interests, favorites, work style | `Promise<Background>`         |
 | `availability.ts`     | Current availability status                      | `Promise<Availability>`           |
 | `projects.ts`         | Personal projects (products, tools, experiments) | `Promise<ProjectEntry[]>`         |
 | `design-portfolio.ts` | Design portfolio (case studies, visual work)     | `Promise<DesignPortfolioEntry[]>` |

@@ -44,8 +44,8 @@ Every module here must remain **client-safe** for both consumers.
 Content is consumed by the public site and the AI system prompt. **Do not** put the following in any `$lib/content/` file:
 
 - Exact **city** names (past or present); **regional** phrasing only (e.g. “San Antonio area”, “Central Texas”) plus remote/on-site/hybrid when relevant
-- **Age**, date of birth, or computed age
-- **Family** specifics — especially anything that identifies **children**; broad statements only if Ben approves (e.g. “parent” without names or counts)
+- **Age**, date of birth, or computed age (use broad generational/career-phase language instead when needed)
+- **Family** identifying specifics — names, ages, schools, routines, or whereabouts; high-level facts are allowed if Ben approves (e.g. parent status, children/pet counts without identifiers)
 - **Phone numbers**; private mailing address
 - **Medical history** or health details
 - **Middle name** or full legal name beyond what Ben uses publicly
