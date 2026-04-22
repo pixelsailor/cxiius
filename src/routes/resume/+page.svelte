@@ -97,9 +97,9 @@
 							<span class="title-small education-item__dates">{education.completedDate}</span>
 						</div>
 					</div>
-					<ul class="education-item__honours-list">
-						{#each education.honours as honour (honour)}
-							<li class="body-large education-item__honour">{honour}</li>
+					<ul class="education-item__honors-list">
+						{#each education.honors as honor (honor)}
+							<li class="body-large education-item__honor">{honor}</li>
 						{/each}
 					</ul>
 					<p class="body-medium education-item__notes">{education.notes}</p>

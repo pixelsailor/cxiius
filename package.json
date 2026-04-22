@@ -5,6 +5,8 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
+		"precheck": "node scripts/clean-sveltekit-cloudflare.mjs",
+		"prebuild": "node scripts/clean-sveltekit-cloudflare.mjs",
 		"build": "vite build",
 		"preview": "wrangler dev .svelte-kit/cloudflare/_worker.js --port 4173",
 		"prepare": "svelte-kit sync || echo ''",
