@@ -100,7 +100,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 
 		<div class="command-menu-container" id="commandMenuContainer">
 			<Dialog.Root bind:open={commandDialogOpen}>
-				<Dialog.Trigger class="button text dialog-trigger">Try typing something</Dialog.Trigger>
+				<Dialog.Trigger class="button text dialog-trigger fade-in">Try typing something</Dialog.Trigger>
 				<Dialog.Portal to="#commandMenuContainer">
 					<Dialog.Content class="command-dialog">
 						<Dialog.Title class="sr-only">Command Menu</Dialog.Title>
@@ -156,6 +156,23 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 	:global(.dialog-trigger.button) {
 		font-style: italic;
 		color: var(--foreground-alt);
+		opacity: 0;
+		animation: 0.1s ease-in 5s 1 fade-in;
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		:global(.dialog-trigger.button) {
+			animation: 1s ease-in 7s 1 forwards fade-in;
+		}
+	}
+
+	@keyframes fade-in {
+		from {
+			opacity: 0;
+		}
+		to {
+			opacity: 1;
+		}
 	}
 
 	.chat-window-messages {

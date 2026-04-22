@@ -11,6 +11,8 @@
 
 	let commandInputValue = $state('');
 
+	let commandInputWrapper = $state<HTMLDivElement | null>(null);
+
 	/** Mirrors Command.Root state for Enter handling (see onStateChange). */
 	let commandFilteredCount = $state(0);
 	let commandSearch = $state('');
@@ -34,12 +36,9 @@
 	}
 
 	function handleCommandInputKeydown(event: KeyboardEvent) {
-		/** Remove focus from the command input when Escape is pressed. */
-		// if (event.key === 'Escape') {
-		// 	const toBlur = document.getElementById('chatWindowInput');
-		// 	toBlur?.blur();
-		// 	return;
-		// }
+		if (commandInputWrapper) {
+			commandInputWrapper.dataset.value = commandInputValue;
+		}
 
 		if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229 || commandFilteredCount > 0) {
 			return;
@@ -84,21 +83,6 @@ Features a chat window with a command input and a chat messages container.
 	</div>
 	<div class="chat-window-input-container">
 		<Command.Root class="command-root" onStateChange={handleCommandStateChange}>
-			<Command.Input bind:value={commandInputValue}>
-				{#snippet child({ props })}
-					<textarea
-						{...props}
-						class="input borderless body-medium command-input"
-						name="chat-window-input"
-						id="chatWindowInput"
-						placeholder="Ask a question or press slash to navigate"
-						bind:value={commandInputValue}
-						onkeydown={handleCommandInputKeydown}
-						maxlength="500"
-						aria-busy={chat.status === 'loading'}
-					></textarea>
-				{/snippet}
-			</Command.Input>
 			{#if showRoutes}
 				<Command.List class="command-list">
 					<Command.Viewport class="command-viewport">
@@ -108,6 +92,23 @@ Features a chat window with a command input and a chat messages container.
 					</Command.Viewport>
 				</Command.List>
 			{/if}
+			<Command.Input bind:value={commandInputValue}>
+				{#snippet child({ props })}
+					<div class="textarea-container body-medium" bind:this={commandInputWrapper}>
+						<textarea
+							{...props}
+							class="input borderless body-medium command-input"
+							name="chat-window-input"
+							id="chatWindowInput"
+							placeholder="Ask a question or press slash to navigate"
+							bind:value={commandInputValue}
+							onkeydown={handleCommandInputKeydown}
+							maxlength="500"
+							aria-busy={chat.status === 'loading'}
+						></textarea>
+					</div>
+				{/snippet}
+			</Command.Input>
 		</Command.Root>
 	</div>
 </div>
@@ -163,12 +164,30 @@ Features a chat window with a command input and a chat messages container.
 	.chat-window-input-container {
 		border: 1px solid var(--border-card);
 		border-radius: var(--radius-card);
-		padding: 0.25rem;
+		padding: 0.25rem 0;
 	}
 
-	textarea {
-		resize: none;
-		width: 100%;
-		height: 1.625rem;
+	.textarea-container {
+		display: grid;
+
+		&::after {
+			content: attr(data-value) '';
+			white-space: pre-wrap;
+			visibility: hidden;
+			grid-area: 1 / 1 / 2 / 2;
+			min-height: 1.625rem;
+			font-weight: 200;
+			letter-spacing: 0.05em;
+			padding: 0.125rem 0.75rem;
+		}
+
+		textarea {
+			resize: none;
+			width: 100%;
+			min-height: 1.625rem;
+			padding: 0.125rem 0.75rem;
+			overflow: hidden;
+			grid-area: 1 / 1 / 2 / 2;
+		}
 	}
 </style>

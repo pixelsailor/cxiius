@@ -41,6 +41,17 @@
 	const chat = new ChatState();
 	setChatContext(chat);
 
+	const openChatWindow = (key?: string) => {
+		showChatWindow = true;
+		setTimeout(() => {
+			const commandInput = document.getElementById('chatWindowInput') as HTMLTextAreaElement | null;
+			commandInput?.focus();
+			if (key && commandInput) {
+				commandInput.value = key;
+			}
+		}, 100);
+	};
+
 	const handleThemeChange = (v: number) => {
 		const i = clampThemeIndex(v);
 		activeThemeIndex = i;
@@ -86,14 +97,7 @@
 			event.preventDefault();
 		}
 
-		showChatWindow = true;
-
-		// Focus the command input after a short delay to ensure the chat window is open
-		setTimeout(() => {
-			const commandInput = document.getElementById('chatWindowInput') as HTMLTextAreaElement | null;
-			commandInput?.focus();
-			if (commandInput) commandInput.value = event.key;
-		}, 100);
+		openChatWindow(event.key);
 	}
 </script>
 
@@ -217,7 +221,7 @@
 
 {#if isJsEnabled && showNav && !showChatWindow}
 	<div class="chat-window-trigger">
-		<Button.Root class="button icon" aria-label="Open chat" onclick={() => (showChatWindow = true)}>
+		<Button.Root class="button icon" aria-label="Open chat" onclick={() => openChatWindow()}>
 			<SmileyIcon size="sm" ariaLabel="Chat icon" />
 		</Button.Root>
 	</div>
