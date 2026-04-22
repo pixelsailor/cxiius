@@ -5,7 +5,7 @@ export type MilitaryService = {
 	rank: string;
 	rate: string;
 	branch: string;
-	regions: string[];
+	locations: string[];
 	startDate: string;
 	endDate: string;
 	summary: string;
@@ -16,14 +16,14 @@ export type MartialArt = {
 	style: string;
 	rank: string;
 	school: string;
-	region: string;
+	location: string;
 	earnedDate: string;
 };
 
 export type InstructorRole = {
 	title: string;
 	organisation: string;
-	region: string;
+	location: string;
 	startDate: string;
 	endDate: string;
 	summary: string;
@@ -68,7 +68,7 @@ const data: Background = {
 		rank: 'Petty Officer 3rd Class',
 		rate: "Boatswain's Mate",
 		branch: 'US Coast Guard Reserve',
-		regions: ['Pacific Northwest', 'Texas Gulf Coast'],
+		locations: ['Pacific Northwest', 'Texas Gulf Coast'],
 		startDate: '2008',
 		endDate: '2016',
 		summary: 'Served eight years in the US Coast Guard Reserve as small boat crew and boarding team member.',
@@ -83,8 +83,8 @@ const data: Background = {
 		{
 			style: "Tracy's Kenpo",
 			rank: '1st Degree Black Belt',
-			school: 'Professional Self Defense',
-			region: 'Southwest Colorado',
+			school: 'Professional Self Defense of Durango',
+			location: 'Durango, CO',
 			earnedDate: '2003'
 		}
 	],
@@ -92,7 +92,7 @@ const data: Background = {
 		{
 			title: 'Assistant Karate Instructor',
 			organisation: 'Sanchin Karate',
-			region: 'South Central Texas',
+			location: 'San Antonio, TX',
 			startDate: '2011',
 			endDate: '2013',
 			summary:
@@ -101,7 +101,7 @@ const data: Background = {
 		{
 			title: 'Snowboard Instructor',
 			organisation: 'Eldora Mountain Resort',
-			region: 'Colorado Front Range',
+			location: 'Nederland, CO',
 			startDate: '1999',
 			endDate: '2001',
 			summary:
@@ -110,7 +110,7 @@ const data: Background = {
 		{
 			title: 'Snowboard Instructor',
 			organisation: 'Purgatory Resort',
-			region: 'Southwest Colorado',
+			location: 'Durango, CO',
 			startDate: '2001',
 			endDate: '2003',
 			summary:
