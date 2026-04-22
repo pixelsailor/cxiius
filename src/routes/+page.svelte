@@ -3,6 +3,7 @@
 	import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
 	import { Command, Dialog } from 'bits-ui';
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
+	import EllipsisLoader from '$lib/ui/ellipsis-loader/EllipsisLoader.svelte';
 
 	const ALPHABET = new RegExp(/^[a-zA-Z/]$/);
 
@@ -92,6 +93,14 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 						<SvelteMarkdown source={message.body} />
 					</div>
 				{/each}
+				{#if chat.status === 'loading'}
+					<div class="chat-window-message chat-window-message--loading body-medium markdown">
+						<p>
+							<span>Thinking</span>
+							<EllipsisLoader />
+						</p>
+					</div>
+				{/if}
 				{#if chat.lastError}
 					<div class="chat-window-error body-small" role="alert">{chat.lastError}</div>
 				{/if}
@@ -188,6 +197,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 		padding-inline: 0.5rem;
 		border-radius: var(--radius-card);
 		border: 1px solid var(--border-card);
+		overflow-x: hidden;
 	}
 
 	.chat-window-message--user {
@@ -201,6 +211,13 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 	.chat-window-message--assistant {
 		align-self: flex-start;
 		background-color: var(--dark-04);
+	}
+
+	.chat-window-message--loading {
+		align-self: center;
+		background-color: transparent;
+		box-shadow: none;
+		border: none;
 	}
 
 	.chat-window-error {

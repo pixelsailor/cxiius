@@ -2,7 +2,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { Button, Command } from 'bits-ui';
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
-
+	import EllipsisLoader from '$lib/ui/ellipsis-loader/EllipsisLoader.svelte';
 	import { getChatContext } from '$lib/stores/chat.context';
 
 	const chat = getChatContext();
@@ -77,6 +77,14 @@ Features a chat window with a command input and a chat messages container.
 				<SvelteMarkdown source={message.body} />
 			</div>
 		{/each}
+		{#if chat.status === 'loading'}
+			<div class="chat-window-message chat-window-message--loading body-medium markdown">
+						<p>
+							<span>Thinking</span>
+							<EllipsisLoader />
+						</p>
+					</div>
+		{/if}
 		{#if chat.lastError}
 			<div class="chat-window-error body-small" role="alert">{chat.lastError}</div>
 		{/if}
@@ -154,6 +162,13 @@ Features a chat window with a command input and a chat messages container.
 		align-self: flex-start;
 		max-width: 95%;
 		background-color: var(--dark-04);
+	}
+
+	.chat-window-message--loading {
+		align-self: flex-start;
+		max-width: 95%;
+		background-color: var(--dark-04);
+		padding-right: 0.25rem;
 	}
 
 	.chat-window-error {
