@@ -22,6 +22,10 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
 	const background = await getBackground();
 	const availability = await getAvailability();
 
+	// Voice Profile.ts
+	const voiceProfileBackgroundArr: string[] = ['## Voice Profile', `### Default Tone: ${background.voice.defaultTone}`, ...background.voice.styleNotes.map((s) => `- ${s}`)];
+	const voiceProfileBackgroundLines = voiceProfileBackgroundArr.join('\n');
+
 	// Design-Portfolio.ts
 	const portfolioArr: string[] = ['## Design portfolio (published on site)'];
 	for (const p of portfolio) {
@@ -82,6 +86,18 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
 	];
 	const instructorRolesBackgroundLines = instructorRolesBackgroundArr.join('\n');
 
+	// Interests.ts
+	const interestsBackgroundArr: string[] = ['## Interests', ...background.interests.map((i) => `### ${i.name} - ${i.notes}`)];
+	const interestsBackgroundLines = interestsBackgroundArr.join('\n');
+
+	// Favorites.ts
+	const favoritesBackgroundArr: string[] = ['## Favorites', `### Books: ${background.favorites.books.join(', ')}`, `### Bands: ${background.favorites.bands.join(', ')}`, `### Movies: ${background.favorites.movies.join(', ')}`, `### Sports Teams: ${background.favorites.sportsTeams.join(', ')}`];
+	const favoritesBackgroundLines = favoritesBackgroundArr.join('\n');
+
+	// Work Style.ts
+	const workStyleBackgroundArr: string[] = ['## Work Style', `### Traits: ${background.workStyle.traits.join(', ')}`, `### Non-Negotiables: ${background.workStyle.nonNegotiables.join(', ')}`, `### Influences: ${background.workStyle.influences.join(', ')}`, `### Philosophy: ${background.workStyle.philosophy}`];
+	const workStyleBackgroundLines = workStyleBackgroundArr.join('\n');
+
 	// Availability.ts
 	const availabilityArr: string[] = ['## Availability'];
 	availabilityArr.push(`- ${availability.statusMessage}`);
@@ -90,6 +106,7 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
 	const availabilityLines = availabilityArr.join('\n');
 
 	return [
+		voiceProfileBackgroundLines,
 		skillsLines,
 		portfolioLines,
 		experienceLines,
@@ -97,6 +114,9 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
 		militaryBackgroundLines,
 		martialArtsBackgroundLines,
 		instructorRolesBackgroundLines,
+		interestsBackgroundLines,
+		favoritesBackgroundLines,
+		workStyleBackgroundLines,
 		availabilityLines
 	].join('\n\n');
 }
