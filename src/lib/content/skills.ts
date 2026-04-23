@@ -35,16 +35,16 @@ const data: SkillCategory[] = [
 		name: 'Frameworks & Libraries',
 		skills: [
 			{ name: 'Angular', proficiency: 'fluent', notes: 'Primary framework across two long-term enterprise engagements; up to Angular 21' },
-			{ name: 'React', proficiency: 'fluent', notes: 'Used extensively at Fortra/DDI and in component library work' },
+			{ name: 'React', proficiency: 'proficient', notes: 'Used extensively at Fortra and in component library work' },
 			{ name: 'SvelteKit', proficiency: 'proficient' },
 			{ name: 'SolidJS', proficiency: 'familiar' },
 			{ name: 'Qwik', proficiency: 'familiar' },
 			{ name: 'Web Components', proficiency: 'proficient' },
-			{ name: 'TailwindCSS', proficiency: 'proficient' },
-			{ name: 'Bootstrap', proficiency: 'fluent' },
+			{ name: 'TailwindCSS', proficiency: 'fluent' },
+			{ name: 'Bootstrap', proficiency: 'proficient' },
 			{ name: 'Material UI', proficiency: 'proficient' },
 			{ name: 'RxJS', proficiency: 'proficient', notes: 'Used extensively in Angular contexts' },
-			{ name: 'jQuery', proficiency: 'fluent', notes: 'Deep historical use; superseded by modern frameworks in current work' },
+			{ name: 'jQuery', proficiency: 'proficient', notes: 'Deep historical use; superseded by modern frameworks in current work' },
 			{ name: 'WordPress', proficiency: 'proficient' }
 		]
 	},
@@ -58,7 +58,7 @@ const data: SkillCategory[] = [
 			},
 			{ name: 'Design systems', proficiency: 'fluent' },
 			{ name: 'Storybook', proficiency: 'proficient' },
-			{ name: 'Figma', proficiency: 'fluent', notes: 'Design-to-code workflows; also used for product design and prototyping' },
+			{ name: 'Figma', proficiency: 'proficient', notes: 'Design-to-code workflows; also used for product design and prototyping' },
 			{ name: 'UI/UX design', proficiency: 'fluent' },
 			{ name: 'Accessibility (WCAG)', proficiency: 'proficient' },
 			{ name: 'Responsive design', proficiency: 'fluent' }
@@ -89,8 +89,8 @@ const data: SkillCategory[] = [
 		name: 'Backend & APIs',
 		skills: [
 			{ name: 'Node.js', proficiency: 'proficient' },
-			{ name: 'Next.js', proficiency: 'proficient' },
-			{ name: 'Express.js', proficiency: 'proficient' },
+			{ name: 'Next.js', proficiency: 'familiar' },
+			{ name: 'Express.js', proficiency: 'familiar' },
 			{ name: 'Sails.js', proficiency: 'familiar' },
 			{ name: 'REST', proficiency: 'fluent' },
 			{ name: 'GraphQL', proficiency: 'proficient' }
@@ -130,12 +130,12 @@ const data: SkillCategory[] = [
 		name: 'Collaboration & Process',
 		skills: [
 			{ name: 'Git', proficiency: 'fluent' },
-			{ name: 'GitHub', proficiency: 'fluent' },
+			{ name: 'GitHub', proficiency: 'proficient' },
 			{ name: 'GitLab', proficiency: 'proficient' },
-			{ name: 'Figma (collaboration)', proficiency: 'fluent' },
+			{ name: 'Figma (collaboration)', proficiency: 'proficient' },
 			{ name: 'Atlassian suite (Jira, Confluence)', proficiency: 'proficient' },
 			{ name: 'Notion', proficiency: 'proficient' },
-			{ name: 'Agile / Scrum', proficiency: 'proficient' },
+			{ name: 'Agile / Scrum', proficiency: 'fluent' },
 			{ name: 'Kanban', proficiency: 'proficient' }
 		]
 	}
