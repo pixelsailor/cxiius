@@ -4,9 +4,29 @@
 
 ---
 
+## Purpose of This Document
+
+This README defines **high-level architecture, constraints, and guiding decisions** required to begin development without ambiguity in foundational systems.
+
+It intentionally avoids:
+
+- Component-level implementation details
+- UX micro-interactions
+- Visual design specifics
+
+Those belong in separate documentation.
+
+This document exists to ensure:
+
+- Early decisions do not create architectural dead-ends
+- Core systems remain aligned with project intent
+- Development can begin without waterfall-style specification
+
+---
+
 ## Developing
 
-**Stack:** TypeScript, npm; ESLint, Prettier, Vitest; SvelteKit with the Cloudflare adapter. Cursor-facing agent conventions (including the Svelte MCP documentation workflow) live in [`.cursor/rules/svelte-mcp-workflow.mdc`](.cursor/rules/svelte-mcp-workflow.mdc).
+**Stack:** TypeScript, npm; ESLint, Prettier, Vitest; SvelteKit with the Cloudflare adapter. Cursor-facing agent conventions (including the Svelte MCP documentation workflow) live in [`.cursor/rules/svelte-mcp-workflow.mdc`](.cursor/rules/svelte-mcp-workflow.mdc). For task-folder orchestration flow, prompts, and stage artifacts, see [`docs/ORCHESTRATED_DEVELOPMENT.md`](docs/ORCHESTRATED_DEVELOPMENT.md).
 
 Start a development server:
 
@@ -45,31 +65,11 @@ When you have a Cloudflare account and KV namespaces:
 2. In **`svelte.config.js`**, configure `@sveltejs/adapter-cloudflare` with **`platformProxy`** (see Wrangler [`getPlatformProxy`](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy) and the adapter’s `platformProxy` option) pointing at your Wrangler config so **`npm run dev`** receives `platform.env.RATE_LIMIT_KV` locally.
 3. Use **`npm run build`** then **`npm run preview`** (or `wrangler dev` on the built worker) to exercise `/api/ai` with KV-backed rate limits without deploying to production.
 
-## Purpose of This Document
-
-This README defines **high-level architecture, constraints, and guiding decisions** required to begin development without ambiguity in foundational systems.
-
-It intentionally avoids:
-
-- Component-level implementation details
-- UX micro-interactions
-- Visual design specifics
-
-Those belong in separate documentation.
-
-This document exists to ensure:
-
-- Early decisions do not create architectural dead-ends
-- Core systems remain aligned with project intent
-- Development can begin without waterfall-style specification
-
 ---
 
-## Concept
+## Documentation
 
-CXII is both an umbrella company and a personal identity. The site reflects that duality: minimal and corporate at a glance, personal and expressive through interaction.
-
-The interface is intentionally ambiguous and rewards curiosity. Discoverability is not optimized for mass usability.
+- Orchestrated workflow guide: [`docs/ORCHESTRATED_DEVELOPMENT.md`](docs/ORCHESTRATED_DEVELOPMENT.md)
 
 ---
 
