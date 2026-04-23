@@ -1,4 +1,4 @@
-import { getDesignPortfolio } from '$lib/content/design-portfolio';
+import { getDesignPortfolio } from '$lib/content/projects';
 import { filterEntries, parseFilter, pickHero, typeQueryFromPageHref } from '$lib/utils/portfolio-load';
 import type { PageLoad } from './$types';
 

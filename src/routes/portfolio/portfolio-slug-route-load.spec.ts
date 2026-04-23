@@ -1,8 +1,8 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { getDesignPortfolio } from '$lib/content/design-portfolio';
-import { load, prerender } from './[slug]/+page.js';
+import { getDesignPortfolio } from '$lib/content/projects';
+import { entries, load, prerender } from './[slug]/+page.js';
 import type { PageData } from './[slug]/$types';
 
 describe('portfolio [slug] +page load', () => {
@@ -67,5 +67,12 @@ describe('portfolio [slug] +page load', () => {
 	it('does not use +page.server.ts for this route (AC-14)', () => {
 		const p = join(process.cwd(), 'src/routes/portfolio/[slug]/+page.server.ts');
 		expect(existsSync(p)).toBe(false);
+	});
+
+	it('entries() yields only portfolio getter slugs; non-portfolio slugs are omitted (AC-07)', async () => {
+		const list = await getDesignPortfolio();
+		const slugParams = await entries();
+		expect(slugParams.map((p) => p.slug)).toEqual(list.map((e) => e.slug));
+		expect(slugParams.some((p) => p.slug === 'whats-for-dinner')).toBe(false);
 	});
 });

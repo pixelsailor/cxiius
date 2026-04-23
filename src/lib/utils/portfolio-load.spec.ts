@@ -1,9 +1,11 @@
 import { describe, it, expect } from 'vitest';
-import type { DesignPortfolioEntry } from '$lib/content/design-portfolio';
+import type { DesignPortfolioEntry } from '$lib/content/projects';
 import { circaYearFromString, filterEntries, parseFilter, pickHero, typeQueryFromPageHref, typeQueryFromSearch } from './portfolio-load';
 
 function entry(overrides: Partial<DesignPortfolioEntry> & Pick<DesignPortfolioEntry, 'slug'>): DesignPortfolioEntry {
 	return {
+		includeInPortfolio: true,
+		status: 'Shipped',
 		name: 'N',
 		projectType: 'ui',
 		images: {

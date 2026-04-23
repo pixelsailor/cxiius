@@ -1,4 +1,4 @@
-import type { DesignPortfolioEntry, DesignPortfolioProjectType } from '$lib/content/design-portfolio';
+import type { DesignPortfolioEntry, DesignPortfolioProjectType } from '$lib/content/projects';
 import { circaYearFromString } from '$lib/utils/circa-year';
 
 export type PortfolioFilterKey = 'all' | DesignPortfolioProjectType;

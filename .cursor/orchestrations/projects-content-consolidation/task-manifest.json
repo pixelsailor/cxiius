@@ -1,0 +1,61 @@
+{
+  "manifest_version": "1.0.0",
+  "task_id": "projects-content-consolidation",
+  "objective": "Consolidate overlapping content in src/lib/content/design-portfolio.ts and src/lib/content/projects.ts into a single projects.ts source while preserving DesignPortfolioEntry structure, adding a status field, and supporting unpublished/non-portfolio projects that are available to AI content but excluded from the Portfolio page and image requirements via a boolean flag.",
+  "status": "awaiting_human",
+  "current_agent": "orchestrator",
+  "pipeline": ["orchestrator", "planner", "builder", "test", "validator"],
+  "completed_stages": [
+    {
+      "agent": "orchestrator",
+      "completed_at": "2026-04-22T21:43:23.3590808-05:00",
+      "output_artifacts": [
+        ".cursor/orchestrations/projects-content-consolidation/task-manifest.json"
+      ],
+      "summary": "Initialized orchestration manifest with actionable objective and planner handoff."
+    },
+    {
+      "agent": "planner",
+      "completed_at": "2026-04-22T21:43:23.3590808-05:00",
+      "output_artifacts": [
+        ".cursor/orchestrations/projects-content-consolidation/plan.md",
+        ".cursor/orchestrations/projects-content-consolidation/acceptance-criteria.md"
+      ],
+      "summary": "Produced implementation plan and acceptance criteria for unified projects content."
+    },
+    {
+      "agent": "builder",
+      "completed_at": "2026-04-22T21:46:06.3652716-05:00",
+      "output_artifacts": [
+        ".cursor/orchestrations/projects-content-consolidation/build-log.md"
+      ],
+      "summary": "Implemented unified projects content module, migrated consumers, and removed legacy design-portfolio module."
+    },
+    {
+      "agent": "test",
+      "completed_at": "2026-04-22T21:48:15.3826830-05:00",
+      "output_artifacts": [
+        ".cursor/orchestrations/projects-content-consolidation/test-report.md"
+      ],
+      "summary": "Added and updated tests to map acceptance criteria coverage and verified check/test commands pass."
+    },
+    {
+      "agent": "validator",
+      "completed_at": "2026-04-22T21:49:46.0697601-05:00",
+      "output_artifacts": [
+        ".cursor/orchestrations/projects-content-consolidation/validation-report.md"
+      ],
+      "summary": "Validated implementation against acceptance criteria and ADR references with PASS verdict."
+    }
+  ],
+  "loop_count": 0,
+  "max_loops": 2,
+  "locked_artifacts": [],
+  "flags": [],
+  "human_approval": {
+    "status": "pending",
+    "approved_at": null,
+    "approver": null,
+    "notes": null
+  }
+}

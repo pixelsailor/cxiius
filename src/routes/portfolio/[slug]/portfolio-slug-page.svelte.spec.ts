@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { render } from 'vitest-browser-svelte';
-import { getDesignPortfolio } from '$lib/content/design-portfolio';
+import { getDesignPortfolio } from '$lib/content/projects';
 import { getNeighborSlugs } from '$lib/utils/portfolio-neighbors';
 import PortfolioSlugPage from './+page.svelte';
 import type { PageData } from './$types';

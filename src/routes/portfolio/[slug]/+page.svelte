@@ -53,7 +53,7 @@
 <!--
 @component
 Page for a single portfolio entry.
-Content is loaded from the design-portfolio.ts file and prerendered for each entry.
+Content is loaded from projects.ts (portfolio-filtered entries) and prerendered for each entry.
 Keyboard navigation is supported for the previous and next project buttons using the ArrowLeft and ArrowRight keys.
 -->
 
@@ -117,19 +117,6 @@ Keyboard navigation is supported for the previous and next project buttons using
 					{/each}
 				</ul>
 			</section>
-
-			<!-- {#if entry.images.showcase !== undefined && entry.images.showcase.length > 0}
-				<section class="showcase-section" aria-labelledby="showcase-heading">
-					<h2 id="showcase-heading" class="headline-small">Showcase</h2>
-					<ul class="showcase-grid">
-						{#each entry.images.showcase as shot, i (`${entry.slug}-showcase-${i}`)}
-							<li class="showcase-item">
-								<img class="showcase-img" src={shot.src} alt={shot.alt.trim() !== '' ? shot.alt : `${entry.name} showcase ${i + 1}`} loading="lazy" decoding="async" />
-							</li>
-						{/each}
-					</ul>
-				</section>
-			{/if} -->
 		</article>
 	{/if}
 </div>

@@ -9,6 +9,8 @@
 
   p {
     margin: .75rem 0;
+    font-size: 0.875rem;
+    line-height: 1.45;
   }
 
   ul {

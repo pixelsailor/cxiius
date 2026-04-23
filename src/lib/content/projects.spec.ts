@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { circaYearFromString } from '$lib/utils/circa-year';
-import { DESIGN_PORTFOLIO_PROJECT_TYPES, getDesignPortfolio, type DesignPortfolioEntry, type DesignPortfolioImage } from './design-portfolio';
+import {
+	DESIGN_PORTFOLIO_PROJECT_TYPES,
+	getDesignPortfolio,
+	getProjects,
+	type DesignPortfolioEntry,
+	type DesignPortfolioImage,
+	type ProjectContentEntry
+} from './projects';
 
 /** Remote URL, site-root static path, or bare filename under `static/` (e.g. hero composed with `/images/` in the route). */
 function isImageRef(s: string): boolean {
@@ -32,9 +39,11 @@ describe('getDesignPortfolio', () => {
 		}
 	});
 
-	it('exposes expected fields on each entry', async () => {
+	it('exposes expected fields on each portfolio entry', async () => {
 		const entries = await getDesignPortfolio();
 		for (const e of entries) {
+			expect(e.includeInPortfolio).toBe(true);
+			expect(typeof e.status).toBe('string');
 			expect(typeof e.slug).toBe('string');
 			expect(typeof e.name).toBe('string');
 			expect(DESIGN_PORTFOLIO_PROJECT_TYPES).toContain(e.projectType);
@@ -72,5 +81,40 @@ describe('getDesignPortfolio', () => {
 		const entries = await getDesignPortfolio();
 		const featured = entries.filter((e: DesignPortfolioEntry) => e.featuredAsHero === true);
 		expect(featured.length).toBeLessThanOrEqual(1);
+	});
+
+	it('excludes non-portfolio slugs from the portfolio list', async () => {
+		const entries = await getDesignPortfolio();
+		expect(entries.some((e) => e.slug === 'whats-for-dinner')).toBe(false);
+	});
+});
+
+describe('getProjects', () => {
+	it('returns a stable superset including non-portfolio entries', async () => {
+		const all = await getProjects();
+		const portfolio = await getDesignPortfolio();
+		expect(all.length).toBeGreaterThanOrEqual(portfolio.length);
+		const dinner = all.find((e) => e.slug === 'whats-for-dinner');
+		expect(dinner).toBeDefined();
+		if (dinner === undefined) {
+			return;
+		}
+		expect(dinner.includeInPortfolio).toBe(false);
+		expect('context' in dinner).toBe(true);
+	});
+
+	it('narrows personal-project shape when includeInPortfolio is false', async () => {
+		const all: ProjectContentEntry[] = await getProjects();
+		for (const e of all) {
+			if (e.includeInPortfolio) {
+				expect(e.images.thumbnail).toBeDefined();
+				expect(e.images.full).toBeDefined();
+			} else {
+				expect('context' in e).toBe(true);
+				if (e.slug === 'whats-for-dinner') {
+					expect(e.projectType).toBeUndefined();
+				}
+			}
+		}
 	});
 });

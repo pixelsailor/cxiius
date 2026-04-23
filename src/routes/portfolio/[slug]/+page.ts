@@ -1,4 +1,4 @@
-import { getDesignPortfolio } from '$lib/content/design-portfolio';
+import { getDesignPortfolio } from '$lib/content/projects';
 import { getNeighborSlugs } from '$lib/utils/portfolio-neighbors';
 import type { PageLoad } from './$types';
 
