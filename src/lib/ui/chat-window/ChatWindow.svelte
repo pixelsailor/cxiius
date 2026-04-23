@@ -168,7 +168,7 @@ Features a chat window with a command input and a chat messages container.
 		align-self: flex-start;
 		max-width: 95%;
 		background-color: var(--dark-04);
-		padding-right: 0.25rem;
+		padding-right: 1rem;
 	}
 
 	.chat-window-error {
