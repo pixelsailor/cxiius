@@ -201,7 +201,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 		border-radius: var(--radius-card);
 		border: 1px solid var(--border-card);
 		overflow-x: hidden;
-		margin-block: 1rem;
+		margin-block: 0.375rem;
 	}
 
 	.chat-window-message--user {
