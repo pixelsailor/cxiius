@@ -1,6 +1,10 @@
 // See https://svelte.dev/docs/kit/types#app.d.ts
 // for information about these interfaces
 declare global {
+	interface Env {
+		TURNSTILE_SECRET_KEY?: string;
+	}
+
 	namespace App {
 		interface Platform {
 			env: Env;

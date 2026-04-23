@@ -25,7 +25,8 @@ function liveGateOpen(): boolean {
 describe.skipIf(!liveGateOpen())('completeAiChat (live Anthropic)', () => {
 	it('returns non-empty assistant text for a valid request', async () => {
 		const body = AiRequestSchema.parse({
-			input: 'Reply with exactly: ok'
+			input: 'Reply with exactly: ok',
+			turnstileToken: 'dev-bypass-not-used-here'
 		});
 		const apiKey = process.env.ANTHROPIC_API_KEY ?? '';
 		const result = await completeAiChat(apiKey, body);

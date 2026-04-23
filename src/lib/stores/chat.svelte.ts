@@ -1,3 +1,5 @@
+import { requestTurnstileToken } from '$lib/utils/turnstile';
+
 export type ChatStatus = 'idle' | 'loading' | 'streaming' | 'complete' | 'error';
 
 export type ChatMessage = {
@@ -31,10 +33,17 @@ export class ChatState {
 		this.status = 'loading';
 
 		try {
+			const turnstileToken = await requestTurnstileToken();
+			if (!turnstileToken) {
+				this.lastError = 'Verification failed. Please retry.';
+				this.status = 'error';
+				return;
+			}
+
 			const res = await fetch('/api/ai', {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ input })
+				body: JSON.stringify({ input, turnstileToken })
 			});
 
 			let payload: unknown = null;

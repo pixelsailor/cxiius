@@ -3,6 +3,12 @@ import { json } from '@sveltejs/kit';
 import { AiRequestSchema } from '$lib/server/ai.schemas';
 import { completeAiChat } from '$lib/server/ai.service';
 import { consumeAiRateLimit, estimateAiTokens } from '$lib/server/kv/aiRateLimit';
+import {
+	hasAllowedFetchSite,
+	isSameOriginRequest,
+	shouldBypassTurnstileForLocalDev,
+	verifyTurnstileToken
+} from '$lib/server/turnstile';
 
 import type { RequestHandler } from './$types';
 
@@ -25,6 +31,9 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 	if (!env?.RATE_LIMIT_KV) {
 		return json({ error: 'service_unavailable' }, { status: 503 });
 	}
+	if (!isSameOriginRequest(request) || !hasAllowedFetchSite(request)) {
+		return json({ error: 'forbidden' }, { status: 403 });
+	}
 
 	let body: unknown;
 	try {
@@ -39,6 +48,22 @@ export const POST: RequestHandler = async ({ request, platform, getClientAddress
 	}
 
 	const clientIp = resolveClientIp(request, getClientAddress);
+	const shouldBypassTurnstile = shouldBypassTurnstileForLocalDev(env.TURNSTILE_SECRET_KEY, request.url);
+	if (!shouldBypassTurnstile) {
+		const turnstileSecret = env.TURNSTILE_SECRET_KEY?.trim();
+		if (!turnstileSecret) {
+			return json({ error: 'service_unavailable' }, { status: 503 });
+		}
+		const turnstileOk = await verifyTurnstileToken({
+			secret: turnstileSecret,
+			token: parsed.data.turnstileToken,
+			remoteIp: clientIp
+		});
+		if (!turnstileOk) {
+			return json({ error: 'invalid_input' }, { status: 400 });
+		}
+	}
+
 	const tokenEstimate = estimateAiTokens(parsed.data.input.length);
 
 	const rl = await consumeAiRateLimit(env.RATE_LIMIT_KV, env.RATE_LIMIT_ID_SALT, clientIp, tokenEstimate);

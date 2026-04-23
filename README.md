@@ -61,15 +61,31 @@ Use this to evaluate real model output while editing `$lib/content` and the serv
 
 When you have a Cloudflare account and KV namespaces:
 
-1. Put `ANTHROPIC_API_KEY`, `RATE_LIMIT_ID_SALT`, and KV binding values in **`.dev.vars`** (and align `wrangler.jsonc` with real `kv_namespaces` IDs). Run `npm run gen` after binding changes.
+1. Put `ANTHROPIC_API_KEY`, `RATE_LIMIT_ID_SALT`, `PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`, and KV binding values in **`.dev.vars`** (or `.env` for local preview) and align `wrangler.jsonc` with real `kv_namespaces` IDs. Run `npm run gen` after binding changes.
 2. In **`svelte.config.js`**, configure `@sveltejs/adapter-cloudflare` with **`platformProxy`** (see Wrangler [`getPlatformProxy`](https://developers.cloudflare.com/workers/wrangler/api/#getplatformproxy) and the adapter’s `platformProxy` option) pointing at your Wrangler config so **`npm run dev`** receives `platform.env.RATE_LIMIT_KV` locally.
 3. Use **`npm run build`** then **`npm run preview`** (or `wrangler dev` on the built worker) to exercise `/api/ai` with KV-backed rate limits without deploying to production.
+4. For first local verification, use Cloudflare Turnstile test keys and confirm the chat works locally before switching to production keys:
+   - Site key: `1x00000000000000000000AA`
+   - Secret key: `1x0000000000000000000000000000000AA`
+
+### Local chatbot verification checklist (fresh clone)
+
+Use this sequence before your first deploy:
+
+1. Copy [`.env.example`](.env.example) to `.env` and fill all required vars (`ANTHROPIC_API_KEY`, `RATE_LIMIT_ID_SALT`, `PUBLIC_TURNSTILE_SITE_KEY`, `TURNSTILE_SECRET_KEY`).
+2. Use Turnstile **test keys** first (above), then run:
+   - `npm run build`
+   - `npm run preview`
+3. Open `http://127.0.0.1:4173` (Worker preview), send a chat message, and confirm the assistant responds.
+4. If that works, replace Turnstile test keys with your real keys and re-test locally before deploying.
+5. If you see `Verification failed. Please retry.`, it means the browser did not obtain a Turnstile token. Usually this is an env/key issue; restart preview and hard-refresh the page after changing env values.
 
 ---
 
 ## Documentation
 
 - Orchestrated workflow guide: [`docs/ORCHESTRATED_DEVELOPMENT.md`](docs/ORCHESTRATED_DEVELOPMENT.md)
+- Local troubleshooting guide: [`docs/local-dev-troubleshooting.md`](docs/local-dev-troubleshooting.md)
 
 ---
 
@@ -267,11 +283,17 @@ All user input (text or voice) follows a unified pipeline:
 2. **Rate Limiting**
    - IP-based via KV store
 
-3. **Prompt Constraints**
+3. **Bot Attestation**
+   - Cloudflare Turnstile token required per chat request
+
+4. **Prompt Constraints**
    - Explicit behavioral boundaries
 
-4. **Input Limits**
+5. **Input Limits**
    - Hard cap enforced server-side
+
+6. **Request Provenance**
+   - Same-origin + fetch metadata checks at the API boundary
 
 ### Design Philosophy
 

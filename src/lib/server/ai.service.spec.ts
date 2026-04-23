@@ -26,7 +26,7 @@ describe('completeAiChat', () => {
 	});
 
 	it('returns UNKNOWN-style failure when API key is empty', async () => {
-		const r = await completeAiChat('   ', { input: 'hello' });
+		const r = await completeAiChat('   ', { input: 'hello', turnstileToken: 'token' });
 		expect(r.ok).toBe(false);
 		if (!r.ok) expect(r.error.code).toBe('UNKNOWN');
 	});
@@ -35,14 +35,14 @@ describe('completeAiChat', () => {
 		messagesCreate.mockResolvedValue({
 			content: [{ type: 'text', text: 'Assistant reply' }]
 		});
-		const r = await completeAiChat('test-api-key', { input: 'Hello' });
+		const r = await completeAiChat('test-api-key', { input: 'Hello', turnstileToken: 'token' });
 		expect(r.ok).toBe(true);
 		if (r.ok) expect(r.data.text).toBe('Assistant reply');
 	});
 
 	it('maps SDK errors to UPSTREAM_UNAVAILABLE', async () => {
 		messagesCreate.mockRejectedValue(new Error('network'));
-		const r = await completeAiChat('test-api-key', { input: 'Hello' });
+		const r = await completeAiChat('test-api-key', { input: 'Hello', turnstileToken: 'token' });
 		expect(r.ok).toBe(false);
 		if (!r.ok) expect(r.error.code).toBe('UPSTREAM_UNAVAILABLE');
 	});
