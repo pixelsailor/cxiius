@@ -9,15 +9,15 @@
 }
 
 .command-input {
-  /* background-color: var(--background-alt); */
+  background-color: var(--background-alt);
   border: none;
-  /* color: var(--foreground);
+  color: var(--foreground);
   width: 100%;
   outline-style: none;
   padding: 0.25rem 0.375rem;
   font-family: inherit;
   font-weight: 200 !important;
-  letter-spacing: 0.05em !important; */
+  letter-spacing: 0.0125em;
 
   &::placeholder {
     color: var(--foreground-alt);

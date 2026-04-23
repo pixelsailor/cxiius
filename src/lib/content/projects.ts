@@ -119,7 +119,7 @@ const portfolioData: DesignPortfolioEntry[] = [
 				{ src: '/images/cubs_item-933.webp', alt: 'A screenshot of the University of Colorado Book Store website item detail page.' }
 			]
 		},
-		circa: '2000',
+		circa: '2005',
 		technologies: ['HTML', 'CSS', 'JavaScript', 'ColdFusion', 'Adobe Photoshop', 'Adobe Illustrator'],
 		summary: 'Website design for the University of Colorado Book Store.',
 		description:
@@ -265,7 +265,7 @@ const portfolioData: DesignPortfolioEntry[] = [
 				{ src: '/images/mms_editregions-933.webp', alt: 'A screenshot of the Media Management System showing the United States with western states highlighted.' }
 			]
 		},
-		circa: '2007 - Q1',
+		circa: '2007',
 		technologies: ['Adobe Photoshop', 'HTML', 'CSS', 'JavaScript'],
 		summary: "UI for MOD Systems' Media Management System.",
 		description:
@@ -288,11 +288,11 @@ const portfolioData: DesignPortfolioEntry[] = [
 				{ src: '/images/modcom_endpoints-933.webp', alt: 'A screenshot of the MOD Systems website "endpoints" page highlighting digital and physical media devices.' }
 			]
 		},
-		circa: '2006 - Q2',
+		circa: '2008',
 		technologies: ['HTML', 'CSS', 'Adobe Photoshop', 'Adobe Illustrator'],
 		summary: 'Corporate website for MOD Systems.',
 		description:
-			"One of my first projects after joining MOD Systems was to redesign the company website -- taking it from a basic \"about us\" page to a more modern, informative, and engaging experience. The new website featured a clean, modern design with a focus on showcasing the company's products and services offering a central location for customers to learn more about the company and its services. It included a new logo, color scheme, and typography, as well as a new set of icons and illustrations to help convey the company's brand and values. The website was built using HTML, CSS, and JavaScript, and was hosted on the company's own servers."
+			"Built and maintained the MOD Systems corporate website. The site featured a clean, modern design with a focus on showcasing the company's products and services offering a central location for customers to learn more about the company and its services. It included a new logo, color scheme, and typography, as well as a new set of icons and illustrations to help convey the company's brand and values. The website was built using HTML, CSS, and JavaScript, and was hosted on the company's own servers."
 	},
 	{
 		includeInPortfolio: true as const,
