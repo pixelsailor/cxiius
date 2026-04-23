@@ -69,6 +69,10 @@
 		commandInputValue = '';
 		commandDialogOpen = false;
 	}
+	function handleCommandCloseAutoFocus(event: Event) {
+		event.preventDefault();
+		(document.activeElement as HTMLElement | null)?.blur();
+	}
 </script>
 
 <!--
@@ -112,7 +116,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 			<Dialog.Root bind:open={commandDialogOpen}>
 				<Dialog.Trigger class="button text dialog-trigger fade-in">Try typing something</Dialog.Trigger>
 				<Dialog.Portal to="#commandMenuContainer">
-					<Dialog.Content class="command-dialog">
+					<Dialog.Content class="command-dialog" preventScroll={false} onCloseAutoFocus={handleCommandCloseAutoFocus}>
 						<Dialog.Title class="sr-only">Command Menu</Dialog.Title>
 						<Dialog.Description class="sr-only">This is the command menu. Use the arrow keys to navigate or start typing to ask questions.</Dialog.Description>
 						<Command.Root class="command-root" onStateChange={handleCommandStateChange}>
@@ -159,6 +163,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 		font-size: 5rem;
 		letter-spacing: 0.15em;
 		line-height: 1.2;
+		margin: 0;
 	}
 
 	.command-menu-container {
