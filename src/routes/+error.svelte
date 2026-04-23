@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { page } from '$app/state';
+	import { page } from '$app/state';
 </script>
 
 <svelte:head>
@@ -8,14 +8,14 @@
 </svelte:head>
 
 <div class="error-card-container">
-  <div class="error-card">
-    <h1 class="headline-large">Ah donkey-spittle! There was a problem.</h1>
+	<div class="error-card">
+		<h1 class="headline-large">Ah donkey-spittle! There was a problem.</h1>
 		<p class="body-large error"><strong>{page.status}</strong><span>|</span><span>{page.error?.message}</span></p>
-  </div>
+	</div>
 </div>
 
 <style>
-  .error-card-container {
+	.error-card-container {
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
@@ -32,9 +32,9 @@
 		line-height: 1.2;
 	}
 
-  .error {
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-  }
+	.error {
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+	}
 </style>

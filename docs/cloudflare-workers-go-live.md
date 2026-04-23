@@ -38,6 +38,7 @@ Complete these before first production deployment.
 The project now includes a prebuild cleanup script (`scripts/clean-sveltekit-cloudflare.mjs`) wired through `prebuild`, so `npm run build` first removes `.svelte-kit/cloudflare` with retries before adapter output.
 
 If you still hit an intermittent lock:
+
 - Ensure no process is holding `.svelte-kit` (stop preview/dev/test watchers).
 - Run `npm run build` again (prebuild retry handles most transient lock races).
 - Use Linux CI for deterministic release artifacts.
@@ -47,6 +48,7 @@ Target outcome: `npm run build` completes without adapter failure.
 ### 3) Prepare production Wrangler configuration
 
 Update `wrangler.jsonc`:
+
 - Keep `name`, `main`, and `assets` as-is unless you intentionally rename worker/app.
 - Replace template KV namespace IDs:
   - `kv_namespaces[0].id`
@@ -104,7 +106,7 @@ Optional later: create a dedicated preview namespace with `wrangler kv namespace
 
 Paste that value into `wrangler.jsonc` as `kv_namespaces[0].id`. For `preview_id`, you can either:
 
-- Create a second namespace (optional) for preview/local dev and paste its ID, or  
+- Create a second namespace (optional) for preview/local dev and paste its ID, or
 - Use the **same** namespace ID as `id` for both fields while you are getting started (simplest).
 
 **After importing GitHub and deploying**
@@ -114,6 +116,7 @@ That first deploy is expected. Finish wiring: set the two secrets on the Worker 
 ### 1) Create (or verify) Worker and KV namespace
 
 In Cloudflare Dashboard:
+
 - Go to **Workers & Pages**.
 - Create a Worker project (or let Workers Builds create it during GitHub import).
 - Create a **Workers KV** namespace (any title you like, for example `cxiius-rate-limit-kv`). You reuse this namespace for the `RATE_LIMIT_KV` binding.
@@ -131,6 +134,7 @@ Copy the printed IDs into `wrangler.jsonc` (`id` = production namespace, `previe
 ### 2) Configure production secrets/vars in Cloudflare
 
 Set these in Worker settings (Production environment):
+
 - Secret: `ANTHROPIC_API_KEY`
 - Secret: `RATE_LIMIT_ID_SALT`
 - KV binding:
@@ -138,9 +142,11 @@ Set these in Worker settings (Production environment):
   - Namespace: your production KV namespace
 
 Optional/staging:
+
 - Add the same keys in a Preview/Staging environment with separate KV namespace.
 
 Exact values to enter:
+
 - **KV binding variable name**: `RATE_LIMIT_KV`
 - **Worker secret names**: `ANTHROPIC_API_KEY`, `RATE_LIMIT_ID_SALT`
 - **Wrangler config path**: `wrangler.jsonc`
@@ -149,6 +155,7 @@ Exact values to enter:
 ### 3) Connect GitHub repo (Workers Builds)
 
 In Cloudflare Dashboard:
+
 1. Open **Workers & Pages** -> **Create** -> **Import a repository** (Workers Builds).
 2. Authorize Cloudflare GitHub app access to your repo/org.
 3. Select the `cxiius` repository and target branch (usually `main`).
@@ -165,6 +172,7 @@ In Cloudflare Dashboard:
 ### 1) Verify deployment
 
 After first successful build:
+
 - Open the generated `*.workers.dev` URL.
 - Validate:
   - Static routes render
@@ -174,6 +182,7 @@ After first successful build:
 ### 2) Connect custom domain
 
 In Worker settings:
+
 - Add `cxii.us` and `www.cxii.us` routes/domains.
 - Confirm DNS records are proxied through Cloudflare.
 - Ensure SSL/TLS mode is set appropriately (typically **Full (strict)**).

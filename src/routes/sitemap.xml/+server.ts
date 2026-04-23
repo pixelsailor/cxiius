@@ -4,12 +4,7 @@ import type { RequestHandler } from './$types';
 const STATIC_ROUTES = ['/', '/about', '/resume', '/portfolio', '/playground'] as const;
 
 function escapeXml(value: string): string {
-	return value
-		.replaceAll('&', '&amp;')
-		.replaceAll('<', '&lt;')
-		.replaceAll('>', '&gt;')
-		.replaceAll('"', '&quot;')
-		.replaceAll("'", '&apos;');
+	return value.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('"', '&quot;').replaceAll("'", '&apos;');
 }
 
 export const GET: RequestHandler = async ({ url }) => {

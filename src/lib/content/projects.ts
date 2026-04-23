@@ -401,6 +401,33 @@ const portfolioData: DesignPortfolioEntry[] = [
 const nonPortfolioData: NonPortfolioProjectEntry[] = [
 	{
 		includeInPortfolio: false,
+		slug: 'cxiius',
+		name: 'cxii.us',
+		status: 'Live',
+		summary:
+			"Primary domain for all CXII-related work, currently serving as Benjamin Thompson's resume and portfolio while demonstrating modern frontend and platform engineering practices.",
+		context:
+			'Designed as more than a static resume site: cxii.us is a working product that showcases implementation decisions in real code, including structured content modeling and AI-assisted interaction patterns that surface richer context than traditional portfolio pages. Pages can be navigated without a traditional navigation bar by typing "/" followed by the desired page name.',
+		selectionAndFreshness: [
+			'Positions the site itself as a first-class project artifact rather than only a container for other work.',
+			'Uses AI integration to provide contextual answers and narrative depth beyond conventional resume and portfolio layouts.',
+			'Acts as the canonical public surface for CXII identity, portfolio, and experience content.'
+		],
+		dataAndSync: [
+			'Content is maintained as typed TypeScript domains to keep data consistent across route rendering and assistant contexts.',
+			'Runtime behavior is deployed on Cloudflare Workers for production hosting and edge execution.'
+		],
+		assistant: [
+			'Anthropic SDK powers assistant capabilities that expand how visitors can explore experience, project context, and technical depth.',
+			'AI interactions are treated as part of the product experience, not an afterthought layered on top of static content.'
+		],
+		authorNotes: ['The current live site is both a professional profile and an implementation-level demonstration of practical SvelteKit and Cloudflare delivery patterns.'],
+		roadmap: ['Continue evolving cxii.us as the primary CXII platform with deeper AI-assisted discovery and ongoing content expansion.'],
+		techStack: ['Svelte', 'SvelteKit', 'Cloudflare Workers', 'Anthropic SDK', 'CSS', 'Vite', 'Vitest', 'Zod', 'bits-ui'],
+		links: {}
+	},
+	{
+		includeInPortfolio: false,
 		slug: 'whats-for-dinner',
 		name: "What's For Dinner",
 		status: 'Active development - private beta planned next',

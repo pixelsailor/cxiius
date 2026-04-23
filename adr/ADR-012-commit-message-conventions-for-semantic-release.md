@@ -16,8 +16,8 @@
 
 ## Conditional Fields
 
-| Field            | Value                                                                  |
-| ---------------- | ---------------------------------------------------------------------- |
+| Field            | Value                                                                              |
+| ---------------- | ---------------------------------------------------------------------------------- |
 | **Related ADRs** | ADR-001 — Project File and Folder Structure; ADR-006 — Type and Schema Conventions |
 
 ---

@@ -2,7 +2,7 @@ import { readFile, readdir } from 'node:fs/promises';
 import { join } from 'node:path';
 import { describe, it, expect } from 'vitest';
 
-const PROJECTS_IMPORT = "$lib/content/projects";
+const PROJECTS_IMPORT = '$lib/content/projects';
 
 async function listServerTsFiles(dir: string): Promise<string[]> {
 	const out: string[] = [];

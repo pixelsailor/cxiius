@@ -10,15 +10,15 @@ Agent-oriented workflows and hard rules live in [`.cursor/rules/content-model.md
 
 Update this table when domains are added or removed.
 
-| File                  | Domain                                           | Getter return type                |
-| :-------------------- | :----------------------------------------------- | :-------------------------------- |
-| `identity.ts`         | Professional identity, differentiators, contact  | `Promise<Identity>`               |
-| `experience.ts`       | Work history                                     | `Promise<ExperienceEntry[]>`      |
-| `skills.ts`           | Technical proficiencies by category              | `Promise<SkillCategory[]>`        |
-| `education.ts`        | Formal education and certifications              | `Promise<EducationEntry[]>`       |
-| `background.ts`       | Personal background, interests, favorites, work style | `Promise<Background>`         |
-| `availability.ts`     | Current availability status                      | `Promise<Availability>`           |
-| `projects.ts`         | Design portfolio, product narratives, and unified getters | `Promise<ProjectContentEntry[]>` (see below) |
+| File              | Domain                                                    | Getter return type                           |
+| :---------------- | :-------------------------------------------------------- | :------------------------------------------- |
+| `identity.ts`     | Professional identity, differentiators, contact           | `Promise<Identity>`                          |
+| `experience.ts`   | Work history                                              | `Promise<ExperienceEntry[]>`                 |
+| `skills.ts`       | Technical proficiencies by category                       | `Promise<SkillCategory[]>`                   |
+| `education.ts`    | Formal education and certifications                       | `Promise<EducationEntry[]>`                  |
+| `background.ts`   | Personal background, interests, favorites, work style     | `Promise<Background>`                        |
+| `availability.ts` | Current availability status                               | `Promise<Availability>`                      |
+| `projects.ts`     | Design portfolio, product narratives, and unified getters | `Promise<ProjectContentEntry[]>` (see below) |
 
 **`projects.ts`:** Single domain for on-site design case studies and off-site (AI) product/tool narratives. Each row has `status: string` and `includeInPortfolio: boolean`. **Portfolio branch** (`includeInPortfolio: true`): `projectType` is `branding` \| `illustration` \| `ui`; `images.thumbnail` and `images.full` are required `DesignPortfolioImage`; optional `hero` and `images.showcase` (detail page only). Use **`getDesignPortfolio()`** for `/portfolio` routes (sorted by circa). **Non-portfolio branch** (`includeInPortfolio: false`): `images` optional with partial slots; `projectType` optional. **`getProjects()`** returns all records (portfolio seed order, then non-portfolio) for the AI system prompt and future consumers.
 

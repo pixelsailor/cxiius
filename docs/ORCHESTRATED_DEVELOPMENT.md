@@ -265,4 +265,3 @@ When this guide conflicts with role contracts, trust the role contracts:
 - `.cursor/agents/test.md`
 - `.cursor/agents/validator.md`
 - `.cursor/rules/orchestration-artifacts.mdc`
-

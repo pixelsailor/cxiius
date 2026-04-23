@@ -1,13 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { circaYearFromString } from '$lib/utils/circa-year';
-import {
-	DESIGN_PORTFOLIO_PROJECT_TYPES,
-	getDesignPortfolio,
-	getProjects,
-	type DesignPortfolioEntry,
-	type DesignPortfolioImage,
-	type ProjectContentEntry
-} from './projects';
+import { DESIGN_PORTFOLIO_PROJECT_TYPES, getDesignPortfolio, getProjects, type DesignPortfolioEntry, type DesignPortfolioImage, type ProjectContentEntry } from './projects';
 
 /** Remote URL, site-root static path, or bare filename under `static/` (e.g. hero composed with `/images/` in the route). */
 function isImageRef(s: string): boolean {

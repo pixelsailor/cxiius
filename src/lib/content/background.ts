@@ -95,8 +95,7 @@ const data: Background = {
 			location: 'San Antonio, TX',
 			startDate: '2011',
 			endDate: '2013',
-			summary:
-				'Led warm-ups for youth after-school programs and adult classes, then coached students one-on-one during group training to improve form and technique.'
+			summary: 'Led warm-ups for youth after-school programs and adult classes, then coached students one-on-one during group training to improve form and technique.'
 		},
 		{
 			title: 'Snowboard Instructor',
@@ -104,8 +103,7 @@ const data: Background = {
 			location: 'Nederland, CO',
 			startDate: '1999',
 			endDate: '2001',
-			summary:
-				'Taught private and group lessons for students from children to older adults, adapting coaching style and riding methods to each learner.'
+			summary: 'Taught private and group lessons for students from children to older adults, adapting coaching style and riding methods to each learner.'
 		},
 		{
 			title: 'Snowboard Instructor',
@@ -113,15 +111,13 @@ const data: Background = {
 			location: 'Durango, CO',
 			startDate: '2001',
 			endDate: '2003',
-			summary:
-				'Taught private and group lessons while continuing to refine adaptive coaching techniques for a broad range of student needs and abilities.'
+			summary: 'Taught private and group lessons while continuing to refine adaptive coaching techniques for a broad range of student needs and abilities.'
 		}
 	],
 	interests: [
 		{
 			name: 'Snowboarding',
-			notes:
-				'Started in 1989 and rode at least one day every season for 20 years. Known as a go-to instructor for half-pipe and terrain park coaching.'
+			notes: 'Started in 1989 and rode at least one day every season for 20 years. Known as a go-to instructor for half-pipe and terrain park coaching.'
 		},
 		{
 			name: 'LEGO',
@@ -129,13 +125,11 @@ const data: Background = {
 		},
 		{
 			name: 'PC gaming',
-			notes:
-				'Supports creative problem-solving and systems thinking, including exploring alternatives beyond the default or most popular path.'
+			notes: 'Supports creative problem-solving and systems thinking, including exploring alternatives beyond the default or most popular path.'
 		},
 		{
 			name: 'Landscape and astrophotography',
-			notes:
-				'Enjoys capturing natural scenes and night skies, especially in remote mountain settings.'
+			notes: 'Enjoys capturing natural scenes and night skies, especially in remote mountain settings.'
 		},
 		{
 			name: 'Camping and overlanding',
@@ -143,38 +137,15 @@ const data: Background = {
 		}
 	],
 	favorites: {
-		books: [
-			'The Hunt for Red October',
-			'Tom Clancy classics',
-			"The Hitchhiker's Guide to the Galaxy series",
-			'Dune series',
-			'The Murderbot Diaries'
-		],
-		bands: [
-			'311',
-			'Coheed and Cambria',
-			'The Dear Hunter',
-			'Royal Blood',
-			'Muse',
-			'Two Door Cinema Club',
-			'Mellowdrone',
-			'Portugal. The Man'
-		],
+		books: ['The Hunt for Red October', 'Tom Clancy classics', "The Hitchhiker's Guide to the Galaxy series", 'Dune series', 'The Murderbot Diaries'],
+		bands: ['311', 'Coheed and Cambria', 'The Dear Hunter', 'Royal Blood', 'Muse', 'Two Door Cinema Club', 'Mellowdrone', 'Portugal. The Man'],
 		movies: ['Back to the Future', 'Anchorman', 'Dune', 'Elf', 'Grave of the Fireflies', 'Snatch', 'Three Amigos'],
 		sportsTeams: ['Denver Broncos', 'Colorado Avalanche', 'Denver Nuggets', 'Los Angeles Dodgers']
 	},
 	workStyle: {
 		traits: ['Adaptable', 'High standards', 'Clear communication', 'Team-first mindset'],
-		nonNegotiables: [
-			'Documentation is essential',
-			'Real usability testing is required',
-			'Consistency in design matters',
-			'Do not sacrifice production quality for speed'
-		],
-		influences: [
-			'Snowboard instruction shaped a mentoring-oriented leadership style',
-			'Gaming and LEGO reinforced creative problem-solving and iterative system improvement'
-		],
+		nonNegotiables: ['Documentation is essential', 'Real usability testing is required', 'Consistency in design matters', 'Do not sacrifice production quality for speed'],
+		influences: ['Snowboard instruction shaped a mentoring-oriented leadership style', 'Gaming and LEGO reinforced creative problem-solving and iterative system improvement'],
 		philosophy:
 			'Great products come from collaboration and diverse perspectives. Applications should adapt to users rather than forcing users to adapt to rigid systems. Interfaces should be approachable, and testing should cover both intended and edge-case behaviors across design and development.'
 	},

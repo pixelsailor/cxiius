@@ -2,9 +2,9 @@
 	"plugins": {
 		"svelte": {
 			"enabled": true
-    },
-    "cloudflare": {
-      "enabled": true
-    }
+		},
+		"cloudflare": {
+			"enabled": true
+		}
 	}
 }

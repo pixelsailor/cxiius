@@ -79,11 +79,11 @@ Features a chat window with a command input and a chat messages container.
 		{/each}
 		{#if chat.status === 'loading'}
 			<div class="chat-window-message chat-window-message--loading body-medium markdown">
-						<p>
-							<span>Thinking</span>
-							<EllipsisLoader />
-						</p>
-					</div>
+				<p>
+					<span>Thinking</span>
+					<EllipsisLoader />
+				</p>
+			</div>
 		{/if}
 		{#if chat.lastError}
 			<div class="chat-window-error body-small" role="alert">{chat.lastError}</div>

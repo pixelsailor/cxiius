@@ -75,6 +75,6 @@ handling, supersession policy, and review cadence -- is defined in [GOVERNANCE.m
 
 ### Quality
 
-| ID      | Domain  | Title                                                                                         | Status   | Description                                                                                                                                     |
-| ------- | ------- | --------------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------- |
+| ID      | Domain  | Title                                                                                                         | Status   | Description                                                                                                                                           |
+| ------- | ------- | ------------------------------------------------------------------------------------------------------------- | -------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | ADR-012 | Quality | [Commit Message Conventions for Semantic Release](ADR-012-commit-message-conventions-for-semantic-release.md) | proposed | Standardizes Angular-style Conventional Commit format and semantic-release version mapping so commit history remains machine-parseable and consistent |

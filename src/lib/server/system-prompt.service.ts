@@ -29,9 +29,7 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
 	const projectsArr: string[] = ['## Projects and portfolio (all entries)'];
 	for (const p of projects) {
 		if (p.includeInPortfolio) {
-			projectsArr.push(
-				`- **${p.name}** [${p.projectType}] (${p.circa}) [${p.status}]: ${p.description} **Tech:** ${p.technologies.join(', ')}.`
-			);
+			projectsArr.push(`- **${p.name}** [${p.projectType}] (${p.circa}) [${p.status}]: ${p.description} **Tech:** ${p.technologies.join(', ')}.`);
 		} else {
 			projectsArr.push(`### ${p.name} (${p.status})`);
 			projectsArr.push(p.summary);
@@ -120,11 +118,23 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
 	const interestsBackgroundLines = interestsBackgroundArr.join('\n');
 
 	// Favorites.ts
-	const favoritesBackgroundArr: string[] = ['## Favorites', `### Books: ${background.favorites.books.join(', ')}`, `### Bands: ${background.favorites.bands.join(', ')}`, `### Movies: ${background.favorites.movies.join(', ')}`, `### Sports Teams: ${background.favorites.sportsTeams.join(', ')}`];
+	const favoritesBackgroundArr: string[] = [
+		'## Favorites',
+		`### Books: ${background.favorites.books.join(', ')}`,
+		`### Bands: ${background.favorites.bands.join(', ')}`,
+		`### Movies: ${background.favorites.movies.join(', ')}`,
+		`### Sports Teams: ${background.favorites.sportsTeams.join(', ')}`
+	];
 	const favoritesBackgroundLines = favoritesBackgroundArr.join('\n');
 
 	// Work Style.ts
-	const workStyleBackgroundArr: string[] = ['## Work Style', `### Traits: ${background.workStyle.traits.join(', ')}`, `### Non-Negotiables: ${background.workStyle.nonNegotiables.join(', ')}`, `### Influences: ${background.workStyle.influences.join(', ')}`, `### Philosophy: ${background.workStyle.philosophy}`];
+	const workStyleBackgroundArr: string[] = [
+		'## Work Style',
+		`### Traits: ${background.workStyle.traits.join(', ')}`,
+		`### Non-Negotiables: ${background.workStyle.nonNegotiables.join(', ')}`,
+		`### Influences: ${background.workStyle.influences.join(', ')}`,
+		`### Philosophy: ${background.workStyle.philosophy}`
+	];
 	const workStyleBackgroundLines = workStyleBackgroundArr.join('\n');
 
 	// Availability.ts
