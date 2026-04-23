@@ -1,6 +1,11 @@
 <script lang="ts">
 	import { Button } from 'bits-ui';
 	import type { PageProps } from './$types';
+	import { resolve } from '$app/paths';
+	import type { Pathname } from '$app/types';
+	import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon } from '$lib/ui/icons';
+
+	const resumePdfPath = '/assets/ben-thompson__frontend-swe.pdf' as Pathname;
 
 	let { data }: PageProps = $props();
 </script>
@@ -22,10 +27,28 @@
 			<h2 class="headline-small role">{data.identity.role}</h2>
 			<ul class="supporting-links link">
 				<li class="supporting-link">
-					<a href="https://{data.identity.contact.linkedin}">{data.identity.contact.linkedin}</a>
+					<a href="https://{data.identity.contact.linkedin}" class="linkedin-link">
+						<LinkedInIcon size="sm" ariaLabel="LinkedIn" />
+						LinkedIn
+					</a>
 				</li>
 				<li class="supporting-link">
-					<a href="https://{data.identity.contact.dribbble}">{data.identity.contact.dribbble}</a>
+					<a href="https://{data.identity.contact.dribbble}" class="dribbble-link">
+						<DribbbleIcon size="sm" ariaLabel="Dribbble" />
+						Dribbble
+					</a>
+				</li>
+				<li class="supporting-link">
+					<a href="https://{data.identity.contact.github}" class="github-link">
+						<GithubIcon size="sm" ariaLabel="Github" />
+						Github
+					</a>
+				</li>
+				<li class="supporting-link align-right">
+					<a href={resolve(resumePdfPath)} class="pdf-link" download>
+						<PdfIcon size="sm" ariaLabel="PDF" />
+						Download
+					</a>
 				</li>
 			</ul>
 		</section>
@@ -121,6 +144,31 @@
 		padding: 0;
 		margin: 0;
 		list-style: none;
+	}
+
+	.supporting-link a {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 0.5rem;
+		border: none;
+
+		&.linkedin-link:hover {
+			color: #0077b5;
+		}
+		&.dribbble-link:hover {
+			color: #ea4c89;
+		}
+		&.github-link:hover {
+			color: #a855f7;
+		}
+		&.pdf-link:hover {
+			color: #b92b27;
+		}
+	}
+
+	.supporting-link.align-right {
+		margin-left: auto;
 	}
 
 	.page-content {

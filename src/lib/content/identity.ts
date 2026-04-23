@@ -15,6 +15,7 @@ export type Identity = {
 		url: string;
 		linkedin: string;
 		dribbble: string;
+		github: string;
 	};
 	yearsExperience: number;
 	summary: string;
@@ -31,7 +32,8 @@ const data: Identity = {
 		email: 'ben@cxii.us',
 		url: 'cxii.us',
 		linkedin: 'linkedin.com/in/cxiius',
-		dribbble: 'dribbble.com/cxiius'
+		dribbble: 'dribbble.com/cxiius',
+		github: 'github.com/pixelsailor/cxiius'
 	},
 	yearsExperience: 25,
 	summary:
