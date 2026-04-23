@@ -4,6 +4,12 @@
 	"compatibility_date": "2026-04-07",
 	"compatibility_flags": ["nodejs_als"],
 	"main": ".svelte-kit/cloudflare/_worker.js",
+	"routes": [
+		{
+			"pattern": "cxii.us/*",
+			"zone_name": "cxii.us"
+		}
+	],
 	"assets": {
 		"binding": "ASSETS",
 		"directory": ".svelte-kit/cloudflare"

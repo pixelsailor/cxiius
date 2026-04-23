@@ -18,10 +18,10 @@
 	{#snippet children({ tickItems, thumbItems })}
 		<Slider.Range />
 		{#each thumbItems as { index } (index)}
-			<Slider.Thumb {index} />
+			<Slider.Thumb {index} aria-label="Slider thumb" />
 		{/each}
 		{#each tickItems as { index, value } (index)}
-			<Slider.Tick {index} />
+			<Slider.Tick {index} aria-label="Slider tick" />
 			{#if tickLabel}
 				<Slider.TickLabel {index} position="top">
 					{@render tickLabel({ index, value })}

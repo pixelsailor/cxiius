@@ -238,6 +238,7 @@
 		justify-content: var(--header-justify-content);
 		align-items: var(--header-align-items);
 		padding: var(--header-padding);
+		padding-right: 0;
 		height: 3rem;
 		background-color: hsl(from var(--background) h s l / 0.8);
 		border-bottom: 1px solid var(--background);
