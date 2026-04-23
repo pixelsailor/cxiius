@@ -4,6 +4,7 @@
 	import { Command, Dialog } from 'bits-ui';
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
 	import EllipsisLoader from '$lib/ui/ellipsis-loader/EllipsisLoader.svelte';
+	import About from '$lib/ui/about/About.svelte';
 
 	const ALPHABET = new RegExp(/^[a-zA-Z/]$/);
 
@@ -137,6 +138,8 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 				</Dialog.Portal>
 			</Dialog.Root>
 		</div>
+	{:else}
+		<About />
 	{/if}
 </div>
 
