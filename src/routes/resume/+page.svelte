@@ -97,7 +97,7 @@
 			<div class="skills-list">
 				{#each data.skills as skillCategory (skillCategory.name)}
 					<div class="skill-category">
-						<h4 class="title-small skill-category__name">{skillCategory.name}</h4>
+						<h4 class="title-medium skill-category__name">{skillCategory.name}</h4>
 						<ul class="skill-category__skills-list">
 							{#each skillCategory.skills as skill (skill.name)}
 								<li class="skill-category__skill-item">{skill.name}</li>
@@ -278,6 +278,10 @@
 
 	.skill-category__skills-list {
 		margin-block: 0 1.5rem;
+	}
+
+	.skill-category__skill-item {
+		line-height: 1.3;
 	}
 
 	.education-item__notes {

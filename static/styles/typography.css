@@ -136,6 +136,14 @@ kbd {
   display: inline-block;
 }
 
+ul {
+  margin-inline: 1.25rem;
+}
+
+li {
+  line-height: 1.5;
+}
+
 .fredericka {
   font-family: 'Fredericka the Great', Baskerville, 'Times New Roman', serif;
 }
