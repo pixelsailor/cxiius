@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { getChatContext } from '$lib/stores/chat.context';
 	import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
-	import { Command, Dialog } from 'bits-ui';
+	import { Command, Popover } from 'bits-ui';
 	import SvelteMarkdown from '@humanspeak/svelte-markdown';
 	import EllipsisLoader from '$lib/ui/ellipsis-loader/EllipsisLoader.svelte';
 	import About from '$lib/ui/about/About.svelte';
@@ -24,14 +24,22 @@
 
 	let showRoutes = $derived(commandInputValue.startsWith('/'));
 
-	// let commandResponse = $state('');
-
+	/**
+	 * Handle keydown events for the page.
+	 * Responsible for opening the command dialog and hiding the hint text.
+	 */
 	function handleKeyDown(event: KeyboardEvent) {
 		if (!ALPHABET.test(event.key)) {
 			return;
 		}
 		const dialogWasAlreadyOpen = commandDialogOpen;
 		commandDialogOpen = true;
+
+		// Hide the hint text when the dialog is opened -- it extends beyond the container and looks bad.
+		const commandTrigger = document.querySelector('.dialog-trigger') as HTMLButtonElement | null;
+		console.log('trigger', commandTrigger);
+		commandTrigger?.classList.add('hide-hint');
+
 		// When the dialog was closed, the first key may not reach the input yet — seed it.
 		// When the dialog is already open, the focused input applies the key normally; seeding would duplicate.
 		const shouldSeedFirstKey = !dialogWasAlreadyOpen && commandInputValue.length === 0;
@@ -44,11 +52,19 @@
 		}
 	}
 
+	/**
+	 * Handle state changes for the command input.
+	 * Responsible for updating the command search and filtered count.
+	 */
 	function handleCommandStateChange(state: { search: string; filtered: { count: number } }) {
 		commandSearch = state.search;
 		commandFilteredCount = state.filtered.count;
 	}
 
+	/**
+	 * Handle keydown events for the command input.
+	 * Responsible for submitting the user text and closing the command dialog.
+	 */
 	function handleCommandInputKeydown(event: KeyboardEvent) {
 		if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229) {
 			return;
@@ -56,6 +72,7 @@
 		if (commandFilteredCount > 0) {
 			return;
 		}
+
 		const queryStart = commandSearch.trimStart();
 		if (queryStart.startsWith('/')) {
 			return;
@@ -69,9 +86,15 @@
 		commandInputValue = '';
 		commandDialogOpen = false;
 	}
-	function handleCommandCloseAutoFocus(event: Event) {
-		event.preventDefault();
-		(document.activeElement as HTMLElement | null)?.blur();
+
+	/** Clear the command input value when the Escape key is pressed. */
+	function handleEscapeKeydown() {
+		commandInputValue = '';
+	}
+
+	/** Clear the command input value when the user interacts outside the Popover. */
+	function handleInteractOutside() {
+		commandInputValue = '';
 	}
 </script>
 
@@ -113,12 +136,10 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 		{/if}
 
 		<div class="command-menu-container" id="commandMenuContainer">
-			<Dialog.Root bind:open={commandDialogOpen}>
-				<Dialog.Trigger class="button text dialog-trigger fade-in">Try typing something</Dialog.Trigger>
-				<Dialog.Portal to="#commandMenuContainer">
-					<Dialog.Content class="command-dialog" preventScroll={false} onCloseAutoFocus={handleCommandCloseAutoFocus}>
-						<Dialog.Title class="sr-only">Command Menu</Dialog.Title>
-						<Dialog.Description class="sr-only">This is the command menu. Use the arrow keys to navigate or start typing to ask questions.</Dialog.Description>
+			<Popover.Root bind:open={commandDialogOpen}>
+				<Popover.Trigger class="button text dialog-trigger fade-in">Type <kbd>/</kbd> to navigate, or start typing to ask a question</Popover.Trigger>
+				<Popover.Portal to="#commandMenuContainer">
+					<Popover.Content class="command-dialog" sideOffset={-38} onEscapeKeydown={handleEscapeKeydown} onInteractOutside={handleInteractOutside}>
 						<Command.Root class="command-root" onStateChange={handleCommandStateChange}>
 							<Command.Input
 								bind:value={commandInputValue}
@@ -138,13 +159,14 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 								</Command.List>
 							{/if}
 						</Command.Root>
-					</Dialog.Content>
-				</Dialog.Portal>
-			</Dialog.Root>
+					</Popover.Content>
+				</Popover.Portal>
+			</Popover.Root>
 		</div>
-	{:else}
-		<About />
 	{/if}
+	<noscript>
+		<About />
+	</noscript>
 </div>
 
 <style>
@@ -164,6 +186,10 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 		letter-spacing: 0.15em;
 		line-height: 1.2;
 		margin: 0;
+	}
+
+	:global(.dialog-trigger.hide-hint) {
+		opacity: 0 !important;
 	}
 
 	.command-menu-container {
@@ -196,8 +222,6 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 		display: flex;
 		flex-direction: column;
 		gap: 0.5rem;
-		overflow-y: auto;
-		overscroll-behavior: contain;
 		min-height: 0;
 	}
 

@@ -130,9 +130,9 @@ kbd {
   background-color: var(--background-alt);
   border: 1px solid var(--dark-01);
   border-radius: 0.25rem;
-  font-size: 0.625rem;
+  /* font-size: 0.625rem; */
   letter-spacing: 0;
-  padding: 0 0.375rem;
+  padding: 0 0.25rem;
   display: inline-block;
 }
 
