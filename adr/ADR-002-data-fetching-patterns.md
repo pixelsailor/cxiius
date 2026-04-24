@@ -54,8 +54,8 @@ import { getIdentity } from '$lib/content/identity';
 export const prerender = true;
 
 export const load = async () => {
-	const [identity, experience] = await Promise.all([getIdentity(), getExperience()]);
-	return { identity, experience };
+  const [identity, experience] = await Promise.all([getIdentity(), getExperience()]);
+  return { identity, experience };
 };
 ```
 
@@ -89,7 +89,7 @@ Every content route `+page.ts` must export `export const prerender = true` (as t
 export const prerender = true;
 
 export const load = async () => {
-	/* await getters; return plain objects */
+  /* await getters; return plain objects */
 };
 ```
 

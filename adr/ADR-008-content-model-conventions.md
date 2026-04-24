@@ -58,18 +58,18 @@ The TypeScript type describing a content domain's shape is defined in the same f
 // $lib/content/[domain].ts
 
 export type SkillCategory = {
-	name: string;
-	skills: Skill[];
+  name: string;
+  skills: Skill[];
 };
 
 export type Skill = {
-	name: string;
-	proficiency: 'fluent' | 'proficient' | 'familiar';
-	notes?: string;
+  name: string;
+  proficiency: 'fluent' | 'proficient' | 'familiar';
+  notes?: string;
 };
 
 const data: SkillCategory[] = [
-	/* ... */
+  /* ... */
 ];
 
 export const getSkills = (): Promise<SkillCategory[]> => Promise.resolve(data);

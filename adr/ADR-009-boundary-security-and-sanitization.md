@@ -185,9 +185,9 @@ Example:
 
 ```json
 {
-	"error": "rate_limit_exceeded",
-	"type": "token_budget",
-	"retry_after": 120
+  "error": "rate_limit_exceeded",
+  "type": "token_budget",
+  "retry_after": 120
 }
 ```
 

@@ -64,8 +64,8 @@ import { z } from 'zod';
 export const ERROR_CODES = ['RATE_LIMITED', 'UPSTREAM_UNAVAILABLE', 'INVALID_INPUT', 'NOT_FOUND', 'UNKNOWN'] as const;
 
 export const ChatRequestSchema = z.object({
-	message: z.string().min(1).max(1000),
-	sessionId: z.string().uuid().optional()
+  message: z.string().min(1).max(1000),
+  sessionId: z.string().uuid().optional()
 });
 ```
 

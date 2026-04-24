@@ -50,14 +50,14 @@ h2, .headline-medium {
 
 h3, .title-large {
   font-size: 1.375rem; /* 22px */
-  line-height: 1.625; /* 26px */
+  line-height: 1.375; /* 22px */
   font-weight: 400;
   letter-spacing: 0;
 }
 
 h4, .title-medium {
   font-size: 1.125rem; /* 18px */
-  line-height: 1.5; /* 24px */
+  line-height: 1.375; /* 22px */
   font-weight: 500;
   letter-spacing: 0;
 }

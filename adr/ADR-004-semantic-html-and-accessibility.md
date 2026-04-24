@@ -44,16 +44,16 @@ Every page in CXII uses the following layout structure without exception. This s
 
 ```svelte
 <header>
-	<!-- Site identity — headline element or structured div -->
-	<!-- Primary navigation — always present in the DOM -->
+  <!-- Site identity — headline element or structured div -->
+  <!-- Primary navigation — always present in the DOM -->
 </header>
 
 <main>
-	<!-- Route content — structured with heading hierarchy -->
+  <!-- Route content — structured with heading hierarchy -->
 </main>
 
 <footer>
-	<!-- Site-level secondary content -->
+  <!-- Site-level secondary content -->
 </footer>
 ```
 
@@ -155,9 +155,9 @@ Animations in CXII are light and purposeful — icon transitions, fade-ins, subt
 ```css
 /* Required pattern for any animation */
 @media (prefers-reduced-motion: no-preference) {
-	.animated-element {
-		transition: opacity 200ms ease;
-	}
+  .animated-element {
+    transition: opacity 200ms ease;
+  }
 }
 ```
 

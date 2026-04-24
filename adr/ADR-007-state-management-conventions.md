@@ -57,9 +57,9 @@ State that does not leave a component is declared with the `$state` rune. `$deri
 
 ```svelte
 <script lang="ts">
-	let inputValue = $state('');
-	let isSubmitting = $state(false);
-	let charCount = $derived(inputValue.length);
+  let inputValue = $state('');
+  let isSubmitting = $state(false);
+  let charCount = $derived(inputValue.length);
 </script>
 ```
 
@@ -74,22 +74,22 @@ State shared across components is implemented as a class with `$state` fields. S
 ```ts
 // $lib/stores/chat.svelte.ts
 export class ChatState {
-	messages = $state<Message[]>([]);
-	status = $state<ChatStatus>('idle');
-	isAvailable = $state(true);
+  messages = $state<Message[]>([]);
+  status = $state<ChatStatus>('idle');
+  isAvailable = $state(true);
 
-	readonly isStreaming = $derived.by(() => this.status === 'streaming');
-	readonly hasMessages = $derived.by(() => this.messages.length > 0);
+  readonly isStreaming = $derived.by(() => this.status === 'streaming');
+  readonly hasMessages = $derived.by(() => this.messages.length > 0);
 
-	setUnavailable() {
-		this.isAvailable = false;
-		this.status = 'idle';
-	}
+  setUnavailable() {
+    this.isAvailable = false;
+    this.status = 'idle';
+  }
 
-	reset() {
-		this.messages = [];
-		this.status = 'idle';
-	}
+  reset() {
+    this.messages = [];
+    this.status = 'idle';
+  }
 }
 ```
 
@@ -126,11 +126,11 @@ Data assigned from API responses — including streamed chat content — is stor
 
 ```ts
 class ChatState {
-	response = $state.raw<ChatResponse | null>(null); // replaced, not mutated
+  response = $state.raw<ChatResponse | null>(null); // replaced, not mutated
 
-	setResponse(data: ChatResponse) {
-		this.response = data; // triggers reactivity; no deep proxy overhead
-	}
+  setResponse(data: ChatResponse) {
+    this.response = data; // triggers reactivity; no deep proxy overhead
+  }
 }
 ```
 

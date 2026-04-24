@@ -1,59 +1,59 @@
 <script lang="ts">
-	import { afterNavigate } from '$app/navigation';
-	import { Button, Command } from 'bits-ui';
-	import SvelteMarkdown from '@humanspeak/svelte-markdown';
-	import EllipsisLoader from '$lib/ui/ellipsis-loader/EllipsisLoader.svelte';
-	import { getChatContext } from '$lib/stores/chat.context';
+  import { afterNavigate } from '$app/navigation';
+  import { Button, Command } from 'bits-ui';
+  import SvelteMarkdown from '@humanspeak/svelte-markdown';
+  import EllipsisLoader from '$lib/ui/ellipsis-loader/EllipsisLoader.svelte';
+  import { getChatContext } from '$lib/stores/chat.context';
 
-	const chat = getChatContext();
+  const chat = getChatContext();
 
-	let { hideToolbar = false }: { hideToolbar?: boolean } = $props();
+  let { hideToolbar = false }: { hideToolbar?: boolean } = $props();
 
-	let commandInputValue = $state('');
+  let commandInputValue = $state('');
 
-	let commandInputWrapper = $state<HTMLDivElement | null>(null);
+  let commandInputWrapper = $state<HTMLDivElement | null>(null);
 
-	/** Mirrors Command.Root state for Enter handling (see onStateChange). */
-	let commandFilteredCount = $state(0);
-	let commandSearch = $state('');
+  /** Mirrors Command.Root state for Enter handling (see onStateChange). */
+  let commandFilteredCount = $state(0);
+  let commandSearch = $state('');
 
-	let showRoutes = $derived(commandInputValue.startsWith('/'));
+  let showRoutes = $derived(commandInputValue.startsWith('/'));
 
-	/** Use afterNavigate to restore the chat input focus when a route is selected. */
-	afterNavigate(() => {
-		const toFocus = document.getElementById('chatWindowInput');
-		toFocus?.focus();
-	});
+  /** Use afterNavigate to restore the chat input focus when a route is selected. */
+  afterNavigate(() => {
+    const toFocus = document.getElementById('chatWindowInput');
+    toFocus?.focus();
+  });
 
-	function handleCommandStateChange(state: { search: string; filtered: { count: number } }) {
-		commandSearch = state.search;
-		commandFilteredCount = state.filtered.count;
-	}
+  function handleCommandStateChange(state: { search: string; filtered: { count: number } }) {
+    commandSearch = state.search;
+    commandFilteredCount = state.filtered.count;
+  }
 
-	/** Clear the command input value when a route is selected. */
-	function handleCommandRouteSelect() {
-		commandInputValue = '';
-	}
+  /** Clear the command input value when a route is selected. */
+  function handleCommandRouteSelect() {
+    commandInputValue = '';
+  }
 
-	function handleCommandInputKeydown(event: KeyboardEvent) {
-		if (commandInputWrapper) {
-			commandInputWrapper.dataset.value = commandInputValue;
-		}
+  function handleCommandInputKeydown(event: KeyboardEvent) {
+    if (commandInputWrapper) {
+      commandInputWrapper.dataset.value = commandInputValue;
+    }
 
-		if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229 || commandFilteredCount > 0) {
-			return;
-		}
-		const queryStart = commandSearch.trimStart();
-		if (queryStart.startsWith('/')) {
-			commandInputValue = '';
-			return;
-		}
-		event.stopPropagation();
-		event.preventDefault();
+    if (event.key !== 'Enter' || event.isComposing || event.keyCode === 229 || commandFilteredCount > 0) {
+      return;
+    }
+    const queryStart = commandSearch.trimStart();
+    if (queryStart.startsWith('/')) {
+      commandInputValue = '';
+      return;
+    }
+    event.stopPropagation();
+    event.preventDefault();
 
-		void chat.submitUserText(commandSearch.trim());
-		commandInputValue = '';
-	}
+    void chat.submitUserText(commandSearch.trim());
+    commandInputValue = '';
+  }
 </script>
 
 <!--
@@ -62,147 +62,147 @@ Chat Window
 Features a chat window with a command input and a chat messages container.
 -->
 <div class="chat-window-container">
-	{#if !hideToolbar}
-		<div class="chat-window-toolbar">
-			<Button.Root type="button" class="button text label-small" onclick={() => chat.clear()}>Clear transcript</Button.Root>
-		</div>
-	{/if}
-	<div class="chat-window-messages" role="log" aria-relevant="additions" aria-label="Chat messages">
-		{#each chat.messages as message (message.id)}
-			<div
-				class="chat-window-message body-medium markdown"
-				class:chat-window-message--user={message.role === 'user'}
-				class:chat-window-message--assistant={message.role === 'assistant'}
-			>
-				<SvelteMarkdown source={message.body} />
-			</div>
-		{/each}
-		{#if chat.status === 'loading'}
-			<div class="chat-window-message chat-window-message--loading body-medium markdown">
-				<p>
-					<span>Thinking</span>
-					<EllipsisLoader />
-				</p>
-			</div>
-		{/if}
-		{#if chat.lastError}
-			<div class="chat-window-error body-small" role="alert">{chat.lastError}</div>
-		{/if}
-	</div>
-	<div class="chat-window-input-container">
-		<Command.Root class="command-root" onStateChange={handleCommandStateChange}>
-			{#if showRoutes}
-				<Command.List class="command-list">
-					<Command.Viewport class="command-viewport">
-						<Command.LinkItem href="/about" class="command-link-item" onSelect={handleCommandRouteSelect}>/About</Command.LinkItem>
-						<Command.LinkItem href="/resume" class="command-link-item" onSelect={handleCommandRouteSelect}>/Resume</Command.LinkItem>
-						<Command.LinkItem href="/portfolio" class="command-link-item" onSelect={handleCommandRouteSelect}>/Portfolio</Command.LinkItem>
-					</Command.Viewport>
-				</Command.List>
-			{/if}
-			<Command.Input bind:value={commandInputValue}>
-				{#snippet child({ props })}
-					<div class="textarea-container body-medium" bind:this={commandInputWrapper}>
-						<textarea
-							{...props}
-							class="input borderless body-medium command-input"
-							name="chat-window-input"
-							id="chatWindowInput"
-							placeholder="Ask a question or press slash to navigate"
-							bind:value={commandInputValue}
-							onkeydown={handleCommandInputKeydown}
-							maxlength="500"
-							aria-busy={chat.status === 'loading'}
-						></textarea>
-					</div>
-				{/snippet}
-			</Command.Input>
-		</Command.Root>
-	</div>
+  {#if !hideToolbar}
+    <div class="chat-window-toolbar">
+      <Button.Root type="button" class="button text label-small" onclick={() => chat.clear()}>Clear transcript</Button.Root>
+    </div>
+  {/if}
+  <div class="chat-window-messages" role="log" aria-relevant="additions" aria-label="Chat messages">
+    {#each chat.messages as message (message.id)}
+      <div
+        class="chat-window-message body-medium markdown"
+        class:chat-window-message--user={message.role === 'user'}
+        class:chat-window-message--assistant={message.role === 'assistant'}
+      >
+        <SvelteMarkdown source={message.body} />
+      </div>
+    {/each}
+    {#if chat.status === 'loading'}
+      <div class="chat-window-message chat-window-message--loading body-medium markdown">
+        <p>
+          <span>Thinking</span>
+          <EllipsisLoader />
+        </p>
+      </div>
+    {/if}
+    {#if chat.lastError}
+      <div class="chat-window-error body-small" role="alert">{chat.lastError}</div>
+    {/if}
+  </div>
+  <div class="chat-window-input-container">
+    <Command.Root class="command-root" onStateChange={handleCommandStateChange}>
+      {#if showRoutes}
+        <Command.List class="command-list">
+          <Command.Viewport class="command-viewport">
+            <Command.LinkItem href="/about" class="command-link-item" onSelect={handleCommandRouteSelect}>/About</Command.LinkItem>
+            <Command.LinkItem href="/resume" class="command-link-item" onSelect={handleCommandRouteSelect}>/Resume</Command.LinkItem>
+            <Command.LinkItem href="/portfolio" class="command-link-item" onSelect={handleCommandRouteSelect}>/Portfolio</Command.LinkItem>
+          </Command.Viewport>
+        </Command.List>
+      {/if}
+      <Command.Input bind:value={commandInputValue}>
+        {#snippet child({ props })}
+          <div class="textarea-container body-medium" bind:this={commandInputWrapper}>
+            <textarea
+              {...props}
+              class="input borderless body-medium command-input"
+              name="chat-window-input"
+              id="chatWindowInput"
+              placeholder="Ask a question or press slash to navigate"
+              bind:value={commandInputValue}
+              onkeydown={handleCommandInputKeydown}
+              maxlength="500"
+              aria-busy={chat.status === 'loading'}
+            ></textarea>
+          </div>
+        {/snippet}
+      </Command.Input>
+    </Command.Root>
+  </div>
 </div>
 
 <style>
-	.chat-window-container {
-		display: grid;
-		grid-template-rows: 1fr auto;
-		height: 100%;
-		width: 100%;
-		min-height: 0;
-		gap: 0.5rem;
-		overflow: hidden;
-	}
+  .chat-window-container {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    width: 100%;
+    min-height: 0;
+    gap: 0.5rem;
+    overflow: hidden;
+  }
 
-	.chat-window-toolbar {
-		display: flex;
-		justify-content: flex-end;
-	}
+  .chat-window-toolbar {
+    display: flex;
+    justify-content: flex-end;
+  }
 
-	.chat-window-messages {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		overflow-y: auto;
-		overscroll-behavior: contain;
-		min-height: 0;
-	}
+  .chat-window-messages {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    min-height: 0;
+  }
 
-	.chat-window-message {
-		padding-inline: 0.5rem;
-		border-radius: var(--radius-card);
-		border: 1px solid var(--border-card);
-	}
+  .chat-window-message {
+    padding-inline: 0.5rem;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--border-card);
+  }
 
-	.chat-window-message--user {
-		align-self: flex-end;
-		max-width: 95%;
-		font-style: italic;
-	}
+  .chat-window-message--user {
+    align-self: flex-end;
+    max-width: 95%;
+    font-style: italic;
+  }
 
-	.chat-window-message--assistant {
-		align-self: flex-start;
-		max-width: 95%;
-		background-color: var(--dark-04);
-	}
+  .chat-window-message--assistant {
+    align-self: flex-start;
+    max-width: 95%;
+    background-color: var(--dark-04);
+  }
 
-	.chat-window-message--loading {
-		align-self: flex-start;
-		max-width: 95%;
-		background-color: var(--dark-04);
-		padding-right: 1rem;
-	}
+  .chat-window-message--loading {
+    align-self: flex-start;
+    max-width: 95%;
+    background-color: var(--dark-04);
+    padding-right: 1rem;
+  }
 
-	.chat-window-error {
-		color: var(--destructive-text);
-		padding: 0.25rem 0;
-	}
+  .chat-window-error {
+    color: var(--destructive-text);
+    padding: 0.25rem 0;
+  }
 
-	.chat-window-input-container {
-		border: 1px solid var(--border-card);
-		border-radius: var(--radius-card);
-		padding: 0.25rem 0;
-	}
+  .chat-window-input-container {
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-card);
+    padding: 0.25rem 0;
+  }
 
-	.textarea-container {
-		display: grid;
+  .textarea-container {
+    display: grid;
 
-		&::after {
-			content: attr(data-value) '';
-			white-space: pre-wrap;
-			visibility: hidden;
-			grid-area: 1 / 1 / 2 / 2;
-			min-height: 1.625rem;
-			font-weight: 200;
-			letter-spacing: 0.05em;
-			padding: 0.125rem 0.75rem;
-		}
+    &::after {
+      content: attr(data-value) '';
+      white-space: pre-wrap;
+      visibility: hidden;
+      grid-area: 1 / 1 / 2 / 2;
+      min-height: 1.625rem;
+      font-weight: 200;
+      letter-spacing: 0.05em;
+      padding: 0.125rem 0.75rem;
+    }
 
-		textarea {
-			resize: none;
-			width: 100%;
-			min-height: 1.625rem;
-			padding: 0.125rem 0.75rem;
-			overflow: hidden;
-			grid-area: 1 / 1 / 2 / 2;
-		}
-	}
+    textarea {
+      resize: none;
+      width: 100%;
+      min-height: 1.625rem;
+      padding: 0.125rem 0.75rem;
+      overflow: hidden;
+      grid-area: 1 / 1 / 2 / 2;
+    }
+  }
 </style>

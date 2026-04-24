@@ -67,9 +67,9 @@ Functions in `$lib/server/` return typed result objects rather than throwing err
 export type Result<T> = { ok: true; data: T } | { ok: false; error: AppError };
 
 export type AppError = {
-	code: ErrorCode;
-	message: string;
-	detail?: string;
+  code: ErrorCode;
+  message: string;
+  detail?: string;
 };
 
 export type ErrorCode = 'RATE_LIMITED' | 'UPSTREAM_UNAVAILABLE' | 'INVALID_INPUT' | 'NOT_FOUND' | 'UNKNOWN';
@@ -78,12 +78,12 @@ export type ErrorCode = 'RATE_LIMITED' | 'UPSTREAM_UNAVAILABLE' | 'INVALID_INPUT
 ```ts
 // $lib/server/chat.service.ts
 export const streamChatResponse = async (input: ChatRequest): Promise<Result<ReadableStream>> => {
-	try {
-		const stream = await anthropicClient.stream(input);
-		return { ok: true, data: stream };
-	} catch (err) {
-		return { ok: false, error: mapAnthropicError(err) };
-	}
+  try {
+    const stream = await anthropicClient.stream(input);
+    return { ok: true, data: stream };
+  } catch (err) {
+    return { ok: false, error: mapAnthropicError(err) };
+  }
 };
 ```
 
@@ -104,11 +104,11 @@ Inline error states must be:
 
 ```svelte
 {#await content}
-	<LoadingState />
+  <LoadingState />
 {:then content}
-	<ContentView {content} />
+  <ContentView {content} />
 {:catch error}
-	<ErrorState message="This content couldn't be loaded." action={{ label: 'Try again', handler: reload }} />
+  <ErrorState message="This content couldn't be loaded." action={{ label: 'Try again', handler: reload }} />
 {/await}
 ```
 
@@ -169,11 +169,11 @@ SvelteKit's global `handleError` hook is implemented in `hooks.server.ts`. Its r
 ```ts
 // hooks.server.ts
 export const handleError: HandleServerError = ({ error, event }) => {
-	console.error(error); // server-side log
-	return {
-		message: 'An unexpected error occurred.',
-		code: 'UNKNOWN'
-	};
+  console.error(error); // server-side log
+  return {
+    message: 'An unexpected error occurred.',
+    code: 'UNKNOWN'
+  };
 };
 ```
 

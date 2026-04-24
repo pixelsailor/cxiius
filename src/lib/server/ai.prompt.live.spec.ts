@@ -13,27 +13,27 @@ import { AiRequestSchema } from './ai.schemas';
 import { completeAiChat } from './ai.service';
 
 for (const [key, value] of Object.entries(loadEnv('development', process.cwd(), ''))) {
-	if (process.env[key] === undefined) {
-		process.env[key] = value;
-	}
+  if (process.env[key] === undefined) {
+    process.env[key] = value;
+  }
 }
 
 function liveGateOpen(): boolean {
-	return process.env.RUN_AI_LIVE === '1' && Boolean(process.env.ANTHROPIC_API_KEY?.trim());
+  return process.env.RUN_AI_LIVE === '1' && Boolean(process.env.ANTHROPIC_API_KEY?.trim());
 }
 
 describe.skipIf(!liveGateOpen())('completeAiChat (live Anthropic)', () => {
-	it('returns non-empty assistant text for a valid request', async () => {
-		const body = AiRequestSchema.parse({
-			input: 'Reply with exactly: ok',
-			turnstileToken: 'dev-bypass-not-used-here'
-		});
-		const apiKey = process.env.ANTHROPIC_API_KEY ?? '';
-		const result = await completeAiChat(apiKey, body);
+  it('returns non-empty assistant text for a valid request', async () => {
+    const body = AiRequestSchema.parse({
+      input: 'Reply with exactly: ok',
+      turnstileToken: 'dev-bypass-not-used-here'
+    });
+    const apiKey = process.env.ANTHROPIC_API_KEY ?? '';
+    const result = await completeAiChat(apiKey, body);
 
-		expect(result.ok).toBe(true);
-		if (result.ok) {
-			expect(result.data.text.trim().length).toBeGreaterThan(0);
-		}
-	});
+    expect(result.ok).toBe(true);
+    if (result.ok) {
+      expect(result.data.text.trim().length).toBeGreaterThan(0);
+    }
+  });
 });
