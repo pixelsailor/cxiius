@@ -299,6 +299,7 @@ const portfolioData: DesignPortfolioEntry[] = [
 		status: 'Shipped',
 		slug: 'frontline-vulnerability-manager',
 		name: 'Frontline Vulnerability Manager',
+		liveUrl: 'https://www.fortra.com/products/fortra-vulnerability-management',
 		projectType: 'ui',
 		images: {
 			thumbnail: {
@@ -313,10 +314,11 @@ const portfolioData: DesignPortfolioEntry[] = [
 			showcase: [
 				{ src: '/images/fvm_dashboard-933.webp', alt: 'A screenshot of the Frontline Vulnerability Manager showing application dashboard.' },
 				{ src: '/images/fvm_assets-933.webp', alt: 'A screenshot of the Frontline Vulnerability Manager showing a list network assets with vulnerabilities.' },
-				{ src: '/images/fvm_theme-933.webp', alt: 'A screenshot of the Frontline Vulnerability Manager showing the screen for creating a custom theme.' }
+				{ src: '/images/fvm_theme-933.webp', alt: 'A screenshot of the Frontline Vulnerability Manager showing the screen for creating a custom theme.' },
+				{ src: '/images/fvm_accolades-933.webp', alt: 'Frontline/Fortra VM has been recognized by analysts and industry publications for its ease of use and effectiveness.' }
 			]
 		},
-		circa: '2013',
+		circa: '2015',
 		technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'AngularJS', 'Bootstrap', 'Webpack', 'Jasmine', 'Python', 'Django'],
 		summary: 'UI design for Frontline VM.',
 		description:
@@ -395,6 +397,30 @@ const portfolioData: DesignPortfolioEntry[] = [
 		technologies: ['Identity', 'Typography', 'Color systems', 'Logo design', 'Branding', 'Adobe Illustrator'],
 		summary: 'Logo design for Profession Self Defense of Durango.',
 		description: 'Logo design for Profession Self Defense of Durango.'
+	},
+	{
+		includeInPortfolio: true as const,
+		status: 'Cancelled',
+		slug: 'frontline-vm-v7',
+		name: 'Frontline Vulnerability Manager v7',
+		projectType: 'ui',
+		featuredAsHero: true,
+		images: {
+			thumbnail: { src: '/images/fvm7_av-thumb.webp', alt: 'A screenshot from the Frontline VM v7 Active View dashboard showing network vulnerability data.' },
+			full: { src: '/images/fvm7_av-933_alt.webp', alt: 'A man at a desk in an open office engaging with the Frontline VM v7 Active View interface.' },
+			hero: { src: '/images/fvm7_av-hero.webp', alt: 'A man at a desk in an open office engaging with the Frontline VM v7 Active View interface.' },
+			showcase: [
+				{ src: '/images/fvm7_buildreport-933.webp', alt: 'A screenshot from the Frontline VM v7 Build Report dialog.' },
+				{ src: '/images/fvm7_rnamgmt-933.webp', alt: 'A screenshot from the Frontline VM v7 RNA management screen showing the details of an RNA device.' },
+				{ src: '/images/fvm7_scanactivity-933.webp', alt: 'A screenshot from the Frontline VM v7 Scan Activity screen showing recent scan results.' },
+				{ src: '/images/fvm7_scanvulns-933.webp', alt: 'A screenshot from the Frontline VM v7 Scan Vulnerabilities screen showing a list of network vulnerabilities.' },
+				// { src: '/images/fvm7_testqueue-933.webp', alt: 'A screenshot from the Frontline VM v7 Test Queue screen showing a list of scans awaiting analysis.' }
+			]
+		},
+		circa: '2022',
+		technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'Angular Material', 'Webpack', 'Jasmine', 'Python', 'Django'],
+		summary: 'UI design for Frontline VM v7.',
+		description: 'Version 7 was intended to be the next major release of Frontline VM before Digital Defense\'s acquisition by Fortra. Working solo for nearly the entire duration of the project, I drove the design and development to migrate the entire front-end from AngularJS to Angular. Visually, there was a renewed focus on accessibility, prioritizing color contrast and screen reader support to meet WCAG 2.1 AA compliance standards. It also featured a custom fork of Angular Material that was built to not only support features unique to FVM but would live on to become the Angular component library for other Fortra products. While it saw a limited public release as an A/B test, allowing users to switch between the old and new versions, the project was ultimately cancelled before it could be fully realized.',
 	}
 ];
 

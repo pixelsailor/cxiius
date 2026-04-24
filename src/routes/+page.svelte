@@ -37,7 +37,6 @@
 
 		// Hide the hint text when the dialog is opened -- it extends beyond the container and looks bad.
 		const commandTrigger = document.querySelector('.dialog-trigger') as HTMLButtonElement | null;
-		console.log('trigger', commandTrigger);
 		commandTrigger?.classList.add('hide-hint');
 
 		// When the dialog was closed, the first key may not reach the input yet — seed it.
