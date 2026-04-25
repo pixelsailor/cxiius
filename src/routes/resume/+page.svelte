@@ -241,12 +241,12 @@
 
   .experience-item__company-details,
   .education-item__institution-details {
-    color: var(--foreground-alt);
     display: flex;
     flex-direction: column;
     align-items: baseline;
     justify-content: space-between;
     margin-bottom: 0.5rem;
+    opacity: 0.8;
   }
 
   @media (min-width: 600px) {
