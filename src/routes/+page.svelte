@@ -1,11 +1,12 @@
 <script lang="ts">
+  import SvelteMarkdown from '@humanspeak/svelte-markdown';
+  import { Command, Popover } from 'bits-ui';
+  import { MediaQuery } from 'svelte/reactivity';
   import { getChatContext } from '$lib/stores/chat.context';
   import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
-  import { Command, Popover } from 'bits-ui';
-  import SvelteMarkdown from '@humanspeak/svelte-markdown';
   import EllipsisLoader from '$lib/ui/ellipsis-loader/EllipsisLoader.svelte';
   import About from '$lib/ui/about/About.svelte';
-  import { MediaQuery } from 'svelte/reactivity';
+  import {DoSomething } from '$lib/ui/index';
 
   const ALPHABET = new RegExp(/^[a-zA-Z/]$/);
 
@@ -26,6 +27,8 @@
   let commandFilteredCount = $state(0);
   let commandSearch = $state('');
 
+  let disableHints = $state(false);
+
   let showRoutes = $derived(commandInputValue.startsWith('/'));
 
   let hasKeyboard = $derived(!hasCoarsePointer.current || canHover.current);
@@ -42,8 +45,9 @@
     commandDialogOpen = true;
 
     // Hide the hint text when the dialog is opened -- it extends beyond the container and looks bad.
-    const commandTrigger = document.querySelector('.dialog-trigger') as HTMLButtonElement | null;
-    commandTrigger?.classList.add('hide-hint');
+    // const commandTrigger = document.querySelector('.dialog-trigger') as HTMLButtonElement | null;
+    // commandTrigger?.classList.add('hide-hint');
+    disableHints = true;
 
     // When the dialog was closed, the first key may not reach the input yet — seed it.
     // When the dialog is already open, the focused input applies the key normally; seeding would duplicate.
@@ -142,7 +146,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 
     <div class="command-menu-container" id="commandMenuContainer">
       <Popover.Root bind:open={commandDialogOpen}>
-        <Popover.Trigger class="button text dialog-trigger fade-in">Type <kbd>/</kbd> to navigate, or start typing to ask a question</Popover.Trigger>
+        <Popover.Trigger class={['button text dialog-trigger fade-in', disableHints ? 'hide-hint' : '']}>Type <kbd>/</kbd> to navigate, or start typing to ask a question</Popover.Trigger>
         <Popover.Portal to="#commandMenuContainer">
           <Popover.Content class="command-dialog" sideOffset={-38} onEscapeKeydown={handleEscapeKeydown} onInteractOutside={handleInteractOutside}>
             <Command.Root class="command-root" onStateChange={handleCommandStateChange}>
@@ -168,6 +172,10 @@ Features a Command prompt for navigation and interacting with the integrated AI 
         </Popover.Portal>
       </Popover.Root>
     </div>
+
+    <div class={['do-something', disableHints ? 'hide-hint' : '']}>
+      <DoSomething />
+    </div>
   {/if}
   <noscript>
     <About />
@@ -191,6 +199,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
     letter-spacing: 0.15em;
     line-height: 1.2;
     margin: 1.5rem 0 0;
+    anchor-name: --cxii;
   }
 
   :global(.dialog-trigger.hide-hint) {
@@ -205,21 +214,12 @@ Features a Command prompt for navigation and interacting with the integrated AI 
     font-style: italic;
     color: var(--foreground-alt);
     opacity: 0;
-    animation: 0.1s ease-in 5s 1 fade-in;
+    animation: 0.1s ease-in 6s 1 fade-in;
   }
 
   @media (prefers-reduced-motion: no-preference) {
     :global(.dialog-trigger.button) {
-      animation: 1s ease-in 7s 1 forwards fade-in;
-    }
-  }
-
-  @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
+      animation: 1s ease-in 10s 1 forwards fade-in;
     }
   }
 
@@ -261,5 +261,29 @@ Features a Command prompt for navigation and interacting with the integrated AI 
   .chat-window-error {
     color: var(--destructive-text);
     padding: 0.25rem 0;
+  }
+
+  .do-something {
+    position: absolute;
+    position-anchor: --cxii;
+    position-area: span-top left;
+    bottom: 20px;
+    max-width: 180px;
+    opacity: 0;
+    will-change: opacity;
+    animation: 0.5s ease-in 5s 1 forwards fade-in;
+
+    &.hide-hint {
+      opacity: 0 !important;
+    }
+  }
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 </style>
