@@ -418,10 +418,95 @@ const portfolioData: DesignPortfolioEntry[] = [
       ]
     },
     circa: '2022',
-    technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'Angular Material', 'Webpack', 'Jasmine', 'Python', 'Django'],
+    technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'Angular Material', 'Webpack', 'Jasmine', 'Python', 'Django', 'Nx'],
     summary: 'UI design for Frontline VM v7.',
     description:
       "Version 7 was intended to be the next major release of Frontline VM before Digital Defense's acquisition by Fortra. Working solo for nearly the entire duration of the project, I drove the design and development to migrate the entire front-end from AngularJS to Angular. Visually, there was a renewed focus on accessibility, prioritizing color contrast and screen reader support to meet WCAG 2.1 AA compliance standards. It also featured a custom fork of Angular Material that was built to not only support features unique to FVM but would live on to become the Angular component library for other Fortra products. While it saw a limited public release as an A/B test, allowing users to switch between the old and new versions, the project was ultimately cancelled before it could be fully realized."
+  },
+  {
+    includeInPortfolio: true as const,
+    status: 'Shipped',
+    slug: 'uniform-design-system',
+    name: 'Uniform Design System',
+    projectType: 'ui',
+    images: {
+      thumbnail: { src: '/images/uniform_buttons-thumb.webp', alt: 'A series of buttons with different colors and styles from the Uniform Design System.' },
+      full: { src: '/images/uniform_previews-933.webp', alt: 'A collection of examples from the Uniform Design System including buttons, forms, progress bars, and more.' },
+      showcase: [
+        { src: '/images/uniform_buttons-933.webp', alt: 'A series of buttons with different colors and styles from the Uniform Design System.' },
+        { src: '/images/uniform_forms-933.webp', alt: 'A screenshot of an example form using the Uniform Design System.' },
+        { src: '/images/uniform_badge-933.webp', alt: 'A demonstration of various Uniform badge components in different colors.' }
+      ]
+    },
+    circa: '2022',
+    technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'Angular Material', 'Nx'],
+    summary: 'Design system for Digital Defense and Fortra products.',
+    description:
+      'Uniform was developed as a fork of Angular Material to support the unique needs of the Frontline VM application and other Digital Defense products. It was later incorporated into the Fortra development stack as the design system for their Angular-based products.'
+  },
+  {
+    includeInPortfolio: true as const,
+    status: 'Shipped',
+    slug: 'sealevel-design-system',
+    name: 'SeaLevel',
+    projectType: 'ui',
+    images: {
+      thumbnail: {
+        src: '/images/sealevel_preview-thumb2.webp',
+        alt: 'A collection of examples from the SeaLevel component library including buttons, forms, progress bars, and more.'
+      },
+      full: { src: '/images/sealevel_preview-933.webp', alt: 'A collection of examples from the SeaLevel component library including buttons, forms, progress bars, and more.' },
+      showcase: [
+        { src: '/images/sealevel_grid-933.webp', alt: 'A demonstration of the SeaLevel grid system with different column layouts.' },
+        { src: '/images/sealevel_stack-933.webp', alt: 'A demonstration of the SeaLevel stack system showing its built-in divider options.' }
+      ]
+    },
+    circa: '2023',
+    technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'PrimeNG'],
+    summary: 'SeaLevel component library.',
+    description:
+      'SeaLevel was developed as an extension of PrimeNG for use as the internal component library for LevelBlue. Built for the express intent of not only integrating custom features directly into a single, unified design system, but also improving the developer experience by providing a more consistent and predictable API for building complex UI components. Purposely built alongside an orchestrated agentic development environment, the component library was designed to be fully AI-compatible, ensuring consistent, high-quality output across the entire development process.'
+  },
+  {
+    includeInPortfolio: true as const,
+    status: 'In development',
+    slug: 'whats-for-dinner',
+    name: "What's For Dinner",
+    projectType: 'ui',
+    images: {
+      thumbnail: { src: '/images/wfd_prompt-thumb.webp', alt: 'Close-up of the What\'s For Dinner prompt interface asking, "Care to cook up dinner?"' },
+      full: { src: '/images/wfd_prompt-933.webp', alt: "A laptop in a cozy home setting showing the What's For Dinner application homepage." },
+      hero: { src: '/images/wfd_prompt-hero.webp', alt: "A laptop in a cozy home setting showing the What's For Dinner application homepage." },
+      showcase: [
+        { src: '/images/wfd_suggestions-933.webp', alt: "A screenshot of the What's For Dinner application suggestions page." },
+        { src: '/images/wfd_recipe-933.webp', alt: 'A screenshot of a recipe for burritos and cilantro lime rice.' }
+      ]
+    },
+    circa: '2026',
+    technologies: ['HTML', 'CSS', 'Svelte', 'SvelteKit', 'Cloudflare Workers', 'OpenAI SDK', 'Dexie', 'Supabase'],
+    summary: "What's For Dinner website.",
+    description:
+      "Born out of my own frustration of trying to decide what to cook for dinner every night, What's For Dinner is an offline-first Svelte 5 / SvelteKit web app that helps pick a meal from a personal recipe collection. Suggestions weigh time of day and how often each recipe is prepared, surfacing favorites while also bringing forward dishes that have not been cooked in a while so the rotation stays interesting. Integrated with an AI assistant that suggests new recipes and helps edit existing ones in place, allowing users to attach dietary and method preferences when asking for ideas - for example gluten-free, vegan, or avoiding specific techniques such as sous vide."
+  },
+  {
+    includeInPortfolio: true as const,
+    status: 'Shipped',
+    slug: 'norge-familie-v3',
+    name: 'Norge Familie (v3)',
+    projectType: 'ui',
+    liveUrl: 'https://www.norwegian-family.com',
+    images: {
+      thumbnail: { src: '/images/norgefamilie_home-thumb.webp', alt: 'A screenshot of the Norge Familie website homepage.' },
+      full: { src: '/images/norgefamilie_home-933.webp', alt: 'A screenshot of the Norge Familie website homepage.' },
+      showcase: [
+        { src: '/images/norgefamilie_gallery-933.webp', alt: 'A screenshot of the Norge Familie gallery page. A mosaic of hand-sewn nisse dolls in various colors and sizes.' }
+      ]
+    },
+    circa: '2025',
+    technologies: ['HTML', 'CSS', 'JavaScript', 'WordPress', 'PHP'],
+    summary: 'Norge Familie (v3)',
+    description:
+      'Norge Familie is my longest running side project. Started in 2005 as a simple PHP ecommerce store to support a small family business. Originally built on a custom CMS, the site was migrated to WordPress for improved scalability and ease of use. The latest version includes new branding, a redesigned product catalog, and a new ecommerce platform.'
   }
 ];
 

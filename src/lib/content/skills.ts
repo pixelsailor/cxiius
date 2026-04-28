@@ -32,7 +32,7 @@ const data: SkillCategory[] = [
       { name: 'XML', proficiency: 'familiar' },
       { name: 'JSON', proficiency: 'fluent' },
       { name: 'YAML', proficiency: 'familiar' },
-      { name: 'Markdown', proficiency: 'fluent' },
+      { name: 'Markdown', proficiency: 'fluent' }
     ]
   },
   {
@@ -96,7 +96,7 @@ const data: SkillCategory[] = [
       { name: 'Webpack', proficiency: 'familiar' },
       { name: 'Rollup', proficiency: 'familiar' },
       { name: 'Nx', proficiency: 'proficient', notes: 'Used for monorepo management in enterprise Angular contexts' },
-      { name: 'PostCSS', proficiency: 'proficient' },
+      { name: 'PostCSS', proficiency: 'proficient' }
     ]
   },
   {
@@ -120,7 +120,7 @@ const data: SkillCategory[] = [
       { name: 'PostgreSQL', proficiency: 'familiar' },
       { name: 'SQLite', proficiency: 'familiar' },
       { name: 'MongoDB', proficiency: 'familiar' },
-      { name: 'Supabase', proficiency: 'familiar' },
+      { name: 'Supabase', proficiency: 'familiar' }
     ]
   },
   {
@@ -133,7 +133,7 @@ const data: SkillCategory[] = [
       { name: 'Jenkins', proficiency: 'familiar' },
       { name: 'Git', proficiency: 'proficient' },
       { name: 'GitHub', proficiency: 'proficient' },
-      { name: 'GitLab', proficiency: 'proficient' },
+      { name: 'GitLab', proficiency: 'proficient' }
     ]
   },
   {

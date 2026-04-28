@@ -40,24 +40,71 @@ const data: ExperienceEntry[] = [
   {
     title: 'Senior Software Engineer',
     company: 'Fortra',
-    formerlyKnownAs: 'Digital Defense, Inc. (DDI)',
     location: 'Eden Prairie, MN (Remote)',
     employmentType: 'full-time',
-    startDate: '2013-05',
+    startDate: '2021-02',
     endDate: '2025-01',
-    context:
-      "Joined Digital Defense Inc. as one of only two frontend developers tasked with re-engineering Frontline - DDI's flagship SaaS vulnerability management platform and primary revenue stream - from the ground up on AngularJS. Frontline aggregates, visualises, and helps security teams act on large volumes of vulnerability scan data. DDI was later acquired by Fortra.",
+    context: "Transitioned (after Fortra's acquisition of DDI) to a centralized UX engineering role supporting multiple product teams and front-end stacks.",
     contributions: [
-      'Served as primary UI/UX designer for the Frontline Vulnerability Management platform (rebranded as Fortra VM after the acquisition by Fortra) - responsible for making a data-intensive, technically complex security tool feel accessible and intuitive to practitioners.',
-      'Championed responsive design for Frontline at a time when the idea was pushed back on internally. Persisted in advocating for it; it was ultimately adopted and became a standout highlight when demoing the product to clients.',
-      'Designed and developed internal AngularJS, Angular, and React component libraries used across Frontline and other internal web applications.',
-      'Worked independently to design, prototype, and deliver proof-of-concept applications and MVPs for new internal revenue streams.',
-      'Post-acquisition: joined the UX Implementation team translating Figma designs into production-quality code, then moved to a focused strike team as the primary frontend developer for new features and application development.',
-      'Continued to own significant frontend architecture decisions and component library maintenance throughout both eras.'
+      "Built the Angular implementation of Fortra's React-based design system, serving as the sole Angular specialist and enabling adoption of shared UI standards across non-React applications.",
+      'Partnered with UX and engineering teams to implement Figma-driven designs in production, ensuring consistency between design and code across products.',
+      'Acted as lead UI developer on React-based applications, contributing to feature delivery and aligning implementations with shared component and design system standards.',
+      'Supported cross-team development through reusable patterns and component-driven architecture, improving consistency and reducing duplication across the portfolio.'
     ],
-    outcomes:
-      'Contributed to a product that earned top analyst recognition - accolades from Gartner and Frost & Sullivan, SC Magazine "Best Buy" designation specifically noting ease of use - and was a key factor in Fortra\'s acquisition of DDI. Delivered 11+ years of continuous, high-quality frontend work across multiple product lines and organisational transitions.',
-    tech: ['Angular', 'React', 'TypeScript', 'JavaScript', 'SASS/SCSS', 'Component libraries', 'Figma-to-code', 'SaaS product development', 'Storybook', 'Jest', 'Testing Library']
+    outcomes: 'Enabled design system adoption across multiple frameworks and teams, supporting consistent UI delivery during post-acquisition integration and product expansion.',
+    tech: [
+      'Angular',
+      'React',
+      'TypeScript',
+      'JavaScript',
+      'SASS/SCSS',
+      'Component libraries',
+      'Figma-to-code',
+      'SaaS product development',
+      'Storybook',
+      'Jest',
+      'Testing Library',
+      'Material UI',
+      'TailwindCSS',
+      'Playwright',
+      'MSW'
+    ]
+  },
+  {
+    title: 'Front-End UI/UX Engineer',
+    company: 'Digital Defense, Inc.',
+    location: 'San Antonio, TX',
+    employmentType: 'full-time',
+    startDate: '2013-05',
+    endDate: '2021-02',
+    context:
+      'Joined as one of two front-end engineers to re-architect Frontline VM, a flagship SaaS vulnerability management platform, rebuilding the application from the ground up in AngularJS and delivering it to production.',
+    contributions: [
+      'Owned UI architecture and UX design for a complex, data-intensive security platform, translating practitioner workflows into an interface optimized for clarity, speed, and usability.',
+      'Built and maintained shared Angular component libraries, establishing reusable patterns that improved consistency and accelerated development across Frontline and related applications.',
+      'Championed and implemented responsive design despite internal resistance, turning adaptability into a differentiator in client demos and field adoption.',
+      'Led modernization of Frontline, migrating the application from AngularJS to Angular 7+ and introducing improved accessibility standards and updated UI patterns.',
+      'Designed and delivered POCs and MVPs using AWS services including Cognito, EC2 and DynamoDB, expanding internal capabilities and supporting new product directions.'
+    ],
+    outcomes: 'Delivered and evolved a flagship platform recognized by analysts including Gartner and Frost & Sullivan, and awarded SC Magazine "Best Buy" for usability.',
+    tech: [
+      'AngularJS',
+      'Angular',
+      'TypeScript',
+      'JavaScript',
+      'SASS/SCSS',
+      'Component libraries',
+      'SaaS product development',
+      'Storybook',
+      'Jest',
+      'AWS',
+      'Cognito',
+      'EC2',
+      'DynamoDB',
+      'Bootstrap',
+      'Angular Material',
+      'TailwindCSS'
+    ]
   },
   {
     title: 'Web Designer and Developer',
@@ -78,7 +125,7 @@ const data: ExperienceEntry[] = [
     tech: ['WordPress', 'PHP', 'HTML', 'CSS', 'JavaScript', 'jQuery', 'Custom CMS development', 'E-commerce', 'Responsive design', 'Branding']
   },
   {
-    title: 'Principal UI/UX Designer',
+    title: 'Lead UI and Graphic Designer',
     company: 'MOD Systems',
     location: 'Seattle, WA',
     employmentType: 'full-time',
@@ -101,7 +148,7 @@ const data: ExperienceEntry[] = [
     tech: ['UI/UX design', 'Interaction design', 'Brand design', 'Corporate web development', 'Presentation design', 'Cross-device design (kiosk, mobile, set-top box)']
   },
   {
-    title: 'Principal Graphic Designer & Production Assistant',
+    title: 'Staff Graphic Designer & Production Assistant',
     company: 'Directory Plus',
     location: 'Durango, CO',
     employmentType: 'full-time',

@@ -6,7 +6,7 @@
   import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
   import EllipsisLoader from '$lib/ui/ellipsis-loader/EllipsisLoader.svelte';
   import About from '$lib/ui/about/About.svelte';
-  import {DoSomething } from '$lib/ui/index';
+  import { DoSomething } from '$lib/ui/index';
 
   const ALPHABET = new RegExp(/^[a-zA-Z/]$/);
 
@@ -146,7 +146,9 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 
     <div class="command-menu-container" id="commandMenuContainer">
       <Popover.Root bind:open={commandDialogOpen}>
-        <Popover.Trigger class={['button text dialog-trigger fade-in', disableHints ? 'hide-hint' : '']}>Type <kbd>/</kbd> to navigate, or start typing to ask a question</Popover.Trigger>
+        <Popover.Trigger class={['button text dialog-trigger fade-in', disableHints ? 'hide-hint' : '']}
+          >Type <kbd>/</kbd> to navigate, or start typing to ask a question</Popover.Trigger
+        >
         <Popover.Portal to="#commandMenuContainer">
           <Popover.Content class="command-dialog" sideOffset={-38} onEscapeKeydown={handleEscapeKeydown} onInteractOutside={handleInteractOutside}>
             <Command.Root class="command-root" onStateChange={handleCommandStateChange}>
