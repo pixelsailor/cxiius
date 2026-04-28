@@ -192,18 +192,20 @@
     color: var(--foreground);
   }
 
-  .page-content:hover .will-fade {
-    color: var(--muted);
-    text-shadow: 0 0 10px var(--muted);
-  }
+  @media ((hover: hover) and (pointer: fine)) {
+    .page-content:hover .will-fade {
+      color: var(--muted);
+      text-shadow: 0 0 10px var(--muted);
+    }
 
-  .page-content .will-fade {
-    transition: color 0.45s ease-in-out;
-  }
+    .page-content .will-fade {
+      transition: color 0.45s ease-in-out;
+    }
 
-  .page-content .will-fade:hover {
-    color: var(--foreground);
-    text-shadow: none;
+    .page-content .will-fade:hover {
+      color: var(--foreground);
+      text-shadow: none;
+    }
   }
 
   section {

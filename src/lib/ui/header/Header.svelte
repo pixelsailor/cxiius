@@ -34,6 +34,7 @@
   let isHomePage = $derived(currentRoute === '/');
 
   let showDropdownNav = $derived.by(() => {
+    if (!isJsEnabled) return false;
     if (!hasKeyboard || !isLargeScreen.current) return true;
     return false;
   });
