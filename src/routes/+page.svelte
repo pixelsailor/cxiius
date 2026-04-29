@@ -221,7 +221,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
 
   @media (prefers-reduced-motion: no-preference) {
     :global(.dialog-trigger.button) {
-      animation: 1s ease-in 10s 1 forwards fade-in;
+      animation: 1s ease-in 14s 1 forwards fade-in;
     }
   }
 
@@ -273,7 +273,7 @@ Features a Command prompt for navigation and interacting with the integrated AI 
     max-width: 180px;
     opacity: 0;
     will-change: opacity;
-    animation: 0.5s ease-in 5s 1 forwards fade-in;
+    animation: 0.5s ease-in 9s 1 forwards fade-in;
 
     &.hide-hint {
       opacity: 0 !important;
