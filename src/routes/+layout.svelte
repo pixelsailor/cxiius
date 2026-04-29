@@ -50,14 +50,11 @@
   const chat = new ChatState();
   setChatContext(chat);
 
-  const openChatWindow = (key?: string) => {
+  const openChatWindow = () => {
     showChatWindow = true;
     setTimeout(() => {
       const commandInput = document.getElementById('chatWindowInput') as HTMLTextAreaElement | null;
       commandInput?.focus();
-      if (key && commandInput) {
-        commandInput.value = key;
-      }
     }, 100);
   };
 
@@ -80,15 +77,16 @@
       showChatWindow = false;
       return;
     }
-
-    if (showChatWindow || !ALPHABET.test(event.key)) return;
+    
+    const modifierKey = event.ctrlKey || event.metaKey || event.altKey;
+    if (showChatWindow || !ALPHABET.test(event.key) || modifierKey) return;
 
     // Prevent firefox from opening its quick search
     if (event.key === '/') {
       event.preventDefault();
     }
 
-    openChatWindow(event.key);
+    openChatWindow();
   }
 </script>
 

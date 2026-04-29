@@ -38,27 +38,19 @@
    * Responsible for opening the command dialog and hiding the hint text.
    */
   function handleKeyDown(event: KeyboardEvent) {
-    if (!ALPHABET.test(event.key)) {
+    // Prevent Firefox from opening its quick search
+    if (event.key === '/' && !commandDialogOpen) {
+      event.preventDefault();
+    }
+    
+    const modifierKey = event.ctrlKey || event.metaKey || event.altKey;
+    if (!ALPHABET.test(event.key) || modifierKey) {
       return;
     }
-    const dialogWasAlreadyOpen = commandDialogOpen;
     commandDialogOpen = true;
 
     // Hide the hint text when the dialog is opened -- it extends beyond the container and looks bad.
-    // const commandTrigger = document.querySelector('.dialog-trigger') as HTMLButtonElement | null;
-    // commandTrigger?.classList.add('hide-hint');
     disableHints = true;
-
-    // When the dialog was closed, the first key may not reach the input yet — seed it.
-    // When the dialog is already open, the focused input applies the key normally; seeding would duplicate.
-    const shouldSeedFirstKey = !dialogWasAlreadyOpen && commandInputValue.length === 0;
-    if (shouldSeedFirstKey) {
-      commandInputValue = event.key;
-      // `/` is seeded; prevent default so the focused element (not the input) does not also receive it.
-      if (event.key === '/') {
-        event.preventDefault();
-      }
-    }
   }
 
   /**
