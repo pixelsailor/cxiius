@@ -10,6 +10,7 @@
   import { CloseIcon, SmileyIcon } from '$lib/ui/icons';
   import { serifFontFamily } from '$lib/utils/fonts';
   import { MediaQuery } from 'svelte/reactivity';
+  import { env } from '$env/dynamic/public';
 
   const ALPHABET = new RegExp(/^[a-zA-Z/]$/);
 
@@ -117,6 +118,7 @@
 
     <footer>
       <span class="label-small">&copy; 2026 Benjamin Thompson. All rights reserved.</span>
+      <div class="cf-turnstile" data-sitekey={env.PUBLIC_TURNSTILE_SITE_KEY}></div>
     </footer>
   </main>
 
