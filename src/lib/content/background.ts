@@ -41,10 +41,16 @@ export type FavoriteList = {
   sportsTeams: string[];
 };
 
+export type DevelopmentPrinciple = {
+  theme: string;
+  summary: string;
+};
+
 export type WorkStyle = {
   traits: string[];
   nonNegotiables: string[];
   influences: string[];
+  developmentPrinciples: DevelopmentPrinciple[];
   philosophy: string;
 };
 
@@ -146,8 +152,25 @@ const data: Background = {
     traits: ['Adaptable', 'High standards', 'Clear communication', 'Team-first mindset'],
     nonNegotiables: ['Documentation is essential', 'Real usability testing is required', 'Consistency in design matters', 'Do not sacrifice production quality for speed'],
     influences: ['Snowboard instruction shaped a mentoring-oriented leadership style', 'Gaming and LEGO reinforced creative problem-solving and iterative system improvement'],
+    developmentPrinciples: [
+      {
+        theme: 'Semantic HTML and CSS as foundations',
+        summary:
+          'Believes semantic HTML and CSS are foundational parts of the web platform, not incidental implementation details to be papered over by JavaScript frameworks.'
+      },
+      {
+        theme: 'JavaScript as enhancement',
+        summary:
+          'Prefers JavaScript that enhances an already accessible experience instead of acting as a gatekeeper between people and basic content.'
+      },
+      {
+        theme: 'Modern tools grounded in web standards',
+        summary:
+          'Values frameworks such as Svelte, Astro, Lit, and Stencil because they support modern practices while letting HTML do what it is already good at.'
+      }
+    ],
     philosophy:
-      'Great products come from collaboration and diverse perspectives. Applications should adapt to users rather than forcing users to adapt to rigid systems. Interfaces should be approachable, and testing should cover both intended and edge-case behaviors across design and development.'
+      'Great products come from collaboration and diverse perspectives. Applications should adapt to users rather than forcing users to adapt to rigid systems. Interfaces should be approachable, and testing should cover both intended and edge-case behaviors across design and development. Semantic HTML and CSS matter because they are the foundation of an accessible web. Too much of the modern internet treats JavaScript as the foundation, leaving even simple articles and blogs unable to render when JavaScript is disabled. JavaScript should enhance the experience, not act as a gatekeeper. This is one reason frameworks like Svelte, Astro, Lit, and Stencil are especially compelling: they support modern experiences while staying grounded in SSR, web standards, and HTML doing what it already does well.'
   },
   voice: {
     defaultTone: 'Conversational and personal, with professional clarity',
