@@ -2,11 +2,13 @@
 // Content domain: technical proficiencies, categorised by area.
 //
 // Proficiency scale:
-//   fluent - primary working tools; used daily or near-daily across multiple projects
-//   proficient - solid working knowledge; used regularly, comfortable owning implementation
-//   familiar - working knowledge; can contribute meaningfully, may reference docs
+//   1: No Experience - No practical experience.
+//   2: Emerging - Limited hands-on experience; can ramp up quickly.
+//   3: Competent - Working knowledge; can contribute meaningfully with occasional reference to documentation.
+//   4: Proficient - Strong working knowledge; comfortable owning implementation independently.
+//   5: Fluent - Primary working tool; extensive practical experience across multiple projects.
 
-export type Proficiency = 'fluent' | 'proficient' | 'familiar';
+export type Proficiency = 'fluent' | 'proficient' | 'competent' | 'emerging' | 'no experience';
 
 export type Skill = {
   name: string;
@@ -28,11 +30,11 @@ const data: SkillCategory[] = [
       { name: 'Sass/SCSS', proficiency: 'fluent' },
       { name: 'JavaScript', proficiency: 'fluent' },
       { name: 'TypeScript', proficiency: 'fluent' },
-      { name: 'PHP', proficiency: 'proficient', notes: 'Primary use in freelance era (2010-2013); less recent' },
-      { name: 'XML', proficiency: 'familiar' },
+      { name: 'PHP', proficiency: 'competent', notes: 'Primary use in freelance era (2010-2013); less recent' },
+      { name: 'XML', proficiency: 'competent' },
       { name: 'JSON', proficiency: 'fluent' },
-      { name: 'YAML', proficiency: 'familiar' },
-      { name: 'Markdown', proficiency: 'fluent' }
+      { name: 'Python', proficiency: 'emerging' },
+      { name: 'Node.js', proficiency: 'competent' },
     ]
   },
   {
@@ -41,21 +43,19 @@ const data: SkillCategory[] = [
       { name: 'Angular', proficiency: 'fluent', notes: 'Primary framework across two long-term enterprise engagements; up to Angular 21' },
       { name: 'React', proficiency: 'proficient', notes: 'Used extensively at Fortra and in component library work' },
       { name: 'Svelte + SvelteKit', proficiency: 'proficient' },
-      { name: 'SolidJS', proficiency: 'familiar' },
-      { name: 'Qwik', proficiency: 'familiar' },
-      { name: 'Astro', proficiency: 'familiar' },
-      { name: 'Lit', proficiency: 'familiar' },
-      { name: 'Web Components', proficiency: 'proficient' },
+      { name: 'Qwik', proficiency: 'competent' },
+      { name: 'Astro', proficiency: 'emerging' },
+      { name: 'Web Components', proficiency: 'emerging' },
       { name: 'TailwindCSS', proficiency: 'fluent' },
-      { name: 'Bootstrap', proficiency: 'proficient' },
+      { name: 'Bootstrap', proficiency: 'competent' },
       { name: 'Angular Material', proficiency: 'fluent' },
       { name: 'Material UI (MUI)', proficiency: 'proficient' },
-      { name: 'PrimeNG', proficiency: 'proficient' },
-      { name: 'Shadcn UI', proficiency: 'familiar' },
-      { name: 'Semantic / Foundation UI', proficiency: 'familiar' },
+      { name: 'PrimeNG', proficiency: 'fluent' },
+      { name: 'Shadcn UI', proficiency: 'emerging' },
+      { name: 'Semantic / Fomantic UI', proficiency: 'competent' },
       { name: 'RxJS', proficiency: 'proficient', notes: 'Used extensively in Angular contexts' },
-      { name: 'jQuery', proficiency: 'proficient', notes: 'Deep historical use; superseded by modern frameworks in current work' },
-      { name: 'WordPress', proficiency: 'proficient' }
+      { name: 'jQuery', proficiency: 'competent', notes: 'Deep historical use; superseded by modern frameworks in current work' },
+      { name: 'WordPress', proficiency: 'competent' }
     ]
   },
   {
@@ -93,8 +93,8 @@ const data: SkillCategory[] = [
       { name: 'yarn', proficiency: 'proficient' },
       { name: 'pnpm', proficiency: 'proficient' },
       { name: 'Vite', proficiency: 'proficient' },
-      { name: 'Webpack', proficiency: 'familiar' },
-      { name: 'Rollup', proficiency: 'familiar' },
+      { name: 'Webpack', proficiency: 'competent' },
+      { name: 'Rollup', proficiency: 'emerging' },
       { name: 'Nx', proficiency: 'proficient', notes: 'Used for monorepo management in enterprise Angular contexts' },
       { name: 'PostCSS', proficiency: 'proficient' }
     ]
@@ -102,10 +102,9 @@ const data: SkillCategory[] = [
   {
     name: 'Backend & APIs',
     skills: [
-      { name: 'Node.js', proficiency: 'proficient' },
-      { name: 'Next.js', proficiency: 'familiar' },
-      { name: 'Express.js', proficiency: 'familiar' },
-      { name: 'Sails.js', proficiency: 'familiar' },
+      { name: 'Next.js', proficiency: 'emerging' },
+      { name: 'Express.js', proficiency: 'emerging' },
+      { name: 'Sails.js', proficiency: 'emerging' },
       { name: 'REST', proficiency: 'fluent' },
       { name: 'GraphQL', proficiency: 'proficient' }
     ]
@@ -113,24 +112,23 @@ const data: SkillCategory[] = [
   {
     name: 'Databases',
     skills: [
-      { name: 'MySQL', proficiency: 'proficient' },
-      { name: 'NoSQL', proficiency: 'familiar' },
-      { name: 'IndexedDB', proficiency: 'familiar' },
-      { name: 'SQL', proficiency: 'proficient' },
-      { name: 'PostgreSQL', proficiency: 'familiar' },
-      { name: 'SQLite', proficiency: 'familiar' },
-      { name: 'MongoDB', proficiency: 'familiar' },
-      { name: 'Supabase', proficiency: 'familiar' }
+      { name: 'MySQL', proficiency: 'competent' },
+      { name: 'GraphQL', proficiency: 'competent' },
+      { name: 'IndexedDB', proficiency: 'competent' },
+      { name: 'PostgreSQL', proficiency: 'competent' },
+      { name: 'SQLite', proficiency: 'competent' },
+      { name: 'MongoDB', proficiency: 'competent' },
+      { name: 'Supabase', proficiency: 'competent' }
     ]
   },
   {
     name: 'DevOps & Cloud',
     skills: [
       { name: 'Docker', proficiency: 'proficient' },
-      { name: 'AWS (EC2, DynamoDB, Cognito)', proficiency: 'familiar' },
+      { name: 'AWS (EC2, DynamoDB, Cognito)', proficiency: 'competent' },
       { name: 'Cloudflare', proficiency: 'proficient' },
       { name: 'CI/CD pipelines', proficiency: 'proficient' },
-      { name: 'Jenkins', proficiency: 'familiar' },
+      { name: 'Jenkins', proficiency: 'competent' },
       { name: 'Git', proficiency: 'proficient' },
       { name: 'GitHub', proficiency: 'proficient' },
       { name: 'GitLab', proficiency: 'proficient' }
@@ -146,7 +144,7 @@ const data: SkillCategory[] = [
         proficiency: 'fluent',
         notes: 'Designing component libraries with guardrails that produce reliable output from AI coding agents'
       },
-      { name: 'Copilot', proficiency: 'familiar', notes: 'Personal tooling' }
+      { name: 'Copilot', proficiency: 'competent', notes: 'Personal tooling' }
     ]
   },
   {
