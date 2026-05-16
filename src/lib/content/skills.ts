@@ -8,7 +8,7 @@
 //   4: Proficient - Strong working knowledge; comfortable owning implementation independently.
 //   5: Fluent - Primary working tool; extensive practical experience across multiple projects.
 
-export type Proficiency = 'fluent' | 'proficient' | 'competent' | 'emerging' | 'no experience';
+export type Proficiency = 'fluent' | 'proficient' | 'competent' | 'emerging' | 'none';
 
 export type Skill = {
   name: string;
@@ -20,6 +20,49 @@ export type SkillCategory = {
   name: string;
   skills: Skill[];
 };
+
+const proficiencyMap: Record<Proficiency, { level: number; name: string; description: string; avatar: string; avatar_description: string; color: string }> = {
+  none: {
+    level: 1,
+    name: 'No Experience',
+    avatar: '',
+    description: 'No practical experience.',
+    avatar_description: '',
+    color: 'gray',
+  },
+  emerging: {
+    level: 2,
+    name: 'Emerging',
+    avatar: 'zombie',
+    description: 'Limited hands-on experience or not recently used; can ramp up quickly.',
+    avatar_description: 'Will beat and claw their way to devour the subject',
+    color: 'red',
+  },
+  competent: {
+    level: 3,
+    name: 'Competent',
+    description: 'Working knowledge or used sparingly in the last few years; can contribute meaningfully with occasional reference to documentation.',
+    avatar: 'pirate',
+    avatar_description: 'Capable of getting the job done through brute force and lots of snearing -- doesn\'t always know why something works... probably voodoo.',
+    color: 'yellow',
+  },
+  proficient: {
+    level: 4,
+    name: 'Proficient',
+    description: 'Strong working knowledge or used regularly in the last few years; comfortable owning implementation independently.',
+    avatar: 'cowbow',
+    avatar_description: 'Never afraid to jump in and take command, using their vast know-how to easily adapt to unfamiliar territory and unexpected challenges.',
+    color: 'blue',
+  },
+  fluent: {
+    level: 5,
+    name: 'Fluent',
+    description: 'Extensive practical experience across multiple projects; primary working tool.',
+    avatar: 'ninja',
+    avatar_description: 'Mastery is not a goal to be achieved, but a journey to be embarked upon; always seeking to improve and grow.',
+    color: 'green',
+  },
+} as const;
 
 const data: SkillCategory[] = [
   {
