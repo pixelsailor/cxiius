@@ -8,6 +8,7 @@ export type ExperienceEntry = {
   company: string;
   formerlyKnownAs?: string;
   location: string;
+  industry?: string;
   employmentType: 'full-time' | 'contract' | 'freelance';
   startDate: string;
   endDate: string | 'present';
@@ -21,12 +22,14 @@ const data: ExperienceEntry[] = [
   {
     title: 'Lead UI Developer',
     company: 'LevelBlue',
+    formerlyKnownAs: 'TrustWave',
     location: 'Dallas, TX (Remote / Contract)',
+    industry: 'Cybersecurity',
     employmentType: 'contract',
     startDate: '2025-07',
     endDate: '2026-04',
     context:
-      'LevelBlue is a cybersecurity company. Embedded within a contracted strike team - three developers and one UI designer - brought in to rescue a product that had been stalled in development for over a year. The mandate was to deliver a fully functional application within a six-month window.',
+      'Embedded within a contracted strike team - three developers and one UI designer - brought in to rescue a product that had been stalled in development for over a year. The mandate was to deliver a fully functional application within a six-month window.',
     contributions: [
       'Architected an opinionated Angular 21 component library that enforced design system compliance by construction - making it structurally difficult to produce inconsistent or off-brand output. The library codified decisions around color, typography, spacing, and interaction patterns, eliminating ad-hoc variation at the component level.',
       "Designed the component library's API and consumption patterns to serve both human developers and AI coding agents equally - establishing guardrails that preserved code integrity, accessibility standards, and design fidelity regardless of who (or what) was writing the implementation.",
@@ -40,7 +43,9 @@ const data: ExperienceEntry[] = [
   {
     title: 'Senior Software Engineer',
     company: 'Fortra',
+    formerlyKnownAs: 'HelpSystems',
     location: 'Eden Prairie, MN (Remote)',
+    industry: 'Cybersecurity',
     employmentType: 'full-time',
     startDate: '2021-02',
     endDate: '2025-01',
@@ -74,6 +79,7 @@ const data: ExperienceEntry[] = [
     title: 'Front-End UI/UX Engineer',
     company: 'Digital Defense, Inc.',
     location: 'San Antonio, TX',
+    industry: 'Cybersecurity',
     employmentType: 'full-time',
     startDate: '2013-05',
     endDate: '2021-02',
@@ -128,6 +134,7 @@ const data: ExperienceEntry[] = [
     title: 'Lead UI and Graphic Designer',
     company: 'MOD Systems',
     location: 'Seattle, WA',
+    industry: 'Software Development',
     employmentType: 'full-time',
     startDate: '2006-02',
     endDate: '2010-04',
@@ -151,6 +158,7 @@ const data: ExperienceEntry[] = [
     title: 'Staff Graphic Designer & Production Assistant',
     company: 'Directory Plus',
     location: 'Durango, CO',
+    industry: 'Advertising',
     employmentType: 'full-time',
     startDate: '2002-02',
     endDate: '2004-05',

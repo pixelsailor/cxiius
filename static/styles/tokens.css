@@ -6,10 +6,7 @@
 	--base-font-weight: 300;
 	--base-font-size: 18px;
 
-	/* Theme colors */
-	--white: hsl(0 0% 100%);
-	--black: hsl(0 0% 0%);
-
+	/* Theme colors -- Default PrimeNG Color Palette */
 	--p-zinc-50: hsl(0 0% 98.04%);
 	--p-zinc-100: hsl(240 4.76% 95.88%);
 	--p-zinc-200: hsl(240 5.88% 90%);
@@ -45,6 +42,29 @@
 	--p-stone-800: hsl(12 6.49% 15.1%);
 	--p-stone-900: hsl(24 9.8% 10%);
 	--p-stone-950: hsl(20 14.29% 4.12%);
+
+	--fuchsia-800: #86198f;
+
+	--purple-800: #6b21a8;
+
+	--sky-800: #075985;
+	
+	--blue-800: #1e40af;
+
+	--green-700: #15803d;
+	--green-800: #166534;
+
+	--lime-800: #3f6212;
+
+	--amber-600: #d97706;
+	--amber-700: #b45309;
+
+	--red-800: #991b1b;
+
+	--pink-700: #be185d;
+
+	--white: hsl(0 0% 100%);
+	--black: hsl(0 0% 0%);
 
 	--warn: hsl(24.6 95% 53.1%);
 	--warn-text: hsl(20.5 90.2% 48.2%);
@@ -94,6 +114,7 @@
 	--shadow-btn: 0px 1px 0px 1px rgba(0, 0, 0, 0.03);
 	--shadow-card: 0px 2px 0px 1px rgba(0, 0, 0, 0.04);
 	--shadow-date-field-focus: 0px 0px 0px 3px rgba(24, 24, 27, 0.17);
+	--shadow-text: 1px 1px 1px hsl(from var(--p-zinc-800) h s l / 0.8);
 
 	/* Layout */
 	--header-display: flex;

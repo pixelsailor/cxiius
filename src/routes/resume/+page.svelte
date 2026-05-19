@@ -3,11 +3,15 @@
   import type { PageProps } from './$types';
   import { resolve } from '$app/paths';
   import type { Pathname } from '$app/types';
+  import { getProficiencyLevel } from '$lib/content/skills';
   import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon } from '$lib/ui/icons';
 
   const resumePdfPath = '/assets/ben-thompson__frontend-swe.pdf' as Pathname;
 
   let { data }: PageProps = $props();
+
+  const formatAvatarLabel = (avatar: string): string =>
+    avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '';
 </script>
 
 <svelte:head>
@@ -92,19 +96,61 @@
         </div>
       {/each}
     </section>
-    <section class="skills-section will-fade">
-      <h3 class="headline-small">Skills</h3>
-      <div class="skills-list">
-        {#each data.skills as skillCategory (skillCategory.name)}
-          <div class="skill-category">
-            <h4 class="title-medium skill-category__name">{skillCategory.name}</h4>
-            <ul class="skill-category__skills-list">
-              {#each skillCategory.skills as skill (skill.name)}
-                <li class="skill-category__skill-item">{skill.name}</li>
-              {/each}
-            </ul>
+    <section class="skills-section will-fade" aria-labelledby="skills-heading">
+      <h3 class="headline-small" id="skills-heading">Skills</h3>
+      <div class="skills-chart">
+        <div class="skills-chart__bars">
+          <div class="skills-scale" aria-hidden="true">
+            {#each data.proficiencyLevels as level, index (level.proficiency)}
+              <span
+                class="skills-scale__label label-large"
+                class:skills-scale__label--end={index === data.proficiencyLevels.length - 1}
+                style:left="{level.barWidthPercent}%"
+              >
+                {formatAvatarLabel(level.avatar)}
+              </span>
+            {/each}
           </div>
-        {/each}
+          {#each data.skills as skillCategory (skillCategory.name)}
+            <div class="skill-category">
+              <h4 class="title-medium skill-category__name">{skillCategory.name}</h4>
+              <ul class="skill-bars">
+                {#each skillCategory.skills as skill (skill.name)}
+                  {@const level = getProficiencyLevel(skill.proficiency)}
+                  <li class="skill-bar">
+                    <div
+                      class="skill-bar__track"
+                      role="meter"
+                      aria-valuemin={1}
+                      aria-valuemax={5}
+                      aria-valuenow={level.level}
+                      aria-label="{skill.name}: {level.name}"
+                    >
+                      <div
+                        class="skill-bar__fill skill-bar__fill--level-{level.level}"
+                        style:width="{level.barWidthPercent}%"
+                      >
+                        <span class="skill-bar__label title-small">{skill.name}</span>
+                      </div>
+                    </div>
+                  </li>
+                {/each}
+              </ul>
+            </div>
+          {/each}
+        </div>
+        <aside class="skills-chart__legend" aria-label="Proficiency level descriptions">
+          {#each [...data.proficiencyLevels].toReversed() as level (level.proficiency)}
+            <article class="skills-legend__item">
+              <h4 class="title-medium skills-legend__title">{formatAvatarLabel(level.avatar)}</h4>
+              <p class="body-large skills-legend__text">
+                <em>{level.avatarDescription}</em>
+              </p>
+              <p class="body-medium">{level.description}</p>
+            </article>
+            <hr class="skills-legend__divider" />
+          {/each}
+        </aside>
       </div>
     </section>
 
@@ -280,38 +326,135 @@
     margin-block: 0.5rem;
   }
 
-  .skills-list {
-    columns: 3;
-    column-gap: 3rem;
+  .skills-chart {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    margin-top: 0.5rem;
   }
 
-  @media (max-width: 768px) {
-    .skills-list {
-      columns: 2;
+  @media (min-width: 768px) {
+    .skills-chart {
+      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+      align-items: start;
     }
   }
 
-  @media (max-width: 480px) {
-    .skills-list {
-      columns: 1;
-    }
+  .skills-scale {
+    position: relative;
+    height: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .skills-scale__label {
+    position: absolute;
+    top: 0;
+    transform: translateX(-50%);
+    line-height: 1;
+    font-style: italic;
+    white-space: nowrap;
+  }
+
+  .skills-scale__label--end {
+    transform: translateX(-100%);
   }
 
   .skill-category {
-    break-inside: avoid;
+    margin-bottom: 1.25rem;
   }
 
   .skill-category__name {
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.5rem;
     line-height: 1;
   }
 
-  .skill-category__skills-list {
-    margin-block: 0 1.5rem;
+  .skill-bars {
+    list-style: none;
+    margin: 0;
+    padding: 0;
   }
 
-  .skill-category__skill-item {
-    line-height: 1.3;
+  .skill-bar {
+    margin-bottom: 0.35rem;
+  }
+
+  .skill-bar__track {
+    height: 1.75rem;
+    border-radius: 0.35rem;
+    background-color: var(--background-alt);
+    overflow: hidden;
+  }
+
+  .skill-bar__fill {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    min-width: 0;
+    padding-inline: 0.5rem;
+    border-radius: inherit;
+    box-sizing: border-box;
+    color: var(--contrast);
+    background-image: linear-gradient(180deg, hsl(0 0% 100% / 0.22), hsl(0 0% 0% / 0.12));
+    background-blend-mode: overlay;
+  }
+
+  .skill-bar__fill--level-1 {
+    background-color: var(--p-zinc-500);
+  }
+
+  .skill-bar__fill--level-2 {
+    background-color: var(--fuchsia-800);
+  }
+
+  .skill-bar__fill--level-3 {
+    background-color: var(--amber-700);
+  }
+
+  .skill-bar__fill--level-4 {
+    background-color: var(--blue-800);
+  }
+
+  .skill-bar__fill--level-5 {
+    background-color: var(--green-700);
+  }
+
+  .skill-bar__label {
+    color: var(--white);
+    font-family: var(--sans-font-family);
+    text-shadow: var(--shadow-text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .skills-chart__legend {
+    position: sticky;
+    top: 4rem;
+  }
+
+  .skills-legend__item {
+    margin-bottom: 1.25rem;
+  }
+
+  .skills-legend__item:last-child {
+    margin-bottom: 0;
+  }
+
+  .skills-legend__title {
+    margin: 0 0 0.35rem;
+    line-height: 1.1;
+  }
+
+  .skills-legend__text {
+    margin: 0;
+    line-height: 1.35;
+    opacity: 0.9;
+  }
+
+  .skills-legend__text em {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-style: italic;
   }
 
   .education-item__notes {
