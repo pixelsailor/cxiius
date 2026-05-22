@@ -8,7 +8,7 @@ import { getBackground } from '$lib/content/background';
 import { getEducation } from '$lib/content/education';
 import { getExperience } from '$lib/content/experience';
 import { getProjects } from '$lib/content/projects';
-import { getSkills } from '$lib/content/skills';
+import { formatSkillsForPrompt, getSkillRecords } from '$lib/content/skills';
 
 /**
  * Returns a plain-text block aggregating public site content for prompt injection.
@@ -16,7 +16,7 @@ import { getSkills } from '$lib/content/skills';
  */
 export async function assembleSystemPromptFromSiteContent(): Promise<string> {
   const projects = await getProjects();
-  const skills = await getSkills();
+  const skillRecords = await getSkillRecords();
   const experience = await getExperience();
   const education = await getEducation();
   const background = await getBackground();
@@ -64,15 +64,7 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
   }
   const projectsLines = projectsArr.join('\n');
 
-  // Skills.ts
-  const skillsArr: string[] = ['## Skills'];
-  for (const s of skills) {
-    skillsArr.push(`### ${s.name}`);
-    for (const skill of s.skills) {
-      skillsArr.push(`- **${skill.name}**: [${skill.proficiency}]`);
-    }
-  }
-  const skillsLines = skillsArr.join('\n');
+  const skillsLines = formatSkillsForPrompt(skillRecords);
 
   // Experience.ts
   const experienceArr: string[] = ['## Experience'];

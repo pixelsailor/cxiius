@@ -1,17 +1,40 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { Button } from 'bits-ui';
   import type { PageProps } from './$types';
   import { resolve } from '$app/paths';
   import type { Pathname } from '$app/types';
-  import { getProficiencyLevel } from '$lib/content/skills';
+  import { getProficiencyLevel, type SkillViewMode } from '$lib/content/skills';
+  import { groupSkillsForDisplay, readPersistedSkillsViewMode, writePersistedSkillsViewMode } from '$lib/utils/skills-presentation';
   import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon } from '$lib/ui/icons';
 
   const resumePdfPath = '/assets/ben-thompson__frontend-swe.pdf' as Pathname;
 
+  const viewModeOptions: { value: SkillViewMode; label: string }[] = [
+    { value: 'category', label: 'Category' },
+    { value: 'proficiency', label: 'Proficiency' },
+    { value: 'stack', label: 'Tech stack' }
+  ];
+
   let { data }: PageProps = $props();
 
-  const formatAvatarLabel = (avatar: string): string =>
-    avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '';
+  let skillsViewMode = $state<SkillViewMode>('category');
+
+  const skillDisplayGroups = $derived(groupSkillsForDisplay(data.skillRecords, skillsViewMode, data.skillCategories, data.skillStacks));
+
+  const setSkillsViewMode = (mode: SkillViewMode): void => {
+    skillsViewMode = mode;
+    writePersistedSkillsViewMode(mode);
+  };
+
+  onMount(() => {
+    const persisted = readPersistedSkillsViewMode();
+    if (persisted !== null) {
+      skillsViewMode = persisted;
+    }
+  });
+
+  const formatAvatarLabel = (avatar: string): string => (avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '');
 </script>
 
 <svelte:head>
@@ -97,39 +120,38 @@
       {/each}
     </section>
     <section class="skills-section will-fade" aria-labelledby="skills-heading">
-      <h3 class="headline-small" id="skills-heading">Skills</h3>
+      <div class="skills-section__header">
+        <h3 class="headline-small" id="skills-heading">Skills</h3>
+        <fieldset class="skills-view-controls" aria-label="Group skills by">
+          <legend class="label-large skills-view-controls__legend">Group by</legend>
+          <div class="skills-view-controls__options">
+            {#each viewModeOptions as option (option.value)}
+              <label class="skills-view-controls__option label-large">
+                <input type="radio" name="skills-view-mode" value={option.value} checked={skillsViewMode === option.value} onchange={() => setSkillsViewMode(option.value)} />
+                {option.label}
+              </label>
+            {/each}
+          </div>
+        </fieldset>
+      </div>
       <div class="skills-chart">
         <div class="skills-chart__bars">
           <div class="skills-scale" aria-hidden="true">
             {#each data.proficiencyLevels as level, index (level.proficiency)}
-              <span
-                class="skills-scale__label label-large"
-                class:skills-scale__label--end={index === data.proficiencyLevels.length - 1}
-                style:left="{level.barWidthPercent}%"
-              >
+              <span class="skills-scale__label label-large" class:skills-scale__label--end={index === data.proficiencyLevels.length - 1} style:left="{level.barWidthPercent}%">
                 {formatAvatarLabel(level.avatar)}
               </span>
             {/each}
           </div>
-          {#each data.skills as skillCategory (skillCategory.name)}
+          {#each skillDisplayGroups as skillGroup (skillGroup.name)}
             <div class="skill-category">
-              <h4 class="title-medium skill-category__name">{skillCategory.name}</h4>
+              <h4 class="title-medium skill-category__name">{skillGroup.name}</h4>
               <ul class="skill-bars">
-                {#each skillCategory.skills as skill (skill.name)}
+                {#each skillGroup.skills as skill (skill.name)}
                   {@const level = getProficiencyLevel(skill.proficiency)}
                   <li class="skill-bar">
-                    <div
-                      class="skill-bar__track"
-                      role="meter"
-                      aria-valuemin={1}
-                      aria-valuemax={5}
-                      aria-valuenow={level.level}
-                      aria-label="{skill.name}: {level.name}"
-                    >
-                      <div
-                        class="skill-bar__fill skill-bar__fill--level-{level.level}"
-                        style:width="{level.barWidthPercent}%"
-                      >
+                    <div class="skill-bar__track" role="meter" aria-valuemin={1} aria-valuemax={5} aria-valuenow={level.level} aria-label="{skill.name}: {level.name}">
+                      <div class="skill-bar__fill skill-bar__fill--level-{level.level}" style:width="{level.barWidthPercent}%">
                         <span class="skill-bar__label title-small">{skill.name}</span>
                       </div>
                     </div>
@@ -324,6 +346,51 @@
   .experience-item__contribution {
     line-height: 1.3;
     margin-block: 0.5rem;
+  }
+
+  .skills-section__header {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 600px) {
+    .skills-section__header {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+  }
+
+  .skills-view-controls {
+    margin: 0;
+    padding: 0;
+    border: none;
+    min-inline-size: 0;
+  }
+
+  .skills-view-controls__legend {
+    margin-bottom: 0.35rem;
+    font-style: italic;
+  }
+
+  .skills-view-controls__options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem 1rem;
+  }
+
+  .skills-view-controls__option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    cursor: pointer;
+  }
+
+  .skills-view-controls__option input {
+    margin: 0;
+    accent-color: var(--accent, var(--blue-800));
   }
 
   .skills-chart {

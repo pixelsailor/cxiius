@@ -38,7 +38,7 @@ const data: ExperienceEntry[] = [
     ],
     outcomes:
       'Delivered a previously stalled application within the contracted six-month window. Established a component architecture capable of supporting multi-model, AI-assisted development without sacrificing consistency or accessibility.',
-    tech: ['Angular 21', 'TypeScript', 'Component library architecture', 'Design systems', 'Cursor', 'AI-assisted development', 'Multi-model workflows']
+    tech: ['Angular 21', 'TypeScript', 'Component library architecture', 'Design systems', 'Cursor', 'AI-assisted development', 'Multi-model workflows', 'Zod', 'PrimeNG', 'Multi-tenant architecture', 'Route guards', 'RBAC', 'RxJS']
   },
   {
     title: 'Senior Software Engineer',
@@ -63,6 +63,11 @@ const data: ExperienceEntry[] = [
       'TypeScript',
       'JavaScript',
       'SASS/SCSS',
+      'React Router',
+      'Zustand',
+      'Tanstack Query',
+      'React Hook Form',
+      'Zod',
       'Component libraries',
       'Figma-to-code',
       'SaaS product development',
@@ -72,7 +77,8 @@ const data: ExperienceEntry[] = [
       'Material UI',
       'TailwindCSS',
       'Playwright',
-      'MSW'
+      'Mock Service Worker (MSW)',
+      'RBAC'
     ]
   },
   {
@@ -109,7 +115,12 @@ const data: ExperienceEntry[] = [
       'DynamoDB',
       'Bootstrap',
       'Angular Material',
-      'TailwindCSS'
+      'TailwindCSS',
+      'Python',
+      'Multi tenant architecture',
+      'RBAC',
+      'Route guards',
+      'RxJS'
     ]
   },
   {
