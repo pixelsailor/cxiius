@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import type { DesignPortfolioEntry } from '$lib/content/projects';
-import { circaYearFromString, filterEntries, parseFilter, pickHero, typeQueryFromPageHref, typeQueryFromSearch } from './portfolio-load';
+import {
+  circaYearFromString,
+  filterEntries,
+  parseFilter,
+  pickHero,
+  typeQueryFromPageHref,
+  typeQueryFromSearch
+} from './portfolio-load';
 
 function entry(overrides: Partial<DesignPortfolioEntry> & Pick<DesignPortfolioEntry, 'slug'>): DesignPortfolioEntry {
   return {
@@ -54,7 +61,11 @@ describe('parseFilter', () => {
 
 describe('typeQueryFromSearch', () => {
   it('matches URLSearchParams.get("type") for representative URLs (prerender-safe alternative)', () => {
-    for (const href of ['http://localhost/portfolio', 'http://localhost/portfolio?type=ui', 'http://localhost/portfolio?type=branding&other=1']) {
+    for (const href of [
+      'http://localhost/portfolio',
+      'http://localhost/portfolio?type=ui',
+      'http://localhost/portfolio?type=branding&other=1'
+    ]) {
       const u = new URL(href);
       expect(typeQueryFromSearch(u.search)).toBe(u.searchParams.get('type'));
     }
@@ -91,7 +102,10 @@ describe('typeQueryFromPageHref', () => {
 });
 
 describe('filterEntries', () => {
-  const entries: DesignPortfolioEntry[] = [entry({ slug: 'a', projectType: 'branding' }), entry({ slug: 'b', projectType: 'ui' })];
+  const entries: DesignPortfolioEntry[] = [
+    entry({ slug: 'a', projectType: 'branding' }),
+    entry({ slug: 'b', projectType: 'ui' })
+  ];
 
   it('returns all entries for all', () => {
     expect(filterEntries(entries, 'all')).toEqual(entries);
@@ -106,17 +120,27 @@ describe('filterEntries', () => {
 
 describe('pickHero', () => {
   it('prefers featuredAsHero when present (first in array order)', () => {
-    const entries: DesignPortfolioEntry[] = [entry({ slug: 'old', circa: '2099', featuredAsHero: true }), entry({ slug: 'newer', circa: '2099 - later' })];
+    const entries: DesignPortfolioEntry[] = [
+      entry({ slug: 'old', circa: '2099', featuredAsHero: true }),
+      entry({ slug: 'newer', circa: '2099 - later' })
+    ];
     expect(pickHero(entries).slug).toBe('old');
   });
 
   it('picks greatest circa year when no featured flag', () => {
-    const entries: DesignPortfolioEntry[] = [entry({ slug: 'y2020', circa: '2020' }), entry({ slug: 'y2024', circa: '2024 - Q1' }), entry({ slug: 'y2021', circa: '2021' })];
+    const entries: DesignPortfolioEntry[] = [
+      entry({ slug: 'y2020', circa: '2020' }),
+      entry({ slug: 'y2024', circa: '2024 - Q1' }),
+      entry({ slug: 'y2021', circa: '2021' })
+    ];
     expect(pickHero(entries).slug).toBe('y2024');
   });
 
   it('on tie keeps earlier array entry', () => {
-    const entries: DesignPortfolioEntry[] = [entry({ slug: 'first', circa: '2020 - A' }), entry({ slug: 'second', circa: '2020 - B' })];
+    const entries: DesignPortfolioEntry[] = [
+      entry({ slug: 'first', circa: '2020 - A' }),
+      entry({ slug: 'second', circa: '2020 - B' })
+    ];
     expect(pickHero(entries).slug).toBe('first');
   });
 });

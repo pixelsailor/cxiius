@@ -22,7 +22,11 @@ export function shouldBypassTurnstileForLocalDev(secret: string | undefined, req
   }
 }
 
-export async function verifyTurnstileToken(args: { secret: string; token: string; remoteIp: string }): Promise<boolean> {
+export async function verifyTurnstileToken(args: {
+  secret: string;
+  token: string;
+  remoteIp: string;
+}): Promise<boolean> {
   const body = new URLSearchParams();
   body.set('secret', args.secret);
   body.set('response', args.token);

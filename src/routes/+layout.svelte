@@ -97,7 +97,10 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class={['layout-container', isLargeScreen.current ? '' : 'layout-container--small']} style:font-family={activeFontFamily}>
+<div
+  class={['layout-container', isLargeScreen.current ? '' : 'layout-container--small']}
+  style:font-family={activeFontFamily}
+>
   <main>
     <Header bind:fontFamily={activeFontFamily} />
 
@@ -119,8 +122,17 @@
         </div>
         <div class="sidebar-content chat-container">
           <div class="chat-container-header">
-            <Button.Root type="button" class="button text label-small" disabled={chat.messages.length === 0} onclick={() => chat.clear()}>Clear transcript</Button.Root>
-            <Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => (showChatWindow = false)}>
+            <Button.Root
+              type="button"
+              class="button text label-small"
+              disabled={chat.messages.length === 0}
+              onclick={() => chat.clear()}>Clear transcript</Button.Root
+            >
+            <Button.Root
+              class="button text icon shadow-mini"
+              aria-label="Close chat"
+              onclick={() => (showChatWindow = false)}
+            >
               <CloseIcon size="xs" ariaLabel="Close chat" />
             </Button.Root>
           </div>

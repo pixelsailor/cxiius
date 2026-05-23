@@ -38,7 +38,21 @@ const data: ExperienceEntry[] = [
     ],
     outcomes:
       'Delivered a previously stalled application within the contracted six-month window. Established a component architecture capable of supporting multi-model, AI-assisted development without sacrificing consistency or accessibility.',
-    tech: ['Angular 21', 'TypeScript', 'Component library architecture', 'Design systems', 'Cursor', 'AI-assisted development', 'Multi-model workflows', 'Zod', 'PrimeNG', 'Multi-tenant architecture', 'Route guards', 'RBAC', 'RxJS']
+    tech: [
+      'Angular 21',
+      'TypeScript',
+      'Component library architecture',
+      'Design systems',
+      'Cursor',
+      'AI-assisted development',
+      'Multi-model workflows',
+      'Zod',
+      'PrimeNG',
+      'Multi-tenant architecture',
+      'Route guards',
+      'RBAC',
+      'RxJS'
+    ]
   },
   {
     title: 'Senior Software Engineer',
@@ -49,14 +63,16 @@ const data: ExperienceEntry[] = [
     employmentType: 'full-time',
     startDate: '2021-02',
     endDate: '2025-01',
-    context: "Transitioned (after Fortra's acquisition of DDI) to a centralized UX engineering role supporting multiple product teams and front-end stacks.",
+    context:
+      "Transitioned (after Fortra's acquisition of DDI) to a centralized UX engineering role supporting multiple product teams and front-end stacks.",
     contributions: [
       "Built the Angular implementation of Fortra's React-based design system, serving as the sole Angular specialist and enabling adoption of shared UI standards across non-React applications.",
       'Partnered with UX and engineering teams to implement Figma-driven designs in production, ensuring consistency between design and code across products.',
       'Acted as lead UI developer on React-based applications, contributing to feature delivery and aligning implementations with shared component and design system standards.',
       'Supported cross-team development through reusable patterns and component-driven architecture, improving consistency and reducing duplication across the portfolio.'
     ],
-    outcomes: 'Enabled design system adoption across multiple frameworks and teams, supporting consistent UI delivery during post-acquisition integration and product expansion.',
+    outcomes:
+      'Enabled design system adoption across multiple frameworks and teams, supporting consistent UI delivery during post-acquisition integration and product expansion.',
     tech: [
       'Angular',
       'React',
@@ -98,7 +114,8 @@ const data: ExperienceEntry[] = [
       'Led modernization of Frontline, migrating the application from AngularJS to Angular 7+ and introducing improved accessibility standards and updated UI patterns.',
       'Designed and delivered POCs and MVPs using AWS services including Cognito, EC2 and DynamoDB, expanding internal capabilities and supporting new product directions.'
     ],
-    outcomes: 'Delivered and evolved a flagship platform recognized by analysts including Gartner and Frost & Sullivan, and awarded SC Magazine "Best Buy" for usability.',
+    outcomes:
+      'Delivered and evolved a flagship platform recognized by analysts including Gartner and Frost & Sullivan, and awarded SC Magazine "Best Buy" for usability.',
     tech: [
       'AngularJS',
       'Angular',
@@ -130,7 +147,8 @@ const data: ExperienceEntry[] = [
     employmentType: 'freelance',
     startDate: '2010-11',
     endDate: '2013-04',
-    context: 'Operated as a sole proprietor offering full-cycle web design and development services to small businesses and nonprofits.',
+    context:
+      'Operated as a sole proprietor offering full-cycle web design and development services to small businesses and nonprofits.',
     contributions: [
       'Managed complete project lifecycles independently: client discovery, requirements gathering, UX planning, visual design, responsive front-end development, deployment, and ongoing maintenance.',
       "Designed and developed custom WordPress themes and bespoke content management systems tailored to each client's operational needs.",
@@ -139,7 +157,18 @@ const data: ExperienceEntry[] = [
     ],
     outcomes:
       'Delivered end-to-end web presence and CMS solutions for a range of small business and nonprofit clients, including the University of Colorado Bookstore, Extelligence Internet Services, and several independent organisations.',
-    tech: ['WordPress', 'PHP', 'HTML', 'CSS', 'JavaScript', 'jQuery', 'Custom CMS development', 'E-commerce', 'Responsive design', 'Branding']
+    tech: [
+      'WordPress',
+      'PHP',
+      'HTML',
+      'CSS',
+      'JavaScript',
+      'jQuery',
+      'Custom CMS development',
+      'E-commerce',
+      'Responsive design',
+      'Branding'
+    ]
   },
   {
     title: 'Lead UI and Graphic Designer',
@@ -163,7 +192,14 @@ const data: ExperienceEntry[] = [
     ],
     outcomes:
       'Sole creative force behind a platform that shipped across major national retail partners. Design work directly contributed to enterprise sales and content rights negotiations. Multiple products moved from concept to real-world deployment. The company wound down as the industry shifted away from physical media entirely.',
-    tech: ['UI/UX design', 'Interaction design', 'Brand design', 'Corporate web development', 'Presentation design', 'Cross-device design (kiosk, mobile, set-top box)']
+    tech: [
+      'UI/UX design',
+      'Interaction design',
+      'Brand design',
+      'Corporate web development',
+      'Presentation design',
+      'Cross-device design (kiosk, mobile, set-top box)'
+    ]
   },
   {
     title: 'Staff Graphic Designer & Production Assistant',
@@ -173,7 +209,8 @@ const data: ExperienceEntry[] = [
     employmentType: 'full-time',
     startDate: '2002-02',
     endDate: '2004-05',
-    context: 'Directory Plus produced printed Yellow Pages directories for businesses across the southwestern United States.',
+    context:
+      'Directory Plus produced printed Yellow Pages directories for businesses across the southwestern United States.',
     contributions: [
       'Designed custom print advertisements for hundreds of clients across southwestern Colorado and New Mexico.',
       "Managed the design team's day-to-day operations: delegating tasks, tracking schedules, and maintaining quality standards.",

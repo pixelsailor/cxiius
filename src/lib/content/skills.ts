@@ -101,7 +101,10 @@ export type ProficiencyLevel = {
 
 const MAX_PROFICIENCY_LEVEL = 4;
 
-const proficiencyMap: Record<Proficiency, { level: number; name: string; description: string; avatar: string; avatarDescription: string; color: string }> = {
+const proficiencyMap: Record<
+  Proficiency,
+  { level: number; name: string; description: string; avatar: string; avatarDescription: string; color: string }
+> = {
   none: {
     level: 0,
     name: 'No Experience',
@@ -121,17 +124,21 @@ const proficiencyMap: Record<Proficiency, { level: number; name: string; descrip
   competent: {
     level: 2,
     name: 'Competent',
-    description: 'Working knowledge or used sparingly in the last few years; can contribute meaningfully with occasional reference to documentation.',
+    description:
+      'Working knowledge or used sparingly in the last few years; can contribute meaningfully with occasional reference to documentation.',
     avatar: 'pirate',
-    avatarDescription: "Capable of getting the job done through brute force and lots of sneering -- doesn't always know why something works... probably voodoo.",
+    avatarDescription:
+      "Capable of getting the job done through brute force and lots of sneering -- doesn't always know why something works... probably voodoo.",
     color: 'yellow'
   },
   proficient: {
     level: 3,
     name: 'Proficient',
-    description: 'Strong working knowledge or used regularly in the last few years; comfortable owning implementation independently.',
+    description:
+      'Strong working knowledge or used regularly in the last few years; comfortable owning implementation independently.',
     avatar: 'cowboy',
-    avatarDescription: 'Never afraid to jump in and take command, using their vast know-how to easily adapt to unfamiliar territory and unexpected challenges.',
+    avatarDescription:
+      'Never afraid to jump in and take command, using their vast know-how to easily adapt to unfamiliar territory and unexpected challenges.',
     color: 'blue'
   },
   fluent: {
@@ -139,7 +146,8 @@ const proficiencyMap: Record<Proficiency, { level: number; name: string; descrip
     name: 'Fluent',
     description: 'Extensive practical experience across multiple projects; primary working tool.',
     avatar: 'ninja',
-    avatarDescription: 'Mastery is not a goal to be achieved, but a journey to be embarked upon; always seeking to improve and grow.',
+    avatarDescription:
+      'Mastery is not a goal to be achieved, but a journey to be embarked upon; always seeking to improve and grow.',
     color: 'green'
   }
 } as const;
@@ -810,13 +818,16 @@ const recordToSkill = (record: SkillRecord): Skill => ({
 
 const stackNameById = (id: SkillStackId): string => SKILL_STACKS.find((stack) => stack.id === id)?.name ?? id;
 
-const categoryNameById = (id: SkillCategoryId): string => SKILL_CATEGORIES.find((category) => category.id === id)?.name ?? id;
+const categoryNameById = (id: SkillCategoryId): string =>
+  SKILL_CATEGORIES.find((category) => category.id === id)?.name ?? id;
 
 /**
  * Returns metadata for each proficiency tier shown on the resume skills chart.
  */
 export const getProficiencyLevels = (): Promise<ProficiencyLevel[]> =>
-  Promise.resolve((['emerging', 'competent', 'proficient', 'fluent'] as const).map((proficiency) => toProficiencyLevel(proficiency)));
+  Promise.resolve(
+    (['emerging', 'competent', 'proficient', 'fluent'] as const).map((proficiency) => toProficiencyLevel(proficiency))
+  );
 
 /**
  * Resolves display metadata for a single proficiency key.
@@ -837,7 +848,8 @@ export const getSkillStacks = (): Promise<readonly SkillStackMeta[]> => Promise.
 /**
  * Returns the flat skill datasource (primary export for AI and resume grouping).
  */
-export const getSkillRecords = (): Promise<SkillRecord[]> => Promise.resolve(sortRecordsByCategoryAndName(skillRecords));
+export const getSkillRecords = (): Promise<SkillRecord[]> =>
+  Promise.resolve(sortRecordsByCategoryAndName(skillRecords));
 
 /**
  * Groups flat records by category for legacy consumers.

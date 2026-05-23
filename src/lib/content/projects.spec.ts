@@ -1,6 +1,13 @@
 import { describe, it, expect } from 'vitest';
 import { circaYearFromString } from '$lib/utils/circa-year';
-import { DESIGN_PORTFOLIO_PROJECT_TYPES, getDesignPortfolio, getProjects, type DesignPortfolioEntry, type DesignPortfolioImage, type ProjectContentEntry } from './projects';
+import {
+  DESIGN_PORTFOLIO_PROJECT_TYPES,
+  getDesignPortfolio,
+  getProjects,
+  type DesignPortfolioEntry,
+  type DesignPortfolioImage,
+  type ProjectContentEntry
+} from './projects';
 
 /** Remote URL, site-root static path, or bare filename under `static/` (e.g. hero composed with `/images/` in the route). */
 function isImageRef(s: string): boolean {
@@ -62,7 +69,12 @@ describe('getDesignPortfolio', () => {
     const entries = await getDesignPortfolio();
     const remoteUrls: string[] = [];
     for (const e of entries) {
-      const urls = [e.images.thumbnail.src, e.images.full.src, ...(e.images.hero !== undefined ? [e.images.hero.src] : []), ...(e.images.showcase ?? []).map((img) => img.src)];
+      const urls = [
+        e.images.thumbnail.src,
+        e.images.full.src,
+        ...(e.images.hero !== undefined ? [e.images.hero.src] : []),
+        ...(e.images.showcase ?? []).map((img) => img.src)
+      ];
       for (const url of urls) {
         if (url.startsWith('https://')) remoteUrls.push(url);
       }

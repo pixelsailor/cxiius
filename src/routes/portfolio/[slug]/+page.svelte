@@ -15,7 +15,11 @@
     if (target === null || !(target instanceof HTMLElement)) {
       return false;
     }
-    if (target instanceof HTMLInputElement || target instanceof HTMLTextAreaElement || target instanceof HTMLSelectElement) {
+    if (
+      target instanceof HTMLInputElement ||
+      target instanceof HTMLTextAreaElement ||
+      target instanceof HTMLSelectElement
+    ) {
       return true;
     }
     return target.isContentEditable;

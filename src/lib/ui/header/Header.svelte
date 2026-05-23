@@ -7,7 +7,15 @@
   import { page } from '$app/state';
   import type { RouteId } from '$app/types';
   import { Slider } from '$lib/ui';
-  import { PaletteIcon, DesktopIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon, ListSearchIcon } from '$lib/ui/icons';
+  import {
+    PaletteIcon,
+    DesktopIcon,
+    SunIcon,
+    SunHorizonIcon,
+    MoonStarsIcon,
+    MoonIcon,
+    ListSearchIcon
+  } from '$lib/ui/icons';
   import { serifFontFamily, sansFontFamily } from '$lib/utils/fonts';
   import { MediaQuery } from 'svelte/reactivity';
 
@@ -81,7 +89,14 @@
     <ul class="main-nav-list">
       {#each navItems as item (item.path)}
         <li class="main-nav-item link">
-          <a href={item.path === '/' ? resolve('/') : item.path === '/resume' ? resolve('/resume') : resolve('/portfolio')} class="main-nav-link">{item.label}</a>
+          <a
+            href={item.path === '/'
+              ? resolve('/')
+              : item.path === '/resume'
+                ? resolve('/resume')
+                : resolve('/portfolio')}
+            class="main-nav-link">{item.label}</a
+          >
         </li>
       {/each}
     </ul>

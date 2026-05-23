@@ -3,7 +3,12 @@ import { json } from '@sveltejs/kit';
 import { AiRequestSchema } from '$lib/server/ai.schemas';
 import { completeAiChat } from '$lib/server/ai.service';
 import { consumeAiRateLimit, estimateAiTokens } from '$lib/server/kv/aiRateLimit';
-import { hasAllowedFetchSite, isSameOriginRequest, shouldBypassTurnstileForLocalDev, verifyTurnstileToken } from '$lib/server/turnstile';
+import {
+  hasAllowedFetchSite,
+  isSameOriginRequest,
+  shouldBypassTurnstileForLocalDev,
+  verifyTurnstileToken
+} from '$lib/server/turnstile';
 
 import type { RequestHandler } from './$types';
 

@@ -1,16 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { SkillRecord } from '$lib/content/skills';
 import {
-	groupSkillsForDisplay,
-	parsePersistedSkillsChartSelectionJson,
-	readPersistedSkillsViewMode,
-	RESUME_SKILLS_CHART_SELECTION_KEY,
-	RESUME_SKILLS_VIEW_STORAGE_KEY,
-	skillRecordToSkill,
-	writeIncludedSkillIds,
-	writePersistedSkillsViewMode,
-	defaultIncludedSkillIds,
-	hydrateIncludedSkillIds
+  groupSkillsForDisplay,
+  parsePersistedSkillsChartSelectionJson,
+  readPersistedSkillsViewMode,
+  RESUME_SKILLS_CHART_SELECTION_KEY,
+  RESUME_SKILLS_VIEW_STORAGE_KEY,
+  skillRecordToSkill,
+  writeIncludedSkillIds,
+  writePersistedSkillsViewMode,
+  defaultIncludedSkillIds,
+  hydrateIncludedSkillIds
 } from '$lib/utils/skills-presentation';
 
 const categories = [

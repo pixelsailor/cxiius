@@ -64,7 +64,9 @@ Features a chat window with a command input and a chat messages container.
 <div class="chat-window-container">
   {#if !hideToolbar}
     <div class="chat-window-toolbar">
-      <Button.Root type="button" class="button text label-small" onclick={() => chat.clear()}>Clear transcript</Button.Root>
+      <Button.Root type="button" class="button text label-small" onclick={() => chat.clear()}
+        >Clear transcript</Button.Root
+      >
     </div>
   {/if}
   <div class="chat-window-messages" role="log" aria-relevant="additions" aria-label="Chat messages">
@@ -94,9 +96,15 @@ Features a chat window with a command input and a chat messages container.
       {#if showRoutes}
         <Command.List class="command-list">
           <Command.Viewport class="command-viewport">
-            <Command.LinkItem href="/about" class="command-link-item" onSelect={handleCommandRouteSelect}>/About</Command.LinkItem>
-            <Command.LinkItem href="/resume" class="command-link-item" onSelect={handleCommandRouteSelect}>/Resume</Command.LinkItem>
-            <Command.LinkItem href="/portfolio" class="command-link-item" onSelect={handleCommandRouteSelect}>/Portfolio</Command.LinkItem>
+            <Command.LinkItem href="/about" class="command-link-item" onSelect={handleCommandRouteSelect}
+              >/About</Command.LinkItem
+            >
+            <Command.LinkItem href="/resume" class="command-link-item" onSelect={handleCommandRouteSelect}
+              >/Resume</Command.LinkItem
+            >
+            <Command.LinkItem href="/portfolio" class="command-link-item" onSelect={handleCommandRouteSelect}
+              >/Portfolio</Command.LinkItem
+            >
           </Command.Viewport>
         </Command.List>
       {/if}

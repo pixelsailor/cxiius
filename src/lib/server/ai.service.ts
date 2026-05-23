@@ -45,7 +45,11 @@ function extractAssistantText(content: unknown[]): string | null {
 /**
  * Runs a single-turn Messages completion. All provider parameters are fixed here.
  */
-export async function completeAiChat(apiKey: string, body: AiRequest, options?: { fetchImpl?: typeof fetch }): Promise<Result<{ text: string }>> {
+export async function completeAiChat(
+  apiKey: string,
+  body: AiRequest,
+  options?: { fetchImpl?: typeof fetch }
+): Promise<Result<{ text: string }>> {
   if (!apiKey || apiKey.trim().length === 0) {
     return {
       ok: false,
@@ -56,7 +60,10 @@ export async function completeAiChat(apiKey: string, body: AiRequest, options?: 
     };
   }
 
-  const [guidelines, siteContent] = await Promise.all([getAiAssistantGuidelines(), assembleSystemPromptFromSiteContent()]);
+  const [guidelines, siteContent] = await Promise.all([
+    getAiAssistantGuidelines(),
+    assembleSystemPromptFromSiteContent()
+  ]);
   const system = `${guidelines}\n\n${siteContent}`.trim();
 
   const client = new Anthropic({
