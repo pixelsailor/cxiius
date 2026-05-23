@@ -1,6 +1,6 @@
 ---
 name: validator
-model: gpt-5.4-nano-medium
+model: inherit
 ---
 
 # Agent: Validator

@@ -1,40 +1,16 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
   import { Button } from 'bits-ui';
   import type { PageProps } from './$types';
   import { resolve } from '$app/paths';
   import type { Pathname } from '$app/types';
-  import { getProficiencyLevel, type SkillViewMode } from '$lib/content/skills';
-  import { groupSkillsForDisplay, readPersistedSkillsViewMode, writePersistedSkillsViewMode } from '$lib/utils/skills-presentation';
   import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon } from '$lib/ui/icons';
+  import { ResumeSkillsBaseline, ResumeSkillsExplorer } from '$lib/ui/skills-explorer';
 
   const resumePdfPath = '/assets/ben-thompson__frontend-swe.pdf' as Pathname;
 
-  const viewModeOptions: { value: SkillViewMode; label: string }[] = [
-    { value: 'category', label: 'Category' },
-    { value: 'proficiency', label: 'Proficiency' },
-    { value: 'stack', label: 'Tech stack' }
-  ];
-
   let { data }: PageProps = $props();
 
-  let skillsViewMode = $state<SkillViewMode>('category');
-
-  const skillDisplayGroups = $derived(groupSkillsForDisplay(data.skillRecords, skillsViewMode, data.skillCategories, data.skillStacks));
-
-  const setSkillsViewMode = (mode: SkillViewMode): void => {
-    skillsViewMode = mode;
-    writePersistedSkillsViewMode(mode);
-  };
-
-  onMount(() => {
-    const persisted = readPersistedSkillsViewMode();
-    if (persisted !== null) {
-      skillsViewMode = persisted;
-    }
-  });
-
-  const formatAvatarLabel = (avatar: string): string => (avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '');
+  let skillsExplorerMounted = $state(false);
 </script>
 
 <svelte:head>
@@ -120,59 +96,26 @@
       {/each}
     </section>
     <section class="skills-section will-fade" aria-labelledby="skills-heading">
-      <div class="skills-section__header">
+      <div class="skills-section__intro">
         <h3 class="headline-small" id="skills-heading">Skills</h3>
-        <fieldset class="skills-view-controls" aria-label="Group skills by">
-          <legend class="label-large skills-view-controls__legend">Group by</legend>
-          <div class="skills-view-controls__options">
-            {#each viewModeOptions as option (option.value)}
-              <label class="skills-view-controls__option label-large">
-                <input type="radio" name="skills-view-mode" value={option.value} checked={skillsViewMode === option.value} onchange={() => setSkillsViewMode(option.value)} />
-                {option.label}
-              </label>
-            {/each}
-          </div>
-        </fieldset>
+        <p class="body-medium skills-section__dek">
+          Proficiency by domain category. Toggle individual skills below the chart.
+        </p>
       </div>
-      <div class="skills-chart">
-        <div class="skills-chart__bars">
-          <div class="skills-scale" aria-hidden="true">
-            {#each data.proficiencyLevels as level, index (level.proficiency)}
-              <span class="skills-scale__label label-large" class:skills-scale__label--end={index === data.proficiencyLevels.length - 1} style:left="{level.barWidthPercent}%">
-                {formatAvatarLabel(level.avatar)}
-              </span>
-            {/each}
-          </div>
-          {#each skillDisplayGroups as skillGroup (skillGroup.name)}
-            <div class="skill-category">
-              <h4 class="title-medium skill-category__name">{skillGroup.name}</h4>
-              <ul class="skill-bars">
-                {#each skillGroup.skills as skill (skill.name)}
-                  {@const level = getProficiencyLevel(skill.proficiency)}
-                  <li class="skill-bar">
-                    <div class="skill-bar__track" role="meter" aria-valuemin={1} aria-valuemax={5} aria-valuenow={level.level} aria-label="{skill.name}: {level.name}">
-                      <div class="skill-bar__fill skill-bar__fill--level-{level.level}" style:width="{level.barWidthPercent}%">
-                        <span class="skill-bar__label title-small">{skill.name}</span>
-                      </div>
-                    </div>
-                  </li>
-                {/each}
-              </ul>
-            </div>
-          {/each}
-        </div>
-        <aside class="skills-chart__legend" aria-label="Proficiency level descriptions">
-          {#each [...data.proficiencyLevels].toReversed() as level (level.proficiency)}
-            <article class="skills-legend__item">
-              <h4 class="title-medium skills-legend__title">{formatAvatarLabel(level.avatar)}</h4>
-              <p class="body-large skills-legend__text">
-                <em>{level.avatarDescription}</em>
-              </p>
-              <p class="body-medium">{level.description}</p>
-            </article>
-            <hr class="skills-legend__divider" />
-          {/each}
-        </aside>
+      <div
+        class="skills-explorer-shell"
+        data-explorer-ready={skillsExplorerMounted ? '' : undefined}
+      >
+        <ResumeSkillsBaseline
+          skillRecords={data.skillRecords}
+          categories={data.skillCategories}
+          hideVisually={skillsExplorerMounted}
+        />
+        <ResumeSkillsExplorer
+          skillRecords={data.skillRecords}
+          skillCategories={data.skillCategories}
+          bind:chartReady={skillsExplorerMounted}
+        />
       </div>
     </section>
 
@@ -348,182 +291,22 @@
     margin-block: 0.5rem;
   }
 
-  .skills-section__header {
+  .skills-section__intro {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
-  }
-
-  @media (min-width: 600px) {
-    .skills-section__header {
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
-    }
-  }
-
-  .skills-view-controls {
-    margin: 0;
-    padding: 0;
-    border: none;
-    min-inline-size: 0;
-  }
-
-  .skills-view-controls__legend {
-    margin-bottom: 0.35rem;
-    font-style: italic;
-  }
-
-  .skills-view-controls__options {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.75rem 1rem;
-  }
-
-  .skills-view-controls__option {
-    display: inline-flex;
-    align-items: center;
     gap: 0.35rem;
-    cursor: pointer;
+    margin-bottom: 0.85rem;
   }
 
-  .skills-view-controls__option input {
-    margin: 0;
-    accent-color: var(--accent, var(--blue-800));
-  }
-
-  .skills-chart {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    margin-top: 0.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .skills-chart {
-      grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
-      align-items: start;
-    }
-  }
-
-  .skills-scale {
-    position: relative;
-    height: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .skills-scale__label {
-    position: absolute;
-    top: 0;
-    transform: translateX(-50%);
-    line-height: 1;
-    font-style: italic;
-    white-space: nowrap;
-  }
-
-  .skills-scale__label--end {
-    transform: translateX(-100%);
-  }
-
-  .skill-category {
-    margin-bottom: 1.25rem;
-  }
-
-  .skill-category__name {
-    margin: 0 0 0.5rem;
-    line-height: 1;
-  }
-
-  .skill-bars {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .skill-bar {
-    margin-bottom: 0.35rem;
-  }
-
-  .skill-bar__track {
-    height: 1.75rem;
-    border-radius: 0.35rem;
-    background-color: var(--background-alt);
-    overflow: hidden;
-  }
-
-  .skill-bar__fill {
+  .skills-explorer-shell {
     display: flex;
-    align-items: center;
-    height: 100%;
-    min-width: 0;
-    padding-inline: 0.5rem;
-    border-radius: inherit;
-    box-sizing: border-box;
-    color: var(--contrast);
-    background-image: linear-gradient(180deg, hsl(0 0% 100% / 0.22), hsl(0 0% 0% / 0.12));
-    background-blend-mode: overlay;
+    flex-direction: column;
+    gap: 1.25rem;
   }
 
-  .skill-bar__fill--level-1 {
-    background-color: var(--p-zinc-500);
+  .skills-section__dek {
+    max-width: 70ch;
   }
-
-  .skill-bar__fill--level-2 {
-    background-color: var(--fuchsia-800);
-  }
-
-  .skill-bar__fill--level-3 {
-    background-color: var(--amber-700);
-  }
-
-  .skill-bar__fill--level-4 {
-    background-color: var(--blue-800);
-  }
-
-  .skill-bar__fill--level-5 {
-    background-color: var(--green-700);
-  }
-
-  .skill-bar__label {
-    color: var(--white);
-    font-family: var(--sans-font-family);
-    text-shadow: var(--shadow-text);
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-  }
-
-  .skills-chart__legend {
-    position: sticky;
-    top: 4rem;
-  }
-
-  .skills-legend__item {
-    margin-bottom: 1.25rem;
-  }
-
-  .skills-legend__item:last-child {
-    margin-bottom: 0;
-  }
-
-  .skills-legend__title {
-    margin: 0 0 0.35rem;
-    line-height: 1.1;
-  }
-
-  .skills-legend__text {
-    margin: 0;
-    line-height: 1.35;
-    opacity: 0.9;
-  }
-
-  .skills-legend__text em {
-    display: block;
-    margin-bottom: 0.35rem;
-    font-style: italic;
-  }
-
   .education-item__notes {
     margin-block: 0.5rem;
     font-style: italic;

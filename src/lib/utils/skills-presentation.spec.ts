@@ -1,11 +1,16 @@
 import { describe, expect, it, vi } from 'vitest';
 import type { SkillRecord } from '$lib/content/skills';
 import {
-  groupSkillsForDisplay,
-  readPersistedSkillsViewMode,
-  RESUME_SKILLS_VIEW_STORAGE_KEY,
-  skillRecordToSkill,
-  writePersistedSkillsViewMode
+	groupSkillsForDisplay,
+	parsePersistedSkillsChartSelectionJson,
+	readPersistedSkillsViewMode,
+	RESUME_SKILLS_CHART_SELECTION_KEY,
+	RESUME_SKILLS_VIEW_STORAGE_KEY,
+	skillRecordToSkill,
+	writeIncludedSkillIds,
+	writePersistedSkillsViewMode,
+	defaultIncludedSkillIds,
+	hydrateIncludedSkillIds
 } from '$lib/utils/skills-presentation';
 
 const categories = [
@@ -23,6 +28,7 @@ const sampleRecords: SkillRecord[] = [
     id: 'typescript',
     name: 'TypeScript',
     proficiency: 'fluent',
+    yearsOfExperience: 10,
     categoryId: 'languages-markup',
     stackIds: ['angular', 'react']
   },
@@ -30,6 +36,7 @@ const sampleRecords: SkillRecord[] = [
     id: 'angular',
     name: 'Angular',
     proficiency: 'fluent',
+    yearsOfExperience: 12,
     categoryId: 'frameworks-libraries',
     stackIds: ['angular']
   },
@@ -37,6 +44,7 @@ const sampleRecords: SkillRecord[] = [
     id: 'react',
     name: 'React',
     proficiency: 'proficient',
+    yearsOfExperience: 9,
     categoryId: 'frameworks-libraries',
     stackIds: ['react']
   }
@@ -96,6 +104,46 @@ describe('skills view mode persistence', () => {
 
     writePersistedSkillsViewMode('stack');
     expect(readPersistedSkillsViewMode()).toBe('stack');
+
+    vi.unstubAllGlobals();
+  });
+});
+
+describe('skills chart selection persistence', () => {
+  it('uses the documented localStorage key', () => {
+    expect(RESUME_SKILLS_CHART_SELECTION_KEY).toBe('cxii-resume-skills-chart-selection');
+  });
+
+  it('rejects malformed JSON payloads', () => {
+    expect(parsePersistedSkillsChartSelectionJson('{broken')).toBeNull();
+  });
+
+  it('requires version === 2 to deserialize', () => {
+    expect(parsePersistedSkillsChartSelectionJson(JSON.stringify({ version: 1, excludedSkillIds: [] }))).toBeNull();
+  });
+
+  it('round-trips excluded skill ids', () => {
+    const ls = {
+      store: new Map<string, string>(),
+      getItem(key: string) {
+        return this.store.get(key) ?? null;
+      },
+      setItem(key: string, value: string) {
+        this.store.set(key, value);
+      },
+      removeItem(key: string) {
+        this.store.delete(key);
+      }
+    };
+    vi.stubGlobal('localStorage', ls);
+
+    const included = defaultIncludedSkillIds(sampleRecords);
+    included.delete('react');
+    writeIncludedSkillIds(sampleRecords, included);
+
+    const hydrated = hydrateIncludedSkillIds(sampleRecords);
+    expect(hydrated.has('typescript')).toBe(true);
+    expect(hydrated.has('react')).toBe(false);
 
     vi.unstubAllGlobals();
   });

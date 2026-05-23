@@ -64,6 +64,11 @@ export type SkillRecord = {
   id: string;
   name: string;
   proficiency: Proficiency;
+  /**
+   * Whole years of substantive use (portfolio estimate).
+   * @remarks Non-negative; aligned with narrative in experience timelines and resume notes where present.
+   */
+  yearsOfExperience: number;
   notes?: string;
   categoryId: SkillCategoryId;
   stackIds: SkillStackId[];
@@ -94,11 +99,11 @@ export type ProficiencyLevel = {
   barWidthPercent: number;
 };
 
-const MAX_PROFICIENCY_LEVEL = 5;
+const MAX_PROFICIENCY_LEVEL = 4;
 
 const proficiencyMap: Record<Proficiency, { level: number; name: string; description: string; avatar: string; avatarDescription: string; color: string }> = {
   none: {
-    level: 1,
+    level: 0,
     name: 'No Experience',
     avatar: '',
     description: 'No practical experience.',
@@ -106,7 +111,7 @@ const proficiencyMap: Record<Proficiency, { level: number; name: string; descrip
     color: 'gray'
   },
   emerging: {
-    level: 2,
+    level: 1,
     name: 'Emerging',
     avatar: 'zombie',
     description: 'Limited hands-on experience or not recently used; can ramp up quickly.',
@@ -114,7 +119,7 @@ const proficiencyMap: Record<Proficiency, { level: number; name: string; descrip
     color: 'red'
   },
   competent: {
-    level: 3,
+    level: 2,
     name: 'Competent',
     description: 'Working knowledge or used sparingly in the last few years; can contribute meaningfully with occasional reference to documentation.',
     avatar: 'pirate',
@@ -122,7 +127,7 @@ const proficiencyMap: Record<Proficiency, { level: number; name: string; descrip
     color: 'yellow'
   },
   proficient: {
-    level: 4,
+    level: 3,
     name: 'Proficient',
     description: 'Strong working knowledge or used regularly in the last few years; comfortable owning implementation independently.',
     avatar: 'cowboy',
@@ -130,7 +135,7 @@ const proficiencyMap: Record<Proficiency, { level: number; name: string; descrip
     color: 'blue'
   },
   fluent: {
-    level: 5,
+    level: 4,
     name: 'Fluent',
     description: 'Extensive practical experience across multiple projects; primary working tool.',
     avatar: 'ninja',
@@ -168,6 +173,7 @@ const skillRecords: SkillRecord[] = [
     id: 'css',
     name: 'CSS',
     proficiency: 'proficient',
+    yearsOfExperience: 18,
     categoryId: 'languages-markup',
     stackIds: ['web-fundamentals', 'design-accessibility']
   },
@@ -175,6 +181,7 @@ const skillRecords: SkillRecord[] = [
     id: 'html',
     name: 'HTML',
     proficiency: 'fluent',
+    yearsOfExperience: 20,
     categoryId: 'languages-markup',
     stackIds: ['web-fundamentals']
   },
@@ -182,6 +189,7 @@ const skillRecords: SkillRecord[] = [
     id: 'javascript',
     name: 'JavaScript',
     proficiency: 'proficient',
+    yearsOfExperience: 17,
     categoryId: 'languages-markup',
     stackIds: ['web-fundamentals']
   },
@@ -189,6 +197,7 @@ const skillRecords: SkillRecord[] = [
     id: 'php',
     name: 'PHP',
     proficiency: 'competent',
+    yearsOfExperience: 3,
     notes: 'Primary use in freelance era (2010-2013); less recent',
     categoryId: 'languages-markup',
     stackIds: ['web-fundamentals']
@@ -197,6 +206,7 @@ const skillRecords: SkillRecord[] = [
     id: 'python',
     name: 'Python',
     proficiency: 'emerging',
+    yearsOfExperience: 2,
     categoryId: 'languages-markup',
     stackIds: ['web-fundamentals']
   },
@@ -204,6 +214,7 @@ const skillRecords: SkillRecord[] = [
     id: 'sass-scss',
     name: 'Sass/SCSS',
     proficiency: 'fluent',
+    yearsOfExperience: 14,
     categoryId: 'languages-markup',
     stackIds: ['web-fundamentals', 'design-accessibility']
   },
@@ -211,6 +222,7 @@ const skillRecords: SkillRecord[] = [
     id: 'semantic-html-aria',
     name: 'Semantic HTML / ARIA',
     proficiency: 'proficient',
+    yearsOfExperience: 15,
     categoryId: 'languages-markup',
     stackIds: ['web-fundamentals', 'design-accessibility']
   },
@@ -218,6 +230,7 @@ const skillRecords: SkillRecord[] = [
     id: 'sql',
     name: 'SQL',
     proficiency: 'emerging',
+    yearsOfExperience: 2,
     categoryId: 'languages-markup',
     stackIds: ['data-apis']
   },
@@ -225,6 +238,7 @@ const skillRecords: SkillRecord[] = [
     id: 'typescript',
     name: 'TypeScript',
     proficiency: 'fluent',
+    yearsOfExperience: 10,
     categoryId: 'languages-markup',
     stackIds: ['web-fundamentals', 'angular', 'react', 'svelte']
   },
@@ -232,6 +246,7 @@ const skillRecords: SkillRecord[] = [
     id: 'angular',
     name: 'Angular',
     proficiency: 'fluent',
+    yearsOfExperience: 12,
     notes: 'Primary framework across two long-term enterprise engagements; up to Angular 21',
     categoryId: 'frameworks-libraries',
     stackIds: ['angular']
@@ -240,6 +255,7 @@ const skillRecords: SkillRecord[] = [
     id: 'angular-material',
     name: 'Angular Material',
     proficiency: 'fluent',
+    yearsOfExperience: 11,
     categoryId: 'frameworks-libraries',
     stackIds: ['angular', 'design-accessibility']
   },
@@ -247,6 +263,7 @@ const skillRecords: SkillRecord[] = [
     id: 'nx',
     name: 'Nx',
     proficiency: 'proficient',
+    yearsOfExperience: 8,
     notes: 'Monorepo management in enterprise Angular contexts',
     categoryId: 'frameworks-libraries',
     stackIds: ['angular', 'platform-delivery']
@@ -255,6 +272,7 @@ const skillRecords: SkillRecord[] = [
     id: 'primeng',
     name: 'PrimeNG',
     proficiency: 'fluent',
+    yearsOfExperience: 10,
     categoryId: 'frameworks-libraries',
     stackIds: ['angular']
   },
@@ -262,6 +280,7 @@ const skillRecords: SkillRecord[] = [
     id: 'rxjs',
     name: 'RxJS',
     proficiency: 'proficient',
+    yearsOfExperience: 10,
     notes: 'Used extensively in Angular contexts',
     categoryId: 'frameworks-libraries',
     stackIds: ['angular']
@@ -270,6 +289,7 @@ const skillRecords: SkillRecord[] = [
     id: 'svelte',
     name: 'Svelte',
     proficiency: 'proficient',
+    yearsOfExperience: 4,
     notes: 'Primary stack for this portfolio and recent PWA work',
     categoryId: 'frameworks-libraries',
     stackIds: ['svelte']
@@ -278,6 +298,7 @@ const skillRecords: SkillRecord[] = [
     id: 'sveltekit',
     name: 'SvelteKit',
     proficiency: 'proficient',
+    yearsOfExperience: 3,
     categoryId: 'frameworks-libraries',
     stackIds: ['svelte']
   },
@@ -285,6 +306,7 @@ const skillRecords: SkillRecord[] = [
     id: 'dexie',
     name: 'Dexie',
     proficiency: 'competent',
+    yearsOfExperience: 3,
     categoryId: 'frameworks-libraries',
     stackIds: ['svelte', 'data-apis']
   },
@@ -292,6 +314,7 @@ const skillRecords: SkillRecord[] = [
     id: 'indexeddb',
     name: 'IndexedDB',
     proficiency: 'competent',
+    yearsOfExperience: 8,
     categoryId: 'frameworks-libraries',
     stackIds: ['svelte', 'data-apis']
   },
@@ -299,6 +322,7 @@ const skillRecords: SkillRecord[] = [
     id: 'supabase',
     name: 'Supabase',
     proficiency: 'competent',
+    yearsOfExperience: 2,
     categoryId: 'frameworks-libraries',
     stackIds: ['svelte', 'data-apis']
   },
@@ -306,6 +330,7 @@ const skillRecords: SkillRecord[] = [
     id: 'jquery',
     name: 'jQuery',
     proficiency: 'competent',
+    yearsOfExperience: 12,
     notes: 'Deep historical use; superseded by modern frameworks in current work',
     categoryId: 'frameworks-libraries',
     stackIds: ['web-fundamentals', 'react']
@@ -314,6 +339,7 @@ const skillRecords: SkillRecord[] = [
     id: 'nextjs',
     name: 'Next.js',
     proficiency: 'emerging',
+    yearsOfExperience: 2,
     categoryId: 'frameworks-libraries',
     stackIds: ['react']
   },
@@ -321,6 +347,7 @@ const skillRecords: SkillRecord[] = [
     id: 'qwik',
     name: 'Qwik',
     proficiency: 'emerging',
+    yearsOfExperience: 1,
     categoryId: 'frameworks-libraries',
     stackIds: ['react']
   },
@@ -328,6 +355,7 @@ const skillRecords: SkillRecord[] = [
     id: 'react',
     name: 'React',
     proficiency: 'proficient',
+    yearsOfExperience: 8,
     notes: 'Used extensively at Fortra and in component library work',
     categoryId: 'frameworks-libraries',
     stackIds: ['react']
@@ -336,6 +364,7 @@ const skillRecords: SkillRecord[] = [
     id: 'react-hook-form',
     name: 'React Hook Form',
     proficiency: 'competent',
+    yearsOfExperience: 6,
     categoryId: 'frameworks-libraries',
     stackIds: ['react']
   },
@@ -343,6 +372,7 @@ const skillRecords: SkillRecord[] = [
     id: 'react-router',
     name: 'React Router',
     proficiency: 'competent',
+    yearsOfExperience: 7,
     categoryId: 'frameworks-libraries',
     stackIds: ['react']
   },
@@ -350,6 +380,7 @@ const skillRecords: SkillRecord[] = [
     id: 'tanstack-query',
     name: 'TanStack Query',
     proficiency: 'competent',
+    yearsOfExperience: 5,
     categoryId: 'frameworks-libraries',
     stackIds: ['react']
   },
@@ -357,6 +388,7 @@ const skillRecords: SkillRecord[] = [
     id: 'wordpress',
     name: 'WordPress',
     proficiency: 'competent',
+    yearsOfExperience: 6,
     categoryId: 'frameworks-libraries',
     stackIds: ['web-fundamentals']
   },
@@ -364,6 +396,7 @@ const skillRecords: SkillRecord[] = [
     id: 'zod',
     name: 'Zod',
     proficiency: 'proficient',
+    yearsOfExperience: 5,
     categoryId: 'frameworks-libraries',
     stackIds: ['react', 'angular', 'svelte']
   },
@@ -371,6 +404,7 @@ const skillRecords: SkillRecord[] = [
     id: 'zustand',
     name: 'Zustand',
     proficiency: 'competent',
+    yearsOfExperience: 3,
     categoryId: 'frameworks-libraries',
     stackIds: ['react']
   },
@@ -378,6 +412,7 @@ const skillRecords: SkillRecord[] = [
     id: 'bootstrap',
     name: 'Bootstrap',
     proficiency: 'competent',
+    yearsOfExperience: 10,
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility']
   },
@@ -385,6 +420,7 @@ const skillRecords: SkillRecord[] = [
     id: 'component-library-architecture',
     name: 'Component library architecture',
     proficiency: 'fluent',
+    yearsOfExperience: 12,
     notes: 'Opinionated, accessible, AI-compatible component systems',
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility', 'angular', 'react']
@@ -393,6 +429,7 @@ const skillRecords: SkillRecord[] = [
     id: 'design-systems',
     name: 'Design systems',
     proficiency: 'fluent',
+    yearsOfExperience: 14,
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility']
   },
@@ -400,6 +437,7 @@ const skillRecords: SkillRecord[] = [
     id: 'figma',
     name: 'Figma',
     proficiency: 'competent',
+    yearsOfExperience: 6,
     notes: 'Design-to-code workflows; product design and prototyping',
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility']
@@ -408,6 +446,7 @@ const skillRecords: SkillRecord[] = [
     id: 'mui',
     name: 'Material UI (MUI)',
     proficiency: 'proficient',
+    yearsOfExperience: 8,
     categoryId: 'ui-and-design',
     stackIds: ['react', 'design-accessibility']
   },
@@ -415,6 +454,7 @@ const skillRecords: SkillRecord[] = [
     id: 'responsive-design',
     name: 'Responsive design',
     proficiency: 'fluent',
+    yearsOfExperience: 18,
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility', 'web-fundamentals']
   },
@@ -422,6 +462,7 @@ const skillRecords: SkillRecord[] = [
     id: 'storybook',
     name: 'Storybook',
     proficiency: 'competent',
+    yearsOfExperience: 7,
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility', 'angular', 'react']
   },
@@ -429,6 +470,7 @@ const skillRecords: SkillRecord[] = [
     id: 'tailwindcss',
     name: 'TailwindCSS',
     proficiency: 'fluent',
+    yearsOfExperience: 6,
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility', 'svelte', 'react', 'angular']
   },
@@ -436,6 +478,7 @@ const skillRecords: SkillRecord[] = [
     id: 'ui-ux-design',
     name: 'UI/UX design',
     proficiency: 'fluent',
+    yearsOfExperience: 18,
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility']
   },
@@ -443,6 +486,7 @@ const skillRecords: SkillRecord[] = [
     id: 'wcag-accessibility',
     name: 'WCAG accessibility',
     proficiency: 'proficient',
+    yearsOfExperience: 12,
     categoryId: 'ui-and-design',
     stackIds: ['design-accessibility']
   },
@@ -450,6 +494,7 @@ const skillRecords: SkillRecord[] = [
     id: 'code-review',
     name: 'Code review',
     proficiency: 'proficient',
+    yearsOfExperience: 15,
     categoryId: 'testing-and-qa',
     stackIds: ['testing-quality', 'collaboration']
   },
@@ -457,6 +502,7 @@ const skillRecords: SkillRecord[] = [
     id: 'jest',
     name: 'Jest',
     proficiency: 'proficient',
+    yearsOfExperience: 8,
     categoryId: 'testing-and-qa',
     stackIds: ['testing-quality', 'react', 'angular']
   },
@@ -464,6 +510,7 @@ const skillRecords: SkillRecord[] = [
     id: 'karma',
     name: 'Karma',
     proficiency: 'proficient',
+    yearsOfExperience: 11,
     categoryId: 'testing-and-qa',
     stackIds: ['testing-quality', 'angular']
   },
@@ -471,6 +518,7 @@ const skillRecords: SkillRecord[] = [
     id: 'msw',
     name: 'Mock Service Worker (MSW)',
     proficiency: 'competent',
+    yearsOfExperience: 4,
     categoryId: 'testing-and-qa',
     stackIds: ['testing-quality', 'react']
   },
@@ -478,6 +526,7 @@ const skillRecords: SkillRecord[] = [
     id: 'playwright',
     name: 'Playwright',
     proficiency: 'competent',
+    yearsOfExperience: 3,
     notes: 'E2E testing in React product contexts at Fortra',
     categoryId: 'testing-and-qa',
     stackIds: ['testing-quality', 'react']
@@ -486,6 +535,7 @@ const skillRecords: SkillRecord[] = [
     id: 'testing-library',
     name: 'Testing Library',
     proficiency: 'proficient',
+    yearsOfExperience: 8,
     categoryId: 'testing-and-qa',
     stackIds: ['testing-quality', 'react', 'angular']
   },
@@ -493,6 +543,7 @@ const skillRecords: SkillRecord[] = [
     id: 'unit-testing',
     name: 'Unit testing',
     proficiency: 'proficient',
+    yearsOfExperience: 17,
     categoryId: 'testing-and-qa',
     stackIds: ['testing-quality']
   },
@@ -500,6 +551,7 @@ const skillRecords: SkillRecord[] = [
     id: 'vitest',
     name: 'Vitest',
     proficiency: 'proficient',
+    yearsOfExperience: 5,
     categoryId: 'testing-and-qa',
     stackIds: ['testing-quality', 'svelte']
   },
@@ -507,6 +559,7 @@ const skillRecords: SkillRecord[] = [
     id: 'expressjs',
     name: 'Express.js',
     proficiency: 'emerging',
+    yearsOfExperience: 2,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
   },
@@ -514,6 +567,7 @@ const skillRecords: SkillRecord[] = [
     id: 'graphql',
     name: 'GraphQL',
     proficiency: 'competent',
+    yearsOfExperience: 6,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
   },
@@ -521,6 +575,7 @@ const skillRecords: SkillRecord[] = [
     id: 'mongodb',
     name: 'MongoDB',
     proficiency: 'emerging',
+    yearsOfExperience: 2,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
   },
@@ -528,6 +583,7 @@ const skillRecords: SkillRecord[] = [
     id: 'mysql',
     name: 'MySQL',
     proficiency: 'competent',
+    yearsOfExperience: 6,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
   },
@@ -535,6 +591,7 @@ const skillRecords: SkillRecord[] = [
     id: 'nodejs',
     name: 'Node.js',
     proficiency: 'competent',
+    yearsOfExperience: 10,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis', 'platform-delivery']
   },
@@ -542,6 +599,7 @@ const skillRecords: SkillRecord[] = [
     id: 'oauth-jwt',
     name: 'OAuth / JWT',
     proficiency: 'competent',
+    yearsOfExperience: 6,
     notes: 'Including AWS Cognito-backed flows in product work',
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
@@ -550,6 +608,7 @@ const skillRecords: SkillRecord[] = [
     id: 'openapi-swagger',
     name: 'OpenAPI / Swagger',
     proficiency: 'competent',
+    yearsOfExperience: 9,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
   },
@@ -557,6 +616,7 @@ const skillRecords: SkillRecord[] = [
     id: 'postgresql',
     name: 'PostgreSQL',
     proficiency: 'competent',
+    yearsOfExperience: 8,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
   },
@@ -564,6 +624,7 @@ const skillRecords: SkillRecord[] = [
     id: 'rest',
     name: 'REST',
     proficiency: 'fluent',
+    yearsOfExperience: 16,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis', 'web-fundamentals']
   },
@@ -571,6 +632,7 @@ const skillRecords: SkillRecord[] = [
     id: 'sailsjs',
     name: 'Sails.js',
     proficiency: 'emerging',
+    yearsOfExperience: 2,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
   },
@@ -578,6 +640,7 @@ const skillRecords: SkillRecord[] = [
     id: 'serverless',
     name: 'Serverless',
     proficiency: 'emerging',
+    yearsOfExperience: 2,
     categoryId: 'backend-apis-data',
     stackIds: ['platform-delivery', 'svelte']
   },
@@ -585,6 +648,7 @@ const skillRecords: SkillRecord[] = [
     id: 'sqlite',
     name: 'SQLite',
     proficiency: 'competent',
+    yearsOfExperience: 8,
     categoryId: 'backend-apis-data',
     stackIds: ['data-apis']
   },
@@ -592,6 +656,7 @@ const skillRecords: SkillRecord[] = [
     id: 'aws',
     name: 'AWS (EC2, DynamoDB, Cognito)',
     proficiency: 'competent',
+    yearsOfExperience: 6,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery', 'data-apis']
   },
@@ -599,6 +664,7 @@ const skillRecords: SkillRecord[] = [
     id: 'cicd-pipelines',
     name: 'CI/CD pipelines',
     proficiency: 'proficient',
+    yearsOfExperience: 14,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery']
   },
@@ -606,6 +672,7 @@ const skillRecords: SkillRecord[] = [
     id: 'cloudflare',
     name: 'Cloudflare',
     proficiency: 'proficient',
+    yearsOfExperience: 5,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery', 'svelte']
   },
@@ -613,6 +680,7 @@ const skillRecords: SkillRecord[] = [
     id: 'docker',
     name: 'Docker',
     proficiency: 'proficient',
+    yearsOfExperience: 10,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery']
   },
@@ -620,6 +688,7 @@ const skillRecords: SkillRecord[] = [
     id: 'git',
     name: 'Git',
     proficiency: 'proficient',
+    yearsOfExperience: 17,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery', 'collaboration']
   },
@@ -627,6 +696,7 @@ const skillRecords: SkillRecord[] = [
     id: 'github-actions',
     name: 'GitHub Actions',
     proficiency: 'emerging',
+    yearsOfExperience: 3,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery']
   },
@@ -634,6 +704,7 @@ const skillRecords: SkillRecord[] = [
     id: 'gitlab-cicd',
     name: 'GitLab CI/CD',
     proficiency: 'competent',
+    yearsOfExperience: 6,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery']
   },
@@ -641,6 +712,7 @@ const skillRecords: SkillRecord[] = [
     id: 'jenkins',
     name: 'Jenkins',
     proficiency: 'competent',
+    yearsOfExperience: 10,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery']
   },
@@ -648,6 +720,7 @@ const skillRecords: SkillRecord[] = [
     id: 'vite',
     name: 'Vite',
     proficiency: 'proficient',
+    yearsOfExperience: 6,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery', 'svelte', 'react']
   },
@@ -655,6 +728,7 @@ const skillRecords: SkillRecord[] = [
     id: 'webpack',
     name: 'Webpack',
     proficiency: 'competent',
+    yearsOfExperience: 14,
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery']
   },
@@ -662,6 +736,7 @@ const skillRecords: SkillRecord[] = [
     id: 'wrangler',
     name: 'Wrangler',
     proficiency: 'proficient',
+    yearsOfExperience: 4,
     notes: 'Cloudflare Workers deploy and local dev for this site',
     categoryId: 'tooling-cloud-delivery',
     stackIds: ['platform-delivery', 'svelte']
@@ -670,6 +745,7 @@ const skillRecords: SkillRecord[] = [
     id: 'ai-component-apis',
     name: 'AI-compatible component APIs',
     proficiency: 'fluent',
+    yearsOfExperience: 6,
     notes: 'Component libraries with guardrails for reliable AI coding agent output',
     categoryId: 'ai-assisted-development',
     stackIds: ['ai-assisted', 'design-accessibility']
@@ -678,6 +754,7 @@ const skillRecords: SkillRecord[] = [
     id: 'multi-model-workflows',
     name: 'Multi-model workflows',
     proficiency: 'fluent',
+    yearsOfExperience: 4,
     notes: 'Selecting and adapting models for different task types within a single project',
     categoryId: 'ai-assisted-development',
     stackIds: ['ai-assisted']
@@ -686,6 +763,7 @@ const skillRecords: SkillRecord[] = [
     id: 'agile-scrum',
     name: 'Agile / Scrum',
     proficiency: 'fluent',
+    yearsOfExperience: 16,
     categoryId: 'collaboration-process',
     stackIds: ['collaboration']
   },
@@ -693,6 +771,7 @@ const skillRecords: SkillRecord[] = [
     id: 'atlassian-suite',
     name: 'Atlassian suite (Jira, Confluence)',
     proficiency: 'proficient',
+    yearsOfExperience: 12,
     categoryId: 'collaboration-process',
     stackIds: ['collaboration']
   }
@@ -788,7 +867,7 @@ export const formatSkillsForPrompt = (records: SkillRecord[]): string => {
       lines.push(`### ${categoryNameById(record.categoryId)}`);
     }
     const stacks = record.stackIds.map(stackNameById).join(', ');
-    lines.push(`- **${record.name}**: [${record.proficiency}] | stacks: ${stacks}`);
+    lines.push(`- **${record.name}**: [${record.proficiency}] | years=${record.yearsOfExperience} | stacks: ${stacks}`);
     if (record.notes !== undefined && record.notes.trim() !== '') {
       lines.push(`  - ${record.notes}`);
     }
