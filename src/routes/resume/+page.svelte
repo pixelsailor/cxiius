@@ -4,7 +4,7 @@
   import { resolve } from '$app/paths';
   import type { Pathname } from '$app/types';
   import { getProficiencyLevel } from '$lib/content/skills';
-  import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon } from '$lib/ui/icons';
+  import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon, CaretDownIcon } from '$lib/ui/icons';
   import { ResumeSkillsExplorer } from '$lib/ui/skills-explorer';
   import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
 
@@ -15,6 +15,9 @@
   let isJsEnabled = $state(isJavaScriptEnabled());
   
   let skillsExplorerMounted = $state(false);
+
+  let chartOptionsOpen = $state(false);
+  let chartOptionsAnchorEl = $state<HTMLElement | null>(null);
 
   function formatAvatarLabel(avatar: string): string {
     return avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '';
@@ -75,7 +78,26 @@
     {#if isJsEnabled}
       <!-- Show skills explorer first if JavaScript is enabled -->
       <section class="skills-section will-fade" aria-labelledby="skills-heading">
-        <h3 class="headline-small" id="skills-heading">Skills</h3>
+        <div class="skills-section__header">
+          <h3 class="headline-small" id="skills-heading">Skills</h3>
+          <div class="skills-section__header__controls">
+            <button
+              type="button"
+              class="button"
+              aria-expanded={chartOptionsOpen}
+              aria-controls="skills-chart-options"
+              onclick={() => {
+                chartOptionsOpen = !chartOptionsOpen;
+              }}
+            >
+              Show chart options
+              <CaretDownIcon size="sm" ariaLabel="Caret down" />
+            </button>
+          </div>
+        </div>
+        <div bind:this={chartOptionsAnchorEl} class="skills-explorer-anchor">
+          <!-- Used to anchor the popover panel. This has no height ensuring the popover correctly covers the chart instead of above or below it. -->
+        </div>
         <div class="skills-explorer-shell" data-explorer-ready={skillsExplorerMounted ? '' : undefined}>
           <ResumeSkillsExplorer
             skillRecords={data.skillRecords}
@@ -83,6 +105,8 @@
             onChartReady={(ready) => {
               skillsExplorerMounted = ready;
             }}
+            bind:open={chartOptionsOpen}
+            customAnchor={chartOptionsAnchorEl}
           />
         </div>
       </section>
@@ -352,6 +376,21 @@
   .experience-item__contribution {
     line-height: 1.3;
     margin-block: 0.5rem;
+  }
+
+  .skills-section__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .skills-section__header__controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .skills-chart {

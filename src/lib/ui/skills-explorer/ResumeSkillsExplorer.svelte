@@ -18,11 +18,21 @@
     skillCategories: readonly SkillCategoryMeta[];
     /** Notifies the parent when the chart has rendered at least once. */
     onChartReady?: (ready: boolean) => void;
+    /** Two-way bound open state for the chart options popover (`Popover.Root bind:open`). */
+    open?: boolean;
+    /** External trigger element that anchors the popover panel (`Popover.Content customAnchor`). */
+    customAnchor?: HTMLElement | null;
   };
 
   type ChartCtor = (typeof import('chart.js'))['Chart'];
 
-  let { skillRecords, skillCategories, onChartReady }: Props = $props();
+  let {
+    skillRecords,
+    skillCategories,
+    onChartReady,
+    open = $bindable(false),
+    customAnchor = null
+  }: Props = $props();
 
   let canvasEl: HTMLCanvasElement | undefined = undefined;
   let chartInstance: InstanceType<ChartCtor> | null = null;
@@ -136,11 +146,6 @@
     writeIncludedSkillIds(skillRecords, includedSkillIds);
     void repaintChart();
   });
-
-  function selectDomain(domainId: string) {
-    selectedDomain = domainId;
-    console.log('selectedDomain', selectedDomain);
-  }
 </script>
 
 <!--
@@ -154,17 +159,20 @@ Example:
 -->
 
 <div class="resume-skills-chart">
-  <Popover.Root>
-    <Popover.Trigger class="button">Show chart options</Popover.Trigger>
+  <Popover.Root bind:open>
     <Popover.Portal>
-      <Popover.Content class="popover__content skills-explorer-popover">
-        <h4 class="title-medium">Chart options</h4>
+      <Popover.Content
+        id="skills-chart-options"
+        class="popover__content skills-explorer-popover"
+        customAnchor={customAnchor ?? undefined}
+      >
+        <h4 class="title-medium">Skill Domains</h4>
         <div class="skills-container">
           <ul class="skill-domains">
             {#each categorySections as section (section.categoryId)}
               <li class="skill-domain__item">
                 <label
-                  class="skill-domain__toggle"
+                  class={['skill-domain__toggle', { 'skill-domain__toggle--selected': selectedDomain === section.categoryId }]}
                   onfocus={() => selectedDomain = section.categoryId}
                   onmouseenter={() => selectedDomain = section.categoryId}
                 >
@@ -175,6 +183,7 @@ Example:
                     checked={isSectionFullyIncluded(section)}
                     use:categoryCheckboxState={isSectionPartiallyIncluded(section)}
                     onchange={(event) => toggleCategoryInclusion(section, event.currentTarget.checked)}
+                    onfocus={() => selectedDomain = section.categoryId}
                   />
                   <span class="skill-domain__label label-large">{section.categoryName}</span>
                 </label>
@@ -278,7 +287,8 @@ Example:
     border-radius: var(--radius-input);
     transition: background-color 0.15s ease;
 
-    &:hover {
+    &:hover,
+    &:has(.skill-domain__toggle--selected) {
       background-color: var(--muted);
     }
   }

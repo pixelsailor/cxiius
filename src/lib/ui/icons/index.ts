@@ -1,3 +1,5 @@
+import CaretDownIcon from './CaretDownIcon.svelte';
+import CaretUpDownIcon from './CaretUpDownIcon.svelte';
 import CloseIcon from './CloseIcon.svelte';
 import DesktopIcon from './DesktopIcon.svelte';
 import DimSunIcon from './DimSunIcon.svelte';
@@ -14,6 +16,8 @@ import SunIcon from './SunIcon.svelte';
 import SunHorizonIcon from './SunHorizonIcon.svelte';
 
 export {
+  CaretDownIcon,
+  CaretUpDownIcon,
   CloseIcon,
   DesktopIcon,
   MoonIcon,
