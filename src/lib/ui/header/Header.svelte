@@ -215,16 +215,6 @@ Header component: Contains the main navigation and global theme and font control
   }
 
   :global(.popover__content) {
-    padding: 0.75rem 0.5rem 1rem;
-    border: 1px solid var(--muted);
-    border-radius: var(--radius-popover);
-    background-color: var(--background);
-    color: var(--foreground);
-    box-shadow: var(--shadow-popover);
-    z-index: 40;
-    width: 16rem;
-    min-height: auto;
-
     &.main-nav-popover__content {
       margin-left: 0.25rem;
       padding: 0 0.5rem;

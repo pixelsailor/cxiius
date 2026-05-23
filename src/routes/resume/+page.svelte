@@ -71,6 +71,23 @@
         performant, maintainable, and user-centered solutions.
       </p>
     </section>
+
+    {#if isJsEnabled}
+      <!-- Show skills explorer first if JavaScript is enabled -->
+      <section class="skills-section will-fade" aria-labelledby="skills-heading">
+        <h3 class="headline-small" id="skills-heading">Skills</h3>
+        <div class="skills-explorer-shell" data-explorer-ready={skillsExplorerMounted ? '' : undefined}>
+          <ResumeSkillsExplorer
+            skillRecords={data.skillRecords}
+            skillCategories={data.skillCategories}
+            onChartReady={(ready) => {
+              skillsExplorerMounted = ready;
+            }}
+          />
+        </div>
+      </section>
+    {/if}
+
     <section class="differentiators-section will-fade">
       <dl class="differentiators-list">
         {#each data.identity.differentiators as differentiator (differentiator.headline)}
@@ -104,9 +121,10 @@
         </div>
       {/each}
     </section>
-    <section class="skills-section will-fade" aria-labelledby="skills-heading">
-      <h3 class="headline-small" id="skills-heading">Skills</h3>
-      <noscript>
+
+    <noscript>
+      <section class="skills-section will-fade" aria-labelledby="skills-heading">
+        <h3 class="headline-small" id="skills-heading">Skills</h3>
         <div class="skills-chart">
           <div class="skills-chart__bars">
             <div class="skills-scale" aria-hidden="true">
@@ -161,20 +179,8 @@
             {/each}
           </aside>
         </div>
-      </noscript>
-
-      {#if isJsEnabled}
-        <div class="skills-explorer-shell" data-explorer-ready={skillsExplorerMounted ? '' : undefined}>
-          <ResumeSkillsExplorer
-            skillRecords={data.skillRecords}
-            skillCategories={data.skillCategories}
-            onChartReady={(ready) => {
-              skillsExplorerMounted = ready;
-            }}
-          />
-        </div>
-      {/if}
-    </section>
+      </section>
+    </noscript>
 
     <section class="education-section will-fade">
       <h3 class="headline-small education-section__title">Education</h3>

@@ -1,15 +1,17 @@
 <script lang="ts">
-  import { browser } from '$app/environment';
+  import { Popover } from 'bits-ui';
+  import cn from 'clsx';
+  import type { ChartConfiguration } from 'chart.js';
   import { onDestroy, onMount } from 'svelte';
   import { SvelteSet } from 'svelte/reactivity';
-  import type { SkillCategoryMeta, SkillRecord } from '$lib/content/skills';
+  import { browser } from '$app/environment';
+  import { type SkillCategoryMeta, type SkillRecord } from '$lib/content/skills';
   import { buildSkillCategorySections, type SkillCategorySection } from '$lib/utils/skills-chart-data';
   import {
     buildCategoryProficiencyBarChart,
     ensureResumeSkillBarChartRegistered
   } from '$lib/utils/skills-chart-config';
   import { hydrateIncludedSkillIds, writeIncludedSkillIds } from '$lib/utils/skills-presentation';
-  import type { ChartConfiguration } from 'chart.js';
 
   type Props = {
     skillRecords: SkillRecord[];
@@ -27,6 +29,9 @@
   let clientHydrated = $state(false);
   let chartHasRendered = false;
   let includedSkillIds = new SvelteSet<string>();
+
+  /** The domain category that is currently selected/displayed in the options popover. This does not affect the chart itself. */
+  let selectedDomain = $state<string>('languages-markup');
 
   const categorySections = $derived(buildSkillCategorySections(skillRecords, skillCategories));
   const includedCount = $derived(skillRecords.filter((record) => includedSkillIds.has(record.id)).length);
@@ -131,6 +136,11 @@
     writeIncludedSkillIds(skillRecords, includedSkillIds);
     void repaintChart();
   });
+
+  function selectDomain(domainId: string) {
+    selectedDomain = domainId;
+    console.log('selectedDomain', selectedDomain);
+  }
 </script>
 
 <!--
@@ -144,63 +154,139 @@ Example:
 -->
 
 <div class="resume-skills-chart">
-  <p class="resume-skills-chart__intro body-medium">
-    Each bar is one skill, colored by domain category. Bar height reflects proficiency tier. Toggle a whole category or
-    individual skills below to change what appears on the chart.
-  </p>
+  <Popover.Root>
+    <Popover.Trigger class="button">Show chart options</Popover.Trigger>
+    <Popover.Portal>
+      <Popover.Content class="popover__content skills-explorer-popover">
+        <h4 class="title-medium">Chart options</h4>
+        <div class="skills-container">
+          <ul class="skill-domains">
+            {#each categorySections as section (section.categoryId)}
+              <li class="skill-domain__item">
+                <label
+                  class="skill-domain__toggle"
+                  onfocus={() => selectedDomain = section.categoryId}
+                  onmouseenter={() => selectedDomain = section.categoryId}
+                >
+                  <input
+                    type="checkbox"
+                    class={['skill-domain__checkbox', `skill-domain--${section.categoryId}`]}
+                    style:accent-color={section.color}
+                    checked={isSectionFullyIncluded(section)}
+                    use:categoryCheckboxState={isSectionPartiallyIncluded(section)}
+                    onchange={(event) => toggleCategoryInclusion(section, event.currentTarget.checked)}
+                  />
+                  <span class="skill-domain__label label-large">{section.categoryName}</span>
+                </label>
+              </li>
+            {/each}
+          </ul>
 
-  <ul class="resume-skills-chart__legend" aria-label="Domain category colors">
-    {#each categorySections as section (section.categoryId)}
-      <li class="resume-skills-chart__legend-item">
-        <span class="resume-skills-chart__swatch" style:background-color={section.color} aria-hidden="true"></span>
-        <span>{section.categoryName}</span>
-      </li>
-    {/each}
-  </ul>
+          <div class="skill-domain__skills-container">
+            {#each categorySections as section (section.categoryId)}
+              <ul
+                class={cn(
+                  'skill-domain__skills',
+                  { 'skill-domain__skills--selected': selectedDomain === section.categoryId },
+                  { 'cols-2': section.skills.length > 7 }
+                )}
+                style:background-color={`hsl(from ${section.color} h s l / 0.1)`}
+              >
+                {#each section.skills as skill (skill.id)}
+                  <li class="skill-domain__skill-item">
+                    <label class="skill-domain__skill-toggle">
+                      <input
+                        type="checkbox"
+                        class={['skill-domain__checkbox', `skill-domain--${skill.id}`]}
+                        style:accent-color={section.color}
+                        checked={includedSkillIds.has(skill.id)}
+                        onchange={(event) => toggleSkillInclusion(skill.id, event.currentTarget.checked)}
+                      />
+                      <span class="skill-domain__skill-label label-large">{skill.name}</span>
+                    </label>
+                  </li>
+                {/each}
+              </ul>
+            {/each}
+          </div>
+        </div>
+      </Popover.Content>
+    </Popover.Portal>
+  </Popover.Root>
 
   <div class="resume-skills-chart__canvas-wrap">
     <div class="resume-skills-chart__frame" role="img" aria-label={describeCanvasAria()}>
       <canvas bind:this={canvasEl}></canvas>
     </div>
   </div>
-
-  <div class="resume-skills-chart__toggles" aria-labelledby="skills-toggle-heading">
-    <h4 class="title-medium" id="skills-toggle-heading">Include skills on chart</h4>
-    {#each categorySections as section (section.categoryId)}
-      <section class="resume-skills-chart__toggle-group" aria-labelledby="toggle-{section.categoryId}">
-        <label class="resume-skills-chart__toggle-group-title" id="toggle-{section.categoryId}">
-          <input
-            type="checkbox"
-            checked={isSectionFullyIncluded(section)}
-            use:categoryCheckboxState={isSectionPartiallyIncluded(section)}
-            onchange={(event) => toggleCategoryInclusion(section, event.currentTarget.checked)}
-          />
-          <span class="resume-skills-chart__swatch" style:background-color={section.color} aria-hidden="true"></span>
-          <span>{section.categoryName}</span>
-        </label>
-        <ul class="resume-skills-chart__toggle-list">
-          {#each section.skills as skill (skill.id)}
-            <li>
-              <label
-                class="resume-skills-chart__toggle"
-                class:resume-skills-chart__toggle--off={!includedSkillIds.has(skill.id)}
-              >
-                <input
-                  type="checkbox"
-                  checked={includedSkillIds.has(skill.id)}
-                  onchange={(event) => toggleSkillInclusion(skill.id, event.currentTarget.checked)}
-                />
-                <span class="resume-skills-chart__toggle-name">{skill.name}</span>
-              </label>
-            </li>
-          {/each}
-        </ul>
-      </section>
-    {/each}
-  </div>
 </div>
 
 <style>
+  label:hover {
+    cursor: pointer;
+  }
+
+  .popover__content.skills-explorer-popover {
+    width: 960px;
+  }
+
+  .skills-container {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 1rem;
+  }
+
+  .skill-domain__skills-container {
+    flex: 1;
+  }
+
+  .skill-domains, .skill-domain__skills {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+  }
+
+  .skill-domain__skills {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0.5rem;
+    opacity: 0;
+    height: 0;
+    padding: 0 0.5rem;
+    border-radius: var(--radius-input);
+    pointer-events: none;
+
+    &.cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    &.skill-domain__skills--selected {
+      opacity: 1;
+      height: auto;
+      padding: 0.5rem;
+      pointer-events: auto;
+    }
+  }
+
+  .skill-domain__item {
+    border-radius: var(--radius-input);
+    transition: background-color 0.15s ease;
+
+    &:hover {
+      background-color: var(--muted);
+    }
+  }
+
+  .skill-domain__toggle {
+    padding: 0.25rem 0.5rem;
+  }
+
   .resume-skills-chart {
     display: flex;
     flex-direction: column;
@@ -308,10 +394,5 @@ Example:
 
   .resume-skills-chart__toggle-name {
     font-weight: 500;
-  }
-
-  input[type='checkbox'] {
-    margin: 0;
-    accent-color: var(--blue-800, #2563eb);
   }
 </style>

@@ -13,14 +13,14 @@ import {
 
 /** Canvas-safe hex fills keyed by category (Chart.js cannot rely on CSS variables). */
 export const SKILL_CATEGORY_CHART_COLORS: Record<SkillCategoryId, string> = {
-  'languages-markup': '#2563eb',
-  'frameworks-libraries': '#7c3aed',
-  'ui-and-design': '#db2777',
-  'testing-and-qa': '#0891b2',
-  'backend-apis-data': '#059669',
-  'tooling-cloud-delivery': '#ea580c',
-  'ai-assisted-development': '#9333ea',
-  'collaboration-process': '#0369a1'
+  'languages-markup': 'hsl(217, 91%, 60%)',
+  'frameworks-libraries': 'hsl(280, 53%, 40%)',
+  'ui-and-design': 'hsl(348, 83%, 47%)',
+  'testing-and-qa': 'hsl(171, 100%, 41%)',
+  'backend-apis-data': 'hsl(160, 78%, 31%)',
+  'tooling-cloud-delivery': 'hsl(34, 91%, 52%)',
+  'ai-assisted-development': 'hsl(282, 86%, 52%)',
+  'collaboration-process': 'hsl(198, 98%, 31%)'
 };
 
 /** One domain category block used by the chart and skill toggle panel. */
