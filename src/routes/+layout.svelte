@@ -78,7 +78,7 @@
       showChatWindow = false;
       return;
     }
-    
+
     const modifierKey = event.ctrlKey || event.metaKey || event.altKey;
     if (showChatWindow || !ALPHABET.test(event.key) || modifierKey) return;
 
@@ -106,8 +106,8 @@
     </div>
 
     <footer>
-      <span class="label-small">&copy; 2026 Benjamin Thompson. All rights reserved.</span>
       <div class="cf-turnstile" data-sitekey={env.PUBLIC_TURNSTILE_SITE_KEY}></div>
+      <span class="label-small">&copy; 2026 Benjamin Thompson. All rights reserved.</span>
     </footer>
   </main>
 
@@ -231,6 +231,7 @@
 
   footer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0.25rem;
