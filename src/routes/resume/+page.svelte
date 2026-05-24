@@ -5,7 +5,7 @@
   import type { Pathname } from '$app/types';
   import { getProficiencyLevel } from '$lib/content/skills';
   import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon, CaretDownIcon } from '$lib/ui/icons';
-  import { ResumeSkillsExplorer } from '$lib/ui/skills-explorer';
+  import { type ChartOptionsPane, ResumeSkillsExplorer } from '$lib/ui/skills-explorer';
   import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
 
   const resumePdfPath = '/assets/ben-thompson__frontend-swe.pdf' as Pathname;
@@ -18,6 +18,8 @@
 
   let chartOptionsOpen = $state(false);
   let chartOptionsAnchorEl = $state<HTMLElement | null>(null);
+
+  let chartOptionsPane = $state<ChartOptionsPane>('domains');
 
   function formatAvatarLabel(avatar: string): string {
     return avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '';
@@ -80,14 +82,28 @@
       <section class="skills-section will-fade" aria-labelledby="skills-heading">
         <div class="skills-section__header">
           <h3 class="headline-small" id="skills-heading">Skills</h3>
-          <div class="skills-section__header__controls">
+          <div class="button-group">
             <button
               type="button"
               class="button"
               aria-expanded={chartOptionsOpen}
               aria-controls="skills-chart-options"
-              onclick={() => {
-                chartOptionsOpen = !chartOptionsOpen;
+              onpointerenter={() => {
+                chartOptionsOpen = true;
+                chartOptionsPane = 'skillStacks';
+              }}
+            >
+              Tech stack options
+              <CaretDownIcon size="sm" ariaLabel="Caret down" />
+            </button>
+            <button
+              type="button"
+              class="button"
+              aria-expanded={chartOptionsOpen}
+              aria-controls="skills-chart-options"
+              onpointerenter={() => {
+                chartOptionsOpen = true;
+                chartOptionsPane = 'domains';
               }}
             >
               Show chart options
@@ -102,11 +118,13 @@
           <ResumeSkillsExplorer
             skillRecords={data.skillRecords}
             skillCategories={data.skillCategories}
+            skillStacks={data.skillStacks}
             onChartReady={(ready) => {
               skillsExplorerMounted = ready;
             }}
             bind:open={chartOptionsOpen}
             customAnchor={chartOptionsAnchorEl}
+            selectedPane={chartOptionsPane}
           />
         </div>
       </section>

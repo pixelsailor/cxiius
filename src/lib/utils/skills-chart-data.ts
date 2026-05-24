@@ -8,7 +8,8 @@ import {
   SKILL_CATEGORIES,
   type SkillCategoryId,
   type SkillCategoryMeta,
-  type SkillRecord
+  type SkillRecord,
+  type SkillStackId
 } from '$lib/content/skills';
 
 /** Canvas-safe hex fills keyed by category (Chart.js cannot rely on CSS variables). */
@@ -99,3 +100,11 @@ export const buildSkillCategorySections = (
       )
     }))
     .filter((section) => section.skills.length > 0);
+
+/**
+ * Returns skill records tagged with the given tech stack id.
+ * @param records - Full skill datasource
+ * @param stackId - Stack id from content metadata
+ */
+export const skillRecordsForStack = (records: SkillRecord[], stackId: SkillStackId): SkillRecord[] =>
+  records.filter((record) => record.stackIds.includes(stackId));

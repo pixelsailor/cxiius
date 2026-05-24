@@ -5,21 +5,34 @@
   import { onDestroy, onMount } from 'svelte';
   import { SvelteSet } from 'svelte/reactivity';
   import { browser } from '$app/environment';
-  import { type SkillCategoryMeta, type SkillRecord } from '$lib/content/skills';
-  import { buildSkillCategorySections, type SkillCategorySection } from '$lib/utils/skills-chart-data';
+  import {
+    type SkillCategoryMeta,
+    type SkillRecord,
+    type SkillStackId,
+    type SkillStackMeta
+  } from '$lib/content/skills';
+  import {
+    buildSkillCategorySections,
+    skillRecordsForStack,
+    type SkillCategorySection
+  } from '$lib/utils/skills-chart-data';
   import {
     buildCategoryProficiencyBarChart,
     ensureResumeSkillBarChartRegistered
   } from '$lib/utils/skills-chart-config';
   import { hydrateIncludedSkillIds, writeIncludedSkillIds } from '$lib/utils/skills-presentation';
+  import type { ChartOptionsPane } from './types';
 
   type Props = {
     skillRecords: SkillRecord[];
     skillCategories: readonly SkillCategoryMeta[];
+    skillStacks: readonly SkillStackMeta[];
     /** Notifies the parent when the chart has rendered at least once. */
     onChartReady?: (ready: boolean) => void;
     /** Two-way bound open state for the chart options popover (`Popover.Root bind:open`). */
     open?: boolean;
+    /** The pane to display in the popover. */
+    selectedPane?: ChartOptionsPane;
     /** External trigger element that anchors the popover panel (`Popover.Content customAnchor`). */
     customAnchor?: HTMLElement | null;
   };
@@ -29,8 +42,10 @@
   let {
     skillRecords,
     skillCategories,
+    skillStacks,
     onChartReady,
     open = $bindable(false),
+    selectedPane = 'domains',
     customAnchor = null
   }: Props = $props();
 
@@ -38,18 +53,31 @@
   let chartInstance: InstanceType<ChartCtor> | null = null;
   let clientHydrated = $state(false);
   let chartHasRendered = false;
+
+  /** The skill ids that are currently included in the chart. */
   let includedSkillIds = new SvelteSet<string>();
 
   /** The domain category that is currently selected/displayed in the options popover. This does not affect the chart itself. */
   let selectedDomain = $state<string>('languages-markup');
 
+  /** The tech stack highlighted in the stacks pane; selecting one replaces chart inclusion with that stack's skills. */
+  let selectedStackId = $state<SkillStackId | null>(null);
+
   const categorySections = $derived(buildSkillCategorySections(skillRecords, skillCategories));
+  const stacksWithSkills = $derived(
+    skillStacks.filter((stack) => skillRecordsForStack(skillRecords, stack.id).length > 0)
+  );
   const includedCount = $derived(skillRecords.filter((record) => includedSkillIds.has(record.id)).length);
 
   const describeCanvasAria = (): string =>
     `Vertical bar chart of ${includedCount} skills grouped by domain category; bar height shows proficiency tier`;
 
+  const clearSelectedStack = (): void => {
+    selectedStackId = null;
+  };
+
   const toggleSkillInclusion = (skillId: string, checked: boolean): void => {
+    clearSelectedStack();
     if (checked) {
       includedSkillIds.add(skillId);
     } else {
@@ -69,6 +97,7 @@
   };
 
   const toggleCategoryInclusion = (section: SkillCategorySection, checked: boolean): void => {
+    clearSelectedStack();
     for (const skill of section.skills) {
       if (checked) {
         includedSkillIds.add(skill.id);
@@ -146,6 +175,14 @@
     writeIncludedSkillIds(skillRecords, includedSkillIds);
     void repaintChart();
   });
+
+  const activateSkillStack = (stack: SkillStackMeta): void => {
+    selectedStackId = stack.id;
+    includedSkillIds.clear();
+    for (const skill of skillRecordsForStack(skillRecords, stack.id)) {
+      includedSkillIds.add(skill.id);
+    }
+  };
 </script>
 
 <!--
@@ -166,59 +203,90 @@ Example:
         class="popover__content skills-explorer-popover"
         customAnchor={customAnchor ?? undefined}
       >
-        <h4 class="title-medium">Skill Domains</h4>
-        <div class="skills-container">
-          <ul class="skill-domains">
-            {#each categorySections as section (section.categoryId)}
-              <li class="skill-domain__item">
-                <label
-                  class={['skill-domain__toggle', { 'skill-domain__toggle--selected': selectedDomain === section.categoryId }]}
-                  onfocus={() => selectedDomain = section.categoryId}
-                  onmouseenter={() => selectedDomain = section.categoryId}
-                >
-                  <input
-                    type="checkbox"
-                    class={['skill-domain__checkbox', `skill-domain--${section.categoryId}`]}
-                    style:accent-color={section.color}
-                    checked={isSectionFullyIncluded(section)}
-                    use:categoryCheckboxState={isSectionPartiallyIncluded(section)}
-                    onchange={(event) => toggleCategoryInclusion(section, event.currentTarget.checked)}
-                    onfocus={() => selectedDomain = section.categoryId}
-                  />
-                  <span class="skill-domain__label label-large">{section.categoryName}</span>
-                </label>
-              </li>
-            {/each}
-          </ul>
-
-          <div class="skill-domain__skills-container">
-            {#each categorySections as section (section.categoryId)}
-              <ul
-                class={cn(
-                  'skill-domain__skills',
-                  { 'skill-domain__skills--selected': selectedDomain === section.categoryId },
-                  { 'cols-2': section.skills.length > 7 }
-                )}
-                style:background-color={`hsl(from ${section.color} h s l / 0.1)`}
-              >
-                {#each section.skills as skill (skill.id)}
-                  <li class="skill-domain__skill-item">
-                    <label class="skill-domain__skill-toggle">
+        {#if selectedPane === 'domains'}
+          <div class="skills-explorer-pane skills-explorer-pane--domains">
+            <h4 class="title-medium">Skill Domains</h4>
+            <div class="skills-container">
+              <ul class="skill-domains">
+                {#each categorySections as section (section.categoryId)}
+                  <li class="skill-domain__item">
+                    <label
+                      class={['skill-domain__toggle', { 'skill-domain__toggle--selected': selectedDomain === section.categoryId }]}
+                      onfocus={() => selectedDomain = section.categoryId}
+                      onmouseenter={() => selectedDomain = section.categoryId}
+                    >
                       <input
                         type="checkbox"
-                        class={['skill-domain__checkbox', `skill-domain--${skill.id}`]}
+                        class={['skill-domain__checkbox', `skill-domain--${section.categoryId}`]}
                         style:accent-color={section.color}
-                        checked={includedSkillIds.has(skill.id)}
-                        onchange={(event) => toggleSkillInclusion(skill.id, event.currentTarget.checked)}
+                        checked={isSectionFullyIncluded(section)}
+                        use:categoryCheckboxState={isSectionPartiallyIncluded(section)}
+                        onchange={(event) => toggleCategoryInclusion(section, event.currentTarget.checked)}
+                        onfocus={() => selectedDomain = section.categoryId}
                       />
-                      <span class="skill-domain__skill-label label-large">{skill.name}</span>
+                      <span class="skill-domain__label label-large">{section.categoryName}</span>
                     </label>
                   </li>
                 {/each}
               </ul>
-            {/each}
+    
+              <div class="skill-domain__skills-container">
+                {#each categorySections as section (section.categoryId)}
+                  <ul
+                    class={cn(
+                      'skill-domain__skills',
+                      { 'skill-domain__skills--selected': selectedDomain === section.categoryId },
+                      { 'cols-2': section.skills.length > 7 }
+                    )}
+                    style:background-color={`hsl(from ${section.color} h s l / 0.1)`}
+                  >
+                    {#each section.skills as skill (skill.id)}
+                      <li class="skill-domain__skill-item">
+                        <label class="skill-domain__skill-toggle">
+                          <input
+                            type="checkbox"
+                            class={['skill-domain__checkbox', `skill-domain--${skill.id}`]}
+                            style:accent-color={section.color}
+                            checked={includedSkillIds.has(skill.id)}
+                            onchange={(event) => toggleSkillInclusion(skill.id, event.currentTarget.checked)}
+                          />
+                          <span class="skill-domain__skill-label label-large">{skill.name}</span>
+                        </label>
+                      </li>
+                    {/each}
+                  </ul>
+                {/each}
+              </div>
+            </div>
           </div>
-        </div>
+        {/if}
+        {#if selectedPane === 'skillStacks'}
+          <div class="skills-explorer-pane skills-explorer-pane--stacks">
+            <h4 class="title-medium" id="skills-chart-stacks-heading">Tech Stacks</h4>
+            <fieldset class="tech-stacks" aria-labelledby="skills-chart-stacks-heading">
+              <legend class="tech-stacks__legend">Select one tech stack to show on the chart</legend>
+              <ul class="tech-stacks__list">
+                {#each stacksWithSkills as stack (stack.id)}
+                  <li class="tech-stack__item">
+                    <label
+                      class={['tech-stack__toggle', { 'tech-stack__toggle--selected': selectedStackId === stack.id }]}
+                    >
+                      <input
+                        type="radio"
+                        name="resume-skills-stack"
+                        class="tech-stack__radio"
+                        value={stack.id}
+                        checked={selectedStackId === stack.id}
+                        onchange={() => activateSkillStack(stack)}
+                      />
+                      <span class="tech-stack__label label-large">{stack.name}</span>
+                    </label>
+                  </li>
+                {/each}
+              </ul>
+            </fieldset>
+          </div>
+        {/if}
       </Popover.Content>
     </Popover.Portal>
   </Popover.Root>
@@ -294,6 +362,58 @@ Example:
   }
 
   .skill-domain__toggle {
+    padding: 0.25rem 0.5rem;
+  }
+
+  .tech-stacks {
+    margin: 0;
+    padding: 0;
+    border: none;
+    min-inline-size: 0;
+  }
+
+  .tech-stacks__legend {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .tech-stacks__list,
+  .tech-stacks__list label {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .tech-stacks__list label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .tech-stacks__list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.25rem 1rem;
+  }
+
+  .tech-stack__item {
+    border-radius: var(--radius-input);
+    transition: background-color 0.15s ease;
+
+    &:hover,
+    &:has(.tech-stack__toggle--selected) {
+      background-color: var(--muted);
+    }
+  }
+
+  .tech-stack__toggle {
     padding: 0.25rem 0.5rem;
   }
 
