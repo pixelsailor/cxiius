@@ -207,7 +207,7 @@ Example:
           <div class="skills-explorer-pane skills-explorer-pane--domains">
             <h4 class="title-medium">Skill Domains</h4>
             <div class="skills-container">
-              <ul class="skill-domains">
+              <ul class="skill-domains skillset-controls">
                 {#each categorySections as section (section.categoryId)}
                   <li class="skill-domain__item">
                     <label
@@ -263,14 +263,12 @@ Example:
         {#if selectedPane === 'skillStacks'}
           <div class="skills-explorer-pane skills-explorer-pane--stacks">
             <h4 class="title-medium" id="skills-chart-stacks-heading">Tech Stacks</h4>
-            <fieldset class="tech-stacks" aria-labelledby="skills-chart-stacks-heading">
-              <legend class="tech-stacks__legend">Select one tech stack to show on the chart</legend>
-              <ul class="tech-stacks__list">
+            <fieldset class="fieldset__tech-stacks" aria-labelledby="skills-chart-stacks-heading">
+              <legend class="tech-stacks__legend sr-only">Select one tech stack to show on the chart</legend>
+              <ul class="tech-stacks skillset-controls">
                 {#each stacksWithSkills as stack (stack.id)}
                   <li class="tech-stack__item">
-                    <label
-                      class={['tech-stack__toggle', { 'tech-stack__toggle--selected': selectedStackId === stack.id }]}
-                    >
+                    <label class="tech-stack__toggle">
                       <input
                         type="radio"
                         name="resume-skills-stack"
@@ -317,7 +315,9 @@ Example:
     flex: 1;
   }
 
-  .skill-domains, .skill-domain__skills {
+  .skill-domains,
+  .skill-domain__skills,
+  .tech-stacks {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -351,7 +351,8 @@ Example:
     }
   }
 
-  .skill-domain__item {
+  .skill-domain__item,
+  .tech-stack__item {
     border-radius: var(--radius-input);
     transition: background-color 0.15s ease;
 
@@ -361,11 +362,12 @@ Example:
     }
   }
 
-  .skill-domain__toggle {
+  .skill-domain__toggle,
+  .tech-stack__toggle {
     padding: 0.25rem 0.5rem;
   }
 
-  .tech-stacks {
+  .fieldset__tech-stacks {
     margin: 0;
     padding: 0;
     border: none;
@@ -384,37 +386,22 @@ Example:
     border: 0;
   }
 
-  .tech-stacks__list,
-  .tech-stacks__list label {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-
-  .tech-stacks__list label {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .tech-stacks__list {
+  .tech-stacks {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 0.25rem 1rem;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0 1rem;
   }
 
-  .tech-stack__item {
-    border-radius: var(--radius-input);
-    transition: background-color 0.15s ease;
-
-    &:hover,
-    &:has(.tech-stack__toggle--selected) {
-      background-color: var(--muted);
+  @media (min-width: 540px) {
+    .tech-stacks {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
-
-  .tech-stack__toggle {
-    padding: 0.25rem 0.5rem;
+  
+  @media (min-width: 800px) {
+    .tech-stacks {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   .resume-skills-chart {

@@ -15,7 +15,7 @@ const sampleSkills = (): SkillRecord[] => [
     proficiency: 'fluent',
     yearsOfExperience: 18,
     categoryId: 'languages-markup',
-    stackIds: ['angular', 'design-accessibility']
+    stackIds: ['angular', 'web-fundamentals']
   },
   {
     id: 'angular',

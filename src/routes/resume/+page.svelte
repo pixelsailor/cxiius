@@ -77,6 +77,17 @@
       </p>
     </section>
 
+    <section class="differentiators-section will-fade">
+      <dl class="differentiators-list">
+        {#each data.identity.differentiators as differentiator (differentiator.headline)}
+          <div class="differentiator-item">
+            <dt class="title-medium">{differentiator.headline}</dt>
+            <dd class="body-large">{differentiator.detail}</dd>
+          </div>
+        {/each}
+      </dl>
+    </section>
+
     {#if isJsEnabled}
       <!-- Show skills explorer first if JavaScript is enabled -->
       <section class="skills-section will-fade" aria-labelledby="skills-heading">
@@ -129,17 +140,7 @@
         </div>
       </section>
     {/if}
-
-    <section class="differentiators-section will-fade">
-      <dl class="differentiators-list">
-        {#each data.identity.differentiators as differentiator (differentiator.headline)}
-          <div class="differentiator-item">
-            <dt class="title-medium">{differentiator.headline}</dt>
-            <dd class="body-large">{differentiator.detail}</dd>
-          </div>
-        {/each}
-      </dl>
-    </section>
+    
     <section class="experience-section will-fade">
       <h3 class="headline-small">Experience</h3>
       {#each data.experience as experience (experience.title)}
