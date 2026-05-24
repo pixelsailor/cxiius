@@ -77,7 +77,12 @@ function parseState(raw: string | null): z.infer<typeof AiRateLimitStateSchema> 
  * ADR-009: enforce request + token budgets before calling upstream.
  * Mutates KV on success (records this request).
  */
-export async function consumeAiRateLimit(kv: KVNamespace, salt: string, clientIp: string, inputTokenEstimate: number): Promise<AiRateLimitOk | AiRateLimitDenied> {
+export async function consumeAiRateLimit(
+  kv: KVNamespace,
+  salt: string,
+  clientIp: string,
+  inputTokenEstimate: number
+): Promise<AiRateLimitOk | AiRateLimitDenied> {
   if (!salt || salt.length < 8) {
     return {
       denied: true,

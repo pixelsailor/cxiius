@@ -8,7 +8,7 @@ import { getBackground } from '$lib/content/background';
 import { getEducation } from '$lib/content/education';
 import { getExperience } from '$lib/content/experience';
 import { getProjects } from '$lib/content/projects';
-import { getSkills } from '$lib/content/skills';
+import { formatSkillsForPrompt, getSkillRecords } from '$lib/content/skills';
 
 /**
  * Returns a plain-text block aggregating public site content for prompt injection.
@@ -16,20 +16,26 @@ import { getSkills } from '$lib/content/skills';
  */
 export async function assembleSystemPromptFromSiteContent(): Promise<string> {
   const projects = await getProjects();
-  const skills = await getSkills();
+  const skillRecords = await getSkillRecords();
   const experience = await getExperience();
   const education = await getEducation();
   const background = await getBackground();
   const availability = await getAvailability();
 
   // Voice Profile.ts
-  const voiceProfileBackgroundArr: string[] = ['## Voice Profile', `### Default Tone: ${background.voice.defaultTone}`, ...background.voice.styleNotes.map((s) => `- ${s}`)];
+  const voiceProfileBackgroundArr: string[] = [
+    '## Voice Profile',
+    `### Default Tone: ${background.voice.defaultTone}`,
+    ...background.voice.styleNotes.map((s) => `- ${s}`)
+  ];
   const voiceProfileBackgroundLines = voiceProfileBackgroundArr.join('\n');
 
   const projectsArr: string[] = ['## Projects and portfolio (all entries)'];
   for (const p of projects) {
     if (p.includeInPortfolio) {
-      projectsArr.push(`- **${p.name}** [${p.projectType}] (${p.circa}) [${p.status}]: ${p.description} **Tech:** ${p.technologies.join(', ')}.`);
+      projectsArr.push(
+        `- **${p.name}** [${p.projectType}] (${p.circa}) [${p.status}]: ${p.description} **Tech:** ${p.technologies.join(', ')}.`
+      );
     } else {
       projectsArr.push(`### ${p.name} (${p.status})`);
       projectsArr.push(p.summary);
@@ -64,15 +70,7 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
   }
   const projectsLines = projectsArr.join('\n');
 
-  // Skills.ts
-  const skillsArr: string[] = ['## Skills'];
-  for (const s of skills) {
-    skillsArr.push(`### ${s.name}`);
-    for (const skill of s.skills) {
-      skillsArr.push(`- **${skill.name}**: [${skill.proficiency}]`);
-    }
-  }
-  const skillsLines = skillsArr.join('\n');
+  const skillsLines = formatSkillsForPrompt(skillRecords);
 
   // Experience.ts
   const experienceArr: string[] = ['## Experience'];
@@ -104,7 +102,10 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
   ];
   const militaryBackgroundLines = militaryBackgroundArr.join('\n');
 
-  const martialArtsBackgroundArr: string[] = ['## Martial Arts', ...background.martialArts.map((m) => `### ${m.rank} - _${m.style}_ | ${m.school}_ | ${m.earnedDate}`)];
+  const martialArtsBackgroundArr: string[] = [
+    '## Martial Arts',
+    ...background.martialArts.map((m) => `### ${m.rank} - _${m.style}_ | ${m.school}_ | ${m.earnedDate}`)
+  ];
   const martialArtsBackgroundLines = martialArtsBackgroundArr.join('\n');
 
   const instructorRolesBackgroundArr: string[] = [
@@ -114,7 +115,10 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
   const instructorRolesBackgroundLines = instructorRolesBackgroundArr.join('\n');
 
   // Interests.ts
-  const interestsBackgroundArr: string[] = ['## Interests', ...background.interests.map((i) => `### ${i.name} - ${i.notes}`)];
+  const interestsBackgroundArr: string[] = [
+    '## Interests',
+    ...background.interests.map((i) => `### ${i.name} - ${i.notes}`)
+  ];
   const interestsBackgroundLines = interestsBackgroundArr.join('\n');
 
   // Favorites.ts

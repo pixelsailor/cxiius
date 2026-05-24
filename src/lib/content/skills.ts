@@ -1,5 +1,5 @@
 /**
- * @fileoverview Defines technical skill categories, proficiency scale metadata, and getters for resume and AI prompt assembly.
+ * @fileoverview Flat technical skill records and proficiency metadata for AI prompts and resume UI grouping.
  * @module lib/content/skills
  */
 
@@ -8,14 +8,94 @@ export const PROFICIENCY_ORDER = ['none', 'emerging', 'competent', 'proficient',
 
 export type Proficiency = (typeof PROFICIENCY_ORDER)[number];
 
-/** A single technology or practice with an assigned proficiency tier. */
+/** Resume chart grouping modes (applied in UI via skills-presentation utils). */
+export const SKILL_VIEW_MODES = ['category', 'proficiency', 'stack'] as const;
+
+export type SkillViewMode = (typeof SKILL_VIEW_MODES)[number];
+
+/** Canonical category ids for datasource tagging (not presentation order). */
+export const SKILL_CATEGORY_IDS = [
+  'languages-markup',
+  'frameworks-libraries',
+  'ui-and-design',
+  'testing-and-qa',
+  'backend-apis-data',
+  'tooling-cloud-delivery',
+  'ai-assisted-development',
+  'collaboration-process'
+] as const;
+
+export type SkillCategoryId = (typeof SKILL_CATEGORY_IDS)[number];
+
+/**
+ * Tech stack ids for optional resume stack-mode grouping.
+ * @remarks Named industry bundles (MERN, MEAN, PERN, T3, JAMstack, LAMP) plus framework ecosystems
+ * and delivery patterns (serverless/edge). Not every skill belongs to a stack; use categoryId otherwise.
+ */
+export const SKILL_STACK_IDS = [
+  'web-fundamentals',
+  'angular',
+  'react',
+  'svelte',
+  'serverless',
+  'jamstack',
+  'mern',
+  'mean',
+  'pern',
+  't3-stack',
+  'lamp',
+  'react-aws',
+  'angular-enterprise',
+  'nextjs-supabase'
+] as const;
+
+export type SkillStackId = (typeof SKILL_STACK_IDS)[number];
+
+/** Category metadata for prompts and category-mode charts. */
+export type SkillCategoryMeta = {
+  id: SkillCategoryId;
+  name: string;
+};
+
+/** Stack metadata for stack-mode charts and prompt tags. */
+export type SkillStackMeta = {
+  id: SkillStackId;
+  name: string;
+};
+
+/**
+ * Single skill entry in the content datasource.
+ * @remarks One row per skill; use categoryId and stackIds for grouping in the resume UI.
+ */
+export type SkillRecord = {
+  /** Stable key for keys in lists and future migrations. */
+  id: string;
+  name: string;
+  /** Subjective proficiency level based on peronal confidence and usage context. */
+  proficiency: Proficiency;
+  /**
+   * Whole years of substantive use (portfolio estimate).
+   * @remarks Non-negative; aligned with narrative in experience timelines and resume notes where present.
+   */
+  yearsOfExperience: number;
+  notes?: string;
+  /** Canonical domain category id for grouping in the resume UI. */
+  categoryId: SkillCategoryId;
+  /**
+   * Optional tech stack ids for grouping in the resume UI. `SKILL_STACK_IDS` are representative of common tech stacks in software development.
+   * Not all skills belong to a tech stack; some are domain-specific or general purpose.
+   */
+  stackIds: SkillStackId[];
+};
+
+/** Chart row shape (grouped at display time). */
 export type Skill = {
   name: string;
   proficiency: Proficiency;
   notes?: string;
 };
 
-/** Skills grouped under a resume-facing category heading. */
+/** @deprecated Prefer SkillDisplayGroup from skills-presentation; kept for legacy getters. */
 export type SkillCategory = {
   name: string;
   skills: Skill[];
@@ -24,72 +104,688 @@ export type SkillCategory = {
 /** Display metadata for one step on the proficiency scale (bar width, legend copy, color). */
 export type ProficiencyLevel = {
   proficiency: Proficiency;
-  /** Numeric tier on a 1-5 scale; drives bar width as level / 5. */
   level: number;
-  /** Human-readable tier label (e.g. Fluent). */
   name: string;
   description: string;
-  /** Playful tier alias used on the scale axis (e.g. ninja). */
   avatar: string;
   avatarDescription: string;
-  /** Token key for bar fill styling: gray, red, yellow, blue, or green. */
   color: string;
-  /** Bar fill width as a percentage of the track (level / 5 * 100). */
   barWidthPercent: number;
 };
 
-const MAX_PROFICIENCY_LEVEL = 5;
+const MAX_PROFICIENCY_LEVEL = 4;
 
 const proficiencyMap: Record<
   Proficiency,
   { level: number; name: string; description: string; avatar: string; avatarDescription: string; color: string }
 > = {
   none: {
-    level: 1,
+    level: 0,
     name: 'No Experience',
     avatar: '',
     description: 'No practical experience.',
     avatarDescription: '',
-    color: 'gray',
+    color: 'gray'
   },
   emerging: {
-    level: 2,
+    level: 1,
     name: 'Emerging',
     avatar: 'zombie',
     description: 'Limited hands-on experience or not recently used; can ramp up quickly.',
     avatarDescription: 'Will beat and claw their way to devour the subject.',
-    color: 'red',
+    color: 'red'
   },
   competent: {
-    level: 3,
+    level: 2,
     name: 'Competent',
     description:
       'Working knowledge or used sparingly in the last few years; can contribute meaningfully with occasional reference to documentation.',
     avatar: 'pirate',
     avatarDescription:
       "Capable of getting the job done through brute force and lots of sneering -- doesn't always know why something works... probably voodoo.",
-    color: 'yellow',
+    color: 'yellow'
   },
   proficient: {
-    level: 4,
+    level: 3,
     name: 'Proficient',
     description:
       'Strong working knowledge or used regularly in the last few years; comfortable owning implementation independently.',
     avatar: 'cowboy',
     avatarDescription:
       'Never afraid to jump in and take command, using their vast know-how to easily adapt to unfamiliar territory and unexpected challenges.',
-    color: 'blue',
+    color: 'blue'
   },
   fluent: {
-    level: 5,
+    level: 4,
     name: 'Fluent',
     description: 'Extensive practical experience across multiple projects; primary working tool.',
     avatar: 'ninja',
     avatarDescription:
       'Mastery is not a goal to be achieved, but a journey to be embarked upon; always seeking to improve and grow.',
-    color: 'green',
-  },
+    color: 'green'
+  }
 } as const;
+
+export const SKILL_CATEGORIES: readonly SkillCategoryMeta[] = [
+  { id: 'languages-markup', name: 'Languages & Markup' },
+  { id: 'frameworks-libraries', name: 'Frameworks & Libraries' },
+  { id: 'ui-and-design', name: 'UI & Design' },
+  { id: 'testing-and-qa', name: 'Testing & Quality Assurance' },
+  { id: 'backend-apis-data', name: 'Backend, APIs & Data' },
+  { id: 'tooling-cloud-delivery', name: 'Tooling, Cloud & Delivery' },
+  { id: 'ai-assisted-development', name: 'AI-Assisted Development' },
+  { id: 'collaboration-process', name: 'Collaboration & Process' }
+] as const;
+
+export const SKILL_STACKS: readonly SkillStackMeta[] = [
+  { id: 'web-fundamentals', name: 'Web fundamentals' },
+  { id: 'angular', name: 'Angular' },
+  { id: 'react', name: 'React' },
+  { id: 'svelte', name: 'Svelte' },
+  { id: 'serverless', name: 'Serverless / edge' },
+  { id: 'jamstack', name: 'JAMstack' },
+  { id: 'mern', name: 'MERN' },
+  { id: 'mean', name: 'MEAN' },
+  { id: 'pern', name: 'PERN' },
+  { id: 't3-stack', name: 'T3 Stack' },
+  { id: 'lamp', name: 'LAMP' },
+  { id: 'react-aws', name: 'React + AWS' },
+  { id: 'angular-enterprise', name: 'Angular enterprise' },
+  { id: 'nextjs-supabase', name: 'Next.js + Supabase' }
+] as const;
+
+const skillRecords: SkillRecord[] = [
+  {
+    id: 'css',
+    name: 'CSS',
+    proficiency: 'proficient',
+    yearsOfExperience: 27,
+    categoryId: 'languages-markup',
+    stackIds: ['web-fundamentals', 'jamstack']
+  },
+  {
+    id: 'html',
+    name: 'Semantic HTML',
+    proficiency: 'fluent',
+    yearsOfExperience: 27,
+    categoryId: 'languages-markup',
+    stackIds: ['web-fundamentals', 'jamstack']
+  },
+  {
+    id: 'javascript',
+    name: 'JavaScript',
+    proficiency: 'proficient',
+    yearsOfExperience: 24,
+    categoryId: 'languages-markup',
+    stackIds: ['web-fundamentals', 'jamstack', 'mern', 'mean']
+  },
+  {
+    id: 'php',
+    name: 'PHP',
+    proficiency: 'competent',
+    yearsOfExperience: 3,
+    notes: 'Primary use in freelance era (2010-2013); less recent',
+    categoryId: 'languages-markup',
+    stackIds: ['lamp']
+  },
+  {
+    id: 'python',
+    name: 'Python',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'languages-markup',
+    stackIds: []
+  },
+  {
+    id: 'sass-scss',
+    name: 'Sass/SCSS',
+    proficiency: 'fluent',
+    yearsOfExperience: 14,
+    categoryId: 'languages-markup',
+    stackIds: ['web-fundamentals', 'angular-enterprise']
+  },
+  {
+    id: 'sql',
+    name: 'SQL',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'languages-markup',
+    stackIds: []
+  },
+  {
+    id: 'typescript',
+    name: 'TypeScript',
+    proficiency: 'fluent',
+    yearsOfExperience: 13,
+    categoryId: 'languages-markup',
+    stackIds: ['web-fundamentals', 'angular', 'react', 'svelte', 't3-stack']
+  },
+  {
+    id: 'angular',
+    name: 'Angular',
+    proficiency: 'fluent',
+    yearsOfExperience: 13,
+    notes: 'Primary framework across two long-term enterprise engagements; up to Angular 21',
+    categoryId: 'frameworks-libraries',
+    stackIds: ['angular', 'mean', 'angular-enterprise']
+  },
+  {
+    id: 'angular-material',
+    name: 'Angular Material',
+    proficiency: 'fluent',
+    yearsOfExperience: 10,
+    categoryId: 'ui-and-design',
+    stackIds: ['angular', 'angular-enterprise']
+  },
+  {
+    id: 'nx',
+    name: 'Nx',
+    proficiency: 'proficient',
+    yearsOfExperience: 2,
+    notes: 'Monorepo management in enterprise Angular contexts',
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: ['angular-enterprise']
+  },
+  {
+    id: 'primeng',
+    name: 'PrimeNG',
+    proficiency: 'fluent',
+    yearsOfExperience: 1,
+    categoryId: 'ui-and-design',
+    stackIds: ['angular', 'angular-enterprise']
+  },
+  {
+    id: 'rxjs',
+    name: 'RxJS',
+    proficiency: 'proficient',
+    yearsOfExperience: 10,
+    notes: 'Used extensively in Angular contexts',
+    categoryId: 'frameworks-libraries',
+    stackIds: ['angular', 'mean', 'angular-enterprise']
+  },
+  {
+    id: 'svelte',
+    name: 'Svelte',
+    proficiency: 'proficient',
+    yearsOfExperience: 1,
+    notes: 'Primary stack for this portfolio and recent PWA work',
+    categoryId: 'frameworks-libraries',
+    stackIds: ['svelte', 'jamstack', 'serverless']
+  },
+  {
+    id: 'sveltekit',
+    name: 'SvelteKit',
+    proficiency: 'proficient',
+    yearsOfExperience: 1,
+    categoryId: 'frameworks-libraries',
+    stackIds: ['svelte', 'jamstack', 'serverless']
+  },
+  {
+    id: 'dexie',
+    name: 'Dexie',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: ['svelte']
+  },
+  {
+    id: 'indexeddb',
+    name: 'IndexedDB',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: ['svelte', 'jamstack']
+  },
+  {
+    id: 'supabase',
+    name: 'Supabase',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: ['nextjs-supabase', 'svelte']
+  },
+  {
+    id: 'jquery',
+    name: 'jQuery',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    notes: 'Deep historical use; superseded by modern frameworks in current work',
+    categoryId: 'frameworks-libraries',
+    stackIds: ['web-fundamentals']
+  },
+  {
+    id: 'nextjs',
+    name: 'Next.js',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'frameworks-libraries',
+    stackIds: ['react', 't3-stack', 'nextjs-supabase', 'jamstack']
+  },
+  {
+    id: 'qwik',
+    name: 'Qwik',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'frameworks-libraries',
+    stackIds: []
+  },
+  {
+    id: 'react',
+    name: 'React',
+    proficiency: 'proficient',
+    yearsOfExperience: 2,
+    notes: 'Used extensively at Fortra and in component library work',
+    categoryId: 'frameworks-libraries',
+    stackIds: ['react', 'mern', 'react-aws']
+  },
+  {
+    id: 'react-hook-form',
+    name: 'React Hook Form',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    categoryId: 'frameworks-libraries',
+    stackIds: ['react', 'mern']
+  },
+  {
+    id: 'react-router',
+    name: 'React Router',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    categoryId: 'frameworks-libraries',
+    stackIds: ['react', 'mern']
+  },
+  {
+    id: 'tanstack-query',
+    name: 'TanStack Query',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    categoryId: 'frameworks-libraries',
+    stackIds: ['react', 'mern', 't3-stack']
+  },
+  {
+    id: 'wordpress',
+    name: 'WordPress',
+    proficiency: 'competent',
+    yearsOfExperience: 3,
+    categoryId: 'frameworks-libraries',
+    stackIds: ['lamp']
+  },
+  {
+    id: 'zod',
+    name: 'Zod',
+    proficiency: 'proficient',
+    yearsOfExperience: 2,
+    categoryId: 'backend-apis-data',
+    stackIds: ['t3-stack']
+  },
+  {
+    id: 'zustand',
+    name: 'Zustand',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    categoryId: 'frameworks-libraries',
+    stackIds: ['react', 'mern']
+  },
+  {
+    id: 'bits-ui',
+    name: 'Bits UI',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'ui-and-design',
+    stackIds: ['svelte']
+  },
+  {
+    id: 'bootstrap',
+    name: 'Bootstrap',
+    proficiency: 'competent',
+    yearsOfExperience: 4,
+    categoryId: 'ui-and-design',
+    stackIds: []
+  },
+  {
+    id: 'component-library-architecture',
+    name: 'Component library architecture',
+    proficiency: 'fluent',
+    yearsOfExperience: 5,
+    notes: 'Opinionated, accessible, AI-compatible component systems',
+    categoryId: 'frameworks-libraries',
+    stackIds: ['angular-enterprise', 'react']
+  },
+  {
+    id: 'design-systems',
+    name: 'Design systems',
+    proficiency: 'fluent',
+    yearsOfExperience: 5,
+    categoryId: 'ui-and-design',
+    stackIds: []
+  },
+  {
+    id: 'figma',
+    name: 'Figma',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    notes: 'Design-to-code workflows; product design and prototyping',
+    categoryId: 'ui-and-design',
+    stackIds: []
+  },
+  {
+    id: 'mui',
+    name: 'Material UI (MUI)',
+    proficiency: 'proficient',
+    yearsOfExperience: 2,
+    categoryId: 'ui-and-design',
+    stackIds: ['react', 'mern', 'react-aws']
+  },
+  {
+    id: 'responsive-design',
+    name: 'Responsive design',
+    proficiency: 'fluent',
+    yearsOfExperience: 20,
+    categoryId: 'ui-and-design',
+    stackIds: ['web-fundamentals']
+  },
+  {
+    id: 'storybook',
+    name: 'Storybook',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    categoryId: 'testing-and-qa',
+    stackIds: ['angular-enterprise', 'react', 'mern']
+  },
+  {
+    id: 'tailwindcss',
+    name: 'TailwindCSS',
+    proficiency: 'fluent',
+    yearsOfExperience: 6,
+    categoryId: 'ui-and-design',
+    stackIds: ['t3-stack', 'jamstack', 'svelte', 'react', 'angular']
+  },
+  {
+    id: 'ui-ux-design',
+    name: 'UI/UX design',
+    proficiency: 'fluent',
+    yearsOfExperience: 26,
+    categoryId: 'ui-and-design',
+    stackIds: []
+  },
+  {
+    id: 'wcag-accessibility',
+    name: 'WCAG accessibility',
+    proficiency: 'proficient',
+    yearsOfExperience: 5,
+    categoryId: 'ui-and-design',
+    stackIds: []
+  },
+  {
+    id: 'code-review',
+    name: 'Code review',
+    proficiency: 'proficient',
+    yearsOfExperience: 5,
+    categoryId: 'testing-and-qa',
+    stackIds: []
+  },
+  {
+    id: 'jest',
+    name: 'Jest',
+    proficiency: 'competent',
+    yearsOfExperience: 5,
+    categoryId: 'testing-and-qa',
+    stackIds: ['react', 'mern', 'angular-enterprise']
+  },
+  {
+    id: 'karma',
+    name: 'Karma',
+    proficiency: 'competent',
+    yearsOfExperience: 5,
+    categoryId: 'testing-and-qa',
+    stackIds: ['angular-enterprise']
+  },
+  {
+    id: 'msw',
+    name: 'Mock Service Worker (MSW)',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    categoryId: 'testing-and-qa',
+    stackIds: ['react', 'mern']
+  },
+  {
+    id: 'playwright',
+    name: 'Playwright',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    notes: 'E2E testing in React product contexts at Fortra',
+    categoryId: 'testing-and-qa',
+    stackIds: ['react', 'react-aws']
+  },
+  {
+    id: 'testing-library',
+    name: 'Testing Library',
+    proficiency: 'proficient',
+    yearsOfExperience: 2,
+    categoryId: 'testing-and-qa',
+    stackIds: ['react', 'mern', 'angular-enterprise']
+  },
+  {
+    id: 'unit-testing',
+    name: 'Unit testing',
+    proficiency: 'proficient',
+    yearsOfExperience: 5,
+    categoryId: 'testing-and-qa',
+    stackIds: []
+  },
+  {
+    id: 'vitest',
+    name: 'Vitest',
+    proficiency: 'proficient',
+    yearsOfExperience: 1,
+    categoryId: 'testing-and-qa',
+    stackIds: ['svelte', 'jamstack']
+  },
+  {
+    id: 'expressjs',
+    name: 'Express.js',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: ['mern', 'mean', 'pern']
+  },
+  {
+    id: 'graphql',
+    name: 'GraphQL',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: []
+  },
+  {
+    id: 'mongodb',
+    name: 'MongoDB',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: ['mern', 'mean']
+  },
+  {
+    id: 'mysql',
+    name: 'MySQL',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    categoryId: 'backend-apis-data',
+    stackIds: ['lamp']
+  },
+  {
+    id: 'nodejs',
+    name: 'Node.js',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    categoryId: 'backend-apis-data',
+    stackIds: ['mern', 'mean', 'pern', 't3-stack']
+  },
+  {
+    id: 'oauth-jwt',
+    name: 'OAuth / JWT',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    notes: 'Including AWS Cognito-backed flows in product work',
+    categoryId: 'backend-apis-data',
+    stackIds: ['react-aws']
+  },
+  {
+    id: 'openapi-swagger',
+    name: 'OpenAPI / Swagger',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: ['react-aws']
+  },
+  {
+    id: 'postgresql',
+    name: 'PostgreSQL',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: ['pern', 'nextjs-supabase']
+  },
+  {
+    id: 'rest',
+    name: 'REST',
+    proficiency: 'fluent',
+    yearsOfExperience: 16,
+    categoryId: 'backend-apis-data',
+    stackIds: ['web-fundamentals', 'jamstack']
+  },
+  {
+    id: 'sailsjs',
+    name: 'Sails.js',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'backend-apis-data',
+    stackIds: []
+  },
+  {
+    id: 'aws',
+    name: 'AWS (EC2, DynamoDB, Cognito)',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: ['react-aws', 'serverless']
+  },
+  {
+    id: 'cicd-pipelines',
+    name: 'CI/CD pipelines',
+    proficiency: 'proficient',
+    yearsOfExperience: 5,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: []
+  },
+  {
+    id: 'cloudflare',
+    name: 'Cloudflare',
+    proficiency: 'proficient',
+    yearsOfExperience: 1,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: ['serverless', 'jamstack', 'svelte']
+  },
+  {
+    id: 'docker',
+    name: 'Docker',
+    proficiency: 'proficient',
+    yearsOfExperience: 2,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: []
+  },
+  {
+    id: 'git',
+    name: 'Git',
+    proficiency: 'proficient',
+    yearsOfExperience: 13,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: []
+  },
+  {
+    id: 'github-actions',
+    name: 'GitHub Actions',
+    proficiency: 'emerging',
+    yearsOfExperience: 1,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: []
+  },
+  {
+    id: 'gitlab-cicd',
+    name: 'GitLab CI/CD',
+    proficiency: 'competent',
+    yearsOfExperience: 3,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: []
+  },
+  {
+    id: 'jenkins',
+    name: 'Jenkins',
+    proficiency: 'competent',
+    yearsOfExperience: 5,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: ['angular-enterprise']
+  },
+  {
+    id: 'vite',
+    name: 'Vite',
+    proficiency: 'proficient',
+    yearsOfExperience: 1,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: ['svelte', 'react', 'angular']
+  },
+  {
+    id: 'webpack',
+    name: 'Webpack',
+    proficiency: 'competent',
+    yearsOfExperience: 2,
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: ['angular-enterprise']
+  },
+  {
+    id: 'wrangler',
+    name: 'Wrangler',
+    proficiency: 'proficient',
+    yearsOfExperience: 1,
+    notes: 'Cloudflare Workers deploy and local dev for this site',
+    categoryId: 'tooling-cloud-delivery',
+    stackIds: ['serverless', 'svelte']
+  },
+  {
+    id: 'ai-component-apis',
+    name: 'AI-compatible component APIs',
+    proficiency: 'fluent',
+    yearsOfExperience: 1,
+    notes: 'Component libraries with guardrails for reliable AI coding agent output',
+    categoryId: 'ai-assisted-development',
+    stackIds: []
+  },
+  {
+    id: 'multi-model-workflows',
+    name: 'Multi-model workflows',
+    proficiency: 'competent',
+    yearsOfExperience: 1,
+    notes: 'Selecting and adapting models for different task types within a single project',
+    categoryId: 'ai-assisted-development',
+    stackIds: []
+  },
+  {
+    id: 'agile-scrum',
+    name: 'Agile / Scrum',
+    proficiency: 'fluent',
+    yearsOfExperience: 16,
+    categoryId: 'collaboration-process',
+    stackIds: []
+  },
+  {
+    id: 'atlassian-suite',
+    name: 'Atlassian suite (Jira, Confluence)',
+    proficiency: 'proficient',
+    yearsOfExperience: 16,
+    categoryId: 'collaboration-process',
+    stackIds: []
+  }
+];
 
 const toProficiencyLevel = (proficiency: Proficiency): ProficiencyLevel => {
   const meta = proficiencyMap[proficiency];
@@ -101,17 +797,38 @@ const toProficiencyLevel = (proficiency: Proficiency): ProficiencyLevel => {
     avatar: meta.avatar,
     avatarDescription: meta.avatarDescription,
     color: meta.color,
-    barWidthPercent: (meta.level / MAX_PROFICIENCY_LEVEL) * 100,
+    barWidthPercent: (meta.level / MAX_PROFICIENCY_LEVEL) * 100
   };
 };
 
+const sortRecordsByCategoryAndName = (records: SkillRecord[]): SkillRecord[] => {
+  const categoryOrder = new Map(SKILL_CATEGORIES.map((category, index) => [category.id, index]));
+  return [...records].sort((a, b) => {
+    const categoryDiff = (categoryOrder.get(a.categoryId) ?? 99) - (categoryOrder.get(b.categoryId) ?? 99);
+    if (categoryDiff !== 0) {
+      return categoryDiff;
+    }
+    return a.name.localeCompare(b.name, 'en', { sensitivity: 'base' });
+  });
+};
+
+const recordToSkill = (record: SkillRecord): Skill => ({
+  name: record.name,
+  proficiency: record.proficiency,
+  notes: record.notes
+});
+
+const stackNameById = (id: SkillStackId): string => SKILL_STACKS.find((stack) => stack.id === id)?.name ?? id;
+
+const categoryNameById = (id: SkillCategoryId): string =>
+  SKILL_CATEGORIES.find((category) => category.id === id)?.name ?? id;
+
 /**
  * Returns metadata for each proficiency tier shown on the resume skills chart.
- * @returns Levels from emerging through fluent (excludes none)
  */
 export const getProficiencyLevels = (): Promise<ProficiencyLevel[]> =>
   Promise.resolve(
-    (['emerging', 'competent', 'proficient', 'fluent'] as const).map((proficiency) => toProficiencyLevel(proficiency)),
+    (['emerging', 'competent', 'proficient', 'fluent'] as const).map((proficiency) => toProficiencyLevel(proficiency))
   );
 
 /**
@@ -120,139 +837,55 @@ export const getProficiencyLevels = (): Promise<ProficiencyLevel[]> =>
  */
 export const getProficiencyLevel = (proficiency: Proficiency): ProficiencyLevel => toProficiencyLevel(proficiency);
 
-const data: SkillCategory[] = [
-  {
-    name: 'Languages & Markup',
-    skills: [
-      { name: 'HTML', proficiency: 'fluent' },
-      { name: 'CSS', proficiency: 'proficient' },
-      { name: 'Sass/SCSS', proficiency: 'fluent' },
-      { name: 'JavaScript / TypeScript', proficiency: 'proficient' },
-      { name: 'PHP', proficiency: 'competent', notes: 'Primary use in freelance era (2010-2013); less recent' },
-      { name: 'Python', proficiency: 'emerging' },
-      { name: 'Node.js', proficiency: 'competent' },
-    ]
-  },
-  {
-    name: 'Frameworks & Libraries',
-    skills: [
-      { name: 'Angular', proficiency: 'fluent', notes: 'Primary framework across two long-term enterprise engagements; up to Angular 21' },
-      { name: 'React', proficiency: 'proficient', notes: 'Used extensively at Fortra and in component library work' },
-      { name: 'Svelte', proficiency: 'competent' },
-      { name: 'Qwik', proficiency: 'emerging' },
-      { name: 'Astro', proficiency: 'emerging' },
-      { name: 'Web Components', proficiency: 'emerging' },
-      { name: 'TailwindCSS', proficiency: 'fluent' },
-      { name: 'Bootstrap', proficiency: 'competent' },
-      { name: 'Angular Material', proficiency: 'fluent' },
-      { name: 'Material UI (MUI)', proficiency: 'proficient' },
-      { name: 'PrimeNG', proficiency: 'fluent' },
-      { name: 'Shadcn UI', proficiency: 'emerging' },
-      { name: 'Semantic / Fomantic UI', proficiency: 'competent' },
-      { name: 'RxJS', proficiency: 'proficient', notes: 'Used extensively in Angular contexts' },
-      { name: 'jQuery', proficiency: 'competent', notes: 'Deep historical use; superseded by modern frameworks in current work' },
-      { name: 'WordPress', proficiency: 'competent' }
-    ]
-  },
-  {
-    name: 'Component Systems & Design',
-    skills: [
-      {
-        name: 'Component library architecture',
-        proficiency: 'fluent',
-        notes: 'Core specialisation - design and implementation of opinionated, accessible, AI-compatible component systems'
-      },
-      { name: 'Design systems', proficiency: 'fluent' },
-      { name: 'Storybook', proficiency: 'competent' },
-      { name: 'Figma', proficiency: 'emerging', notes: 'Design-to-code workflows; also used for product design and prototyping' },
-      { name: 'UI/UX design', proficiency: 'fluent' },
-      { name: 'Accessibility (WCAG)', proficiency: 'proficient' },
-      { name: 'Responsive design', proficiency: 'fluent' }
-    ]
-  },
-  {
-    name: 'Testing & Quality',
-    skills: [
-      { name: 'Jest', proficiency: 'proficient' },
-      { name: 'Vitest', proficiency: 'proficient' },
-      { name: 'Karma', proficiency: 'proficient' },
-      { name: 'Testing Library', proficiency: 'proficient' },
-      { name: 'Mock Service Worker (MSW)', proficiency: 'competent' },
-      { name: 'Unit testing', proficiency: 'proficient' },
-    ]
-  },
-  {
-    name: 'Build Tools & Toolchain',
-    skills: [
-      { name: 'Vite', proficiency: 'proficient' },
-      { name: 'Webpack', proficiency: 'competent' },
-      { name: 'Rollup', proficiency: 'emerging' },
-      { name: 'Nx', proficiency: 'proficient', notes: 'Used for monorepo management in enterprise Angular contexts' },
-      { name: 'PostCSS', proficiency: 'proficient' }
-    ]
-  },
-  {
-    name: 'Backend & APIs',
-    skills: [
-      { name: 'SvelteKit', proficiency: 'competent' },
-      { name: 'Next.js', proficiency: 'emerging' },
-      { name: 'Express.js', proficiency: 'emerging' },
-      { name: 'Sails.js', proficiency: 'emerging' },
-      { name: 'REST', proficiency: 'fluent' },
-      { name: 'GraphQL', proficiency: 'competent' },
-      { name: 'Dexie', proficiency: 'competent' },
-      { name: 'Supabase', proficiency: 'competent' }
-    ]
-  },
-  {
-    name: 'Databases',
-    skills: [
-      { name: 'MySQL', proficiency: 'competent' },
-      { name: 'IndexedDB', proficiency: 'competent' },
-      { name: 'PostgreSQL', proficiency: 'competent' },
-      { name: 'SQLite', proficiency: 'competent' },
-      { name: 'MongoDB', proficiency: 'competent' }
-    ]
-  },
-  {
-    name: 'DevOps & Cloud',
-    skills: [
-      { name: 'Docker', proficiency: 'proficient' },
-      { name: 'AWS (EC2, DynamoDB, Cognito)', proficiency: 'competent' },
-      { name: 'Cloudflare', proficiency: 'proficient' },
-      { name: 'CI/CD pipelines', proficiency: 'proficient' },
-      { name: 'Jenkins', proficiency: 'competent' },
-      { name: 'Git', proficiency: 'proficient' },
-      { name: 'GitHub', proficiency: 'proficient' },
-      { name: 'GitLab', proficiency: 'proficient' }
-    ]
-  },
-  {
-    name: 'AI-Assisted Development',
-    skills: [
-      { name: 'Cursor', proficiency: 'fluent', notes: 'Primary AI development environment at LevelBlue; also personal tooling' },
-      { name: 'Multi-model workflows', proficiency: 'fluent', notes: 'Selecting and adapting models for different task types within a single project' },
-      {
-        name: 'AI-compatible component API design',
-        proficiency: 'fluent',
-        notes: 'Designing component libraries with guardrails that produce reliable output from AI coding agents'
-      },
-      { name: 'Copilot', proficiency: 'competent', notes: 'Personal tooling' }
-    ]
-  },
-  {
-    name: 'Collaboration & Process',
-    skills: [
-      { name: 'Figma (collaboration)', proficiency: 'emerging' },
-      { name: 'Atlassian suite (Jira, Confluence)', proficiency: 'proficient' },
-      { name: 'Notion', proficiency: 'proficient' },
-      { name: 'Agile / Scrum', proficiency: 'fluent' },
-      { name: 'Kanban', proficiency: 'proficient' }
-    ]
-  }
-];
+/**
+ * Returns category metadata in datasource order.
+ */
+export const getSkillCategories = (): Promise<readonly SkillCategoryMeta[]> => Promise.resolve(SKILL_CATEGORIES);
 
 /**
- * Returns all skill categories and entries for pages and the system prompt.
+ * Returns tech stack metadata in datasource order.
  */
-export const getSkills = (): Promise<SkillCategory[]> => Promise.resolve(data);
+export const getSkillStacks = (): Promise<readonly SkillStackMeta[]> => Promise.resolve(SKILL_STACKS);
+
+/**
+ * Returns the flat skill datasource (primary export for AI and resume grouping).
+ */
+export const getSkillRecords = (): Promise<SkillRecord[]> =>
+  Promise.resolve(sortRecordsByCategoryAndName(skillRecords));
+
+/**
+ * Groups flat records by category for legacy consumers.
+ * @remarks Prefer getSkillRecords() plus skills-presentation grouping in the resume UI.
+ */
+export const getSkills = (): Promise<SkillCategory[]> =>
+  getSkillRecords().then((records) =>
+    SKILL_CATEGORIES.map((category) => ({
+      name: category.name,
+      skills: records
+        .filter((record) => record.categoryId === category.id)
+        .map(recordToSkill)
+        .sort((a, b) => a.name.localeCompare(b.name, 'en', { sensitivity: 'base' }))
+    })).filter((category) => category.skills.length > 0)
+  );
+
+/**
+ * Plain-text skills block for system prompts: one line per skill with category and stack tags.
+ */
+export const formatSkillsForPrompt = (records: SkillRecord[]): string => {
+  const lines: string[] = ['## Skills'];
+  let currentCategory: SkillCategoryId | null = null;
+
+  for (const record of records) {
+    if (record.categoryId !== currentCategory) {
+      currentCategory = record.categoryId;
+      lines.push(`### ${categoryNameById(record.categoryId)}`);
+    }
+    const stacks = record.stackIds.map(stackNameById).join(', ');
+    lines.push(`- **${record.name}**: [${record.proficiency}] | years=${record.yearsOfExperience} | stacks: ${stacks}`);
+    if (record.notes !== undefined && record.notes.trim() !== '') {
+      lines.push(`  - ${record.notes}`);
+    }
+  }
+
+  return lines.join('\n');
+};

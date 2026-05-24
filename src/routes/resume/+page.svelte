@@ -1,17 +1,30 @@
 <script lang="ts">
   import { Button } from 'bits-ui';
-  import type { PageProps } from './$types';
+  import type { PageData } from './$types';
   import { resolve } from '$app/paths';
   import type { Pathname } from '$app/types';
   import { getProficiencyLevel } from '$lib/content/skills';
   import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon } from '$lib/ui/icons';
+  import { ResumeSkillsChart, ResumeSkillsChartOptionsPopover } from '$lib/ui/skills-explorer';
+  import { SvelteSet } from 'svelte/reactivity';
+  import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
 
   const resumePdfPath = '/assets/ben-thompson__frontend-swe.pdf' as Pathname;
 
-  let { data }: PageProps = $props();
+  let { data }: { data: PageData } = $props();
 
-  const formatAvatarLabel = (avatar: string): string =>
-    avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '';
+  let isJsEnabled = $state(isJavaScriptEnabled());
+
+  let skillsExplorerMounted = $state(false);
+
+  let chartOptionsAnchorEl = $state<HTMLElement | null>(null);
+
+  let includedSkillIds = $state.raw(new SvelteSet<string>());
+  let inclusionHydrated = $state(false);
+
+  function formatAvatarLabel(avatar: string): string {
+    return avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '';
+  }
 </script>
 
 <svelte:head>
@@ -58,11 +71,13 @@
     </section>
     <section class="summary-section will-fade">
       <p class="title-large summary">
-        Front-End Engineer with 20+ years of experience architecting enterprise-scale web applications and design systems. Builds component-driven platforms that enforce
-        accessibility, consistency, and usability by design while enabling AI-assisted development workflows. Proven leader in aligning cross-functional teams to deliver
+        Front-End Engineer with 20+ years of experience architecting enterprise-scale web applications and design
+        systems. Builds component-driven platforms that enforce accessibility, consistency, and usability by design
+        while enabling AI-assisted development workflows. Proven leader in aligning cross-functional teams to deliver
         performant, maintainable, and user-centered solutions.
       </p>
     </section>
+
     <section class="differentiators-section will-fade">
       <dl class="differentiators-list">
         {#each data.identity.differentiators as differentiator (differentiator.headline)}
@@ -73,6 +88,38 @@
         {/each}
       </dl>
     </section>
+
+    {#if isJsEnabled}
+      <!-- Show skills explorer first if JavaScript is enabled -->
+      <section class="skills-section will-fade" aria-labelledby="skills-heading">
+        <div class="skills-section__header">
+          <h3 class="headline-small" id="skills-heading">Skills</h3>
+          <ResumeSkillsChartOptionsPopover
+            skillRecords={data.skillRecords}
+            skillCategories={data.skillCategories}
+            skillStacks={data.skillStacks}
+            customAnchor={chartOptionsAnchorEl}
+            bind:includedSkillIds
+            bind:inclusionHydrated
+          />
+        </div>
+        <div bind:this={chartOptionsAnchorEl} class="skills-explorer-anchor">
+          <!-- Used to anchor the popover panel. This has no height ensuring the popover correctly covers the chart instead of above or below it. -->
+        </div>
+        <div class="skills-explorer-shell" data-explorer-ready={skillsExplorerMounted ? '' : undefined}>
+          <ResumeSkillsChart
+            skillRecords={data.skillRecords}
+            skillCategories={data.skillCategories}
+            {includedSkillIds}
+            {inclusionHydrated}
+            onChartReady={(ready) => {
+              skillsExplorerMounted = ready;
+            }}
+          />
+        </div>
+      </section>
+    {/if}
+
     <section class="experience-section will-fade">
       <h3 class="headline-small">Experience</h3>
       {#each data.experience as experience (experience.title)}
@@ -96,63 +143,66 @@
         </div>
       {/each}
     </section>
-    <section class="skills-section will-fade" aria-labelledby="skills-heading">
-      <h3 class="headline-small" id="skills-heading">Skills</h3>
-      <div class="skills-chart">
-        <div class="skills-chart__bars">
-          <div class="skills-scale" aria-hidden="true">
-            {#each data.proficiencyLevels as level, index (level.proficiency)}
-              <span
-                class="skills-scale__label label-large"
-                class:skills-scale__label--end={index === data.proficiencyLevels.length - 1}
-                style:left="{level.barWidthPercent}%"
-              >
-                {formatAvatarLabel(level.avatar)}
-              </span>
+
+    <noscript>
+      <section class="skills-section will-fade" aria-labelledby="skills-heading">
+        <h3 class="headline-small" id="skills-heading">Skills</h3>
+        <div class="skills-chart">
+          <div class="skills-chart__bars">
+            <div class="skills-scale" aria-hidden="true">
+              {#each data.proficiencyLevels as level, index (level.proficiency)}
+                <span
+                  class="skills-scale__label label-large"
+                  class:skills-scale__label--end={index === data.proficiencyLevels.length - 1}
+                  style:left="{level.barWidthPercent}%"
+                >
+                  {formatAvatarLabel(level.avatar)}
+                </span>
+              {/each}
+            </div>
+            {#each data.skills as skillCategory (skillCategory.name)}
+              <div class="skill-category">
+                <h4 class="title-medium skill-category__name">{skillCategory.name}</h4>
+                <ul class="skill-bars">
+                  {#each skillCategory.skills as skill (skill.name)}
+                    {@const level = getProficiencyLevel(skill.proficiency)}
+                    <li class="skill-bar">
+                      <div
+                        class="skill-bar__track"
+                        role="meter"
+                        aria-valuemin={0}
+                        aria-valuemax={4}
+                        aria-valuenow={level.level}
+                        aria-label="{skill.name}: {level.name}"
+                      >
+                        <div
+                          class="skill-bar__fill skill-bar__fill--level-{level.level}"
+                          style:width="{level.barWidthPercent}%"
+                        >
+                          <span class="skill-bar__label title-small">{skill.name}</span>
+                        </div>
+                      </div>
+                    </li>
+                  {/each}
+                </ul>
+              </div>
             {/each}
           </div>
-          {#each data.skills as skillCategory (skillCategory.name)}
-            <div class="skill-category">
-              <h4 class="title-medium skill-category__name">{skillCategory.name}</h4>
-              <ul class="skill-bars">
-                {#each skillCategory.skills as skill (skill.name)}
-                  {@const level = getProficiencyLevel(skill.proficiency)}
-                  <li class="skill-bar">
-                    <div
-                      class="skill-bar__track"
-                      role="meter"
-                      aria-valuemin={1}
-                      aria-valuemax={5}
-                      aria-valuenow={level.level}
-                      aria-label="{skill.name}: {level.name}"
-                    >
-                      <div
-                        class="skill-bar__fill skill-bar__fill--level-{level.level}"
-                        style:width="{level.barWidthPercent}%"
-                      >
-                        <span class="skill-bar__label title-small">{skill.name}</span>
-                      </div>
-                    </div>
-                  </li>
-                {/each}
-              </ul>
-            </div>
-          {/each}
+          <aside class="skills-chart__legend" aria-label="Proficiency level descriptions">
+            {#each [...data.proficiencyLevels].toReversed() as level (level.proficiency)}
+              <article class="skills-legend__item">
+                <h4 class="title-medium skills-legend__title">{formatAvatarLabel(level.avatar)}</h4>
+                <p class="body-large skills-legend__text">
+                  <em>{level.avatarDescription}</em>
+                </p>
+                <p class="body-medium">{level.description}</p>
+              </article>
+              <hr class="skills-legend__divider" />
+            {/each}
+          </aside>
         </div>
-        <aside class="skills-chart__legend" aria-label="Proficiency level descriptions">
-          {#each [...data.proficiencyLevels].toReversed() as level (level.proficiency)}
-            <article class="skills-legend__item">
-              <h4 class="title-medium skills-legend__title">{formatAvatarLabel(level.avatar)}</h4>
-              <p class="body-large skills-legend__text">
-                <em>{level.avatarDescription}</em>
-              </p>
-              <p class="body-medium">{level.description}</p>
-            </article>
-            <hr class="skills-legend__divider" />
-          {/each}
-        </aside>
-      </div>
-    </section>
+      </section>
+    </noscript>
 
     <section class="education-section will-fade">
       <h3 class="headline-small education-section__title">Education</h3>
@@ -183,6 +233,11 @@
 </div>
 
 <style>
+  .skills-explorer-anchor {
+    container-type: inline-size;
+    container-name: popover-container;
+  }
+
   .role {
     font-size: clamp(1rem, 2.33vw, 1.5rem);
   }
@@ -326,6 +381,21 @@
     margin-block: 0.5rem;
   }
 
+  .skills-section__header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .skills-section__header__controls {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
   .skills-chart {
     display: grid;
     grid-template-columns: 1fr;
@@ -398,23 +468,23 @@
     background-blend-mode: overlay;
   }
 
-  .skill-bar__fill--level-1 {
+  .skill-bar__fill--level-0 {
     background-color: var(--p-zinc-500);
   }
 
-  .skill-bar__fill--level-2 {
+  .skill-bar__fill--level-1 {
     background-color: var(--fuchsia-800);
   }
 
-  .skill-bar__fill--level-3 {
+  .skill-bar__fill--level-2 {
     background-color: var(--amber-700);
   }
 
-  .skill-bar__fill--level-4 {
+  .skill-bar__fill--level-3 {
     background-color: var(--blue-800);
   }
 
-  .skill-bar__fill--level-5 {
+  .skill-bar__fill--level-4 {
     background-color: var(--green-700);
   }
 
@@ -455,6 +525,23 @@
     display: block;
     margin-bottom: 0.35rem;
     font-style: italic;
+  }
+
+  .skills-section__intro {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 0.85rem;
+  }
+
+  .skills-explorer-shell {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .skills-section__dek {
+    max-width: 70ch;
   }
 
   .education-item__notes {

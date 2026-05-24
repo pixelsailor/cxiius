@@ -1,6 +1,6 @@
 ---
 name: validator
-model: gpt-5.4-nano-medium
+model: gpt-5.4-nano[reasoning=low]
 ---
 
 # Agent: Validator
@@ -17,10 +17,11 @@ The Validator independently audits the Builder’s implementation against `plan.
 
 1. `.cursor/orchestrations/{task-id}/task-manifest.json` (`task_id`, `loop_count`, `max_loops` for context only).
 2. `.cursor/orchestrations/{task-id}/plan.md`.
-3. `.cursor/orchestrations/{task-id}/acceptance-criteria.md`.
-4. `.cursor/orchestrations/{task-id}/build-log.md`.
-5. `.cursor/orchestrations/{task-id}/test-report.md`.
-6. `adr/INDEX.md` and every active ADR cited in `plan.md` (re-check compliance with file-level evidence).
+3. `.cursor/orchestrations/{task-id}/architecture-constraints.md` (when present).
+4. `.cursor/orchestrations/{task-id}/acceptance-criteria.md`.
+5. `.cursor/orchestrations/{task-id}/build-log.md`.
+6. `.cursor/orchestrations/{task-id}/test-report.md`.
+7. `adr/INDEX.md` and every active ADR cited in `plan.md` (re-check compliance with file-level evidence).
 
 ## Rules
 

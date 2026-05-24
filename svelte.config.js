@@ -13,7 +13,13 @@ const config = {
     prerender: {
       // Explicit entries so each filter query variant is emitted as static HTML (ADR-002 no-JS baseline).
       // Windows cannot create filenames containing `?`, so query variants are listed on POSIX only; use Linux CI for full static parity.
-      entries: ['*', '/portfolio', ...(platform() === 'win32' ? [] : ['/portfolio?type=all', '/portfolio?type=branding', '/portfolio?type=illustration', '/portfolio?type=ui'])]
+      entries: [
+        '*',
+        '/portfolio',
+        ...(platform() === 'win32'
+          ? []
+          : ['/portfolio?type=all', '/portfolio?type=branding', '/portfolio?type=illustration', '/portfolio?type=ui'])
+      ]
     }
   }
 };

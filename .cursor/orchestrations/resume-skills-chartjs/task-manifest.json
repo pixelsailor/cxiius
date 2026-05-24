@@ -1,0 +1,62 @@
+{
+  "manifest_version": "1.0.0",
+  "task_id": "resume-skills-chartjs",
+  "objective": "Replace the static resume skills bar visualization in src/routes/resume/+page.svelte with an interactive Chart.js-based chart explorer. Users must be able to switch among multiple chart types (horizontal/vertical bar, pie, doughnut, polar area, bubble, radar, and at least one additional distribution chart) and filter skills by tech stack, category, proficiency tier, and years of experience. Add yearsOfExperience as a new numeric field on SkillRecord in src/lib/content/skills.ts and populate all skill records with reasonable values. Preserve prerendered resume content for no-JS baseline (skills list or summary remains in HTML); chart interactivity is a progressive enhancement. Reuse chart.js ^4.5.1 already in package.json. Follow active ADRs (002, 003, 004, 006, 007, 008, 011).",
+  "status": "complete",
+  "current_agent": "orchestrator",
+  "pipeline": ["orchestrator", "planner", "builder", "test", "validator"],
+  "completed_stages": [
+    {
+      "agent": "orchestrator",
+      "completed_at": "2026-05-22T00:00:00.000Z",
+      "output_artifacts": [".cursor/orchestrations/resume-skills-chartjs/task-manifest.json"],
+      "summary": "Bootstrapped orchestration run for Chart.js resume skills explorer."
+    },
+    {
+      "agent": "planner",
+      "completed_at": "2026-05-22T00:05:00.000Z",
+      "output_artifacts": [
+        ".cursor/orchestrations/resume-skills-chartjs/plan.md",
+        ".cursor/orchestrations/resume-skills-chartjs/acceptance-criteria.md"
+      ],
+      "summary": "Plan and 20 acceptance criteria for Chart.js explorer, yearsOfExperience field, and SSR baseline."
+    },
+    {
+      "agent": "builder",
+      "completed_at": "2026-05-22T00:30:00.000Z",
+      "output_artifacts": [".cursor/orchestrations/resume-skills-chartjs/build-log.md"],
+      "summary": "Implemented Chart.js explorer, yearsOfExperience on 74 skills, SSR baseline, utils and UI components; check and skills unit tests pass."
+    },
+    {
+      "agent": "test",
+      "completed_at": "2026-05-22T00:40:00.000Z",
+      "output_artifacts": [".cursor/orchestrations/resume-skills-chartjs/test-report.md"],
+      "summary": "npm run check passed; 20/20 acceptance criteria PASS via targeted vitest and static review."
+    },
+    {
+      "agent": "validator",
+      "completed_at": "2026-05-22T00:50:00.000Z",
+      "output_artifacts": [".cursor/orchestrations/resume-skills-chartjs/validation-report.md"],
+      "summary": "Verdict PASS_WITH_NOTES: implementation meets plan; minor test and manual a11y gaps documented."
+    },
+    {
+      "agent": "orchestrator",
+      "completed_at": "2026-05-22T21:35:00.000Z",
+      "output_artifacts": [
+        ".cursor/orchestrations/resume-skills-chartjs/task-manifest.json",
+        ".cursor/orchestrations/resume-skills-chartjs/human-approval.md"
+      ],
+      "summary": "Human approval recorded; run closed complete after post-validation UX refinements (simplified category bar chart)."
+    }
+  ],
+  "loop_count": 0,
+  "max_loops": 2,
+  "locked_artifacts": [],
+  "flags": [],
+  "human_approval": {
+    "status": "approved",
+    "approved_at": "2026-05-22T21:35:00.000Z",
+    "approver": "Benjamin Thompson",
+    "notes": "Approved via chat after iterative simplification to a full-width category proficiency bar chart with per-skill and per-category toggles."
+  }
+}

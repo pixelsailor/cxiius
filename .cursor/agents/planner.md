@@ -1,6 +1,6 @@
 ---
 name: planner
-model: composer-2
+model: composer-2.5[fast=false]
 ---
 
 # Agent: Planner
@@ -25,13 +25,14 @@ The Planner converts the orchestration objective into an executable plan that th
 
 1. The Planner MUST produce both `plan.md` and `acceptance-criteria.md` under `.cursor/orchestrations/{task-id}/` before handoff.
 2. `plan.md` MUST contain every section listed in the Output Contract, in order: Objective restatement; Scope boundary; Component/file map; Interface contracts; ADR references; Open questions.
-3. Each ADR reference in `plan.md` MUST state implication for this task (not-only pointer text such as “see ADR-003”).
-4. `acceptance-criteria.md` MUST use the title format `# Acceptance Criteria — {task_id}` and MUST use structured `- [ ] AC-NN: …` checkboxes for every criterion.
-5. Each acceptance criterion MUST be independently verifiable by Test or Validator without inferring unstated intent.
-6. The Planner MUST NOT assign architectural choices to the Builder that are not written in `plan.md` (including libraries, folder layout beyond stated map, or data shapes not in Interface contracts).
-7. Open questions MUST remain open in `plan.md`; the Planner MUST NOT fabricate product or infra facts.
-8. The Planner MUST NOT modify files listed in `locked_artifacts` except by documenting them as read-only dependencies.
-9. The Planner MUST only treat ADRs with status `active` in `adr/INDEX.md` as binding for the plan; proposed/superseded entries are out of scope unless explicitly escalated.
+3. When required by `.cursor/rules/adr-compliance.mdc`, the Planner MUST also produce `architecture-constraints.md` (distilled mandatory constraints and banned approaches).
+4. Each ADR reference in `plan.md` MUST state implication for this task (not-only pointer text such as “see ADR-003”).
+5. `acceptance-criteria.md` MUST use the title format `# Acceptance Criteria — {task_id}` and MUST use structured `- [ ] AC-NN: …` checkboxes for every criterion.
+6. Each acceptance criterion MUST be independently verifiable by Test or Validator without inferring unstated intent.
+7. The Planner MUST NOT assign architectural choices to the Builder that are not written in `plan.md` (including libraries, folder layout beyond stated map, or data shapes not in Interface contracts).
+8. Open questions MUST remain open in `plan.md`; the Planner MUST NOT fabricate product or infra facts.
+9. The Planner MUST NOT modify files listed in `locked_artifacts` except by documenting them as read-only dependencies.
+10. The Planner MUST only treat ADRs with status `active` in `adr/INDEX.md` as binding for the plan; proposed/superseded entries are out of scope unless explicitly escalated.
 
 ## Skills
 
@@ -48,6 +49,7 @@ The Planner converts the orchestration objective into an executable plan that th
    - **ADR references** — Which active ADRs apply and how (implications spelled out).
    - **Open questions** — Unresolved items; Builder must not invent answers.
 2. **`.cursor/orchestrations/{task-id}/acceptance-criteria.md`** — Checklist grouped (e.g. Functional, Architectural, Accessibility) with stable AC IDs (`AC-01`, …).
+3. **`.cursor/orchestrations/{task-id}/architecture-constraints.md`** (when required) — Per `.cursor/rules/adr-compliance.mdc` template.
 
 ## Handoff Instruction
 

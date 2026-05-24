@@ -1,11 +1,23 @@
 ---
-description: Require ADR index consultation and active-ADR compliance on implementation (build) work; align with adr/GOVERNANCE.md
+description: ADR governance for build work and orchestrated runs — consult adr/INDEX.md, distill constraints for Planner, enforce via plan artifacts
+version: 1.0.0
 alwaysApply: true
 ---
 
-# ADR compliance (build tasks)
+# ADR compliance
 
-**Scope — “build task”:** Any work that adds, changes, or removes project code, configuration that encodes architecture, dependencies, or APIs — including features, fixes, refactors, and tooling changes that affect how the app is structured or behaves. Not limited to running `npm run build`.
+## Governing sources
+
+Treat these as the architecture source of truth:
+
+- [`adr/INDEX.md`](adr/INDEX.md) — shortlist relevant ADRs for the current task
+- [`adr/GOVERNANCE.md`](adr/GOVERNANCE.md) — proposal workflow, mandatory triggers, approval model, exception handling
+- [`.cursor/agents/`](.cursor/agents/) — orchestration role contracts (Orchestrator, Planner, Builder, Test, Validator)
+- [`.cursor/rules/orchestration-artifacts.mdc`](orchestration-artifacts.mdc) — who may edit files under `.cursor/orchestrations/{task-id}/`
+
+## Scope — “build task”
+
+Any work that adds, changes, or removes project code, configuration that encodes architecture, dependencies, or APIs — including features, fixes, refactors, orchestration planning, and tooling that affects how the app is structured or behaves. Not limited to running `npm run build`.
 
 ## Before substantive implementation
 
@@ -13,16 +25,114 @@ alwaysApply: true
 2. **Treat only `active` ADRs as binding.** Ignore `proposed`, `deprecated`, and `superseded` for new decisions; if an entry says `superseded by ADR-NNN`, follow the referenced ADR.
 3. **Follow** [`adr/GOVERNANCE.md`](adr/GOVERNANCE.md) for lifecycle, conflicts, and scoped compliance (especially §5 and §5.6).
 
-## When something is unclear
+## Distillation model (orchestrated runs)
 
-- **Ambiguous requirement or instruction:** Ask the user a concrete question before choosing an approach that could violate an active ADR or expand scope.
-- **Gap (no active ADR):** You may proceed with sound judgment **or** draft a **proposed** ADR per governance — do **not** treat proposed ADRs as authoritative until a human activates them.
+- ADRs are the **architectural intent layer** for this repository.
+- The **Planner** reads raw ADRs and distills them into orchestration artifacts under `.cursor/orchestrations/{task-id}/`:
+  - **`plan.md`** — **ADR references** section with implications spelled out (required when ADRs apply).
+  - **`architecture-constraints.md`** (required when **two or more** active ADRs apply, or when any single ADR has both mandatory constraints and banned approaches) — distilled mandatory constraints and banned approaches for the run.
+- The **Builder**, **Validator**, and **Test** consume the distilled artifacts plus `acceptance-criteria.md`. They do **not** independently reinterpret raw ADRs unless the distilled artifacts are missing, contradictory, or explicitly marked incomplete.
+- If `plan.md` references ADR-governed work and `architecture-constraints.md` is required but missing, downstream agents must **STOP** and return to the Orchestrator / Planner.
+
+## `architecture-constraints.md` contract
+
+When one or more ADRs apply, the Planner authors `.cursor/orchestrations/{task-id}/architecture-constraints.md` using this structure:
+
+```markdown
+# Architecture Constraints — {task_id}
+
+## Applicable ADRs
+
+| ADR | Title | Key constraint |
+| --- | ----- | -------------- |
+
+## Mandatory constraints
+
+- ...
+
+## Banned approaches
+
+- ...
+
+## Repo areas affected
+
+- ...
+
+## ADR gaps discovered
+
+- None.
+```
+
+Rules for this artifact:
+
+- Keep it **distilled**. Capture only constraints that matter to the current work.
+- Use ADR IDs explicitly (`ADR-001`, `ADR-009`, etc.).
+- If no ADRs apply, do **not** invent constraints. Note that outcome in `plan.md` and continue without the artifact.
+- If a material architecture decision lacks a governing ADR, record the gap under **ADR gaps discovered** and escalate via Orchestrator (`flags`, blocked manifest, or human).
+
+## Role requirements
+
+### Planner
+
+- MUST consult `adr/INDEX.md` before finalizing `plan.md`.
+- MUST read only ADRs relevant to the objective, affected files, or proposed approach.
+- MUST reference applicable ADR IDs in `plan.md` with **implications** (not pointer-only text).
+- MUST produce `architecture-constraints.md` when the distillation threshold above is met.
+- MUST flag missing ADR coverage for material architecture decisions in `plan.md` **Open questions** and escalate to the Orchestrator.
+
+### Builder
+
+- MUST read `architecture-constraints.md` alongside `plan.md` and `acceptance-criteria.md` when the artifact exists.
+- MUST treat **Mandatory constraints** and **Banned approaches** as hard limits.
+- MUST NOT override an active ADR constraint for convenience, speed, or local simplification.
+- MUST STOP and escalate if implementation would violate an active ADR or introduce a new exception.
+
+### Validator
+
+- MUST read `architecture-constraints.md` before validating when the artifact exists.
+- MUST treat ADR compliance as a first-class review dimension in `validation-report.md`.
+- MUST verify mandatory constraints are satisfied, banned approaches are absent, and no unauthorized patterns appear in governed areas.
+- MUST use verdict **FAIL** when ADR constraints are violated even if the feature appears functionally correct.
+
+### Orchestrator
+
+- MUST enforce ADR consultation before invoking Builder when the plan cites ADRs or touches governed areas.
+- MUST verify `plan.md` references applicable ADR IDs with implications.
+- MUST require `architecture-constraints.md` before Builder when the distillation threshold is met.
+- MUST stop the workflow when Planner or Validator reports an ADR gap, ADR conflict, or required exception.
+
+### Test
+
+- MUST remain aware of testing constraints distilled from ADRs (for example Vitest-only unit/component tests, no client `fetch` on content routes per ADR-002).
+- MUST NOT reinterpret raw ADRs or redefine architecture. Escalate via the Orchestrator when distilled artifacts block test work.
+
+## When something is unclear (all agents)
+
+- **Ambiguous requirement:** Ask the user a concrete question before choosing an approach that could violate an active ADR or expand scope.
+- **Gap (no active ADR):** Proceed with sound judgment **or** draft a **proposed** ADR per governance — do **not** treat proposed ADRs as authoritative until a human activates them.
 - **Conflict** between user instruction and an **active** ADR: Stop, cite the ADR, summarize the decision it encodes, and ask how to proceed — do not silently override the ADR.
+
+## New ADR required — escalate when
+
+- A new cross-cutting pattern or architectural layer is introduced
+- A foundational dependency, framework category, toolchain component, or platform capability must change
+- Authentication, security boundaries, sanitization, or compliance posture must change
+- State management, data flow, routing, caching, or KV/storage architecture must change
+- Shell, layout, or shared UI composition rules must change across route boundaries
+- Testing strategy or validation model must change
+- An accepted ADR needs a new exception, carve-out, or superseding constraint
+- The decision is cross-cutting, long-lived, and expensive to reverse
 
 ## During edits
 
 - Prefer **small, local** compliance fixes only in files you already touch, when they meet governance rules for opportunistic compliance; do **not** broaden refactors solely for ADR cleanup.
 - Do **not** infer deprecation from code age or comments — only from ADR status.
+
+## Conflict and escalation
+
+- If two ADRs appear to conflict, STOP and report the conflict. Do not silently choose one.
+- If implementation pressure suggests a one-off deviation from an ADR, STOP and escalate. Do not normalize exceptions in code.
+- If the user explicitly requests a path banned by an ADR, surface the governing ADR and route to ADR exception / proposal handling rather than improvising.
 
 ## Quick reference
 
@@ -31,3 +141,5 @@ alwaysApply: true
 | What is decided and binding | `adr/INDEX.md` (active rows) |
 | Process, proposals, conflicts | `adr/GOVERNANCE.md` |
 | New ADR shape | `adr/TEMPLATE.md` |
+| Orchestration artifact ownership | `.cursor/rules/orchestration-artifacts.mdc` |
+| Role contracts | `.cursor/agents/*.md` |

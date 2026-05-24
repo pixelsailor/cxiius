@@ -3,7 +3,8 @@ export default {
   meta: {
     type: 'problem',
     docs: {
-      description: 'Require ASCII-only source in $lib/content TypeScript files (no smart quotes, em dashes, emoji, etc.).'
+      description:
+        'Require ASCII-only source in $lib/content TypeScript files (no smart quotes, em dashes, emoji, etc.).'
     },
     schema: [],
     messages: {

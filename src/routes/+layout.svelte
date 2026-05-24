@@ -78,7 +78,7 @@
       showChatWindow = false;
       return;
     }
-    
+
     const modifierKey = event.ctrlKey || event.metaKey || event.altKey;
     if (showChatWindow || !ALPHABET.test(event.key) || modifierKey) return;
 
@@ -97,7 +97,10 @@
   <link rel="icon" href={favicon} />
 </svelte:head>
 
-<div class={['layout-container', isLargeScreen.current ? '' : 'layout-container--small']} style:font-family={activeFontFamily}>
+<div
+  class={['layout-container', isLargeScreen.current ? '' : 'layout-container--small']}
+  style:font-family={activeFontFamily}
+>
   <main>
     <Header bind:fontFamily={activeFontFamily} />
 
@@ -106,8 +109,8 @@
     </div>
 
     <footer>
-      <span class="label-small">&copy; 2026 Benjamin Thompson. All rights reserved.</span>
       <div class="cf-turnstile" data-sitekey={env.PUBLIC_TURNSTILE_SITE_KEY}></div>
+      <span class="label-small">&copy; 2026 Benjamin Thompson. All rights reserved.</span>
     </footer>
   </main>
 
@@ -119,8 +122,17 @@
         </div>
         <div class="sidebar-content chat-container">
           <div class="chat-container-header">
-            <Button.Root type="button" class="button text label-small" disabled={chat.messages.length === 0} onclick={() => chat.clear()}>Clear transcript</Button.Root>
-            <Button.Root class="button text icon shadow-mini" aria-label="Close chat" onclick={() => (showChatWindow = false)}>
+            <Button.Root
+              type="button"
+              class="button text label-small"
+              disabled={chat.messages.length === 0}
+              onclick={() => chat.clear()}>Clear transcript</Button.Root
+            >
+            <Button.Root
+              class="button text icon shadow-mini"
+              aria-label="Close chat"
+              onclick={() => (showChatWindow = false)}
+            >
               <CloseIcon size="xs" ariaLabel="Close chat" />
             </Button.Root>
           </div>
@@ -231,6 +243,7 @@
 
   footer {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0.25rem;

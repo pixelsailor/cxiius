@@ -1,0 +1,59 @@
+{
+	"manifest_version": "1.0.0",
+	"task_id": "resume-skills-view-modes",
+	"objective": "Refactor src/lib/content/skills.ts into an AI-friendly flat skill datasource with category and tech-stack metadata. Add client-side resume skills grouping controls (category, proficiency, tech stack) via presentation utilities and update the system prompt assembler to consume the new shape.",
+	"status": "awaiting_human",
+	"current_agent": "orchestrator",
+	"pipeline": ["orchestrator", "planner", "builder", "test", "validator"],
+	"completed_stages": [
+		{
+			"agent": "orchestrator",
+			"completed_at": "2026-05-22T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/resume-skills-view-modes/task-manifest.json"],
+			"summary": "Bootstrapped run; objective validated; handed off to planner."
+		},
+		{
+			"agent": "planner",
+			"completed_at": "2026-05-22T00:00:00.000Z",
+			"output_artifacts": [
+				".cursor/orchestrations/resume-skills-view-modes/plan.md",
+				".cursor/orchestrations/resume-skills-view-modes/acceptance-criteria.md"
+			],
+			"summary": "Plan and acceptance criteria recorded; ready for Builder."
+		},
+		{
+			"agent": "builder",
+			"completed_at": "2026-05-22T00:00:00.000Z",
+			"output_artifacts": [
+				"src/lib/content/skills.ts",
+				"src/lib/utils/skills-presentation.ts",
+				"src/routes/resume/+page.svelte",
+				"src/routes/resume/+page.ts",
+				"src/lib/server/system-prompt.service.ts"
+			],
+			"summary": "Flat skills datasource, presentation grouping, resume controls, prompt formatter."
+		},
+		{
+			"agent": "test",
+			"completed_at": "2026-05-22T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/resume-skills-view-modes/test-report.md"],
+			"summary": "skills-presentation unit tests and check passed."
+		},
+		{
+			"agent": "validator",
+			"completed_at": "2026-05-22T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/resume-skills-view-modes/validation-report.md"],
+			"summary": "PASS_WITH_NOTES; awaiting human approval."
+		}
+	],
+	"loop_count": 0,
+	"max_loops": 2,
+	"locked_artifacts": [],
+	"flags": [],
+	"human_approval": {
+		"status": "pending",
+		"approved_at": null,
+		"approver": null,
+		"notes": null
+	}
+}

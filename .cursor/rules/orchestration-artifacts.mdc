@@ -24,7 +24,7 @@ Runs live under **`.cursor/orchestrations/{task-id}/`**. Do not treat orchestrat
 | Agent | May write |
 |-------|-----------|
 | **Orchestrator** | `task-manifest.json`; optional `human-approval.md` when recording approval |
-| **Planner** | `plan.md`, `acceptance-criteria.md` |
+| **Planner** | `plan.md`, `acceptance-criteria.md`, `architecture-constraints.md` (when ADRs apply per `adr-compliance.mdc`) |
 | **Builder** | `build-log.md` only (plus application code per plan). **Not** `plan.md`, manifest, or other orchestration files |
 | **Test** | `test-report.md` only |
 | **Validator** | `validation-report.md` only |

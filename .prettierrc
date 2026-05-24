@@ -5,7 +5,7 @@
   "quoteProps": "as-needed",
   "trailingComma": "none",
   "bracketSpacing": true,
-  "printWidth": 180,
+  "printWidth": 120,
   "plugins": ["prettier-plugin-svelte"],
   "overrides": [
     {

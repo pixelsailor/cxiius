@@ -42,7 +42,7 @@
     if (event.key === '/' && !commandDialogOpen) {
       event.preventDefault();
     }
-    
+
     const modifierKey = event.ctrlKey || event.metaKey || event.altKey;
     if (!ALPHABET.test(event.key) || modifierKey) {
       return;
@@ -118,7 +118,11 @@ Features a Command prompt for navigation and interacting with the integrated AI 
     {#if chat.messages.length > 0}
       <div class="chat-window-messages" role="log" aria-relevant="additions" aria-label="Chat messages">
         {#each chat.messages as message (message.id)}
-          <div class="chat-window-message markdown" class:chat-window-message--user={message.role === 'user'} class:chat-window-message--assistant={message.role === 'assistant'}>
+          <div
+            class="chat-window-message markdown"
+            class:chat-window-message--user={message.role === 'user'}
+            class:chat-window-message--assistant={message.role === 'assistant'}
+          >
             <SvelteMarkdown source={message.body} />
           </div>
         {/each}
@@ -142,7 +146,12 @@ Features a Command prompt for navigation and interacting with the integrated AI 
           >Type <kbd>/</kbd> to navigate, or start typing to ask a question</Popover.Trigger
         >
         <Popover.Portal to="#commandMenuContainer">
-          <Popover.Content class="command-dialog" sideOffset={-38} onEscapeKeydown={handleEscapeKeydown} onInteractOutside={handleInteractOutside}>
+          <Popover.Content
+            class="command-dialog"
+            sideOffset={-38}
+            onEscapeKeydown={handleEscapeKeydown}
+            onInteractOutside={handleInteractOutside}
+          >
             <Command.Root class="command-root" onStateChange={handleCommandStateChange}>
               <Command.Input
                 bind:value={commandInputValue}

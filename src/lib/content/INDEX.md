@@ -14,7 +14,7 @@ Update this table when domains are added or removed.
 | :---------------- | :-------------------------------------------------------- | :------------------------------------------- |
 | `identity.ts`     | Professional identity, differentiators, contact           | `Promise<Identity>`                          |
 | `experience.ts`   | Work history                                              | `Promise<ExperienceEntry[]>`                 |
-| `skills.ts`       | Technical proficiencies by category                       | `Promise<SkillCategory[]>`                   |
+| `skills.ts`       | Flat skill records, categories, stacks, proficiency scale | `Promise<SkillRecord[]>` (+ meta getters)    |
 | `education.ts`    | Formal education and certifications                       | `Promise<EducationEntry[]>`                  |
 | `background.ts`   | Personal background, interests, favorites, work style     | `Promise<Background>`                        |
 | `availability.ts` | Current availability status                               | `Promise<Availability>`                      |

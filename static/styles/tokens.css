@@ -6,6 +6,10 @@
 	--base-font-weight: 300;
 	--base-font-size: 18px;
 
+	/* Breakpoints */
+	--breakpoint-sm: 600px;
+	--breakpoint-md: 900px;
+
 	/* Theme colors -- Default PrimeNG Color Palette */
 	--p-zinc-50: hsl(0 0% 98.04%);
 	--p-zinc-100: hsl(240 4.76% 95.88%);

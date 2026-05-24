@@ -1,0 +1,11 @@
+.popover__content {
+  padding: 0.75rem 0.5rem 1rem;
+  border: 1px solid var(--muted);
+  border-radius: var(--radius-popover);
+  background-color: var(--background);
+  color: var(--foreground);
+  box-shadow: var(--shadow-popover);
+  z-index: 40;
+  min-width: 16rem;
+  min-height: auto;
+}

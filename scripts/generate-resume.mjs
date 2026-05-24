@@ -89,11 +89,15 @@ function resolveAgentBinary() {
   // Windows: `where` often misses `agent.ps1` (PATHEXT). Resolve like the shell does.
   if (isWin) {
     try {
-      const out = execFileSync('powershell.exe', ['-NoProfile', '-Command', '(Get-Command agent -ErrorAction Stop).Source'], {
-        encoding: 'utf8',
-        windowsHide: true,
-        stdio: ['ignore', 'pipe', 'ignore']
-      }).trim();
+      const out = execFileSync(
+        'powershell.exe',
+        ['-NoProfile', '-Command', '(Get-Command agent -ErrorAction Stop).Source'],
+        {
+          encoding: 'utf8',
+          windowsHide: true,
+          stdio: ['ignore', 'pipe', 'ignore']
+        }
+      ).trim();
       if (out) return out;
     } catch {
       // ignore

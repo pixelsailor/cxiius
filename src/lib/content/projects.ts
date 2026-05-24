@@ -96,7 +96,10 @@ const portfolioData: DesignPortfolioEntry[] = [
         src: '/images/chateaucinq_logo-thumb.webp',
         alt: 'A stylized illustration of grapes on the vine over a leaf with the text "Le Chateau Cinq" in a stylized font.'
       },
-      full: { src: '/images/chateaucinq_logo-933.webp', alt: 'A stylized illustration of grapes on the vine over a leaf with the text "Le Chateau Cinq" in a stylized font.' }
+      full: {
+        src: '/images/chateaucinq_logo-933.webp',
+        alt: 'A stylized illustration of grapes on the vine over a leaf with the text "Le Chateau Cinq" in a stylized font.'
+      }
     },
     circa: '2001',
     technologies: ['Identity', 'Typography', 'Color systems', 'Logo design', 'Branding', 'Adobe Illustrator'],
@@ -111,12 +114,27 @@ const portfolioData: DesignPortfolioEntry[] = [
     name: 'University of Colorado Book Store website',
     projectType: 'ui',
     images: {
-      thumbnail: { src: '/images/cubs_home-thumb.webp', alt: 'A screenshot of the University of Colorado Book Store website homepage.' },
-      full: { src: '/images/cubs_home-933.webp', alt: 'A screenshot of the University of Colorado Book Store website homepage.' },
-      hero: { src: '/images/cubs_home-hero.webp', alt: 'A screenshot of the University of Colorado Book Store website homepage.' },
+      thumbnail: {
+        src: '/images/cubs_home-thumb.webp',
+        alt: 'A screenshot of the University of Colorado Book Store website homepage.'
+      },
+      full: {
+        src: '/images/cubs_home-933.webp',
+        alt: 'A screenshot of the University of Colorado Book Store website homepage.'
+      },
+      hero: {
+        src: '/images/cubs_home-hero.webp',
+        alt: 'A screenshot of the University of Colorado Book Store website homepage.'
+      },
       showcase: [
-        { src: '/images/cubs_grad-933.webp', alt: 'A screenshot of the University of Colorado Book Store website graduation page.' },
-        { src: '/images/cubs_item-933.webp', alt: 'A screenshot of the University of Colorado Book Store website item detail page.' }
+        {
+          src: '/images/cubs_grad-933.webp',
+          alt: 'A screenshot of the University of Colorado Book Store website graduation page.'
+        },
+        {
+          src: '/images/cubs_item-933.webp',
+          alt: 'A screenshot of the University of Colorado Book Store website item detail page.'
+        }
       ]
     },
     circa: '2005',
@@ -136,7 +154,10 @@ const portfolioData: DesignPortfolioEntry[] = [
         src: '/images/gp_city-thumb.webp',
         alt: 'A stylized isometric illustration of a city showing SD cards in use at different locations and with different devices.'
       },
-      full: { src: '/images/gp_city-933.webp', alt: 'A stylized isometric illustration of a city showing SD cards in use at different locations and with different devices.' }
+      full: {
+        src: '/images/gp_city-933.webp',
+        alt: 'A stylized isometric illustration of a city showing SD cards in use at different locations and with different devices.'
+      }
     },
     circa: '2007',
     technologies: ['Vector', 'Adobe Illustrator', 'Adobe Photoshop'],
@@ -163,7 +184,10 @@ const portfolioData: DesignPortfolioEntry[] = [
         alt: 'A modern living room with Swedish style wood furniture and a large TV with the Greenplayer movie ribbon on the screen.'
       },
       showcase: [
-        { src: '/images/gemini_home-933.webp', alt: 'A screenshot of the Greenplay player UI showing the movie selection ribbon on the home screen.' },
+        {
+          src: '/images/gemini_home-933.webp',
+          alt: 'A screenshot of the Greenplay player UI showing the movie selection ribbon on the home screen.'
+        },
         {
           src: '/images/gemini_moviedetail-933.webp',
           alt: 'A screenshot of the Greenplay player UI showing the detail screen for the movie "Gamer," with the movie title, description, and rating.'
@@ -257,12 +281,27 @@ const portfolioData: DesignPortfolioEntry[] = [
         src: '/images/mms_campaignart-thumb.webp',
         alt: 'A screenshot of the Media Management System demonstrating selecting artwork for an in-store marketing campaign.'
       },
-      full: { src: '/images/mms_addart-933.webp', alt: 'A screenshot of the Media Management System demonstrating selecting artwork for an in-store marketing campaign.' },
-      hero: { src: '/images/mms_campaignart-hero.webp', alt: 'A screenshot of the Media Management System demonstrating selecting artwork for an in-store marketing campaign.' },
+      full: {
+        src: '/images/mms_addart-933.webp',
+        alt: 'A screenshot of the Media Management System demonstrating selecting artwork for an in-store marketing campaign.'
+      },
+      hero: {
+        src: '/images/mms_campaignart-hero.webp',
+        alt: 'A screenshot of the Media Management System demonstrating selecting artwork for an in-store marketing campaign.'
+      },
       showcase: [
-        { src: '/images/mms_alerts-933.webp', alt: 'A screenshot of the Media Management System showing alert notifications.' },
-        { src: '/images/mms_analytics-933.webp', alt: 'A screenshot of the Media Management System showing active users.' },
-        { src: '/images/mms_editregions-933.webp', alt: 'A screenshot of the Media Management System showing the United States with western states highlighted.' }
+        {
+          src: '/images/mms_alerts-933.webp',
+          alt: 'A screenshot of the Media Management System showing alert notifications.'
+        },
+        {
+          src: '/images/mms_analytics-933.webp',
+          alt: 'A screenshot of the Media Management System showing active users.'
+        },
+        {
+          src: '/images/mms_editregions-933.webp',
+          alt: 'A screenshot of the Media Management System showing the United States with western states highlighted.'
+        }
       ]
     },
     circa: '2007',
@@ -278,14 +317,23 @@ const portfolioData: DesignPortfolioEntry[] = [
     name: 'MOD Systems website',
     projectType: 'ui',
     images: {
-      thumbnail: { src: '/images/modcom_products-thumb.webp', alt: 'A screenshot of the MOD Systems website products page showing a small kiosk screen with headphones and a CD.' },
-      full: { src: '/images/modcom_home-933.webp', alt: 'A screenshot of the MOD Systems website products page showing a small kiosk screen with headphones and a CD.' },
+      thumbnail: {
+        src: '/images/modcom_products-thumb.webp',
+        alt: 'A screenshot of the MOD Systems website products page showing a small kiosk screen with headphones and a CD.'
+      },
+      full: {
+        src: '/images/modcom_home-933.webp',
+        alt: 'A screenshot of the MOD Systems website products page showing a small kiosk screen with headphones and a CD.'
+      },
       showcase: [
         {
           src: '/images/modcom_merch-933.webp',
           alt: 'A screenshot of the MOD Systems website "merchandise" page describing the company\'s kiosk and media server with photos of each.'
         },
-        { src: '/images/modcom_endpoints-933.webp', alt: 'A screenshot of the MOD Systems website "endpoints" page highlighting digital and physical media devices.' }
+        {
+          src: '/images/modcom_endpoints-933.webp',
+          alt: 'A screenshot of the MOD Systems website "endpoints" page highlighting digital and physical media devices.'
+        }
       ]
     },
     circa: '2008',
@@ -306,20 +354,46 @@ const portfolioData: DesignPortfolioEntry[] = [
         src: '/images/fvm_av-thumb.webp',
         alt: 'A screenshot of the Frontline Vulnerability Manager Active View screen showing various graphs and charts displaying vulnerability data.'
       },
-      full: { src: '/images/fvm_macbook-933.webp', alt: 'A screenshot of the Frontline Vulnerability Manager showing a list network assets with vulnerabilities.' },
+      full: {
+        src: '/images/fvm_macbook-933.webp',
+        alt: 'A screenshot of the Frontline Vulnerability Manager showing a list network assets with vulnerabilities.'
+      },
       hero: {
         src: '/images/fvm_av-hero.webp',
         alt: 'A screenshot of the Frontline Vulnerability Manager Active View screen showing various graphs and charts displaying vulnerability data.'
       },
       showcase: [
-        { src: '/images/fvm_dashboard-933.webp', alt: 'A screenshot of the Frontline Vulnerability Manager showing application dashboard.' },
-        { src: '/images/fvm_assets-933.webp', alt: 'A screenshot of the Frontline Vulnerability Manager showing a list network assets with vulnerabilities.' },
-        { src: '/images/fvm_theme-933.webp', alt: 'A screenshot of the Frontline Vulnerability Manager showing the screen for creating a custom theme.' },
-        { src: '/images/fvm_accolades-933.webp', alt: 'Frontline/Fortra VM has been recognized by analysts and industry publications for its ease of use and effectiveness.' }
+        {
+          src: '/images/fvm_dashboard-933.webp',
+          alt: 'A screenshot of the Frontline Vulnerability Manager showing application dashboard.'
+        },
+        {
+          src: '/images/fvm_assets-933.webp',
+          alt: 'A screenshot of the Frontline Vulnerability Manager showing a list network assets with vulnerabilities.'
+        },
+        {
+          src: '/images/fvm_theme-933.webp',
+          alt: 'A screenshot of the Frontline Vulnerability Manager showing the screen for creating a custom theme.'
+        },
+        {
+          src: '/images/fvm_accolades-933.webp',
+          alt: 'Frontline/Fortra VM has been recognized by analysts and industry publications for its ease of use and effectiveness.'
+        }
       ]
     },
     circa: '2015',
-    technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'AngularJS', 'Bootstrap', 'Webpack', 'Jasmine', 'Python', 'Django'],
+    technologies: [
+      'HTML',
+      'CSS',
+      'Sass',
+      'TypeScript',
+      'AngularJS',
+      'Bootstrap',
+      'Webpack',
+      'Jasmine',
+      'Python',
+      'Django'
+    ],
     summary: 'UI design for Frontline VM.',
     description:
       "Developed as a complete overhaul of Digital Defense's flagship SaaS vulnerability management platform, Version 6 was built from the ground up with a modern technology stack and was designed to be more user-friendly and intuitive. The new version included a new informative UI, more effecient workflows, and a focus on accessibility and security."
@@ -331,8 +405,14 @@ const portfolioData: DesignPortfolioEntry[] = [
     name: 'Electronique Services & Consulting logo',
     projectType: 'branding',
     images: {
-      thumbnail: { src: '/images/electronique_logo-thumb.webp', alt: 'The Electronique Services & Consulting logo with a large stylized letter "Q" in the center.' },
-      full: { src: '/images/electronique_logo-933.webp', alt: 'The Electronique Services & Consulting logo with a large stylized letter "Q" in the center.' }
+      thumbnail: {
+        src: '/images/electronique_logo-thumb.webp',
+        alt: 'The Electronique Services & Consulting logo with a large stylized letter "Q" in the center.'
+      },
+      full: {
+        src: '/images/electronique_logo-933.webp',
+        alt: 'The Electronique Services & Consulting logo with a large stylized letter "Q" in the center.'
+      }
     },
     circa: '2000',
     technologies: ['Identity', 'Typography', 'Color systems', 'Logo design', 'Branding', 'Adobe Illustrator'],
@@ -351,11 +431,20 @@ const portfolioData: DesignPortfolioEntry[] = [
       hero: { src: '/images/mw_home-hero.webp', alt: 'A screenshot of the MetaWallet website homepage.' },
       showcase: [
         { src: '/images/mw_funddetails-933.webp', alt: 'A screenshot of the MetaWallet website funding details page.' },
-        { src: '/images/mw_publiclibrary-933.webp', alt: "A screenshot of the MetaWallet website public library page showing the user's collection of music available to borrow." }
+        {
+          src: '/images/mw_publiclibrary-933.webp',
+          alt: "A screenshot of the MetaWallet website public library page showing the user's collection of music available to borrow."
+        }
       ]
     },
     circa: '2007 - Q3',
-    technologies: ['UI/UX design', 'Interaction design', 'Brand design', 'Corporate web development', 'Adobe Photoshop'],
+    technologies: [
+      'UI/UX design',
+      'Interaction design',
+      'Brand design',
+      'Corporate web development',
+      'Adobe Photoshop'
+    ],
     summary: 'UI design for the MetaWallet and MetaFund services.',
     description:
       'MetaWallet/MetaFund began as a service to send and receive money to and from other users. Initially offered as a pilot program in Bolivia focused on mobile payments well before smartphones, PayPal, or Venmo made such transactions mainstream, it was designed for cheap, keypad-based mobile devices commonly found in developing countries. The idea grew from simple mobile-to-mobile transfers to a full-featured digital wallet that went beyond simple transfers to include charitable giving, user-to-user transfers, and loaning of physical assets.'
@@ -367,9 +456,20 @@ const portfolioData: DesignPortfolioEntry[] = [
     name: 'Norge Familie logo',
     projectType: 'branding',
     images: {
-      thumbnail: { src: '/images/nf_logo-thumb.webp', alt: 'The Norge Familie logo -- a simple depiction of a viking ship with bold lines and colors.' },
-      full: { src: '/images/nf_logo-933.webp', alt: 'The Norge Familie logo -- a simple depiction of a viking ship with bold lines and colors.' },
-      showcase: [{ src: '/images/nf_oldlogo-933.webp', alt: 'The original Norge Familie logo -- an intentionally crude depiction of a viking ship with rough lines.' }]
+      thumbnail: {
+        src: '/images/nf_logo-thumb.webp',
+        alt: 'The Norge Familie logo -- a simple depiction of a viking ship with bold lines and colors.'
+      },
+      full: {
+        src: '/images/nf_logo-933.webp',
+        alt: 'The Norge Familie logo -- a simple depiction of a viking ship with bold lines and colors.'
+      },
+      showcase: [
+        {
+          src: '/images/nf_oldlogo-933.webp',
+          alt: 'The original Norge Familie logo -- an intentionally crude depiction of a viking ship with rough lines.'
+        }
+      ]
     },
     circa: '2024',
     technologies: ['Identity', 'Typography', 'Color systems', 'Logo design', 'Branding', 'Adobe Illustrator'],
@@ -406,19 +506,49 @@ const portfolioData: DesignPortfolioEntry[] = [
     projectType: 'ui',
     featuredAsHero: true,
     images: {
-      thumbnail: { src: '/images/fvm7_av-thumb.webp', alt: 'A screenshot from the Frontline VM v7 Active View dashboard showing network vulnerability data.' },
-      full: { src: '/images/fvm7_av-933_alt.webp', alt: 'A man at a desk in an open office engaging with the Frontline VM v7 Active View interface.' },
-      hero: { src: '/images/fvm7_av-hero.webp', alt: 'A man at a desk in an open office engaging with the Frontline VM v7 Active View interface.' },
+      thumbnail: {
+        src: '/images/fvm7_av-thumb.webp',
+        alt: 'A screenshot from the Frontline VM v7 Active View dashboard showing network vulnerability data.'
+      },
+      full: {
+        src: '/images/fvm7_av-933_alt.webp',
+        alt: 'A man at a desk in an open office engaging with the Frontline VM v7 Active View interface.'
+      },
+      hero: {
+        src: '/images/fvm7_av-hero.webp',
+        alt: 'A man at a desk in an open office engaging with the Frontline VM v7 Active View interface.'
+      },
       showcase: [
         { src: '/images/fvm7_buildreport-933.webp', alt: 'A screenshot from the Frontline VM v7 Build Report dialog.' },
-        { src: '/images/fvm7_rnamgmt-933.webp', alt: 'A screenshot from the Frontline VM v7 RNA management screen showing the details of an RNA device.' },
-        { src: '/images/fvm7_scanactivity-933.webp', alt: 'A screenshot from the Frontline VM v7 Scan Activity screen showing recent scan results.' },
-        { src: '/images/fvm7_scanvulns-933.webp', alt: 'A screenshot from the Frontline VM v7 Scan Vulnerabilities screen showing a list of network vulnerabilities.' }
+        {
+          src: '/images/fvm7_rnamgmt-933.webp',
+          alt: 'A screenshot from the Frontline VM v7 RNA management screen showing the details of an RNA device.'
+        },
+        {
+          src: '/images/fvm7_scanactivity-933.webp',
+          alt: 'A screenshot from the Frontline VM v7 Scan Activity screen showing recent scan results.'
+        },
+        {
+          src: '/images/fvm7_scanvulns-933.webp',
+          alt: 'A screenshot from the Frontline VM v7 Scan Vulnerabilities screen showing a list of network vulnerabilities.'
+        }
         // { src: '/images/fvm7_testqueue-933.webp', alt: 'A screenshot from the Frontline VM v7 Test Queue screen showing a list of scans awaiting analysis.' }
       ]
     },
     circa: '2022',
-    technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'Angular Material', 'Webpack', 'Jasmine', 'Python', 'Django', 'Nx'],
+    technologies: [
+      'HTML',
+      'CSS',
+      'Sass',
+      'TypeScript',
+      'Angular',
+      'Angular Material',
+      'Webpack',
+      'Jasmine',
+      'Python',
+      'Django',
+      'Nx'
+    ],
     summary: 'UI design for Frontline VM v7.',
     description:
       "Version 7 was intended to be the next major release of Frontline VM before Digital Defense's acquisition by Fortra. Working solo for nearly the entire duration of the project, I drove the design and development to migrate the entire front-end from AngularJS to Angular. Visually, there was a renewed focus on accessibility, prioritizing color contrast and screen reader support to meet WCAG 2.1 AA compliance standards. It also featured a custom fork of Angular Material that was built to not only support features unique to FVM but would live on to become the Angular component library for other Fortra products. While it saw a limited public release as an A/B test, allowing users to switch between the old and new versions, the project was ultimately cancelled before it could be fully realized."
@@ -430,12 +560,27 @@ const portfolioData: DesignPortfolioEntry[] = [
     name: 'Uniform Design System',
     projectType: 'ui',
     images: {
-      thumbnail: { src: '/images/uniform_buttons-thumb.webp', alt: 'A series of buttons with different colors and styles from the Uniform Design System.' },
-      full: { src: '/images/uniform_previews-933.webp', alt: 'A collection of examples from the Uniform Design System including buttons, forms, progress bars, and more.' },
+      thumbnail: {
+        src: '/images/uniform_buttons-thumb.webp',
+        alt: 'A series of buttons with different colors and styles from the Uniform Design System.'
+      },
+      full: {
+        src: '/images/uniform_previews-933.webp',
+        alt: 'A collection of examples from the Uniform Design System including buttons, forms, progress bars, and more.'
+      },
       showcase: [
-        { src: '/images/uniform_buttons-933.webp', alt: 'A series of buttons with different colors and styles from the Uniform Design System.' },
-        { src: '/images/uniform_forms-933.webp', alt: 'A screenshot of an example form using the Uniform Design System.' },
-        { src: '/images/uniform_badge-933.webp', alt: 'A demonstration of various Uniform badge components in different colors.' }
+        {
+          src: '/images/uniform_buttons-933.webp',
+          alt: 'A series of buttons with different colors and styles from the Uniform Design System.'
+        },
+        {
+          src: '/images/uniform_forms-933.webp',
+          alt: 'A screenshot of an example form using the Uniform Design System.'
+        },
+        {
+          src: '/images/uniform_badge-933.webp',
+          alt: 'A demonstration of various Uniform badge components in different colors.'
+        }
       ]
     },
     circa: '2022',
@@ -455,10 +600,19 @@ const portfolioData: DesignPortfolioEntry[] = [
         src: '/images/sealevel_preview-thumb2.webp',
         alt: 'A collection of examples from the SeaLevel component library including buttons, forms, progress bars, and more.'
       },
-      full: { src: '/images/sealevel_preview-933.webp', alt: 'A collection of examples from the SeaLevel component library including buttons, forms, progress bars, and more.' },
+      full: {
+        src: '/images/sealevel_preview-933.webp',
+        alt: 'A collection of examples from the SeaLevel component library including buttons, forms, progress bars, and more.'
+      },
       showcase: [
-        { src: '/images/sealevel_grid-933.webp', alt: 'A demonstration of the SeaLevel grid system with different column layouts.' },
-        { src: '/images/sealevel_stack-933.webp', alt: 'A demonstration of the SeaLevel stack system showing its built-in divider options.' }
+        {
+          src: '/images/sealevel_grid-933.webp',
+          alt: 'A demonstration of the SeaLevel grid system with different column layouts.'
+        },
+        {
+          src: '/images/sealevel_stack-933.webp',
+          alt: 'A demonstration of the SeaLevel stack system showing its built-in divider options.'
+        }
       ]
     },
     circa: '2023',
@@ -474,11 +628,23 @@ const portfolioData: DesignPortfolioEntry[] = [
     name: "What's For Dinner",
     projectType: 'ui',
     images: {
-      thumbnail: { src: '/images/wfd_prompt-thumb.webp', alt: 'Close-up of the What\'s For Dinner prompt interface asking, "Care to cook up dinner?"' },
-      full: { src: '/images/wfd_prompt-933.webp', alt: "A laptop in a cozy home setting showing the What's For Dinner application homepage." },
-      hero: { src: '/images/wfd_prompt-hero.webp', alt: "A laptop in a cozy home setting showing the What's For Dinner application homepage." },
+      thumbnail: {
+        src: '/images/wfd_prompt-thumb.webp',
+        alt: 'Close-up of the What\'s For Dinner prompt interface asking, "Care to cook up dinner?"'
+      },
+      full: {
+        src: '/images/wfd_prompt-933.webp',
+        alt: "A laptop in a cozy home setting showing the What's For Dinner application homepage."
+      },
+      hero: {
+        src: '/images/wfd_prompt-hero.webp',
+        alt: "A laptop in a cozy home setting showing the What's For Dinner application homepage."
+      },
       showcase: [
-        { src: '/images/wfd_suggestions-933.webp', alt: "A screenshot of the What's For Dinner application suggestions page." },
+        {
+          src: '/images/wfd_suggestions-933.webp',
+          alt: "A screenshot of the What's For Dinner application suggestions page."
+        },
         { src: '/images/wfd_recipe-933.webp', alt: 'A screenshot of a recipe for burritos and cilantro lime rice.' }
       ]
     },
@@ -496,10 +662,16 @@ const portfolioData: DesignPortfolioEntry[] = [
     projectType: 'ui',
     liveUrl: 'https://www.norwegian-family.com',
     images: {
-      thumbnail: { src: '/images/norgefamilie_home-thumb.webp', alt: 'A screenshot of the Norge Familie website homepage.' },
+      thumbnail: {
+        src: '/images/norgefamilie_home-thumb.webp',
+        alt: 'A screenshot of the Norge Familie website homepage.'
+      },
       full: { src: '/images/norgefamilie_home-933.webp', alt: 'A screenshot of the Norge Familie website homepage.' },
       showcase: [
-        { src: '/images/norgefamilie_gallery-933.webp', alt: 'A screenshot of the Norge Familie gallery page. A mosaic of hand-sewn nisse dolls in various colors and sizes.' }
+        {
+          src: '/images/norgefamilie_gallery-933.webp',
+          alt: 'A screenshot of the Norge Familie gallery page. A mosaic of hand-sewn nisse dolls in various colors and sizes.'
+        }
       ]
     },
     circa: '2025',
@@ -533,9 +705,23 @@ const nonPortfolioData: NonPortfolioProjectEntry[] = [
       'Anthropic SDK powers assistant capabilities that expand how visitors can explore experience, project context, and technical depth.',
       'AI interactions are treated as part of the product experience, not an afterthought layered on top of static content.'
     ],
-    authorNotes: ['The current live site is both a professional profile and an implementation-level demonstration of practical SvelteKit and Cloudflare delivery patterns.'],
-    roadmap: ['Continue evolving cxii.us as the primary CXII platform with deeper AI-assisted discovery and ongoing content expansion.'],
-    techStack: ['Svelte', 'SvelteKit', 'Cloudflare Workers', 'Anthropic SDK', 'CSS', 'Vite', 'Vitest', 'Zod', 'bits-ui'],
+    authorNotes: [
+      'The current live site is both a professional profile and an implementation-level demonstration of practical SvelteKit and Cloudflare delivery patterns.'
+    ],
+    roadmap: [
+      'Continue evolving cxii.us as the primary CXII platform with deeper AI-assisted discovery and ongoing content expansion.'
+    ],
+    techStack: [
+      'Svelte',
+      'SvelteKit',
+      'Cloudflare Workers',
+      'Anthropic SDK',
+      'CSS',
+      'Vite',
+      'Vitest',
+      'Zod',
+      'bits-ui'
+    ],
     links: {}
   },
   {
@@ -562,8 +748,13 @@ const nonPortfolioData: NonPortfolioProjectEntry[] = [
       'Users can attach dietary and method preferences when asking for ideas - for example gluten-free, vegan, or avoiding specific techniques such as sous vide.',
       'AI-assisted changes apply directly in the recipe text - including substitutions and on-the-fly edits - rather than only returning a separate suggestion block.'
     ],
-    authorNotes: ['Developed solo as a personal tool used almost daily for recipe ideas and for working through practical kitchen constraints as the main cook at home.'],
-    roadmap: ['Near term: private beta before a wider release.', 'Longer term: ship as a public site and as an Ionic app for mobile.'],
+    authorNotes: [
+      'Developed solo as a personal tool used almost daily for recipe ideas and for working through practical kitchen constraints as the main cook at home.'
+    ],
+    roadmap: [
+      'Near term: private beta before a wider release.',
+      'Longer term: ship as a public site and as an Ionic app for mobile.'
+    ],
     techStack: ['Svelte 5', 'SvelteKit', 'Dexie', 'Supabase', 'Progressive Web App / offline-capable web'],
     links: {}
   }

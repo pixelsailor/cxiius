@@ -1,0 +1,63 @@
+{
+	"manifest_version": "1.0.0",
+	"task_id": "skills-explorer-split-popover-chart",
+	"objective": "Phase 2: Use ResumeSkillsChart and ResumeSkillsChartOptionsPopover directly on resume +page.svelte. Popover owns triggers (bits-ui Popover.Trigger child snippet with two hover buttons), openOnHover, panes, inclusion state, and persistence. Keep customAnchor from page for chart overlay. Page only wires shared selection data to chart. Remove ResumeSkillsExplorer. Raw bits-ui only.",
+	"status": "complete",
+	"current_agent": "orchestrator",
+	"pipeline": ["orchestrator", "planner", "builder", "test", "validator"],
+	"completed_stages": [
+		{
+			"agent": "orchestrator",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/skills-explorer-split-popover-chart/task-manifest.json"],
+			"summary": "Phase 2 bootstrap from human decisions."
+		},
+		{
+			"agent": "planner",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": [
+				".cursor/orchestrations/skills-explorer-split-popover-chart/plan.md",
+				".cursor/orchestrations/skills-explorer-split-popover-chart/acceptance-criteria.md",
+				".cursor/orchestrations/skills-explorer-split-popover-chart/architecture-constraints.md"
+			],
+			"summary": "Phase 2 plan: 27 AC-P2 items."
+		},
+		{
+			"agent": "builder",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/skills-explorer-split-popover-chart/build-log.md"],
+			"summary": "Phase 2 implemented; remediation deleted ResumeSkillsExplorer."
+		},
+		{
+			"agent": "test",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/skills-explorer-split-popover-chart/test-report.md"],
+			"summary": "16/16 skills-explorer tests pass."
+		},
+		{
+			"agent": "validator",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": [".cursor/orchestrations/skills-explorer-split-popover-chart/validation-report.md"],
+			"summary": "Phase 2 PASS_WITH_NOTES after remediation."
+		},
+		{
+			"agent": "orchestrator",
+			"completed_at": "2026-05-24T12:00:00.000Z",
+			"output_artifacts": [
+				".cursor/orchestrations/skills-explorer-split-popover-chart/task-manifest.json",
+				".cursor/orchestrations/skills-explorer-split-popover-chart/human-approval.md"
+			],
+			"summary": "Human approval recorded; run closed complete."
+		}
+	],
+	"loop_count": 1,
+	"max_loops": 2,
+	"locked_artifacts": [],
+	"flags": ["phase_2_page_compose"],
+	"human_approval": {
+		"status": "approved",
+		"approved_at": "2026-05-24T12:00:00.000Z",
+		"approver": "user",
+		"notes": "Approved after Phase 2 page compose: chart + popover on resume route, Popover.Trigger with openOnHover, ResumeSkillsExplorer removed."
+	}
+}

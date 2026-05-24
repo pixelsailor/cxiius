@@ -70,7 +70,15 @@
 
     <div class="hero">
       <picture>
-        <img class="hero-img" src={heroLead.src} alt={heroImgAlt} width="933" height="347" loading="eager" decoding="async" />
+        <img
+          class="hero-img"
+          src={heroLead.src}
+          alt={heroImgAlt}
+          width="933"
+          height="347"
+          loading="eager"
+          decoding="async"
+        />
       </picture>
       <div class="hero-glass"></div>
     </div>
@@ -236,7 +244,12 @@
   .glass {
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, hsla(0 0% 100% / 0.32) 0%, hsla(0 0% 100% / 0) 52%, hsla(0 0% 100% / 0.08) 100%);
+    background: linear-gradient(
+      135deg,
+      hsla(0 0% 100% / 0.32) 0%,
+      hsla(0 0% 100% / 0) 52%,
+      hsla(0 0% 100% / 0.08) 100%
+    );
     pointer-events: none;
     border-radius: 0.25rem;
     border: 1px solid var(--border-card);

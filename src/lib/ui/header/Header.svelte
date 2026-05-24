@@ -7,7 +7,15 @@
   import { page } from '$app/state';
   import type { RouteId } from '$app/types';
   import { Slider } from '$lib/ui';
-  import { PaletteIcon, DesktopIcon, SunIcon, SunHorizonIcon, MoonStarsIcon, MoonIcon, ListSearchIcon } from '$lib/ui/icons';
+  import {
+    PaletteIcon,
+    DesktopIcon,
+    SunIcon,
+    SunHorizonIcon,
+    MoonStarsIcon,
+    MoonIcon,
+    ListSearchIcon
+  } from '$lib/ui/icons';
   import { serifFontFamily, sansFontFamily } from '$lib/utils/fonts';
   import { MediaQuery } from 'svelte/reactivity';
 
@@ -81,7 +89,14 @@
     <ul class="main-nav-list">
       {#each navItems as item (item.path)}
         <li class="main-nav-item link">
-          <a href={item.path === '/' ? resolve('/') : item.path === '/resume' ? resolve('/resume') : resolve('/portfolio')} class="main-nav-link">{item.label}</a>
+          <a
+            href={item.path === '/'
+              ? resolve('/')
+              : item.path === '/resume'
+                ? resolve('/resume')
+                : resolve('/portfolio')}
+            class="main-nav-link">{item.label}</a
+          >
         </li>
       {/each}
     </ul>
@@ -200,16 +215,6 @@ Header component: Contains the main navigation and global theme and font control
   }
 
   :global(.popover__content) {
-    padding: 0.75rem 0.5rem 1rem;
-    border: 1px solid var(--muted);
-    border-radius: var(--radius-popover);
-    background-color: var(--background);
-    color: var(--foreground);
-    box-shadow: var(--shadow-popover);
-    z-index: 40;
-    width: 16rem;
-    min-height: auto;
-
     &.main-nav-popover__content {
       margin-left: 0.25rem;
       padding: 0 0.5rem;
