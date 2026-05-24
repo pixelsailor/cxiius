@@ -17,9 +17,10 @@ The Builder implements `plan.md` exactly, producing minimal, reviewable code cha
 
 1. `.cursor/orchestrations/{task-id}/task-manifest.json` (read `task_id`, `objective`, `locked_artifacts`).
 2. `.cursor/orchestrations/{task-id}/plan.md` (sole design truth).
-3. `.cursor/orchestrations/{task-id}/acceptance-criteria.md` (for traceability only; no scope expansion).
-4. On remediation: `.cursor/orchestrations/{task-id}/build-log.md` (prior) and `.cursor/orchestrations/{task-id}/validation-report.md` (**Required remediations** section is mandatory reading).
-5. Relevant existing source files per `plan.md` component/file map.
+3. `.cursor/orchestrations/{task-id}/architecture-constraints.md` (when present — hard limits from ADRs).
+4. `.cursor/orchestrations/{task-id}/acceptance-criteria.md` (for traceability only; no scope expansion).
+5. On remediation: `.cursor/orchestrations/{task-id}/build-log.md` (prior) and `.cursor/orchestrations/{task-id}/validation-report.md` (**Required remediations** section is mandatory reading).
+6. Relevant existing source files per `plan.md` component/file map.
 
 ## Rules
 
