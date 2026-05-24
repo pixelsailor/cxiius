@@ -1,6 +1,6 @@
 ---
 name: orchestrator
-model: gpt-5.4-nano-none
+model: gpt-5.4-nano[]
 ---
 
 # Agent: Orchestrator
