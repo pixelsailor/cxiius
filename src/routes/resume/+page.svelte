@@ -4,22 +4,23 @@
   import { resolve } from '$app/paths';
   import type { Pathname } from '$app/types';
   import { getProficiencyLevel } from '$lib/content/skills';
-  import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon, CaretDownIcon } from '$lib/ui/icons';
-  import { type ChartOptionsPane, ResumeSkillsExplorer } from '$lib/ui/skills-explorer';
+  import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon } from '$lib/ui/icons';
+  import { ResumeSkillsChart, ResumeSkillsChartOptionsPopover } from '$lib/ui/skills-explorer';
+  import { SvelteSet } from 'svelte/reactivity';
   import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
 
   const resumePdfPath = '/assets/ben-thompson__frontend-swe.pdf' as Pathname;
 
   let { data }: { data: PageData } = $props();
-  
+
   let isJsEnabled = $state(isJavaScriptEnabled());
-  
+
   let skillsExplorerMounted = $state(false);
 
-  let chartOptionsOpen = $state(false);
   let chartOptionsAnchorEl = $state<HTMLElement | null>(null);
 
-  let chartOptionsPane = $state<ChartOptionsPane>('domains');
+  let includedSkillIds = $state.raw(new SvelteSet<string>());
+  let inclusionHydrated = $state(false);
 
   function formatAvatarLabel(avatar: string): string {
     return avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '';
@@ -93,54 +94,32 @@
       <section class="skills-section will-fade" aria-labelledby="skills-heading">
         <div class="skills-section__header">
           <h3 class="headline-small" id="skills-heading">Skills</h3>
-          <div class="button-group">
-            <button
-              type="button"
-              class="button"
-              aria-expanded={chartOptionsOpen}
-              aria-controls="skills-chart-options"
-              onpointerenter={() => {
-                chartOptionsOpen = true;
-                chartOptionsPane = 'skillStacks';
-              }}
-            >
-              Tech stack options
-              <CaretDownIcon size="sm" ariaLabel="Caret down" />
-            </button>
-            <button
-              type="button"
-              class="button"
-              aria-expanded={chartOptionsOpen}
-              aria-controls="skills-chart-options"
-              onpointerenter={() => {
-                chartOptionsOpen = true;
-                chartOptionsPane = 'domains';
-              }}
-            >
-              Show chart options
-              <CaretDownIcon size="sm" ariaLabel="Caret down" />
-            </button>
-          </div>
+          <ResumeSkillsChartOptionsPopover
+            skillRecords={data.skillRecords}
+            skillCategories={data.skillCategories}
+            skillStacks={data.skillStacks}
+            customAnchor={chartOptionsAnchorEl}
+            bind:includedSkillIds
+            bind:inclusionHydrated
+          />
         </div>
         <div bind:this={chartOptionsAnchorEl} class="skills-explorer-anchor">
           <!-- Used to anchor the popover panel. This has no height ensuring the popover correctly covers the chart instead of above or below it. -->
         </div>
         <div class="skills-explorer-shell" data-explorer-ready={skillsExplorerMounted ? '' : undefined}>
-          <ResumeSkillsExplorer
+          <ResumeSkillsChart
             skillRecords={data.skillRecords}
             skillCategories={data.skillCategories}
-            skillStacks={data.skillStacks}
+            {includedSkillIds}
+            {inclusionHydrated}
             onChartReady={(ready) => {
               skillsExplorerMounted = ready;
             }}
-            bind:open={chartOptionsOpen}
-            customAnchor={chartOptionsAnchorEl}
-            selectedPane={chartOptionsPane}
           />
         </div>
       </section>
     {/if}
-    
+
     <section class="experience-section will-fade">
       <h3 class="headline-small">Experience</h3>
       {#each data.experience as experience (experience.title)}
@@ -254,6 +233,11 @@
 </div>
 
 <style>
+  .skills-explorer-anchor {
+    container-type: inline-size;
+    container-name: popover-container;
+  }
+
   .role {
     font-size: clamp(1rem, 2.33vw, 1.5rem);
   }
