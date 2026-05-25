@@ -258,7 +258,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'fluent',
     yearsOfExperience: 13,
     categoryId: 'languages-markup',
-    stackIds: ['web-fundamentals', 'angular', 'react', 'svelte', 't3-stack']
+    stackIds: ['web-fundamentals', 'angular', 'react', 'svelte', 't3-stack', 'angular-enterprise', 'mean']
   },
   {
     id: 'angular',
@@ -740,7 +740,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 2,
     categoryId: 'tooling-cloud-delivery',
-    stackIds: ['angular-enterprise']
+    stackIds: ['angular', 'angular-enterprise']
   },
   {
     id: 'wrangler',
