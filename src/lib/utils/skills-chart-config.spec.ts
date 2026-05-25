@@ -99,6 +99,12 @@ describe('buildCategoryProficiencyPolarChart', () => {
     expect(config.data.datasets[0]?.data).toEqual([0]);
     expect(config.options?.plugins?.legend?.display).toBe(false);
   });
+
+  it('draws radial proficiency tick labels above polar segments', () => {
+    const config = buildCategoryProficiencyPolarChart(allIncludedArgs);
+    const radialScale = config.options?.scales?.r;
+    expect(radialScale && 'ticks' in radialScale && radialScale.ticks?.z).toBe(1);
+  });
 });
 
 describe('buildCategoryProficiencyRadarChart', () => {

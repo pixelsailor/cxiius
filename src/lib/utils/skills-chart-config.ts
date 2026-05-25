@@ -85,7 +85,9 @@ const radialProficiencyScale = {
   max: PROFICIENCY_CHART_MAX,
   ticks: {
     stepSize: 1,
-    callback: proficiencyTickCallback
+    callback: proficiencyTickCallback,
+    /** Draw proficiency ring labels above polar/radar segments (Chart.js default z is 0). */
+    z: 1
   }
 } satisfies NonNullable<ChartOptions<'polarArea'>['scales']>['r'];
 
