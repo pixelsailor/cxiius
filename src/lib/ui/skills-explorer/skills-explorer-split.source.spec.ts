@@ -49,12 +49,24 @@ describe('skills-explorer split (source)', () => {
     expect(resumePageSource).toContain('<ResumeSkillsChart');
     expect(resumePageSource).toContain('bind:includedSkillIds');
     expect(resumePageSource).toContain('bind:inclusionHydrated');
+    expect(resumePageSource).toContain('bind:chartType');
+    expect(resumePageSource).toContain('bind:chartTypeHydrated');
     expect(resumePageSource).toContain('customAnchor={chartOptionsAnchorEl}');
     expect(resumePageSource).toContain('class="skills-explorer-anchor"');
     expect(resumePageSource).not.toContain('chartOptionsOpen');
     expect(resumePageSource).not.toContain('chartOptionsPane');
     expect(resumePageSource).not.toMatch(/onpointerenter/);
     expect(resumePageSource).not.toContain('bind:open');
+  });
+
+  it('AC-10: popover owns hydration and persistence for chartType', () => {
+    expect(popoverSource).toContain('hydrateChartType');
+    expect(popoverSource).toContain('writePersistedChartType');
+    expect(popoverSource).toContain('chartTypeHydrated');
+    expect(chartSource).not.toContain('hydrateChartType');
+    expect(chartSource).not.toContain('writePersistedChartType');
+    expect(resumePageSource).not.toContain('hydrateChartType');
+    expect(resumePageSource).not.toContain('writePersistedChartType');
   });
 
   it('AC-P2-10: popover owns hydration and persistence for includedSkillIds', () => {
@@ -86,6 +98,7 @@ describe('skills-explorer split (source)', () => {
     expect(popoverSource).toContain("mergeProps(props, { class: 'button-group' })");
     expect(popoverSource).toContain('Tech stacks');
     expect(popoverSource).toContain('Skills by domain');
+    expect(popoverSource).toContain('Chart type');
     expect(popoverSource).not.toContain('class="sr-only"');
     expect(popoverSource).not.toContain('trigger?: Snippet');
   });

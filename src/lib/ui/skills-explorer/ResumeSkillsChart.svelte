@@ -4,10 +4,8 @@
   import type { SvelteSet } from 'svelte/reactivity';
   import { browser } from '$app/environment';
   import { type SkillCategoryMeta, type SkillRecord } from '$lib/content/skills';
-  import {
-    buildCategoryProficiencyBarChart,
-    ensureResumeSkillBarChartRegistered
-  } from '$lib/utils/skills-chart-config';
+  import { buildResumeSkillsChart, ensureResumeSkillChartRegistered } from '$lib/utils/skills-chart-config';
+  import type { ResumeSkillsChartType } from './types';
 
   type Props = {
     skillRecords: SkillRecord[];
@@ -16,31 +14,66 @@
     includedSkillIds: SvelteSet<string>;
     /** When false, defers Chart.js paint until popover has hydrated inclusion from storage. */
     inclusionHydrated?: boolean;
+    /** When false, defers Chart.js paint until popover has hydrated chart type from storage. */
+    chartTypeHydrated?: boolean;
+    /** Chart.js visualization family to render. */
+    chartType?: ResumeSkillsChartType;
     /** Notifies the parent when the chart has rendered at least once. */
     onChartReady?: (ready: boolean) => void;
   };
 
   type ChartCtor = (typeof import('chart.js'))['Chart'];
 
-  let { skillRecords, skillCategories, includedSkillIds, inclusionHydrated = false, onChartReady }: Props = $props();
+  let {
+    skillRecords,
+    skillCategories,
+    includedSkillIds,
+    inclusionHydrated = false,
+    chartTypeHydrated = false,
+    chartType = 'bar',
+    onChartReady
+  }: Props = $props();
 
   let canvasEl: HTMLCanvasElement | undefined = undefined;
   let chartInstance: InstanceType<ChartCtor> | null = null;
   let chartHasRendered = false;
+  let lastChartType: ResumeSkillsChartType | null = null;
 
   const includedCount = $derived(skillRecords.filter((record) => includedSkillIds.has(record.id)).length);
 
-  const describeCanvasAria = (): string =>
-    `Vertical bar chart of ${includedCount} skills grouped by domain category; bar height shows proficiency tier`;
+  const chartTypeAriaLabels: Record<ResumeSkillsChartType, string> = {
+    bar: 'Vertical bar chart',
+    polar: 'Polar area chart',
+    radar: 'Radar chart',
+    bubble: 'Bubble chart'
+  };
+
+  const describeCanvasAria = (): string => {
+    const typeLabel = chartTypeAriaLabels[chartType];
+    const scaleHint =
+      chartType === 'bubble'
+        ? 'proficiency tier on vertical axis, years of experience on horizontal axis, bubble size encodes years of experience'
+        : chartType === 'bar'
+          ? 'bar height shows proficiency tier'
+          : 'proficiency tier encoded on radial scale';
+    return `${typeLabel} of ${includedCount} skills; ${scaleHint}`;
+  };
 
   async function repaintChart(): Promise<void> {
     if (!browser || canvasEl === undefined) {
       return;
     }
-    await ensureResumeSkillBarChartRegistered();
+
+    const typeChanged = lastChartType !== null && chartType !== lastChartType;
+    if (chartInstance !== null && typeChanged) {
+      chartInstance.destroy();
+      chartInstance = null;
+    }
+
+    await ensureResumeSkillChartRegistered(chartType);
     const { Chart } = await import('chart.js');
     const chartCtor = Chart as ChartCtor;
-    const blueprint = buildCategoryProficiencyBarChart({
+    const blueprint = buildResumeSkillsChart(chartType, {
       datasourceRecords: skillRecords,
       categories: skillCategories,
       includedSkillIds
@@ -50,12 +83,13 @@
       return;
     }
 
-    if (chartInstance !== null) {
+    if (chartInstance === null) {
+      chartInstance = new chartCtor(context, blueprint as ChartConfiguration);
+      lastChartType = chartType;
+    } else {
       chartInstance.data = blueprint.data;
       Object.assign(chartInstance.options, blueprint.options);
       chartInstance.update('none');
-    } else {
-      chartInstance = new chartCtor(context, blueprint as ChartConfiguration<'bar'>);
     }
     if (!chartHasRendered) {
       chartHasRendered = true;
@@ -70,18 +104,21 @@
     return () => {
       chartInstance?.destroy();
       chartInstance = null;
+      lastChartType = null;
     };
   });
 
   onDestroy(() => {
     chartInstance?.destroy();
     chartInstance = null;
+    lastChartType = null;
   });
 
   $effect(() => {
-    if (!browser || !inclusionHydrated || canvasEl === undefined) {
+    if (!browser || !inclusionHydrated || !chartTypeHydrated || canvasEl === undefined) {
       return;
     }
+    void chartType;
     void includedSkillIds.size;
     void repaintChart();
   });
@@ -89,7 +126,7 @@
 
 <!--
 @component
-Resume skills bar chart canvas (Chart.js). Reads `includedSkillIds` from the page bridge (owned by `ResumeSkillsChartOptionsPopover`); does not own persistence or popover UI.
+Resume skills chart canvas (Chart.js). Reads `includedSkillIds` and `chartType` from the page bridge; does not own persistence or popover UI.
 
 Example:
 ```svelte
@@ -97,6 +134,8 @@ Example:
   skillRecords={records}
   skillCategories={categories}
   {includedSkillIds}
+  chartType="bar"
+  {chartTypeHydrated}
   onChartReady={(ready) => { chartReady = ready; }}
 />
 ```

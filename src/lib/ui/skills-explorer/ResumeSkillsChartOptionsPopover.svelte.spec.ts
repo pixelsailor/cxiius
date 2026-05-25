@@ -55,6 +55,13 @@ describe('ResumeSkillsChartOptionsPopover', () => {
 
     await domainsButton.hover();
     expect(screen.getByRole('heading', { name: 'Skill Domains' })).toBeTruthy();
+
+    const chartTypeButton = screen.getByRole('button', { name: /Chart type/i });
+    expect(chartTypeButton).toBeTruthy();
+    expect(chartTypeButton.element().getAttribute('aria-controls')).toBe('skills-chart-options');
+
+    await chartTypeButton.hover();
+    expect(screen.getByRole('heading', { name: 'Chart type' })).toBeTruthy();
   });
 
   it('AC-P2-20: tech-stacks pane exposes fieldset, sr-only legend, and stack radios', async () => {
@@ -97,6 +104,56 @@ describe('ResumeSkillsChartOptionsPopover', () => {
     expect(includedSkillIds.has('angular')).toBe(true);
     expect(includedSkillIds.has('react')).toBe(false);
     expect(includedSkillIds.size).toBe(2);
+  });
+
+  it('AC-21: chart-type pane exposes fieldset, sr-only legend, and four type radios', async () => {
+    const screen = await render(ResumeSkillsChartOptionsPopover, {
+      props: {
+        skillRecords,
+        skillCategories,
+        skillStacks
+      }
+    });
+
+    await screen.getByRole('button', { name: /Chart type/i }).hover();
+    await expect.poll(() => document.querySelector('fieldset.fieldset__chart-types')).not.toBeNull();
+
+    const fieldset = document.querySelector('fieldset.fieldset__chart-types');
+    expect(fieldset).not.toBeNull();
+
+    const legend = fieldset?.querySelector('legend.chart-types__legend');
+    expect(legend?.textContent).toContain('Select chart visualization type');
+
+    const radios = fieldset?.querySelectorAll('input[type="radio"]');
+    expect(radios?.length).toBe(4);
+
+    const barRadio = screen.getByRole('radio', { name: 'Bar' });
+    expect(barRadio).toBeTruthy();
+    expect(barRadio.element()).toHaveProperty('checked', true);
+    expect(screen.getByRole('radio', { name: 'Polar' })).toBeTruthy();
+    expect(screen.getByRole('radio', { name: 'Radar' })).toBeTruthy();
+    expect(screen.getByRole('radio', { name: 'Bubble' })).toBeTruthy();
+  });
+
+  it('AC-21: selecting a chart type updates bindable chartType', async () => {
+    let chartType: 'bar' | 'polar' | 'radar' | 'bubble' = 'bar';
+    const screen = await render(ResumeSkillsChartOptionsPopover, {
+      props: {
+        skillRecords,
+        skillCategories,
+        skillStacks,
+        get chartType() {
+          return chartType;
+        },
+        set chartType(value: 'bar' | 'polar' | 'radar' | 'bubble') {
+          chartType = value;
+        }
+      }
+    });
+
+    await screen.getByRole('button', { name: /Chart type/i }).hover();
+    await screen.getByRole('radio', { name: 'Radar' }).click();
+    expect(chartType).toBe('radar');
   });
 
   it('AC-P2-05: toggling a domain skill checkbox mutates shared includedSkillIds', async () => {

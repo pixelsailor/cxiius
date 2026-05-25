@@ -5,7 +5,11 @@
   import type { Pathname } from '$app/types';
   import { getProficiencyLevel } from '$lib/content/skills';
   import { LinkedInIcon, DribbbleIcon, GithubIcon, PdfIcon } from '$lib/ui/icons';
-  import { ResumeSkillsChart, ResumeSkillsChartOptionsPopover } from '$lib/ui/skills-explorer';
+  import {
+    ResumeSkillsChart,
+    ResumeSkillsChartOptionsPopover,
+    type ResumeSkillsChartType
+  } from '$lib/ui/skills-explorer';
   import { SvelteSet } from 'svelte/reactivity';
   import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
 
@@ -21,6 +25,8 @@
 
   let includedSkillIds = $state.raw(new SvelteSet<string>());
   let inclusionHydrated = $state(false);
+  let chartType = $state<ResumeSkillsChartType>('bar');
+  let chartTypeHydrated = $state(false);
 
   function formatAvatarLabel(avatar: string): string {
     return avatar.length > 0 ? avatar.charAt(0).toUpperCase() + avatar.slice(1) : '';
@@ -101,6 +107,8 @@
             customAnchor={chartOptionsAnchorEl}
             bind:includedSkillIds
             bind:inclusionHydrated
+            bind:chartType
+            bind:chartTypeHydrated
           />
         </div>
         <div bind:this={chartOptionsAnchorEl} class="skills-explorer-anchor">
@@ -112,6 +120,8 @@
             skillCategories={data.skillCategories}
             {includedSkillIds}
             {inclusionHydrated}
+            {chartType}
+            {chartTypeHydrated}
             onChartReady={(ready) => {
               skillsExplorerMounted = ready;
             }}

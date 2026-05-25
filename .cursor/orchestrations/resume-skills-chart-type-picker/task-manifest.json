@@ -1,0 +1,54 @@
+{
+	"manifest_version": "1.0.0",
+	"task_id": "resume-skills-chart-type-picker",
+	"objective": "Add a chart-type options pane to ResumeSkillsChartOptionsPopover: a radio group (bar, polar, radar, bubble) in four responsive columns, a third Popover.Trigger button beside Tech stacks and Skills by domain, and page-level binding so the selection switches the Chart.js chart rendered in ResumeSkillsChart.",
+	"status": "complete",
+	"current_agent": "orchestrator",
+	"pipeline": ["orchestrator", "planner", "builder", "test", "validator"],
+	"completed_stages": [
+		{
+			"agent": "planner",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": [
+				"plan.md",
+				"acceptance-criteria.md",
+				"architecture-constraints.md"
+			],
+			"summary": "Executable plan with ADR constraints, 22 ACs, non-blocking open questions on scatter axes and trigger label."
+		},
+		{
+			"agent": "builder",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": ["build-log.md"],
+			"summary": "Chart-type picker implemented; format/lint/check/build green."
+		},
+		{
+			"agent": "test",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": ["test-report.md"],
+			"summary": "In-scope 31/31 green; chart-config spec + popover/source extensions."
+		},
+		{
+			"agent": "validator",
+			"completed_at": "2026-05-24T00:00:00.000Z",
+			"output_artifacts": ["validation-report.md"],
+			"summary": "FAIL on AC-19 only: full npm test has 7 unrelated pre-existing failures; feature ACs and in-scope tests pass."
+		},
+		{
+			"agent": "orchestrator",
+			"completed_at": "2026-05-25T00:00:00.000Z",
+			"output_artifacts": ["human-approval.md"],
+			"summary": "Human approved; run closed. Post-validation: bubble chart replaced scatter; bubble overflow padding applied."
+		}
+	],
+	"loop_count": 0,
+	"max_loops": 2,
+	"locked_artifacts": [],
+	"flags": ["ac19_unrelated_test_failures"],
+	"human_approval": {
+		"status": "approved",
+		"approved_at": "2026-05-25T00:00:00.000Z",
+		"approver": "user",
+		"notes": "Approved after review. Follow-up: scatter→bubble; bubble edge clipping fix."
+	}
+}

@@ -13,12 +13,16 @@ import {
   SKILL_VIEW_MODES,
   type SkillViewMode
 } from '$lib/content/skills';
+import { RESUME_SKILLS_CHART_TYPES, type ResumeSkillsChartType } from '$lib/ui/skills-explorer/types';
 
 /** @deprecated Historic radio grouping persisted as a lone string token. */
 export const RESUME_SKILLS_VIEW_STORAGE_KEY = 'cxii-resume-skills-view-mode';
 
 /** Versioned JSON for per-skill chart inclusion toggles. */
 export const RESUME_SKILLS_CHART_SELECTION_KEY = 'cxii-resume-skills-chart-selection';
+
+/** Persisted Chart.js visualization variant for the resume skills chart. */
+export const RESUME_SKILLS_CHART_TYPE_KEY = 'cxii-resume-skills-chart-type';
 
 /** One section heading and skill rows for legacy grouping helpers. */
 export type SkillDisplayGroup = {
@@ -154,6 +158,48 @@ export const writeIncludedSkillIds = (records: SkillRecord[], includedIds: Reado
     /** ignore quota / unavailable storage failures */
   }
 };
+
+/**
+ * Reads a persisted chart type, or null when missing or invalid.
+ */
+export const readPersistedChartType = (): ResumeSkillsChartType | null => {
+  if (!canPersistSkillsViewMode()) {
+    return null;
+  }
+  const raw = localStorage.getItem(RESUME_SKILLS_CHART_TYPE_KEY);
+  if (raw === null) {
+    return null;
+  }
+  const trimmed = raw.trim();
+  if (trimmed === 'scatter') {
+    return 'bubble';
+  }
+  if ((RESUME_SKILLS_CHART_TYPES as readonly string[]).includes(trimmed)) {
+    return trimmed as ResumeSkillsChartType;
+  }
+  localStorage.removeItem(RESUME_SKILLS_CHART_TYPE_KEY);
+  return null;
+};
+
+/**
+ * Persists the resume skills chart visualization type (browser only).
+ * @param chartType - Active Chart.js family
+ */
+export const writePersistedChartType = (chartType: ResumeSkillsChartType): void => {
+  if (!canPersistSkillsViewMode()) {
+    return;
+  }
+  try {
+    localStorage.setItem(RESUME_SKILLS_CHART_TYPE_KEY, chartType);
+  } catch {
+    /** ignore quota / unavailable storage failures */
+  }
+};
+
+/**
+ * Returns the stored chart type, or `bar` when storage is empty or invalid.
+ */
+export const hydrateChartType = (): ResumeSkillsChartType => readPersistedChartType() ?? 'bar';
 
 /**
  * Builds chart sections for the selected grouping mode.

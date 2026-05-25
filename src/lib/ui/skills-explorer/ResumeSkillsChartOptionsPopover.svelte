@@ -17,8 +17,13 @@
     skillRecordsForStack,
     type SkillCategorySection
   } from '$lib/utils/skills-chart-data';
-  import { hydrateIncludedSkillIds, writeIncludedSkillIds } from '$lib/utils/skills-presentation';
-  import type { ChartOptionsPane } from './types';
+  import {
+    hydrateChartType,
+    hydrateIncludedSkillIds,
+    writeIncludedSkillIds,
+    writePersistedChartType
+  } from '$lib/utils/skills-presentation';
+  import type { ChartOptionsPane, ResumeSkillsChartType } from './types';
 
   /** Snappy hover open (Phase 1 used immediate pointerenter); standard close grace. */
   const POPOVER_OPEN_DELAY_MS = 100;
@@ -34,7 +39,18 @@
     includedSkillIds?: SvelteSetType<string>;
     /** Bindable; true after client hydration from localStorage. */
     inclusionHydrated?: boolean;
+    /** Bindable Chart.js visualization type shared with `ResumeSkillsChart`. */
+    chartType?: ResumeSkillsChartType;
+    /** Bindable; true after client hydration of chart type from localStorage. */
+    chartTypeHydrated?: boolean;
   };
+
+  const CHART_TYPE_OPTIONS: { value: ResumeSkillsChartType; label: string }[] = [
+    { value: 'bar', label: 'Bar' },
+    { value: 'polar', label: 'Polar' },
+    { value: 'radar', label: 'Radar' },
+    { value: 'bubble', label: 'Bubble' }
+  ];
 
   let {
     skillRecords,
@@ -42,7 +58,9 @@
     skillStacks,
     customAnchor = null,
     includedSkillIds = $bindable(new SvelteSet<string>()),
-    inclusionHydrated = $bindable(false)
+    inclusionHydrated = $bindable(false),
+    chartType = $bindable<ResumeSkillsChartType>('bar'),
+    chartTypeHydrated = $bindable(false)
   }: Props = $props();
 
   let popoverOpen = $state(false);
@@ -69,6 +87,8 @@
       includedSkillIds.add(skillId);
     }
     inclusionHydrated = true;
+    chartType = hydrateChartType();
+    chartTypeHydrated = true;
     return undefined;
   });
 
@@ -80,9 +100,16 @@
     writeIncludedSkillIds(skillRecords, includedSkillIds);
   });
 
+  $effect(() => {
+    if (!browser || !chartTypeHydrated) {
+      return;
+    }
+    writePersistedChartType(chartType);
+  });
+
   function clearSelectedStack(): void {
     selectedStackId = null;
-  };
+  }
 
   function toggleSkillInclusion(skillId: string, checked: boolean): void {
     clearSelectedStack();
@@ -91,7 +118,7 @@
     } else {
       includedSkillIds.delete(skillId);
     }
-  };
+  }
 
   function countIncludedInSection(section: SkillCategorySection): number {
     return section.skills.filter((skill) => includedSkillIds.has(skill.id)).length;
@@ -183,6 +210,18 @@ Example:
           Skills by domain
           <CaretDownIcon size="sm" ariaLabel="Caret down" />
         </button>
+        <button
+          type="button"
+          class="button"
+          aria-controls="skills-chart-options"
+          aria-expanded={popoverOpen}
+          onpointerenter={() => {
+            selectedPane = 'chartType';
+          }}
+        >
+          Chart type
+          <CaretDownIcon size="sm" ariaLabel="Caret down" />
+        </button>
       </div>
     {/snippet}
   </Popover.Trigger>
@@ -252,6 +291,32 @@ Example:
           </div>
         </div>
       {/if}
+      {#if selectedPane === 'chartType'}
+        <div class="skills-explorer-pane skills-explorer-pane--chart-type">
+          <h4 class="title-medium" id="skills-chart-type-heading">Chart type</h4>
+          <fieldset class="fieldset__chart-types" aria-labelledby="skills-chart-type-heading">
+            <legend class="chart-types__legend sr-only">Select chart visualization type</legend>
+            <ul class="chart-types skillset-controls">
+              {#each CHART_TYPE_OPTIONS as option (option.value)}
+                <li class="chart-type__item">
+                  <label class="chart-type__toggle">
+                    <input
+                      type="radio"
+                      name="resume-skills-chart-type"
+                      value={option.value}
+                      checked={chartType === option.value}
+                      onchange={() => {
+                        chartType = option.value;
+                      }}
+                    />
+                    <span class="chart-type__label label-large">{option.label}</span>
+                  </label>
+                </li>
+              {/each}
+            </ul>
+          </fieldset>
+        </div>
+      {/if}
       {#if selectedPane === 'skillStacks'}
         <div class="skills-explorer-pane skills-explorer-pane--stacks">
           <h4 class="title-medium" id="skills-chart-stacks-heading">Tech Stacks</h4>
@@ -302,7 +367,8 @@ Example:
 
   .skill-domains,
   .skill-domain__skills,
-  .tech-stacks {
+  .tech-stacks,
+  .chart-types {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -337,7 +403,8 @@ Example:
   }
 
   .skill-domain__item,
-  .tech-stack__item {
+  .tech-stack__item,
+  .chart-type__item {
     border-radius: var(--radius-input);
     transition: background-color 0.15s ease;
 
@@ -348,8 +415,46 @@ Example:
   }
 
   .skill-domain__toggle,
-  .tech-stack__toggle {
+  .tech-stack__toggle,
+  .chart-type__toggle {
     padding: 0.25rem 0.5rem;
+  }
+
+  .fieldset__chart-types {
+    margin: 0;
+    padding: 0;
+    border: none;
+    min-inline-size: 0;
+  }
+
+  .chart-types__legend {
+    position: absolute;
+    inline-size: 1px;
+    block-size: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .chart-types {
+    display: grid;
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+    gap: 0 1rem;
+  }
+
+  @media (min-width: 540px) {
+    .chart-types {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 800px) {
+    .chart-types {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
   }
 
   .fieldset__tech-stacks {
