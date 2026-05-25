@@ -125,12 +125,13 @@ describe('buildCategoryProficiencyRadarChart', () => {
 });
 
 describe('buildCategoryProficiencyBubbleChart', () => {
-  it('AC-22: returns Chart.js type bubble with years on x, proficiency on y, and radius from years', () => {
+  it('AC-22: returns Chart.js type bubble with skill labels on x, proficiency on y, and radius from years', () => {
     const config = buildCategoryProficiencyBubbleChart(allIncludedArgs);
     expect(config.type).toBe('bubble');
+    expect(config.data.labels).toEqual(['CSS', 'Angular']);
     expect(config.data.datasets[0]?.data).toEqual([
-      { x: 18, y: 4, r: 36 },
-      { x: 8, y: 3, r: 16 }
+      { x: 0, y: 4, r: 36 },
+      { x: 1, y: 3, r: 16 }
     ]);
     expect(config.data.datasets[0]?.backgroundColor).toEqual([
       categoryChartColor('languages-markup'),
@@ -138,9 +139,10 @@ describe('buildCategoryProficiencyBubbleChart', () => {
     ]);
   });
 
-  it('AC-22: empty selection uses single placeholder bubble at origin', () => {
+  it('AC-22: empty selection uses placeholder label and single bubble at origin', () => {
     const config = buildCategoryProficiencyBubbleChart(emptyArgs);
     expect(config.type).toBe('bubble');
+    expect(config.data.labels).toEqual(['No skills selected']);
     expect(config.data.datasets).toHaveLength(1);
     expect(config.data.datasets[0]?.data).toEqual([{ x: 0, y: 0, r: 8 }]);
     expect(config.options?.plugins?.legend?.display).toBe(false);

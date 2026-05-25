@@ -43,12 +43,19 @@ const bubbleChartLayout = {
   }
 } satisfies NonNullable<ChartOptions<'bubble'>['layout']>;
 
-/** Scales with grace so bubble centers at max x/y keep full pixel radius inside the chart area. */
+/** Scales with grace so bubble centers at max y keep full pixel radius inside the chart area. */
 const bubbleChartScales = {
   x: {
-    beginAtZero: true,
-    grace: '15%',
-    title: { display: true, text: 'Years of experience' }
+    type: 'category',
+    ticks: {
+      autoSkip: false,
+      maxRotation: 90,
+      minRotation: 45
+    },
+    title: {
+      display: true,
+      text: 'Skills grouped by domain category (A-Z within each group)'
+    }
   },
   y: {
     beginAtZero: true,
@@ -149,8 +156,9 @@ export async function ensureResumeSkillChartRegistered(chartType: ResumeSkillsCh
   }
 
   if (chartType === 'bubble' && !resumeBubbleChartRegistered) {
-    const { BubbleController, Legend, LinearScale, PointElement, Tooltip } = await import('chart.js');
-    Chart.register(BubbleController, PointElement, LinearScale, Legend, Tooltip);
+    const { BubbleController, CategoryScale, Legend, LinearScale, PointElement, Tooltip } =
+      await import('chart.js');
+    Chart.register(BubbleController, PointElement, CategoryScale, LinearScale, Legend, Tooltip);
     resumeBubbleChartRegistered = true;
   }
 }
@@ -377,7 +385,7 @@ export function buildCategoryProficiencyRadarChart(args: BuildResumeSkillsChartA
 }
 
 /**
- * Maps included skills into a bubble chart: x = years of experience, y = proficiency, r = years-scaled radius.
+ * Maps included skills into a bubble chart: x = skill (category), y = proficiency, r = years-scaled radius.
  */
 export function buildCategoryProficiencyBubbleChart(args: BuildResumeSkillsChartArgs): ChartConfiguration<'bubble'> {
   const rows = chartSkillsFromSelection(args.datasourceRecords, args.categories, args.includedSkillIds);
@@ -386,6 +394,7 @@ export function buildCategoryProficiencyBubbleChart(args: BuildResumeSkillsChart
     return {
       type: 'bubble',
       data: {
+        labels: [EMPTY_PLACEHOLDER_LABEL],
         datasets: [
           {
             label: 'Proficiency level',
@@ -410,12 +419,13 @@ export function buildCategoryProficiencyBubbleChart(args: BuildResumeSkillsChart
   return {
     type: 'bubble',
     data: {
+      labels: rows.map((row) => row.name),
       datasets: [
         {
           label: 'Proficiency level',
           clip: false,
-          data: rows.map((row) => ({
-            x: row.yearsOfExperience,
+          data: rows.map((row, index) => ({
+            x: index,
             y: proficiencyBarValue(row),
             r: bubbleRadiusFromYears(row.yearsOfExperience)
           })),

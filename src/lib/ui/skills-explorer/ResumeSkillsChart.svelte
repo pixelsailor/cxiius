@@ -52,7 +52,7 @@
     const typeLabel = chartTypeAriaLabels[chartType];
     const scaleHint =
       chartType === 'bubble'
-        ? 'proficiency tier on vertical axis, years of experience on horizontal axis, bubble size encodes years of experience'
+        ? 'skills on horizontal axis, proficiency tier on vertical axis, bubble size encodes years of experience'
         : chartType === 'bar'
           ? 'bar height shows proficiency tier'
           : 'proficiency tier encoded on radial scale';
