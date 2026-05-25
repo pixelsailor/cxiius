@@ -112,7 +112,13 @@ describe('buildCategoryProficiencyRadarChart', () => {
     const config = buildCategoryProficiencyRadarChart(allIncludedArgs);
     expect(config.type).toBe('radar');
     expect(config.data.labels).toEqual(['CSS', 'Angular']);
+    expect(config.data.datasets).toHaveLength(2);
+    expect(config.data.datasets[0]?.label).toBe('Languages & Markup');
+    expect(config.data.datasets[0]?.data).toEqual([4, null]);
+    expect(config.data.datasets[1]?.label).toBe('Frameworks & Libraries');
+    expect(config.data.datasets[1]?.data).toEqual([null, 3]);
     expect(config.data.datasets[0]?.fill).toBe(true);
+    expect(config.options?.plugins?.legend?.display).toBe(true);
   });
 
   it('AC-22: empty selection uses placeholder label and single zero spoke', () => {

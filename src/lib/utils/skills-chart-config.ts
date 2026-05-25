@@ -87,6 +87,15 @@ const barYScale = {
   }
 } satisfies NonNullable<ChartOptions<'bar'>['scales']>['y'];
 
+const polarPointLabels = {
+  display: true,
+  centerPointLabels: true
+};
+
+const radarPointLabels = {
+  display: true,
+};
+
 const radialProficiencyScale = {
   min: 0,
   max: PROFICIENCY_CHART_MAX,
@@ -95,12 +104,12 @@ const radialProficiencyScale = {
     callback: proficiencyTickCallback,
     /** Draw proficiency ring labels above polar/radar segments (Chart.js default z is 0). */
     z: 1
-  },
-  pointLabels: {
-    display: true,
-    centerPointLabels: true
   }
 } satisfies NonNullable<ChartOptions<'polarArea'>['scales']>['r'];
+
+const polarProficiencyScale = {...radialProficiencyScale, pointLabels: polarPointLabels};
+
+const radarProficiencyScale = {...radialProficiencyScale, pointLabels: radarPointLabels};
 
 /**
  * Builds a tooltip label showing proficiency tier and years for a skill row.
@@ -117,6 +126,29 @@ const proficiencyTooltipLabel = (rows: SkillRecord[]) => ({
     return `${tier.name} (${skill.yearsOfExperience} yrs)`;
   }
 });
+
+/**
+ * Builds one filled radar dataset per domain category; spokes use null outside that category.
+ * @param rows - Included skills sorted by category then name
+ * @param categories - Category metadata defining dataset order and labels
+ */
+const radarDatasetsByCategory = (
+  rows: SkillRecord[],
+  categories: readonly SkillCategoryMeta[]
+): NonNullable<ChartConfiguration<'radar'>['data']['datasets']> =>
+  categories
+    .filter((category) => rows.some((row) => row.categoryId === category.id))
+    .map((category) => {
+      const color = categoryChartColor(category.id);
+      return {
+        label: category.name,
+        data: rows.map((row) => (row.categoryId === category.id ? proficiencyBarValue(row) : null)),
+        backgroundColor: `color-mix(in srgb, ${color} 25%, transparent)`,
+        borderColor: color,
+        borderWidth: 1,
+        fill: true
+      };
+    });
 
 export type BuildResumeSkillsChartArgs = {
   datasourceRecords: SkillRecord[];
@@ -293,7 +325,7 @@ export function buildCategoryProficiencyPolarChart(args: BuildResumeSkillsChartA
         responsive: true,
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: { r: radialProficiencyScale }
+        scales: { r: polarProficiencyScale }
       }
     };
   }
@@ -321,13 +353,13 @@ export function buildCategoryProficiencyPolarChart(args: BuildResumeSkillsChartA
           callbacks: proficiencyTooltipLabel(rows)
         }
       },
-      scales: { r: radialProficiencyScale }
+      scales: { r: polarProficiencyScale }
     }
   };
 }
 
 /**
- * Maps included skills into a filled radar chart; spoke length encodes proficiency tier.
+ * Maps included skills into a filled radar chart; each domain category is one dataset and spoke length encodes proficiency tier.
  */
 export function buildCategoryProficiencyRadarChart(args: BuildResumeSkillsChartArgs): ChartConfiguration<'radar'> {
   const rows = chartSkillsFromSelection(args.datasourceRecords, args.categories, args.includedSkillIds);
@@ -352,38 +384,29 @@ export function buildCategoryProficiencyRadarChart(args: BuildResumeSkillsChartA
         responsive: true,
         maintainAspectRatio: false,
         plugins: { legend: { display: false } },
-        scales: { r: radialProficiencyScale }
+        scales: { r: radarProficiencyScale }
       }
     };
   }
+
+  const datasets = radarDatasetsByCategory(rows, args.categories);
 
   return {
     type: 'radar',
     data: {
       labels: rows.map((row) => row.name),
-      datasets: [
-        {
-          label: 'Proficiency level',
-          data: rows.map((row) => proficiencyBarValue(row)),
-          backgroundColor: rows.map(
-            (row) => `color-mix(in srgb, ${categoryChartColor(row.categoryId)} 25%, transparent)`
-          ),
-          borderColor: rows.map((row) => categoryChartColor(row.categoryId)),
-          borderWidth: 1,
-          fill: true
-        }
-      ]
+      datasets
     },
     options: {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
-        legend: { display: false },
+        legend: { display: datasets.length > 1 },
         tooltip: {
           callbacks: proficiencyTooltipLabel(rows)
         }
       },
-      scales: { r: radialProficiencyScale }
+      scales: { r: radarProficiencyScale }
     }
   };
 }
