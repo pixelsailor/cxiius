@@ -118,6 +118,7 @@
           <ResumeSkillsChart
             skillRecords={data.skillRecords}
             skillCategories={data.skillCategories}
+            skillStacks={data.skillStacks}
             {includedSkillIds}
             {inclusionHydrated}
             {chartType}

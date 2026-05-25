@@ -16,7 +16,7 @@ const sampleSkills = (): SkillRecord[] => [
     proficiency: 'fluent',
     yearsOfExperience: 18,
     categoryId: 'languages-markup',
-    stackIds: ['angular']
+    stackIds: ['web-fundamentals']
   },
   {
     id: 'angular',
@@ -33,15 +33,22 @@ const categories = [
   { id: 'frameworks-libraries' as const, name: 'Frameworks & Libraries' }
 ];
 
+const stacks = [
+  { id: 'web-fundamentals' as const, name: 'Web fundamentals' },
+  { id: 'angular' as const, name: 'Angular' }
+];
+
 const emptyArgs = {
   datasourceRecords: sampleSkills(),
   categories,
+  stacks,
   includedSkillIds: new Set<string>()
 };
 
 const allIncludedArgs = {
   datasourceRecords: sampleSkills(),
   categories,
+  stacks,
   includedSkillIds: new Set(sampleSkills().map((row) => row.id))
 };
 
@@ -113,9 +120,9 @@ describe('buildCategoryProficiencyRadarChart', () => {
     expect(config.type).toBe('radar');
     expect(config.data.labels).toEqual(['CSS', 'Angular']);
     expect(config.data.datasets).toHaveLength(2);
-    expect(config.data.datasets[0]?.label).toBe('Languages & Markup');
+    expect(config.data.datasets[0]?.label).toBe('Web fundamentals');
     expect(config.data.datasets[0]?.data).toEqual([4, null]);
-    expect(config.data.datasets[1]?.label).toBe('Frameworks & Libraries');
+    expect(config.data.datasets[1]?.label).toBe('Angular');
     expect(config.data.datasets[1]?.data).toEqual([null, 3]);
     expect(config.data.datasets[0]?.fill).toBe(true);
     expect(config.options?.plugins?.legend?.display).toBe(true);

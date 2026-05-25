@@ -4,9 +4,20 @@
  */
 
 import type { ChartConfiguration, ChartOptions, TooltipItem } from 'chart.js';
-import { getProficiencyLevel, PROFICIENCY_ORDER, type SkillCategoryMeta, type SkillRecord } from '$lib/content/skills';
+import {
+  getProficiencyLevel,
+  PROFICIENCY_ORDER,
+  type SkillCategoryMeta,
+  type SkillRecord,
+  type SkillStackMeta
+} from '$lib/content/skills';
 import type { ResumeSkillsChartType } from '$lib/ui/skills-explorer/types';
-import { categoryChartColor, chartSkillsFromSelection, proficiencyBarValue } from '$lib/utils/skills-chart-data';
+import {
+  categoryChartColor,
+  chartSkillsFromSelection,
+  proficiencyBarValue,
+  stackChartColor
+} from '$lib/utils/skills-chart-data';
 
 let resumeBarChartRegistered = false;
 let resumePolarChartRegistered = false;
@@ -128,21 +139,21 @@ const proficiencyTooltipLabel = (rows: SkillRecord[]) => ({
 });
 
 /**
- * Builds one filled radar dataset per domain category; spokes use null outside that category.
+ * Builds one filled radar dataset per tech stack; spokes use null for skills not tagged with that stack.
  * @param rows - Included skills sorted by category then name
- * @param categories - Category metadata defining dataset order and labels
+ * @param stacks - Stack metadata defining dataset order and legend labels
  */
-const radarDatasetsByCategory = (
+const radarDatasetsByStack = (
   rows: SkillRecord[],
-  categories: readonly SkillCategoryMeta[]
+  stacks: readonly SkillStackMeta[]
 ): NonNullable<ChartConfiguration<'radar'>['data']['datasets']> =>
-  categories
-    .filter((category) => rows.some((row) => row.categoryId === category.id))
-    .map((category) => {
-      const color = categoryChartColor(category.id);
+  stacks
+    .filter((stack) => rows.some((row) => row.stackIds.includes(stack.id)))
+    .map((stack) => {
+      const color = stackChartColor(stack.id);
       return {
-        label: category.name,
-        data: rows.map((row) => (row.categoryId === category.id ? proficiencyBarValue(row) : null)),
+        label: stack.name,
+        data: rows.map((row) => (row.stackIds.includes(stack.id) ? proficiencyBarValue(row) : null)),
         backgroundColor: `color-mix(in srgb, ${color} 25%, transparent)`,
         borderColor: color,
         borderWidth: 1,
@@ -153,6 +164,7 @@ const radarDatasetsByCategory = (
 export type BuildResumeSkillsChartArgs = {
   datasourceRecords: SkillRecord[];
   categories: readonly SkillCategoryMeta[];
+  stacks: readonly SkillStackMeta[];
   includedSkillIds: ReadonlySet<string>;
 };
 
@@ -359,7 +371,7 @@ export function buildCategoryProficiencyPolarChart(args: BuildResumeSkillsChartA
 }
 
 /**
- * Maps included skills into a filled radar chart; each domain category is one dataset and spoke length encodes proficiency tier.
+ * Maps included skills into a filled radar chart; each tech stack is one dataset and spoke length encodes proficiency tier.
  */
 export function buildCategoryProficiencyRadarChart(args: BuildResumeSkillsChartArgs): ChartConfiguration<'radar'> {
   const rows = chartSkillsFromSelection(args.datasourceRecords, args.categories, args.includedSkillIds);
@@ -389,7 +401,7 @@ export function buildCategoryProficiencyRadarChart(args: BuildResumeSkillsChartA
     };
   }
 
-  const datasets = radarDatasetsByCategory(rows, args.categories);
+  const datasets = radarDatasetsByStack(rows, args.stacks);
 
   return {
     type: 'radar',

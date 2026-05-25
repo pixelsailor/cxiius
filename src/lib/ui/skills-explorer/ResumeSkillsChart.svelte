@@ -3,13 +3,14 @@
   import { onDestroy, onMount } from 'svelte';
   import type { SvelteSet } from 'svelte/reactivity';
   import { browser } from '$app/environment';
-  import { type SkillCategoryMeta, type SkillRecord } from '$lib/content/skills';
+  import { type SkillCategoryMeta, type SkillRecord, type SkillStackMeta } from '$lib/content/skills';
   import { buildResumeSkillsChart, ensureResumeSkillChartRegistered } from '$lib/utils/skills-chart-config';
   import type { ResumeSkillsChartType } from './types';
 
   type Props = {
     skillRecords: SkillRecord[];
     skillCategories: readonly SkillCategoryMeta[];
+    skillStacks: readonly SkillStackMeta[];
     /** Same Set reference as popover; chart reads membership, does not replace the Set. */
     includedSkillIds: SvelteSet<string>;
     /** When false, defers Chart.js paint until popover has hydrated inclusion from storage. */
@@ -27,6 +28,7 @@
   let {
     skillRecords,
     skillCategories,
+    skillStacks,
     includedSkillIds,
     inclusionHydrated = false,
     chartTypeHydrated = false,
@@ -55,7 +57,9 @@
         ? 'skills on horizontal axis, proficiency tier on vertical axis, bubble size encodes years of experience'
         : chartType === 'bar'
           ? 'bar height shows proficiency tier'
-          : 'proficiency tier encoded on radial scale';
+          : chartType === 'radar'
+            ? 'proficiency tier on radial scale, one polygon per tech stack'
+            : 'proficiency tier encoded on radial scale';
     return `${typeLabel} of ${includedCount} skills; ${scaleHint}`;
   };
 
@@ -76,6 +80,7 @@
     const blueprint = buildResumeSkillsChart(chartType, {
       datasourceRecords: skillRecords,
       categories: skillCategories,
+      stacks: skillStacks,
       includedSkillIds
     });
     const context = canvasEl.getContext('2d');
@@ -133,6 +138,7 @@ Example:
 <ResumeSkillsChart
   skillRecords={records}
   skillCategories={categories}
+  skillStacks={stacks}
   {includedSkillIds}
   chartType="bar"
   {chartTypeHydrated}

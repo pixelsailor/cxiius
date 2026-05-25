@@ -70,6 +70,7 @@ describe('buildCategoryProficiencyBarChart', () => {
     const config = buildCategoryProficiencyBarChart({
       datasourceRecords: sampleSkills(),
       categories,
+      stacks: [],
       includedSkillIds: included
     });
     expect(config.type).toBe('bar');

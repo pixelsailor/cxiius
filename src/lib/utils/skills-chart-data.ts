@@ -45,6 +45,31 @@ export const proficiencyBarValue = (record: SkillRecord): number => getProficien
 export const categoryChartColor = (categoryId: SkillCategoryId): string =>
   SKILL_CATEGORY_CHART_COLORS[categoryId] ?? '#64748b';
 
+/** Canvas-safe fills keyed by tech stack (Chart.js cannot rely on CSS variables). */
+export const SKILL_STACK_CHART_COLORS: Record<SkillStackId, string> = {
+  'web-fundamentals': 'hsl(217, 91%, 60%)',
+  angular: 'hsl(280, 53%, 40%)',
+  react: 'hsl(199, 89%, 48%)',
+  svelte: 'hsl(12, 93%, 55%)',
+  serverless: 'hsl(160, 78%, 31%)',
+  jamstack: 'hsl(34, 91%, 52%)',
+  mern: 'hsl(142, 71%, 45%)',
+  mean: 'hsl(48, 96%, 53%)',
+  pern: 'hsl(262, 83%, 58%)',
+  't3-stack': 'hsl(198, 98%, 31%)',
+  lamp: 'hsl(25, 95%, 53%)',
+  'react-aws': 'hsl(187, 85%, 43%)',
+  'angular-enterprise': 'hsl(291, 64%, 42%)',
+  'nextjs-supabase': 'hsl(168, 76%, 36%)'
+};
+
+/**
+ * Returns the canvas fill color for a tech stack dataset.
+ * @param stackId - Stack id from the skill record
+ */
+export const stackChartColor = (stackId: SkillStackId): string =>
+  SKILL_STACK_CHART_COLORS[stackId] ?? '#64748b';
+
 /**
  * Sorts skills by category order (datasource metadata), then alphabetically within each category.
  * @param records - Full skill datasource
