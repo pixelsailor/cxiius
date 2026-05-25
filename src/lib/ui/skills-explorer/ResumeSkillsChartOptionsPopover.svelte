@@ -23,6 +23,7 @@
     writeIncludedSkillIds,
     writePersistedChartType
   } from '$lib/utils/skills-presentation';
+  import ResumeSkillsChartTypePreview from './ResumeSkillsChartTypePreview.svelte';
   import type { ChartOptionsPane, ResumeSkillsChartType } from './types';
 
   /** Snappy hover open (Phase 1 used immediate pointerenter); standard close grace. */
@@ -300,16 +301,21 @@ Example:
               {#each CHART_TYPE_OPTIONS as option (option.value)}
                 <li class="chart-type__item">
                   <label class="chart-type__toggle">
-                    <input
-                      type="radio"
-                      name="resume-skills-chart-type"
-                      value={option.value}
-                      checked={chartType === option.value}
-                      onchange={() => {
-                        chartType = option.value;
-                      }}
-                    />
-                    <span class="chart-type__label label-large">{option.label}</span>
+                    <span class="chart-type__preview">
+                      <ResumeSkillsChartTypePreview chartType={option.value} />
+                    </span>
+                    <span class="chart-type__control">
+                      <input
+                        type="radio"
+                        name="resume-skills-chart-type"
+                        value={option.value}
+                        checked={chartType === option.value}
+                        onchange={() => {
+                          chartType = option.value;
+                        }}
+                      />
+                      <span class="chart-type__label label-large">{option.label}</span>
+                    </span>
                   </label>
                 </li>
               {/each}
@@ -403,8 +409,7 @@ Example:
   }
 
   .skill-domain__item,
-  .tech-stack__item,
-  .chart-type__item {
+  .tech-stack__item {
     border-radius: var(--radius-input);
     transition: background-color 0.15s ease;
 
@@ -414,10 +419,41 @@ Example:
     }
   }
 
+  .chart-type__item {
+    border-radius: var(--radius-input);
+    transition: background-color 0.15s ease;
+
+    &:hover,
+    &:focus-within {
+      background-color: var(--muted);
+    }
+  }
+
   .skill-domain__toggle,
-  .tech-stack__toggle,
-  .chart-type__toggle {
+  .tech-stack__toggle {
     padding: 0.25rem 0.5rem;
+  }
+
+  .chart-types .chart-type__toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.5rem;
+    padding: 0.5rem;
+    cursor: pointer;
+  }
+
+  .chart-type__preview {
+    display: block;
+    inline-size: 100%;
+    min-block-size: 5.5rem;
+    background-color: transparent;
+  }
+
+  .chart-type__control {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
   }
 
   .fieldset__chart-types {
