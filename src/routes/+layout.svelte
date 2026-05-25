@@ -51,11 +51,16 @@
   const chat = new ChatState();
   setChatContext(chat);
 
-  const openChatWindow = () => {
+  const openChatWindow = (initialKey?: string) => {
     showChatWindow = true;
     setTimeout(() => {
       const commandInput = document.getElementById('chatWindowInput') as HTMLTextAreaElement | null;
-      commandInput?.focus();
+      if (commandInput === null) return;
+      if (initialKey !== undefined) {
+        commandInput.value = initialKey;
+        commandInput.dispatchEvent(new Event('input', { bubbles: true }));
+      }
+      commandInput.focus();
     }, 100);
   };
 
@@ -87,7 +92,7 @@
       event.preventDefault();
     }
 
-    openChatWindow();
+    openChatWindow(event.key);
   }
 </script>
 

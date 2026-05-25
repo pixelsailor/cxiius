@@ -29,6 +29,12 @@ vi.mock('$app/navigation', () => ({
   goto: vi.fn(() => Promise.resolve())
 }));
 
+vi.mock('$env/dynamic/public', () => ({
+  env: {
+    PUBLIC_TURNSTILE_SITE_KEY: 'test-turnstile-site-key'
+  }
+}));
+
 afterEach(() => {
   jsEnabledFlag.enabled = true;
   void cleanup();
@@ -130,10 +136,9 @@ describe('+layout.svelte chat sidebar keyboard (browser)', () => {
     expect(document.querySelector('aside.sidebar')).toBeNull();
   });
 
-  it('AC-10: on `/` (showNav false), chat sidebar is absent and alphabet does not open chat', async () => {
+  it('AC-10: on `/` (showNav false), alphabet does not open chat', async () => {
     pageUrl.pathname = '/';
     await render(LayoutSpecHost);
-    expect(document.querySelector('aside.sidebar')).toBeNull();
     dispatchKey(window, { key: 'a' });
     await new Promise((r) => setTimeout(r, 150));
     expect(document.getElementById('chatWindowInput')).toBeNull();

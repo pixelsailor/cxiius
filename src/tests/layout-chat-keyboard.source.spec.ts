@@ -9,7 +9,9 @@ const layoutSource = readFileSync(layoutPath, 'utf-8');
 describe('+layout.svelte chat keyboard (source)', () => {
   it('AC-03 AC-05: Escape close runs before `showChatWindow || !ALPHABET` early return', () => {
     const escapeClose = layoutSource.indexOf("if (showChatWindow && event.key === 'Escape')");
-    const alphabetEarlyReturn = layoutSource.indexOf('if (showChatWindow || !ALPHABET.test(event.key)) return');
+    const alphabetEarlyReturn = layoutSource.indexOf(
+      'if (showChatWindow || !ALPHABET.test(event.key) || modifierKey) return'
+    );
     expect(escapeClose).toBeGreaterThan(-1);
     expect(alphabetEarlyReturn).toBeGreaterThan(-1);
     expect(escapeClose).toBeLessThan(alphabetEarlyReturn);
@@ -33,15 +35,25 @@ describe('+layout.svelte chat keyboard (source)', () => {
     expect(layoutSource).not.toMatch(/\$app\/stores/);
   });
 
-  it('AC-10: sidebar is inside `isJsEnabled && showNav` gate (progressive enhancement)', () => {
-    const gate = layoutSource.indexOf('{#if isJsEnabled && showNav}');
+  it('AC-10: sidebar is inside `isJsEnabled` gate (progressive enhancement)', () => {
+    const gate = layoutSource.indexOf('{#if isJsEnabled}');
     const aside = layoutSource.indexOf('<aside class="sidebar"');
     expect(gate).toBeGreaterThan(-1);
     expect(aside).toBeGreaterThan(-1);
     expect(aside).toBeGreaterThan(gate);
   });
 
-  it('AC-10: primary nav is shown for no-JS or when showNav (baseline content)', () => {
-    expect(layoutSource).toContain('{#if !isJsEnabled || (isJsEnabled && showNav)}');
+  it('AC-10: chat keyboard handler returns before alphabet open when showNav is false', () => {
+    const showNavGuard = layoutSource.indexOf('if (!isJsEnabled || !showNav) return');
+    const escapeClose = layoutSource.indexOf("if (showChatWindow && event.key === 'Escape')");
+    expect(showNavGuard).toBeGreaterThan(-1);
+    expect(escapeClose).toBeGreaterThan(showNavGuard);
+  });
+
+  it('AC-10: Header exposes baseline nav for no-JS (progressive enhancement)', () => {
+    const headerPath = join(dirname(fileURLToPath(import.meta.url)), '../lib/ui/header/Header.svelte');
+    const headerSource = readFileSync(headerPath, 'utf-8');
+    expect(headerSource).toContain('<noscript>');
+    expect(headerSource).toContain('{@render mainNav()}');
   });
 });

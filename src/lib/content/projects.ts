@@ -504,7 +504,6 @@ const portfolioData: DesignPortfolioEntry[] = [
     slug: 'frontline-vm-v7',
     name: 'Frontline Vulnerability Manager v7',
     projectType: 'ui',
-    featuredAsHero: true,
     images: {
       thumbnail: {
         src: '/images/fvm7_av-thumb.webp',
@@ -620,39 +619,6 @@ const portfolioData: DesignPortfolioEntry[] = [
     summary: 'SeaLevel component library.',
     description:
       'SeaLevel was developed as an extension of PrimeNG for use as the internal component library for LevelBlue. Built for the express intent of not only integrating custom features directly into a single, unified design system, but also improving the developer experience by providing a more consistent and predictable API for building complex UI components. Purposely built alongside an orchestrated agentic development environment, the component library was designed to be fully AI-compatible, ensuring consistent, high-quality output across the entire development process.'
-  },
-  {
-    includeInPortfolio: true as const,
-    status: 'In development',
-    slug: 'whats-for-dinner',
-    name: "What's For Dinner",
-    projectType: 'ui',
-    images: {
-      thumbnail: {
-        src: '/images/wfd_prompt-thumb.webp',
-        alt: 'Close-up of the What\'s For Dinner prompt interface asking, "Care to cook up dinner?"'
-      },
-      full: {
-        src: '/images/wfd_prompt-933.webp',
-        alt: "A laptop in a cozy home setting showing the What's For Dinner application homepage."
-      },
-      hero: {
-        src: '/images/wfd_prompt-hero.webp',
-        alt: "A laptop in a cozy home setting showing the What's For Dinner application homepage."
-      },
-      showcase: [
-        {
-          src: '/images/wfd_suggestions-933.webp',
-          alt: "A screenshot of the What's For Dinner application suggestions page."
-        },
-        { src: '/images/wfd_recipe-933.webp', alt: 'A screenshot of a recipe for burritos and cilantro lime rice.' }
-      ]
-    },
-    circa: '2026',
-    technologies: ['HTML', 'CSS', 'Svelte', 'SvelteKit', 'Cloudflare Workers', 'OpenAI SDK', 'Dexie', 'Supabase'],
-    summary: "What's For Dinner website.",
-    description:
-      "Born out of my own frustration of trying to decide what to cook for dinner every night, What's For Dinner is an offline-first Svelte 5 / SvelteKit web app that helps pick a meal from a personal recipe collection. Suggestions weigh time of day and how often each recipe is prepared, surfacing favorites while also bringing forward dishes that have not been cooked in a while so the rotation stays interesting. Integrated with an AI assistant that suggests new recipes and helps edit existing ones in place, allowing users to attach dietary and method preferences when asking for ideas - for example gluten-free, vegan, or avoiding specific techniques such as sous vide."
   },
   {
     includeInPortfolio: true as const,
