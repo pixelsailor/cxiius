@@ -53,9 +53,7 @@ export function buildResumeSkillsChartTypePreview(chartType: ResumeSkillsChartTy
  * Registers Chart.js controllers required for a chart-type preview thumbnail.
  * @param chartType - Visualization variant to prepare
  */
-export async function ensureResumeSkillsChartTypePreviewRegistered(
-  chartType: ResumeSkillsChartType
-): Promise<void> {
+export async function ensureResumeSkillsChartTypePreviewRegistered(chartType: ResumeSkillsChartType): Promise<void> {
   await ensureResumeSkillChartRegistered(chartType);
 }
 

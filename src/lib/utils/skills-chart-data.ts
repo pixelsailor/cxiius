@@ -67,8 +67,7 @@ export const SKILL_STACK_CHART_COLORS: Record<SkillStackId, string> = {
  * Returns the canvas fill color for a tech stack dataset.
  * @param stackId - Stack id from the skill record
  */
-export const stackChartColor = (stackId: SkillStackId): string =>
-  SKILL_STACK_CHART_COLORS[stackId] ?? '#64748b';
+export const stackChartColor = (stackId: SkillStackId): string => SKILL_STACK_CHART_COLORS[stackId] ?? '#64748b';
 
 /**
  * Sorts skills by category order (datasource metadata), then alphabetically within each category.

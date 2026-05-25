@@ -104,7 +104,7 @@ const polarPointLabels = {
 };
 
 const radarPointLabels = {
-  display: true,
+  display: true
 };
 
 const radialProficiencyScale = {
@@ -118,9 +118,9 @@ const radialProficiencyScale = {
   }
 } satisfies NonNullable<ChartOptions<'polarArea'>['scales']>['r'];
 
-const polarProficiencyScale = {...radialProficiencyScale, pointLabels: polarPointLabels};
+const polarProficiencyScale = { ...radialProficiencyScale, pointLabels: polarPointLabels };
 
-const radarProficiencyScale = {...radialProficiencyScale, pointLabels: radarPointLabels};
+const radarProficiencyScale = { ...radialProficiencyScale, pointLabels: radarPointLabels };
 
 /**
  * Builds a tooltip label showing proficiency tier and years for a skill row.
@@ -204,8 +204,7 @@ export async function ensureResumeSkillChartRegistered(chartType: ResumeSkillsCh
   }
 
   if (chartType === 'bubble' && !resumeBubbleChartRegistered) {
-    const { BubbleController, CategoryScale, Legend, LinearScale, PointElement, Tooltip } =
-      await import('chart.js');
+    const { BubbleController, CategoryScale, Legend, LinearScale, PointElement, Tooltip } = await import('chart.js');
     Chart.register(BubbleController, PointElement, CategoryScale, LinearScale, Legend, Tooltip);
     resumeBubbleChartRegistered = true;
   }
