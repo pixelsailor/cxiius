@@ -11,7 +11,7 @@
     type SkillStackId,
     type SkillStackMeta
   } from '$lib/content/skills';
-  import { CaretDownIcon } from '$lib/ui/icons';
+  import { CaretUpDownIcon, StackIcon, ListChecksIcon, ChartPieIcon } from '$lib/ui/icons';
   import {
     buildSkillCategorySections,
     skillRecordsForStack,
@@ -186,42 +186,63 @@ Example:
 <Popover.Root bind:open={popoverOpen}>
   <Popover.Trigger openOnHover openDelay={POPOVER_OPEN_DELAY_MS} closeDelay={POPOVER_CLOSE_DELAY_MS}>
     {#snippet child({ props })}
-      <div {...mergeProps(props, { class: 'button-group' })}>
+      <div {...mergeProps(props, { class: 'options-trigger' })}>
         <button
           type="button"
-          class="button"
+          class="button text link"
           aria-controls="skills-chart-options"
           aria-expanded={popoverOpen}
           onpointerenter={() => {
             selectedPane = 'skillStacks';
           }}
         >
-          Tech stacks
-          <CaretDownIcon size="sm" ariaLabel="Caret down" />
+          <span class="button-content">
+            <span class="button-icon">
+              <StackIcon size="xs" ariaLabel="Tech stacks" />
+            </span>
+            <span class="button-text">
+              Tech stacks
+              <CaretUpDownIcon size="xs" ariaLabel="Caret up down" />
+            </span>
+          </span>
         </button>
         <button
           type="button"
-          class="button"
+          class="button text link"
           aria-controls="skills-chart-options"
           aria-expanded={popoverOpen}
           onpointerenter={() => {
             selectedPane = 'domains';
           }}
         >
-          Skills by domain
-          <CaretDownIcon size="sm" ariaLabel="Caret down" />
+          <span class="button-content">
+            <span class="button-icon">
+              <ListChecksIcon size="xs" ariaLabel="Skills by domain" />
+            </span>
+            <span class="button-text">
+              Skills by domain
+              <CaretUpDownIcon size="xs" ariaLabel="Caret up down" />
+            </span>
+          </span>
         </button>
         <button
           type="button"
-          class="button"
+          class="button text link"
           aria-controls="skills-chart-options"
           aria-expanded={popoverOpen}
           onpointerenter={() => {
             selectedPane = 'chartType';
           }}
         >
-          Chart type
-          <CaretDownIcon size="sm" ariaLabel="Caret down" />
+          <span class="button-content">
+            <span class="button-icon">
+            <ChartPieIcon size="xs" ariaLabel="Chart type" />
+            </span>
+            <span class="button-text">
+              Chart type
+              <CaretUpDownIcon size="xs" ariaLabel="Caret up down" />
+            </span>
+          </span>
         </button>
       </div>
     {/snippet}
@@ -353,6 +374,44 @@ Example:
 </Popover.Root>
 
 <style>
+  .options-trigger {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .button-content {
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+
+  .button-text {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    visibility: hidden;
+    opacity: 0;
+    scale: 0;
+    width: 0;
+    height: 0;
+  }
+
+  @media (min-width: 640px) {
+    .button-text {
+      visibility: visible;
+      opacity: 1;
+      scale: 1;
+      gap: 0.5rem;
+      width: auto;
+      height: auto;
+    }
+
+    .button-icon {
+      display: none;
+    }
+  }
+
   label:hover {
     cursor: pointer;
   }

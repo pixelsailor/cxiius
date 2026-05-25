@@ -1,0 +1,23 @@
+<script lang="ts">
+  import IconRoot from './IconRoot.svelte';
+  import type { IconSize } from './IconSize';
+
+  let { size, ariaLabel }: { size?: IconSize | number; ariaLabel?: string } = $props();
+</script>
+
+<IconRoot {size} {ariaLabel}>
+  {#snippet children(iconSize: number | IconSize, ariaLabel: string)}
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width={iconSize}
+      height={iconSize}
+      fill="currentColor"
+      viewBox="0 0 256 256"
+      aria-label={ariaLabel || 'Stack'}
+    >
+      <path
+        d="M230.91,172A8,8,0,0,1,228,182.91l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,36,169.09l92,53.65,92-53.65A8,8,0,0,1,230.91,172ZM220,121.09l-92,53.65L36,121.09A8,8,0,0,0,28,134.91l96,56a8,8,0,0,0,8.06,0l96-56A8,8,0,1,0,220,121.09ZM24,80a8,8,0,0,1,4-6.91l96-56a8,8,0,0,1,8.06,0l96,56a8,8,0,0,1,0,13.82l-96,56a8,8,0,0,1-8.06,0l-96-56A8,8,0,0,1,24,80Zm23.88,0L128,126.74,208.12,80,128,33.26Z"
+      ></path>
+    </svg>
+  {/snippet}
+</IconRoot>

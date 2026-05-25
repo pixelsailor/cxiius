@@ -14,6 +14,9 @@ import PdfIcon from './PdfIcon.svelte';
 import SmileyIcon from './SmileyIcon.svelte';
 import SunIcon from './SunIcon.svelte';
 import SunHorizonIcon from './SunHorizonIcon.svelte';
+import StackIcon from './StackIcon.svelte';
+import ListChecksIcon from './ListChecksIcon.svelte';
+import ChartPieIcon from './ChartPieIcon.svelte';
 
 export {
   CaretDownIcon,
@@ -31,5 +34,8 @@ export {
   DribbbleIcon,
   PdfIcon,
   GithubIcon,
-  ListSearchIcon
+  ListSearchIcon,
+  StackIcon,
+  ListChecksIcon,
+  ChartPieIcon
 };
