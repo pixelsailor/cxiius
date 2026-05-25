@@ -28,25 +28,24 @@ export const SKILL_CATEGORY_IDS = [
 export type SkillCategoryId = (typeof SKILL_CATEGORY_IDS)[number];
 
 /**
- * Tech stack ids for optional resume stack-mode grouping.
- * @remarks Named industry bundles (MERN, MEAN, PERN, T3, JAMstack, LAMP) plus framework ecosystems
- * and delivery patterns (serverless/edge). Not every skill belongs to a stack; use categoryId otherwise.
+ * Tech stack ids for optional resume stack-mode grouping and radar overlays.
+ * @remarks Three non-overlapping layers: (1) **delivery patterns** -- cross-cutting platform models
+ * (`web-fundamentals`, `jamstack`, `serverless`); (2) **framework ecosystems** -- primary UI framework
+ * plus its typical libraries and tooling (`angular`, `react`, `svelte`); (3) **industry full-stack bundles**
+ * -- recognizable acronyms a technical director can map to a team topology (`mern`, `mean`, `pern`, `lamp`).
+ * Skills may span multiple stacks (e.g. TypeScript on Angular + MEAN). Not every skill belongs to a stack.
  */
 export const SKILL_STACK_IDS = [
   'web-fundamentals',
+  'jamstack',
+  'serverless',
   'angular',
   'react',
   'svelte',
-  'serverless',
-  'jamstack',
   'mern',
   'mean',
   'pern',
-  't3-stack',
-  'lamp',
-  'react-aws',
-  'angular-enterprise',
-  'nextjs-supabase'
+  'lamp'
 ] as const;
 
 export type SkillStackId = (typeof SKILL_STACK_IDS)[number];
@@ -179,19 +178,15 @@ export const SKILL_CATEGORIES: readonly SkillCategoryMeta[] = [
 
 export const SKILL_STACKS: readonly SkillStackMeta[] = [
   { id: 'web-fundamentals', name: 'Web fundamentals' },
+  { id: 'jamstack', name: 'JAMstack' },
+  { id: 'serverless', name: 'Serverless / edge' },
   { id: 'angular', name: 'Angular' },
   { id: 'react', name: 'React' },
   { id: 'svelte', name: 'Svelte' },
-  { id: 'serverless', name: 'Serverless / edge' },
-  { id: 'jamstack', name: 'JAMstack' },
   { id: 'mern', name: 'MERN' },
   { id: 'mean', name: 'MEAN' },
   { id: 'pern', name: 'PERN' },
-  { id: 't3-stack', name: 'T3 Stack' },
-  { id: 'lamp', name: 'LAMP' },
-  { id: 'react-aws', name: 'React + AWS' },
-  { id: 'angular-enterprise', name: 'Angular enterprise' },
-  { id: 'nextjs-supabase', name: 'Next.js + Supabase' }
+  { id: 'lamp', name: 'LAMP' }
 ] as const;
 
 const skillRecords: SkillRecord[] = [
@@ -242,7 +237,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'fluent',
     yearsOfExperience: 14,
     categoryId: 'languages-markup',
-    stackIds: ['web-fundamentals', 'angular-enterprise']
+    stackIds: ['web-fundamentals', 'angular']
   },
   {
     id: 'sql',
@@ -258,7 +253,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'fluent',
     yearsOfExperience: 13,
     categoryId: 'languages-markup',
-    stackIds: ['web-fundamentals', 'angular', 'react', 'svelte', 't3-stack', 'angular-enterprise', 'mean']
+    stackIds: ['web-fundamentals', 'angular', 'react', 'svelte', 'mean']
   },
   {
     id: 'angular',
@@ -267,7 +262,7 @@ const skillRecords: SkillRecord[] = [
     yearsOfExperience: 13,
     notes: 'Primary framework across two long-term enterprise engagements; up to Angular 21',
     categoryId: 'frameworks-libraries',
-    stackIds: ['angular', 'mean', 'angular-enterprise']
+    stackIds: ['angular', 'mean']
   },
   {
     id: 'angular-material',
@@ -275,7 +270,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'fluent',
     yearsOfExperience: 10,
     categoryId: 'ui-and-design',
-    stackIds: ['angular', 'angular-enterprise']
+    stackIds: ['angular']
   },
   {
     id: 'nx',
@@ -284,7 +279,7 @@ const skillRecords: SkillRecord[] = [
     yearsOfExperience: 2,
     notes: 'Monorepo management in enterprise Angular contexts',
     categoryId: 'tooling-cloud-delivery',
-    stackIds: ['angular-enterprise']
+    stackIds: ['angular']
   },
   {
     id: 'primeng',
@@ -292,7 +287,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'fluent',
     yearsOfExperience: 1,
     categoryId: 'ui-and-design',
-    stackIds: ['angular', 'angular-enterprise']
+    stackIds: ['angular']
   },
   {
     id: 'rxjs',
@@ -301,7 +296,7 @@ const skillRecords: SkillRecord[] = [
     yearsOfExperience: 10,
     notes: 'Used extensively in Angular contexts',
     categoryId: 'frameworks-libraries',
-    stackIds: ['angular', 'mean', 'angular-enterprise']
+    stackIds: ['angular', 'mean']
   },
   {
     id: 'svelte',
@@ -342,7 +337,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 1,
     categoryId: 'backend-apis-data',
-    stackIds: ['nextjs-supabase', 'svelte']
+    stackIds: ['pern', 'svelte', 'jamstack']
   },
   {
     id: 'jquery',
@@ -359,7 +354,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'emerging',
     yearsOfExperience: 1,
     categoryId: 'frameworks-libraries',
-    stackIds: ['react', 't3-stack', 'nextjs-supabase', 'jamstack']
+    stackIds: ['react', 'jamstack']
   },
   {
     id: 'qwik',
@@ -376,7 +371,7 @@ const skillRecords: SkillRecord[] = [
     yearsOfExperience: 2,
     notes: 'Used extensively at Fortra and in component library work',
     categoryId: 'frameworks-libraries',
-    stackIds: ['react', 'mern', 'react-aws']
+    stackIds: ['react', 'mern']
   },
   {
     id: 'react-hook-form',
@@ -400,7 +395,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 2,
     categoryId: 'frameworks-libraries',
-    stackIds: ['react', 'mern', 't3-stack']
+    stackIds: ['react', 'mern']
   },
   {
     id: 'wordpress',
@@ -416,7 +411,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'proficient',
     yearsOfExperience: 2,
     categoryId: 'backend-apis-data',
-    stackIds: ['t3-stack']
+    stackIds: ['react']
   },
   {
     id: 'zustand',
@@ -449,7 +444,7 @@ const skillRecords: SkillRecord[] = [
     yearsOfExperience: 5,
     notes: 'Opinionated, accessible, AI-compatible component systems',
     categoryId: 'frameworks-libraries',
-    stackIds: ['angular-enterprise', 'react']
+    stackIds: ['angular', 'react']
   },
   {
     id: 'design-systems',
@@ -474,7 +469,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'proficient',
     yearsOfExperience: 2,
     categoryId: 'ui-and-design',
-    stackIds: ['react', 'mern', 'react-aws']
+    stackIds: ['react', 'mern']
   },
   {
     id: 'responsive-design',
@@ -490,7 +485,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 1,
     categoryId: 'testing-and-qa',
-    stackIds: ['angular-enterprise', 'react', 'mern']
+    stackIds: ['angular', 'react', 'mern']
   },
   {
     id: 'tailwindcss',
@@ -498,7 +493,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'fluent',
     yearsOfExperience: 6,
     categoryId: 'ui-and-design',
-    stackIds: ['t3-stack', 'jamstack', 'svelte', 'react', 'angular']
+    stackIds: ['jamstack', 'svelte', 'react', 'angular']
   },
   {
     id: 'ui-ux-design',
@@ -530,7 +525,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 5,
     categoryId: 'testing-and-qa',
-    stackIds: ['react', 'mern', 'angular-enterprise']
+    stackIds: ['react', 'mern', 'angular']
   },
   {
     id: 'karma',
@@ -538,7 +533,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 5,
     categoryId: 'testing-and-qa',
-    stackIds: ['angular-enterprise']
+    stackIds: ['angular']
   },
   {
     id: 'msw',
@@ -555,7 +550,7 @@ const skillRecords: SkillRecord[] = [
     yearsOfExperience: 1,
     notes: 'E2E testing in React product contexts at Fortra',
     categoryId: 'testing-and-qa',
-    stackIds: ['react', 'react-aws']
+    stackIds: ['react']
   },
   {
     id: 'testing-library',
@@ -563,7 +558,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'proficient',
     yearsOfExperience: 2,
     categoryId: 'testing-and-qa',
-    stackIds: ['react', 'mern', 'angular-enterprise']
+    stackIds: ['react', 'mern', 'angular']
   },
   {
     id: 'unit-testing',
@@ -619,7 +614,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 2,
     categoryId: 'backend-apis-data',
-    stackIds: ['mern', 'mean', 'pern', 't3-stack']
+    stackIds: ['mern', 'mean', 'pern']
   },
   {
     id: 'oauth-jwt',
@@ -628,7 +623,7 @@ const skillRecords: SkillRecord[] = [
     yearsOfExperience: 1,
     notes: 'Including AWS Cognito-backed flows in product work',
     categoryId: 'backend-apis-data',
-    stackIds: ['react-aws']
+    stackIds: ['react', 'serverless']
   },
   {
     id: 'openapi-swagger',
@@ -636,7 +631,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 1,
     categoryId: 'backend-apis-data',
-    stackIds: ['react-aws']
+    stackIds: ['react', 'serverless']
   },
   {
     id: 'postgresql',
@@ -644,7 +639,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 1,
     categoryId: 'backend-apis-data',
-    stackIds: ['pern', 'nextjs-supabase']
+    stackIds: ['pern']
   },
   {
     id: 'rest',
@@ -668,7 +663,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 2,
     categoryId: 'tooling-cloud-delivery',
-    stackIds: ['react-aws', 'serverless']
+    stackIds: ['serverless']
   },
   {
     id: 'cicd-pipelines',
@@ -724,7 +719,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 5,
     categoryId: 'tooling-cloud-delivery',
-    stackIds: ['angular-enterprise']
+    stackIds: ['angular']
   },
   {
     id: 'vite',
@@ -740,7 +735,7 @@ const skillRecords: SkillRecord[] = [
     proficiency: 'competent',
     yearsOfExperience: 2,
     categoryId: 'tooling-cloud-delivery',
-    stackIds: ['angular', 'angular-enterprise']
+    stackIds: ['angular']
   },
   {
     id: 'wrangler',

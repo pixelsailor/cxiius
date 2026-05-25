@@ -48,19 +48,15 @@ export const categoryChartColor = (categoryId: SkillCategoryId): string =>
 /** Canvas-safe fills keyed by tech stack (Chart.js cannot rely on CSS variables). */
 export const SKILL_STACK_CHART_COLORS: Record<SkillStackId, string> = {
   'web-fundamentals': 'hsl(217, 91%, 60%)',
+  jamstack: 'hsl(34, 91%, 52%)',
+  serverless: 'hsl(160, 78%, 31%)',
   angular: 'hsl(280, 53%, 40%)',
   react: 'hsl(199, 89%, 48%)',
   svelte: 'hsl(12, 93%, 55%)',
-  serverless: 'hsl(160, 78%, 31%)',
-  jamstack: 'hsl(34, 91%, 52%)',
   mern: 'hsl(142, 71%, 45%)',
   mean: 'hsl(48, 96%, 53%)',
   pern: 'hsl(262, 83%, 58%)',
-  't3-stack': 'hsl(198, 98%, 31%)',
-  lamp: 'hsl(25, 95%, 53%)',
-  'react-aws': 'hsl(187, 85%, 43%)',
-  'angular-enterprise': 'hsl(291, 64%, 42%)',
-  'nextjs-supabase': 'hsl(168, 76%, 36%)'
+  lamp: 'hsl(25, 95%, 53%)'
 };
 
 /**
