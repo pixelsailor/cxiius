@@ -236,7 +236,7 @@ Example:
         >
           <span class="button-content">
             <span class="button-icon">
-            <ChartPieIcon size="xs" ariaLabel="Chart type" />
+              <ChartPieIcon size="xs" ariaLabel="Chart type" />
             </span>
             <span class="button-text">
               Chart type

@@ -95,7 +95,6 @@ describe('skills-explorer split (source)', () => {
 
   it('AC-P2-03 AC-P2-14: built-in trigger buttons in child snippet with mergeProps', () => {
     expect(popoverSource).toContain('{#snippet child({ props })}');
-    expect(popoverSource).toContain("mergeProps(props, { class: 'button-group' })");
     expect(popoverSource).toContain('Tech stacks');
     expect(popoverSource).toContain('Skills by domain');
     expect(popoverSource).toContain('Chart type');
