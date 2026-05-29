@@ -4,7 +4,6 @@
   import { isJavaScriptEnabled } from '$lib/utils/jsEnabled';
   import { applyTheme, clampThemeIndex, persistThemeIndex, readStoredThemeIndex } from '$lib/utils/theme';
   import { resolve } from '$app/paths';
-  import { page } from '$app/state';
   import type { RouteId } from '$app/types';
   import { Slider } from '$lib/ui';
   import {
@@ -37,9 +36,9 @@
 
   let activeThemeIndex = $state(0);
 
-  let currentRoute = $derived(page.url.pathname);
-
-  let isHomePage = $derived(currentRoute === '/');
+  /** Navigation bar visibility logic -- keep for reference */
+  // let currentRoute = $derived(page.url.pathname);
+  // let isHomePage = $derived(currentRoute === '/');
 
   let showDropdownNav = $derived.by(() => {
     if (!isJsEnabled) return false;
@@ -128,7 +127,8 @@ Header component: Contains the main navigation and global theme and font control
           </Popover.Content>
         </Popover.Portal>
       </Popover.Root>
-    {:else if isLargeScreen.current && !isHomePage}
+    <!-- {:else if isLargeScreen.current && !isHomePage} // old logic for hiding the navigation bar on home page -- keep for reference -->
+    {:else if isLargeScreen.current}
       {@render mainNav()}
     {/if}
   </div>
