@@ -2,6 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { assembleSystemPromptFromSiteContent } from './system-prompt.service';
 
 describe('assembleSystemPromptFromSiteContent', () => {
+  it('includes identity from getIdentity', async () => {
+    const text = await assembleSystemPromptFromSiteContent();
+    expect(text).toContain('## Identity');
+    expect(text).toContain('Benjamin Thompson');
+    expect(text).toContain('### Differentiators');
+  });
+
   it('includes the projects section and non-portfolio narrative fields from getProjects (AC-08)', async () => {
     const text = await assembleSystemPromptFromSiteContent();
     expect(text).toContain('## Projects and portfolio (all entries)');

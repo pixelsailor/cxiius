@@ -383,7 +383,7 @@ const portfolioData: DesignPortfolioEntry[] = [
     },
     circa: '2015',
     technologies: [
-      'HTML',
+      'Semantic HTML',
       'CSS',
       'Sass',
       'TypeScript',
@@ -392,11 +392,16 @@ const portfolioData: DesignPortfolioEntry[] = [
       'Webpack',
       'Jasmine',
       'Python',
-      'Django'
+      'Django',
+      'RBAC',
+      'REST APIs',
+      'Karma',
+      'NgTable',
+      'RxJS',
     ],
-    summary: 'UI design for Frontline VM.',
+    summary: 'Frontend development for Frontline VM.',
     description:
-      "Developed as a complete overhaul of Digital Defense's flagship SaaS vulnerability management platform, Version 6 was built from the ground up with a modern technology stack and was designed to be more user-friendly and intuitive. The new version included a new informative UI, more effecient workflows, and a focus on accessibility and security."
+      "Developed as a complete overhaul of Digital Defense's flagship SaaS vulnerability management platform, Version 6 was built from the ground up with a modern technology stack and was designed to be more user-friendly and intuitive. The new version included a new informative UI, more effecient workflows, and a focus on accessibility and security. Frontline VM is a data-intensive security platform that helps practitioners manage and mitigate vulnerabilities in their networks. It tracks and prioritizes vulnerabilities, provides insights into network health, and helps organizations respond to threats effectively."
   },
   {
     includeInPortfolio: true as const,
@@ -536,21 +541,29 @@ const portfolioData: DesignPortfolioEntry[] = [
     },
     circa: '2022',
     technologies: [
-      'HTML',
+      'Semantic HTML',
       'CSS',
       'Sass',
+      'TailwindCSS',
       'TypeScript',
-      'Angular',
+      'Angular 10',
       'Angular Material',
       'Webpack',
       'Jasmine',
       'Python',
       'Django',
-      'Nx'
+      'Nx',
+      'WCAG',
+      'RBAC',
+      'REST APIs',
+      'Jest',
+      'Karma',
+      'NgTable',
+      'RxJS',
     ],
     summary: 'UI design for Frontline VM v7.',
     description:
-      "Version 7 was intended to be the next major release of Frontline VM before Digital Defense's acquisition by Fortra. Working solo for nearly the entire duration of the project, I drove the design and development to migrate the entire front-end from AngularJS to Angular. Visually, there was a renewed focus on accessibility, prioritizing color contrast and screen reader support to meet WCAG 2.1 AA compliance standards. It also featured a custom fork of Angular Material that was built to not only support features unique to FVM but would live on to become the Angular component library for other Fortra products. While it saw a limited public release as an A/B test, allowing users to switch between the old and new versions, the project was ultimately cancelled before it could be fully realized."
+      "Version 7 was intended to be the next major release of Frontline VM before Digital Defense's acquisition by Fortra. Working solo for nearly the entire duration of the project, I drove the design and development to migrate the entire front-end from AngularJS to Angular. Visually, there was a renewed focus on accessibility, prioritizing color contrast and screen reader support to meet WCAG 2.1 AA compliance standards. It also featured a custom fork of Angular Material that was built to not only support features unique to FVM but would live on to become the Angular component library for other Fortra products. While it saw a limited public release as user-facing A/B test, allowing users to switch between the old and new versions, the project was ultimately cancelled before it could be fully integrated into Fortra's production environment."
   },
   {
     includeInPortfolio: true as const,
@@ -583,7 +596,7 @@ const portfolioData: DesignPortfolioEntry[] = [
       ]
     },
     circa: '2022',
-    technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'Angular Material', 'Nx'],
+    technologies: ['Semantic HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'Angular Material', 'Nx', 'Storybook', 'WCAG'],
     summary: 'Design system for Digital Defense and Fortra products.',
     description:
       'Uniform was developed as a fork of Angular Material to support the unique needs of the Frontline VM application and other Digital Defense products. It was later incorporated into the Fortra development stack as the design system for their Angular-based products.'
@@ -615,7 +628,7 @@ const portfolioData: DesignPortfolioEntry[] = [
       ]
     },
     circa: '2023',
-    technologies: ['HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'PrimeNG'],
+    technologies: ['Semantic HTML', 'CSS', 'Sass', 'TypeScript', 'Angular', 'PrimeNG', 'WCAG', 'Playwright', 'Vitest', 'AI-assisted development'],
     summary: 'SeaLevel component library.',
     description:
       'SeaLevel was developed as an extension of PrimeNG for use as the internal component library for LevelBlue. Built for the express intent of not only integrating custom features directly into a single, unified design system, but also improving the developer experience by providing a more consistent and predictable API for building complex UI components. Purposely built alongside an orchestrated agentic development environment, the component library was designed to be fully AI-compatible, ensuring consistent, high-quality output across the entire development process.'
@@ -698,7 +711,7 @@ const nonPortfolioData: NonPortfolioProjectEntry[] = [
     summary:
       'A Svelte 5 / SvelteKit web app with offline support that helps pick a meal from a personal recipe collection. Suggestions weigh time of day and how often each recipe is prepared, surfacing favorites while also bringing forward dishes that have not been cooked in a while so the rotation stays interesting.',
     context:
-      'Built as a solo side project for day-to-day household cooking: the goal is to reduce decision fatigue when choosing what to cook, using the recipes you already trust rather than generic lists. Long-term intent is to offer it more broadly - a public web experience and a companion Ionic app - after proving the workflow in real daily use.',
+      'Built as a solo side project for day-to-day household cooking: the goal is to reduce decision fatigue when choosing what to cook, using the recipes you already trust rather than generic lists. Long-term intent is to offer it more broadly - a public web experience and a companion Ionic app - after proving the workflow in real daily use. Utilizes an agentic development pipeline reinforced by AI friendly documentation, ADRs, Cursor agents, rules, and skills.',
     selectionAndFreshness: [
       "Meal ideas are chosen from the user's own library - not a generic catalog.",
       'Selection factors in time of day and preparation frequency so suggestions match the moment and avoid repetitive loops.',
@@ -710,7 +723,7 @@ const nonPortfolioData: NonPortfolioProjectEntry[] = [
       'Supabase provides authentication and cloud backup so recipes can sync across devices and be shared with others.'
     ],
     assistant: [
-      'A built-in assistant suggests new recipes and helps edit existing ones in place.',
+      'A built-in assistant suggests new recipes and helps edit existing ones in place. Uses structured response modeling with Zod to ensure consistent and predictable output.',
       'Users can attach dietary and method preferences when asking for ideas - for example gluten-free, vegan, or avoiding specific techniques such as sous vide.',
       'AI-assisted changes apply directly in the recipe text - including substitutions and on-the-fly edits - rather than only returning a separate suggestion block.'
     ],
@@ -721,7 +734,7 @@ const nonPortfolioData: NonPortfolioProjectEntry[] = [
       'Near term: private beta before a wider release.',
       'Longer term: ship as a public site and as an Ionic app for mobile.'
     ],
-    techStack: ['Svelte 5', 'SvelteKit', 'Dexie', 'Supabase', 'Progressive Web App / offline-capable web'],
+    techStack: ['Svelte 5', 'SvelteKit', 'Dexie', 'Supabase', 'Progressive Web App / offline-capable web', 'Structured response modeling', 'AI-assisted development', 'Zod', 'Vite', 'Vitest', 'Playwright', 'IndexedDB', 'Postgres', 'Cloudflare Workers', 'bits-ui', 'Semantic HTML', 'CSS', 'TailwindCSS', 'OpenAI SDK', 'RBAC', 'Auth'],
     links: {}
   }
 ];

@@ -11,7 +11,9 @@ You are a senior professional resume writer. You receive **structured JSON** exp
 
 ## Invocation
 
-Local/CI only: `npm run generate:resume` or `npm run generate:resume:verbose`. The Node script `scripts/generate-resume.mjs` loads content, appends mode instructions, and sends this role plus the JSON to the **Cursor Agent CLI** (`agent` on PATH, or `CURSOR_AGENT_BIN`). The script writes the model output to `src/static/resume/llms.txt`.
+Local/CI only: `npm run generate:resume` or `npm run generate:resume:verbose`. The Node script `scripts/generate-resume.mjs` loads content, appends mode instructions, and sends this role plus the JSON to the **Cursor Agent CLI** (`agent` on PATH, or `CURSOR_AGENT_BIN`). The script writes the model output to `static/resume/llms.txt`.
+
+For a deterministic export without the Cursor Agent CLI, run `npm run export:llms-txt` (`scripts/export-llms-txt.mjs`).
 
 ## Style and structure
 

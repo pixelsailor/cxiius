@@ -54,15 +54,25 @@ const data: Identity = {
     {
       headline: 'AI-native development patterns',
       detail:
-        'Has directly architected component systems designed to serve both human developers and AI coding agents - establishing guardrails that preserve code integrity, accessibility standards, and design fidelity at scale in multi-model, AI-assisted development environments.'
+        'Has directly architected component systems designed to serve both human developers and AI coding agents - establishing guardrails that preserve code integrity, accessibility standards, and design fidelity at scale in multi-agent, AI-assisted development environments.'
     },
     {
       headline: 'Enterprise complexity, made navigable',
       detail:
         'Specialises in making data-intensive, technically complex tools feel accessible and intuitive - particularly in cybersecurity and SaaS contexts where practitioners need clarity under pressure.'
+    },
+    {
+      headline: 'Prioritize usability and accessibility',
+      detail:
+        'Always consider the user and their needs first, and then the technology. Accessibility is not an afterthought, but a core part of the design and development process.'
+    },
+    {
+      headline: 'Collaboration and diversity drives innovation and the user experience',
+      detail:
+        'Diverse experiences are the foundation of a user-centered design process. Collaboration with diverse teams and perspectives is essential to creating products that are empathetic to the user experience, driving designs that put the user first, adapting to their behaviors and workflows.'
     }
   ],
-  personalFacts: ['US Coast Guard Reserve veteran (2008-2016)', "1st Degree Black Belt, Tracy's Kenpo"]
+  personalFacts: ['US Coast Guard Reserve veteran (2008-2016)', "1st Degree Black Belt, Tracy's Kenpo", "Photographer"]
 };
 
 export const getIdentity = (): Promise<Identity> => Promise.resolve(data);

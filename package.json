@@ -19,7 +19,8 @@
     "test:ai-live": "cross-env RUN_AI_LIVE=1 vitest run --project ai-live",
     "gen": "wrangler types",
     "generate:resume": "node --import tsx scripts/generate-resume.mjs",
-    "generate:resume:verbose": "node --import tsx scripts/generate-resume.mjs verbose"
+    "generate:resume:verbose": "node --import tsx scripts/generate-resume.mjs verbose",
+    "export:llms-txt": "node --import tsx scripts/export-llms-txt.mjs"
   },
   "devDependencies": {
     "@eslint/compat": "^2.0.3",

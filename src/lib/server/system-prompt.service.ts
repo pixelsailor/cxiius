@@ -7,6 +7,7 @@ import { getAvailability } from '$lib/content/availability';
 import { getBackground } from '$lib/content/background';
 import { getEducation } from '$lib/content/education';
 import { getExperience } from '$lib/content/experience';
+import { getIdentity } from '$lib/content/identity';
 import { getProjects } from '$lib/content/projects';
 import { formatSkillsForPrompt, getSkillRecords } from '$lib/content/skills';
 
@@ -15,12 +16,32 @@ import { formatSkillsForPrompt, getSkillRecords } from '$lib/content/skills';
  * Extend here when additional domains should inform the system prompt; keep imports centralized.
  */
 export async function assembleSystemPromptFromSiteContent(): Promise<string> {
+  const identity = await getIdentity();
   const projects = await getProjects();
   const skillRecords = await getSkillRecords();
   const experience = await getExperience();
   const education = await getEducation();
   const background = await getBackground();
   const availability = await getAvailability();
+
+  const identityArr: string[] = [
+    '## Identity',
+    `**${identity.name}**`,
+    `**Role:** ${identity.role}`,
+    `**Location:** ${identity.location}`,
+    `**Email:** ${identity.contact.email}`,
+    `**URL:** ${identity.contact.url}`,
+    `**LinkedIn:** ${identity.contact.linkedin}`,
+    `**Dribbble:** ${identity.contact.dribbble}`,
+    `**GitHub:** ${identity.contact.github}`,
+    `**Experience:** ${identity.yearsExperience}+ years`,
+    identity.summary,
+    '### Differentiators',
+    ...identity.differentiators.map((d) => `- **${d.headline}:** ${d.detail}`),
+    `**Accessibility commitment:** ${identity.usabilityAccessibilityCommitment}`,
+    `**Personal facts:** ${identity.personalFacts.join('; ')}`
+  ];
+  const identityLines = identityArr.join('\n');
 
   // Voice Profile.ts
   const voiceProfileBackgroundArr: string[] = [
@@ -149,6 +170,7 @@ export async function assembleSystemPromptFromSiteContent(): Promise<string> {
   const availabilityLines = availabilityArr.join('\n');
 
   return [
+    identityLines,
     voiceProfileBackgroundLines,
     skillsLines,
     projectsLines,

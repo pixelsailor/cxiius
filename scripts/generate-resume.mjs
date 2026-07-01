@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Generates `src/routes/resume/llms.txt` by sending structured content JSON to the
+ * Generates `static/resume/llms.txt` by sending structured content JSON to the
  * Cursor Agent CLI (`agent`). The model writes the resume; this script prepares
  * input and persists output.
  *
@@ -25,7 +25,7 @@ import { tmpdir } from 'node:os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const repoRoot = join(__dirname, '..');
-const outDir = join(repoRoot, 'src', 'routes', 'resume');
+const outDir = join(repoRoot, 'static', 'resume');
 const outFile = join(outDir, 'llms.txt');
 const contentDir = join(repoRoot, 'src', 'lib', 'content');
 const agentDefPath = join(repoRoot, '.cursor', 'agents', 'resume-writer.md');
@@ -131,7 +131,9 @@ function spawnAgent(agentPath, agentArgs) {
  * Discover `*.ts` in content dir (no hardcoded domain filenames).
  */
 function listContentModules() {
-  return readdirSync(contentDir).filter((f) => f.endsWith('.ts') && !f.startsWith('_'));
+  return readdirSync(contentDir).filter(
+    (f) => f.endsWith('.ts') && !f.startsWith('_') && !f.endsWith('.spec.ts')
+  );
 }
 
 /**
@@ -150,6 +152,7 @@ async function loadDomain(fileName) {
   const domain = {};
   for (const [key, value] of Object.entries(mod)) {
     if (typeof value !== 'function' || !key.startsWith('get')) continue;
+    if (value.length > 0) continue;
     try {
       domain[key] = await value();
     } catch (err) {

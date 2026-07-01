@@ -1,90 +1,423 @@
-## Benjamin Thompson
+> This document is derived from the site typed content source (`src/lib/content/`). Intended for AI systems, language models, and automated tools when generating targeted derivatives such as tailored resumes, cover letters, bio pages, or portfolio summaries. Preserve narrative context when creating derivatives; omit or condense only when a specific output format requires it.
 
-Senior Software Engineer — Front-End Architecture, Component Systems, UI/UX · San Antonio, TX  
-ben@cxii.us | cxii.us | linkedin.com/in/cxiius | dribbble.com/cxiius | github.com/pixelsailor
+# Benjamin Thompson
 
-## Summary
+**Role:** Sr/Staff Software Engineer - Front-End Architecture, Component Systems, UI/UX
+**Location:** San Antonio, TX
+**Email:** ben@cxii.us
+**URL:** cxii.us
+**LinkedIn:** linkedin.com/in/cxiius
+**Dribbble:** dribbble.com/cxiius
+**GitHub:** github.com/pixelsailor/cxiius
+**Experience:** 25+ years
 
-Benjamin Thompson is a strategic, results-driven senior front-end engineer and UI/UX designer with over 20 years of experience building accessible, responsive, enterprise-grade web applications. He combines engineering discipline with design judgment to architect component systems where brand, accessibility, and interaction standards are enforced by structure rather than convention, ensuring intuitive, goal-oriented user experiences. Known as an innovative business partner and effective communicator, he translates complex requirements into seamless, high-performance solutions that integrate front-end and back-end systems.
+---
 
-He specializes in designing systems that support AI-orchestrated development workflows, creating scalable component libraries and guardrails that enable both developers and AI agents to produce consistent, high-quality code while preserving design fidelity and system integrity. His work focuses on making data-heavy, security-focused applications clear, usable, and accessible.
+## Professional Identity
 
-A collaborative leader, US Coast Guard Reserve Veteran, and resourceful problem solver, he has a proven track record of guiding cross-functional teams to deliver efficient code, leverage emerging technologies, and drive business-critical initiatives.
+Front-end engineer and UI/UX designer with over two decades of experience building accessible, responsive, and secure enterprise-grade web applications. Work sits at the intersection of engineering rigor and design sensibility - architecting component systems that encode brand and accessibility standards structurally, rather than relying on convention or documentation alone.
 
-## Experience
+### Differentiators
+- **Component systems that enforce consistency structurally:** Designs component libraries where correct usage is the path of least resistance - making it structurally difficult to produce inconsistent, inaccessible, or off-brand output, regardless of who or what is writing the implementation.
+- **Equal fluency in design and engineering:** Operates effectively as a sole contributor across the full product surface: UX planning, visual design, component architecture, and production code. Can own an entire product's UI end-to-end or embed within a cross-functional team as the bridge between design intent and engineering execution.
+- **AI-native development patterns:** Has directly architected component systems designed to serve both human developers and AI coding agents - establishing guardrails that preserve code integrity, accessibility standards, and design fidelity at scale in multi-agent, AI-assisted development environments.
+- **Enterprise complexity, made navigable:** Specialises in making data-intensive, technically complex tools feel accessible and intuitive - particularly in cybersecurity and SaaS contexts where practitioners need clarity under pressure.
+- **Prioritize usability and accessibility:** Always consider the user and their needs first, and then the technology. Accessibility is not an afterthought, but a core part of the design and development process.
+- **Collaboration and diversity drives innovation and the user experience:** Diverse experiences are the foundation of a user-centered design process. Collaboration with diverse teams and perspectives is essential to creating products that are empathetic to the user experience, driving designs that put the user first, adapting to their behaviors and workflows.
 
-**Lead UI Developer — LevelBlue** · Dallas, TX (remote / contract) · Jul 2025 – Apr 2026  
-Embedded on a four-person strike team brought in to recover a cybersecurity product stalled for over a year, with a mandate to ship a fully functional application within six months.
+Commits to interface usability and to applying WCAG in shipping work through routine accessibility audits, code reviews that include accessibility, and verification with browser tooling such as WAVE, Pa11y, Chrome DevTools, and Lighthouse.
 
-- Owns end-to-end interface design for the rescued product.
-- Architects an opinionated Angular 21 component library that makes inconsistent or off-brand UI structurally difficult to produce, codifying color, typography, spacing, and interaction patterns.
-- Designs the library’s API and consumption patterns for human developers and AI agents alike, preserving accessibility and design fidelity regardless of who implements features.
-- Supports a team environment where Cursor is the primary AI development environment and models are chosen per task type; the library’s structure anchors reliable AI-assisted delivery at scale, compressing feature timelines from months to weeks while meeting enterprise quality expectations.
+**Personal facts:** US Coast Guard Reserve veteran (2008-2016); 1st Degree Black Belt, Tracy's Kenpo; Photographer.
 
-**Outcome:** Delivers the previously stalled application within the six-month window and establishes an architecture that supports multi-model AI-assisted development without sacrificing consistency or accessibility.
+---
 
-**Senior Software Engineer — Fortra** (formerly Digital Defense, Inc.) · Eden Prairie, MN (remote) · May 2013 – Jan 2025 · Full-time  
-One of two front-end developers re-engineering Frontline—DDI’s flagship SaaS vulnerability management platform—from the ground up on Angular 1.x; later works through DDI’s acquisition by Fortra on Frontline and related products.
+## Technical Proficiencies
 
-- Acts as primary UI/UX designer for Frontline, making a data-intensive security product approachable for practitioners.
-- Champions responsive design against internal pushback; adoption becomes a recurring strength in client demos.
-- Builds and maintains internal Angular and React component libraries used across Frontline and other web applications; continues to own significant front-end architecture and library maintenance through the acquisition.
-- Designs and delivers POCs and MVPs for new internal revenue streams independently.
-- Post-acquisition: implements Figma designs in production, then serves on a strike team as primary front-end developer for new features and application development.
+### Languages & Markup
+- CSS [proficient] | 27 years
+- JavaScript [proficient] | 24 years
+- PHP [competent] | 3 years (Primary use in freelance era (2010-2013); less recent)
+- Python [emerging] | 1 years
+- Sass/SCSS [fluent] | 14 years
+- Semantic HTML [fluent] | 27 years
+- SQL [emerging] | 1 years
+- TypeScript [fluent] | 13 years
 
-**Outcome:** Contributes to a product recognized by analysts (e.g., Gartner, Frost & Sullivan) and SC Magazine “Best Buy” for ease of use—cited as a factor in Fortra’s acquisition of DDI—across eleven-plus years of continuous delivery across organizational change.
+### Frameworks & Libraries
+- Angular [fluent] | 13 years (Primary framework across two long-term enterprise engagements; up to Angular 21)
+- Component library architecture [fluent] | 5 years (Opinionated, accessible, AI-compatible component systems)
+- jQuery [competent] | 2 years (Deep historical use; superseded by modern frameworks in current work)
+- Next.js [emerging] | 1 years
+- Qwik [emerging] | 1 years
+- React [proficient] | 2 years (Used extensively at Fortra and in component library work)
+- React Hook Form [competent] | 2 years
+- React Router [competent] | 2 years
+- RxJS [proficient] | 10 years (Used extensively in Angular contexts)
+- Svelte [proficient] | 1 years (Primary stack for this portfolio and recent PWA work)
+- SvelteKit [proficient] | 1 years
+- TanStack Query [competent] | 2 years
+- WordPress [competent] | 3 years
+- Zustand [competent] | 1 years
 
-**Principal UI/UX Designer — MOD Systems** · Seattle, WA · Feb 2006 – Apr 2010 · Full-time  
-Sole designer for a media-on-demand platform (retail kiosks, mobile, set-top) bridging physical and digital sales before streaming dominated the market.
+### UI & Design
+- Angular Material [fluent] | 10 years
+- Bits UI [emerging] | 1 years
+- Bootstrap [competent] | 4 years
+- Design systems [fluent] | 5 years
+- Figma [competent] | 1 years (Design-to-code workflows; product design and prototyping)
+- Material UI (MUI) [proficient] | 2 years
+- PrimeNG [fluent] | 1 years
+- Responsive design [fluent] | 20 years
+- TailwindCSS [fluent] | 6 years
+- UI/UX design [fluent] | 26 years
+- WCAG accessibility [proficient] | 5 years
 
-- Designs the full UX across kiosks, mobile, and set-top experiences, including kiosk deployments with partners such as Starbucks HEAR Music, Best Buy, Blockbuster, Hollywood Video, and Circuit City; contributes to concepts that help secure digital rights from major studios and networks.
-- Directs contract design teams and produces investor-facing and marketing materials.
+### Testing & Quality Assurance
+- Code review [proficient] | 5 years
+- Jest [competent] | 5 years
+- Karma [competent] | 5 years
+- Mock Service Worker (MSW) [competent] | 2 years
+- Playwright [competent] | 1 years (E2E testing in React product contexts at Fortra)
+- Storybook [competent] | 1 years
+- Testing Library [proficient] | 2 years
+- Unit testing [proficient] | 5 years
+- Vitest [proficient] | 1 years
 
-**Outcome:** Serves as the single creative lead for a nationally deployed platform; the company winds down as the industry moves away from physical media.
+### Backend, APIs & Data
+- Dexie [competent] | 1 years
+- Express.js [emerging] | 1 years
+- GraphQL [competent] | 1 years
+- IndexedDB [competent] | 1 years
+- MongoDB [emerging] | 1 years
+- MySQL [competent] | 2 years
+- Node.js [competent] | 2 years
+- OAuth / JWT [competent] | 1 years (Including AWS Cognito-backed flows in product work)
+- OpenAPI / Swagger [competent] | 1 years
+- PostgreSQL [competent] | 1 years
+- REST [fluent] | 16 years
+- Sails.js [emerging] | 1 years
+- Supabase [competent] | 1 years
+- Zod [proficient] | 2 years
 
-**Web Designer and Developer — Independent Contractor** · San Antonio, TX · Nov 2010 – Apr 2013 · Freelance  
-Delivers full-cycle web design and development for small businesses and nonprofits: discovery through deployment and maintenance, custom WordPress themes and bespoke CMS work, branding, and clear communication with non-technical clients.
+### Tooling, Cloud & Delivery
+- AWS (EC2, DynamoDB, Cognito) [competent] | 2 years
+- CI/CD pipelines [proficient] | 5 years
+- Cloudflare [proficient] | 1 years
+- Docker [proficient] | 2 years
+- Git [proficient] | 13 years
+- GitHub Actions [emerging] | 1 years
+- GitLab CI/CD [competent] | 3 years
+- Jenkins [competent] | 5 years
+- Nx [proficient] | 2 years (Monorepo management in enterprise Angular contexts)
+- Vite [proficient] | 1 years
+- Webpack [competent] | 2 years
+- Wrangler [proficient] | 1 years (Cloudflare Workers deploy and local dev for this site)
 
-**Outcome:** Ships end-to-end sites and CMS solutions for clients including the University of Colorado Bookstore, Extelligence Internet Services, and other independent organizations.
+### AI-Assisted Development
+- AI-compatible component APIs [fluent] | 1 years (Component libraries with guardrails for reliable AI coding agent output)
+- Multi-agent workflows [competent] | 1 years (Selecting and adapting models for different task types within a single project)
 
-## Skills
+### Collaboration & Process
+- Agile / Scrum [fluent] | 16 years
+- Atlassian suite (Jira, Confluence) [proficient] | 16 years
 
-**Languages & markup:** HTML, CSS, SASS/SCSS, JavaScript, TypeScript; PHP (proficient; primary use in freelance period).
+---
 
-**Frameworks & libraries:** Angular (through Angular 21), React, SvelteKit, Web Components; Bootstrap, Material UI, TailwindCSS; RxJS; jQuery (deep historical use); WordPress.
+## Professional Experience
 
-**Component systems & design:** Component library architecture, design systems, UI/UX design, Figma (design-to-code and prototyping), Storybook, responsive design, accessibility (WCAG).
+### Lead UI Developer
+**LevelBlue (formerly TrustWave)** - Dallas, TX (Remote / Contract)
+*July 2025 - April 2026*
 
-**Testing & quality:** Jest, Vitest, Karma, Testing Library, MSW, unit and component testing.
+**Context:** Embedded within a contracted strike team - three developers and one UI designer - brought in to rescue a product that had been stalled in development for over a year. The mandate was to deliver a fully functional application within a six-month window.
 
-**Build tools & toolchain:** Vite, Webpack, Nx (monorepo in enterprise Angular contexts).
+#### Responsibilities and contributions
+- Architected an opinionated Angular 21 component library that enforced design system compliance by construction - making it structurally difficult to produce inconsistent or off-brand output. The library codified decisions around color, typography, spacing, and interaction patterns, eliminating ad-hoc variation at the component level.
+- Designed the component library's API and consumption patterns to serve both human developers and AI coding agents equally - establishing guardrails that preserved code integrity, accessibility standards, and design fidelity regardless of who (or what) was writing the implementation.
+- The team adopted Cursor as the primary AI development environment, selecting and adapting different underlying models for different task types. The component library's opinionated structure became the foundation for reliable AI-assisted output at scale.
+- This approach compressed feature delivery from months to weeks while maintaining enterprise-grade quality standards.
 
-**Backend & APIs:** Node.js, Next.js, Express.js, REST, GraphQL.
+#### Key outcomes
+Delivered a previously stalled application within the contracted six-month window. Established a component architecture capable of supporting multi-agent, AI-assisted development without sacrificing consistency or accessibility.
 
-**Databases:** MySQL.
+#### Skills
+Angular 21, TypeScript, Component library architecture, Design systems, Cursor, AI-assisted development, Multi-agent workflows, Zod, PrimeNG, Multi-tenant architecture, Route guards, RBAC, RxJS, Semantic HTML, WCAG, Playwright, Vitest, REST APIs, Swagger, Git, Jira, Confluence, Figma, Prototyping, Component libraries
 
-**DevOps & cloud:** Docker, Cloudflare, CI/CD pipelines.
+### Senior Software Engineer
+**Fortra (formerly HelpSystems)** - Eden Prairie, MN (Remote)
+*February 2021 - January 2025*
 
-**AI-assisted development:** Cursor, multi-model workflows, AI-compatible component API design.
+**Context:** Fortra acquired Digital Defense in February 2021. Initially continued migrating Frontline VM from AngularJS to Angular 10, then joined Fortra's UX Enablement team with React as the primary development framework, served as lead frontend developer on a greenfield project, and supported multiple product teams and front-end stacks during post-acquisition integration.
 
-**Collaboration & process:** Git, GitHub, GitLab, Figma collaboration, Atlassian (Jira, Confluence), Notion, Agile/Scrum, Kanban.
+#### Responsibilities and contributions
+- Initially continued Frontline VM modernization, migrating from AngularJS toward Angular 10 during the post-acquisition transition period.
+- Joined Fortra's UX Enablement team, translating Figma designs into production-quality code and partnering with UX and engineering teams to ensure consistency between design and code across products.
+- Moved to a focused strike team as the primary frontend developer for new features and application development, including lead UI developer responsibilities on React-based greenfield work.
+- Built the Angular implementation of Fortra's React-based design system - the Angular counterpart to the in-house React component library - serving as the sole Angular specialist and enabling shared UI standards across non-React applications.
+- Owned significant frontend architecture decisions and component library maintenance, supporting cross-team development through reusable patterns and component-driven architecture that reduced duplication across the portfolio.
+
+#### Key outcomes
+Enabled design system adoption across multiple frameworks and teams, supporting consistent UI delivery during post-acquisition integration and product expansion.
+
+#### Skills
+Angular, React, TypeScript, JavaScript, SASS/SCSS, React Router, Zustand, Tanstack Query, React Hook Form, Zod, Component libraries, Figma-to-code, SaaS product development, Storybook, Jest, Testing Library, Material UI, TailwindCSS, Playwright, Mock Service Worker (MSW), RBAC, REST APIs, Swagger, Jenkins, CI/CD, Git, GitLab CI/CD, Artifactory, Docker, Jira, Confluence, Prototyping, Design systems, Nx, PNPM Workspaces
+
+### Front-End UI/UX Engineer
+**Digital Defense, Inc.** - San Antonio, TX
+*May 2013 - February 2021*
+
+**Context:** Joined as one of two front-end engineers to re-architect Frontline VM, a flagship SaaS vulnerability management platform, rebuilding the application from the ground up in AngularJS and delivering it to production.
+
+#### Responsibilities and contributions
+- Owned UI architecture and UX design for a complex, data-intensive security platform, translating practitioner workflows into an interface optimized for clarity, speed, and usability.
+- Built and maintained shared Angular component libraries, establishing reusable patterns that improved consistency and accelerated development across Frontline and related applications.
+- Championed and implemented responsive design despite internal resistance, turning adaptability into a differentiator in client demos and field adoption.
+- Led modernization of Frontline, migrating the application from AngularJS to Angular 10 and introducing improved accessibility standards and updated UI patterns.
+- Designed and delivered POCs and MVPs using AWS services including Cognito, EC2 and DynamoDB, expanding internal capabilities and supporting new product directions.
+
+#### Key outcomes
+Delivered and evolved a flagship platform recognized by analysts including Gartner and Frost & Sullivan, and awarded SC Magazine "Best Buy" for usability.
+
+#### Skills
+AngularJS, Angular, TypeScript, JavaScript, SASS/SCSS, Component libraries, SaaS product development, Storybook, Jest, AWS, Cognito, EC2, DynamoDB, Bootstrap, Angular Material, TailwindCSS, Python, Multi tenant architecture, RBAC, Route guards, RxJS, Semantic HTML, Responsive design, REST APIs, Auth, Nx, Git, SVN
+
+### Web Designer and Developer
+**Independent Contractor** - San Antonio, TX
+*November 2010 - April 2013*
+
+**Context:** Operated as a sole proprietor offering full-cycle web design and development services to small businesses and nonprofits.
+
+#### Responsibilities and contributions
+- Managed complete project lifecycles independently: client discovery, requirements gathering, UX planning, visual design, responsive front-end development, deployment, and ongoing maintenance.
+- Designed and developed custom WordPress themes and bespoke content management systems tailored to each client's operational needs.
+- Designed branding and marketing materials including logos, business cards, and promotional assets.
+- Communicated technical concepts clearly to non-technical clients, providing creative direction alongside practical guidance.
+
+#### Key outcomes
+Delivered end-to-end web presence and CMS solutions for a range of small business and nonprofit clients, including the University of Colorado Bookstore, Extelligence Internet Services, and several independent organisations.
+
+#### Skills
+WordPress, PHP, HTML, CSS, JavaScript, jQuery, Custom CMS development, E-commerce, Responsive design, Branding, Lemonstand, BigCommerce
+
+### Lead UI and Graphic Designer
+**MOD Systems** - Seattle, WA
+*February 2006 - April 2010*
+
+**Context:** MOD Systems was a media-on-demand platform provider building infrastructure to bridge the gap between physical and digital media - enabling retail stores to sell digital content before streaming made that model obsolete. The core product was an in-store kiosk system letting customers browse, sample, and burn albums or custom playlists to CD. Served as the sole designer for the entire company.
+
+#### Responsibilities and contributions
+- Designed the complete user experience for MOD's platform across three device form factors: in-store touchscreen kiosks, mobile devices, and set-top boxes.
+- MOD in-store kiosk UI: interface for browsing, sampling, and purchasing or burning music in retail environments - deployed in partner stores including Starbucks HEAR Music, Best Buy, Blockbuster, Hollywood Video, and Circuit City.
+- MOD mobile music player: UI for MOD's mobile playback application.
+- GreenPlay set-top box UI: interface for a streaming television and movie platform that completed a limited hardware trial.
+- MetaWallet: designed a virtual wallet platform enabling charitable giving, user-to-user transfers, and loaning of physical assets - ran a pilot program in Bolivia focused on mobile payments well before smartphones, PayPal, or Venmo made such transactions mainstream.
+- Produced design concepts and final specifications used in sales presentations that secured digital movie rights from major studios and network television networks.
+- Directed contract design teams responsible for the GreenPlay set-top box UI and managed external creative resources.
+- Created all company marketing materials: investor presentations, advertising assets, business cards, and brand materials.
+
+#### Key outcomes
+Sole creative force behind a platform that shipped across major national retail partners. Design work directly contributed to enterprise sales and content rights negotiations. Multiple products moved from concept to real-world deployment. The company wound down as the industry shifted away from physical media entirely.
+
+#### Skills
+UI/UX design, Interaction design, Brand design, Corporate web development, Presentation design, Cross-device design (kiosk, mobile, set-top box), Photoshop, Prototyping, Conceptual design, HTML, CSS, Flash, ActionScript
+
+### Staff Graphic Designer & Production Assistant
+**Directory Plus** - Durango, CO
+*February 2002 - May 2004*
+
+**Context:** Directory Plus produced printed Yellow Pages directories for businesses across the southwestern United States.
+
+#### Responsibilities and contributions
+- Designed custom print advertisements for hundreds of clients across southwestern Colorado and New Mexico.
+- Managed the design team's day-to-day operations: delegating tasks, tracking schedules, and maintaining quality standards.
+- Assisted in final production: paginating books and preparing press-ready files for submission to the printer.
+- Worked directly with clients on custom ad requests, translating specifications into finished print work.
+
+#### Key outcomes
+Maintained production quality and schedule across a high-volume regional print directory operation.
+
+#### Skills
+Print design, Production management, Client services, Photoshop, Illustrator, QuarkXPress, Pagination, Advertising, Leadership
+
+---
+
+## Projects and portfolio
+
+### Chateau Cinq logo [branding] (2001) [Shipped]
+Logo design for a fictional wine estate.
+Logo construction, paired type, and a restrained palette built for print and web alike. Created for a fictional wine estate as part of a project for Sessions.edu.
+**Technologies:** Identity, Typography, Color systems, Logo design, Branding, Adobe Illustrator
+
+### University of Colorado Book Store website [ui] (2005) [Shipped]
+Website design for the University of Colorado Book Store.
+Consulted with the University of Colorado on campus bookstore to evaluate the then current website and provided recommendations for improvement. Was hired afterward to redesign the website focusing on improving the user experience by providing a more intuitive and informative experience. The website was built using the existing ColdFusion platform and designed using Adobe Photoshop.
+**Technologies:** HTML, CSS, JavaScript, ColdFusion, Adobe Photoshop, Adobe Illustrator
+
+### Greenplay ecosystem illustration [illustration] (2007) [Shipped]
+Marketing campaign illustrations for the Greenplay ecosystem.
+Marketing campaign illustrations for the Greenplay ecosystem.
+**Technologies:** Vector, Adobe Illustrator, Adobe Photoshop
+
+### Greenplay player UI [ui] (2007) [Shipped]
+UI design for Greenplay Greenplayer.
+The Greenplayer was a streaming media player that was used in the Greenplay ecosystem. Developed by MOD Systems in a time when Netflix only mailed physical DVDs, the Greenplayer was an attempt to bring movie rentals purchased from brick and mortar retailers into the digital age.
+**Technologies:** Adobe Photoshop, Adobe Illustrator
+
+### Bedrock WordPress theme [ui] (2012) [Shipped]
+Bedrock WordPress theme.
+Bedrock was a small personal project intended to be a foundational piece for extending WordPress themes. It was minimalistic and focused on performance and accessibility featuring common elements that were frequently missing from other themes.
+**Technologies:** WordPress, PHP, HTML, CSS, JavaScript
+
+### MOD Media Management System [ui] (2007) [Shipped]
+UI for MOD Systems' Media Management System.
+The MOD Media Management System was a conceptual, web-based application for managing media content for in-store marketing campaigns. It was designed to complement a client's physical media kiosk system in stores as well as integrate with overhead digital signage systems. Client's could manage campaigns not only for single stores, but customizable regions or even the entire country. The MMS enabled in-store marketing campaigns to be managed from a central location, allowing for real-time updates and adjustments throughout all stores and included powerful options for managing artwork, playlists, and other media content. Workflows were deliberately designed to be easy to understand and use for everyone from the average sales associate to campaign managers and executives.
+**Technologies:** Adobe Photoshop, HTML, CSS, JavaScript
+
+### MOD Systems website [ui] (2008) [Shipped]
+Corporate website for MOD Systems.
+Built and maintained the MOD Systems corporate website. The site featured a clean, modern design with a focus on showcasing the company's products and services offering a central location for customers to learn more about the company and its services. It included a new logo, color scheme, and typography, as well as a new set of icons and illustrations to help convey the company's brand and values. The website was built using HTML, CSS, and JavaScript, and was hosted on the company's own servers.
+**Technologies:** HTML, CSS, Adobe Photoshop, Adobe Illustrator
+
+### Frontline Vulnerability Manager [ui] (2015) [Shipped]
+Frontend development for Frontline VM.
+Developed as a complete overhaul of Digital Defense's flagship SaaS vulnerability management platform, Version 6 was built from the ground up with a modern technology stack and was designed to be more user-friendly and intuitive. The new version included a new informative UI, more effecient workflows, and a focus on accessibility and security. Frontline VM is a data-intensive security platform that helps practitioners manage and mitigate vulnerabilities in their networks. It tracks and prioritizes vulnerabilities, provides insights into network health, and helps organizations respond to threats effectively.
+**Technologies:** Semantic HTML, CSS, Sass, TypeScript, AngularJS, Bootstrap, Webpack, Jasmine, Python, Django, RBAC, REST APIs, Karma, NgTable, RxJS
+**Live URL:** https://www.fortra.com/products/fortra-vulnerability-management
+
+### Electronique Services & Consulting logo [branding] (2000) [Shipped]
+Logo design for Electronique Services & Consulting.
+Logo design for Electronique Services & Consulting.
+**Technologies:** Identity, Typography, Color systems, Logo design, Branding, Adobe Illustrator
+
+### MetaWallet website [ui] (2007 - Q3) [Shipped]
+UI design for the MetaWallet and MetaFund services.
+MetaWallet/MetaFund began as a service to send and receive money to and from other users. Initially offered as a pilot program in Bolivia focused on mobile payments well before smartphones, PayPal, or Venmo made such transactions mainstream, it was designed for cheap, keypad-based mobile devices commonly found in developing countries. The idea grew from simple mobile-to-mobile transfers to a full-featured digital wallet that went beyond simple transfers to include charitable giving, user-to-user transfers, and loaning of physical assets.
+**Technologies:** UI/UX design, Interaction design, Brand design, Corporate web development, Adobe Photoshop
+
+### Norge Familie logo [branding] (2024) [Shipped]
+Logo design for Norge Familie.
+Logo design for Norge Familie. The original logo was intentionally crude and designed to be a simple, bold representation of the company's Viking heritage. The new logo is a more refined, modern design that is more consistent with the company's brand identity.
+**Technologies:** Identity, Typography, Color systems, Logo design, Branding, Adobe Illustrator
+
+### Profession Self Defense of Durango logo [branding] (2003) [Shipped]
+Logo design for Profession Self Defense of Durango.
+Logo design for Profession Self Defense of Durango.
+**Technologies:** Identity, Typography, Color systems, Logo design, Branding, Adobe Illustrator
+
+### Frontline Vulnerability Manager v7 [ui] (2022) [Cancelled]
+UI design for Frontline VM v7.
+Version 7 was intended to be the next major release of Frontline VM before Digital Defense's acquisition by Fortra. Working solo for nearly the entire duration of the project, I drove the design and development to migrate the entire front-end from AngularJS to Angular. Visually, there was a renewed focus on accessibility, prioritizing color contrast and screen reader support to meet WCAG 2.1 AA compliance standards. It also featured a custom fork of Angular Material that was built to not only support features unique to FVM but would live on to become the Angular component library for other Fortra products. While it saw a limited public release as user-facing A/B test, allowing users to switch between the old and new versions, the project was ultimately cancelled before it could be fully integrated into Fortra's production environment.
+**Technologies:** Semantic HTML, CSS, Sass, TailwindCSS, TypeScript, Angular 10, Angular Material, Webpack, Jasmine, Python, Django, Nx, WCAG, RBAC, REST APIs, Jest, Karma, NgTable, RxJS
+
+### Uniform Design System [ui] (2022) [Shipped]
+Design system for Digital Defense and Fortra products.
+Uniform was developed as a fork of Angular Material to support the unique needs of the Frontline VM application and other Digital Defense products. It was later incorporated into the Fortra development stack as the design system for their Angular-based products.
+**Technologies:** Semantic HTML, CSS, Sass, TypeScript, Angular, Angular Material, Nx, Storybook, WCAG
+
+### SeaLevel [ui] (2023) [Shipped]
+SeaLevel component library.
+SeaLevel was developed as an extension of PrimeNG for use as the internal component library for LevelBlue. Built for the express intent of not only integrating custom features directly into a single, unified design system, but also improving the developer experience by providing a more consistent and predictable API for building complex UI components. Purposely built alongside an orchestrated agentic development environment, the component library was designed to be fully AI-compatible, ensuring consistent, high-quality output across the entire development process.
+**Technologies:** Semantic HTML, CSS, Sass, TypeScript, Angular, PrimeNG, WCAG, Playwright, Vitest, AI-assisted development
+
+### Norge Familie (v3) [ui] (2025) [Shipped]
+Norge Familie (v3)
+Norge Familie is my longest running side project. Started in 2005 as a simple PHP ecommerce store to support a small family business. Originally built on a custom CMS, the site was migrated to WordPress for improved scalability and ease of use. The latest version includes new branding, a redesigned product catalog, and a new ecommerce platform.
+**Technologies:** HTML, CSS, JavaScript, WordPress, PHP
+**Live URL:** https://www.norwegian-family.com
+
+### cxii.us (Live)
+Primary domain for all CXII-related work, currently serving as Benjamin Thompson's resume and portfolio while demonstrating modern frontend and platform engineering practices.
+**Context:** Designed as more than a static resume site: cxii.us is a working product that showcases implementation decisions in real code, including structured content modeling and AI-assisted interaction patterns that surface richer context than traditional portfolio pages. Pages can be navigated without a traditional navigation bar by typing "/" followed by the desired page name.
+- Positions the site itself as a first-class project artifact rather than only a container for other work.
+- Uses AI integration to provide contextual answers and narrative depth beyond conventional resume and portfolio layouts.
+- Acts as the canonical public surface for CXII identity, portfolio, and experience content.
+**Tech stack:** Svelte, SvelteKit, Cloudflare Workers, Anthropic SDK, CSS, Vite, Vitest, Zod, bits-ui
+
+### What's For Dinner (Active development - private beta planned next)
+A Svelte 5 / SvelteKit web app with offline support that helps pick a meal from a personal recipe collection. Suggestions weigh time of day and how often each recipe is prepared, surfacing favorites while also bringing forward dishes that have not been cooked in a while so the rotation stays interesting.
+**Context:** Built as a solo side project for day-to-day household cooking: the goal is to reduce decision fatigue when choosing what to cook, using the recipes you already trust rather than generic lists. Long-term intent is to offer it more broadly - a public web experience and a companion Ionic app - after proving the workflow in real daily use. Utilizes an agentic development pipeline reinforced by AI friendly documentation, ADRs, Cursor agents, rules, and skills.
+- Meal ideas are chosen from the user's own library - not a generic catalog.
+- Selection factors in time of day and preparation frequency so suggestions match the moment and avoid repetitive loops.
+- The experience balances familiar favorites with recipes that have gone unstaged for a while, to keep meals from feeling stale.
+**Tech stack:** Svelte 5, SvelteKit, Dexie, Supabase, Progressive Web App / offline-capable web, Structured response modeling, AI-assisted development, Zod, Vite, Vitest, Playwright, IndexedDB, Postgres, Cloudflare Workers, bits-ui, Semantic HTML, CSS, TailwindCSS, OpenAI SDK, RBAC, Auth
+
+---
 
 ## Education
 
-**Associate of Science, Digital Media — Full Sail University** · Winter Park, FL · 2005  
-Class Valedictorian; Advanced Achiever Award; Certificate of Excellence; Perfect Attendance Award. Featured in the inaugural issue of the school’s quarterly publication.
+### Associate of Science, Digital Media
+**Full Sail University** - Winter Park, FL
+*2005*
+- Class Valedictorian
+- Advanced Achiever Award
+- Certificate of Excellence
+- Perfect Attendance Award
+- Featured in the inaugural issue of the school's quarterly publication.
 
-**Web Design Certificate — Sessions.edu** · Online · 2000  
-Project artwork featured in school promotional materials for several years after completion.
+### Web Design Certificate
+**Sessions.edu** - Online
+*2000*
+- Project artwork featured in school promotional materials for several years following completion.
 
-## Projects
+---
 
-**What’s For Dinner** (active development; private beta planned)  
-Offline-capable Svelte 5 / SvelteKit app that suggests meals from the user’s own recipe library, balancing time of day, preparation frequency, and variety so favorites and long-ignored recipes both surface. Dexie for local storage; Supabase for auth and sync. Includes an in-app assistant for new recipes and in-place edits with dietary and method preferences. Roadmap: private beta, then public web and an Ionic companion app.
+## Military Service
 
-## Background
+### Petty Officer 3rd Class, Boatswain's Mate
+**US Coast Guard Reserve** - Pacific Northwest & Texas Gulf Coast
+*2008 - 2016*
 
-**US Coast Guard Reserve** (2008–2016) · Boatswain’s Mate, Petty Officer Third Class · Everett, WA; Port O’Connor, TX  
-Served as small-boat crew and boarding team member; completed ‘A’ School (Yorktown, VA, 2009); Navigation Rules Ace Award; Search & Rescue Fundamentals training.
+Served eight years in the US Coast Guard Reserve as small boat crew and boarding team member.
+- Completed USCG 'A' School in 2009
+- Earned the Navigation Rules Ace Award
+- Trained in search and rescue fundamentals
+- Handled crew safety, navigation lookout duties, and maintenance of vessels, equipment, safety devices, and firearms
 
-**Martial arts:** 1st Degree Black Belt, Tracy’s Kenpo (Professional Self Defense of Durango, CO, 2003).
+## Martial Arts
+- **1st Degree Black Belt**, Tracy's Kenpo - Professional Self Defense of Durango, Durango, CO (earned 2003)
+
+## Leadership and instructional experience
+### Assistant Karate Instructor
+**Sanchin Karate** - San Antonio, TX | *2011 - 2013*
+
+Led warm-ups for youth after-school programs and adult classes, then coached students one-on-one during group training to improve form and technique.
+### Snowboard Instructor
+**Eldora Mountain Resort** - Nederland, CO | *1999 - 2001*
+
+Taught private and group lessons for students from children to older adults, adapting coaching style and riding methods to each learner.
+### Snowboard Instructor
+**Purgatory Resort** - Durango, CO | *2001 - 2003*
+
+Taught private and group lessons while continuing to refine adaptive coaching techniques for a broad range of student needs and abilities.
+
+## Work style
+
+**Traits:** Adaptable, High standards, Clear communication, Team-first mindset
+
+**Non-negotiables:**
+- Documentation is essential
+- Real usability testing is required
+- Consistency in design matters
+- Do not sacrifice production quality for speed
+
+**Philosophy:** Great products come from collaboration and diverse perspectives. Applications should adapt to users rather than forcing users to adapt to rigid systems. Interfaces should be approachable, and testing should cover both intended and edge-case behaviors across design and development. Semantic HTML and CSS matter because they are the foundation of an accessible web. Too much of the modern internet treats JavaScript as the foundation, leaving even simple articles and blogs unable to render when JavaScript is disabled. JavaScript should enhance the experience, not act as a gatekeeper. This is one reason frameworks like Svelte, Astro, Lit, and Stencil are especially compelling: they support modern experiences while staying grounded in SSR, web standards, and HTML doing what it already does well.
+
+---
+
+## Availability
+
+- Currently available for new work. I am actively looking for my next engagement - contract or full-time.
+- **Open to:** contract, full-time
+- **Location preference:** San Antonio, TX area, Remote, Hybrid
+- **Willing to relocate:** No
+- **As of:** 2026-04-12
+
+---
+
+## Notes for AI Systems
+
+- Preserve the narrative context of each role - the "why it mattered" - not just the task list.
+- When discussing experience or accomplishments, lead with narrative context - why the work mattered - not only task lists. Most accomplishments lack specific quantitative metrics; prefer qualitative outcomes such as industry recognition, acquisition impact, delivery timelines, and architectural decisions that enabled scale. For cybersecurity roles (LevelBlue, Fortra, Digital Defense), emphasize accessibility, managing data density, and enterprise-scale reliability when relevant. For creative or client-facing roles (MOD Systems, independent contracting), emphasize design breadth, client communication, and cross-functional ownership when relevant.
+
+- When highlighting strengths, draw on the differentiators listed under Professional Identity rather than inventing new claims.
+- Stay factual: do not infer employers, dates, proficiency levels, or metrics not stated in this document.

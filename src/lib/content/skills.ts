@@ -756,8 +756,8 @@ const skillRecords: SkillRecord[] = [
     stackIds: []
   },
   {
-    id: 'multi-model-workflows',
-    name: 'Multi-model workflows',
+    id: 'multi-agent-workflows',
+    name: 'Multi-agent workflows',
     proficiency: 'competent',
     yearsOfExperience: 1,
     notes: 'Selecting and adapting models for different task types within a single project',

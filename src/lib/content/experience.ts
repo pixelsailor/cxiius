@@ -37,7 +37,7 @@ const data: ExperienceEntry[] = [
       'This approach compressed feature delivery from months to weeks while maintaining enterprise-grade quality standards.'
     ],
     outcomes:
-      'Delivered a previously stalled application within the contracted six-month window. Established a component architecture capable of supporting multi-model, AI-assisted development without sacrificing consistency or accessibility.',
+      'Delivered a previously stalled application within the contracted six-month window. Established a component architecture capable of supporting multi-agent, AI-assisted development without sacrificing consistency or accessibility.',
     tech: [
       'Angular 21',
       'TypeScript',
@@ -45,13 +45,25 @@ const data: ExperienceEntry[] = [
       'Design systems',
       'Cursor',
       'AI-assisted development',
-      'Multi-model workflows',
+      'Multi-agent workflows',
       'Zod',
       'PrimeNG',
       'Multi-tenant architecture',
       'Route guards',
       'RBAC',
-      'RxJS'
+      'RxJS',
+      'Semantic HTML',
+      'WCAG',
+      'Playwright',
+      'Vitest',
+      'REST APIs',
+      'Swagger',
+      'Git',
+      'Jira',
+      'Confluence',
+      'Figma',
+      'Prototyping',
+      'Component libraries',
     ]
   },
   {
@@ -64,12 +76,13 @@ const data: ExperienceEntry[] = [
     startDate: '2021-02',
     endDate: '2025-01',
     context:
-      "Transitioned (after Fortra's acquisition of DDI) to a centralized UX engineering role supporting multiple product teams and front-end stacks.",
+      "Fortra acquired Digital Defense in February 2021. Initially continued migrating Frontline VM from AngularJS to Angular 10, then joined Fortra's UX Enablement team with React as the primary development framework, served as lead frontend developer on a greenfield project, and supported multiple product teams and front-end stacks during post-acquisition integration.",
     contributions: [
-      "Built the Angular implementation of Fortra's React-based design system, serving as the sole Angular specialist and enabling adoption of shared UI standards across non-React applications.",
-      'Partnered with UX and engineering teams to implement Figma-driven designs in production, ensuring consistency between design and code across products.',
-      'Acted as lead UI developer on React-based applications, contributing to feature delivery and aligning implementations with shared component and design system standards.',
-      'Supported cross-team development through reusable patterns and component-driven architecture, improving consistency and reducing duplication across the portfolio.'
+      'Initially continued Frontline VM modernization, migrating from AngularJS toward Angular 10 during the post-acquisition transition period.',
+      "Joined Fortra's UX Enablement team, translating Figma designs into production-quality code and partnering with UX and engineering teams to ensure consistency between design and code across products.",
+      'Moved to a focused strike team as the primary frontend developer for new features and application development, including lead UI developer responsibilities on React-based greenfield work.',
+      "Built the Angular implementation of Fortra's React-based design system - the Angular counterpart to the in-house React component library - serving as the sole Angular specialist and enabling shared UI standards across non-React applications.",
+      'Owned significant frontend architecture decisions and component library maintenance, supporting cross-team development through reusable patterns and component-driven architecture that reduced duplication across the portfolio.'
     ],
     outcomes:
       'Enabled design system adoption across multiple frameworks and teams, supporting consistent UI delivery during post-acquisition integration and product expansion.',
@@ -94,7 +107,21 @@ const data: ExperienceEntry[] = [
       'TailwindCSS',
       'Playwright',
       'Mock Service Worker (MSW)',
-      'RBAC'
+      'RBAC',
+      'REST APIs',
+      'Swagger',
+      'Jenkins',
+      'CI/CD',
+      'Git',
+      'GitLab CI/CD',
+      'Artifactory',
+      'Docker',
+      'Jira',
+      'Confluence',
+      'Prototyping',
+      'Design systems',
+      'Nx',
+      'PNPM Workspaces',
     ]
   },
   {
@@ -111,7 +138,7 @@ const data: ExperienceEntry[] = [
       'Owned UI architecture and UX design for a complex, data-intensive security platform, translating practitioner workflows into an interface optimized for clarity, speed, and usability.',
       'Built and maintained shared Angular component libraries, establishing reusable patterns that improved consistency and accelerated development across Frontline and related applications.',
       'Championed and implemented responsive design despite internal resistance, turning adaptability into a differentiator in client demos and field adoption.',
-      'Led modernization of Frontline, migrating the application from AngularJS to Angular 7+ and introducing improved accessibility standards and updated UI patterns.',
+      'Led modernization of Frontline, migrating the application from AngularJS to Angular 10 and introducing improved accessibility standards and updated UI patterns.',
       'Designed and delivered POCs and MVPs using AWS services including Cognito, EC2 and DynamoDB, expanding internal capabilities and supporting new product directions.'
     ],
     outcomes:
@@ -137,7 +164,14 @@ const data: ExperienceEntry[] = [
       'Multi tenant architecture',
       'RBAC',
       'Route guards',
-      'RxJS'
+      'RxJS',
+      'Semantic HTML',
+      'Responsive design',
+      'REST APIs',
+      'Auth',
+      'Nx',
+      'Git',
+      'SVN'
     ]
   },
   {
@@ -167,7 +201,9 @@ const data: ExperienceEntry[] = [
       'Custom CMS development',
       'E-commerce',
       'Responsive design',
-      'Branding'
+      'Branding',
+      'Lemonstand',
+      'BigCommerce',
     ]
   },
   {
@@ -198,7 +234,14 @@ const data: ExperienceEntry[] = [
       'Brand design',
       'Corporate web development',
       'Presentation design',
-      'Cross-device design (kiosk, mobile, set-top box)'
+      'Cross-device design (kiosk, mobile, set-top box)',
+      'Photoshop',
+      'Prototyping',
+      'Conceptual design',
+      'HTML',
+      'CSS',
+      'Flash',
+      'ActionScript'
     ]
   },
   {
@@ -218,7 +261,7 @@ const data: ExperienceEntry[] = [
       'Worked directly with clients on custom ad requests, translating specifications into finished print work.'
     ],
     outcomes: 'Maintained production quality and schedule across a high-volume regional print directory operation.',
-    tech: ['Print design', 'Production management', 'Client services']
+    tech: ['Print design', 'Production management', 'Client services', 'Photoshop', 'Illustrator', 'QuarkXPress', 'Pagination', 'Advertising', 'Leadership']
   }
 ];
 
