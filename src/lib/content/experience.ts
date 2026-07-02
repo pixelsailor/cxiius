@@ -125,7 +125,7 @@ const data: ExperienceEntry[] = [
     ]
   },
   {
-    title: 'Front-End UI/UX Engineer',
+    title: 'Staff Front-End UI/UX Engineer',
     company: 'Digital Defense, Inc.',
     location: 'San Antonio, TX',
     industry: 'Cybersecurity',
